@@ -23,7 +23,7 @@ export const routes: Routes = [
   {
     path: 'user',
     children: [
-      { path: 'add', component: AddUserComponent, canActivate: [permissionGuard], data: {permissions: ["TEST"]}},
+      { path: 'add', component: AddUserComponent },
       { path: 'update', component: UpdateUserComponent },
       { path: 'list', component: ListUserComponent },
       { path: 'set-password/:id', component: SetPasswordComponent },
