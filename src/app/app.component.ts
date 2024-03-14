@@ -1,5 +1,5 @@
 
-import {Component, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {Router} from "@angular/router";
@@ -13,12 +13,22 @@ import {PopupService} from "./service/popup.service";
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'banka-frontend';
 
   @ViewChild('sidenav') sidenav: MatSidenav | undefined = undefined;
 
   userInitials: string = "";
+
+  @HostListener('window:beforeunload', ['$event'])
+  onWindowClose(event: any): void {
+    localStorage.removeItem('jwt');
+ }
+
+ //Must implement OnInit so we can have HostListeners
+  ngOnInit(): void {
+      
+  }
 
 
   constructor(private userService : UserService, private router: Router) {
