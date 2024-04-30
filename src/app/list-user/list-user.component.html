@@ -41,14 +41,17 @@
       <div *ngSwitchCase="'users'">
         <div class="filter-row">
           <div class="left-row">
-            <div class="filter-dropdown">
-              <select class="security-filter-select" [(ngModel)]="position">
-                <option value="">All</option>
-                <option value="Admin">Admin</option>
-                <option value="Supervizor">Supervizor</option>
-                <option value="Agent">Agent</option>
-              </select>
-            </div>
+<!--            <div class="filter-dropdown">-->
+<!--              <select class="security-filter-select" [(ngModel)]="position">-->
+<!--                <option value="">All</option>-->
+<!--                <option value="Admin">Admin</option>-->
+<!--                <option value="Supervizor">Supervizor</option>-->
+<!--                <option value="Agent">Agent</option>-->
+<!--              </select>-->
+<!--            </div>-->
+              <label class="label" >Position:</label>
+              <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
+
             <transparent-text-field class="searchTF" [(text)]="firstName" [fieldName]="'By name'"></transparent-text-field>
             <transparent-text-field class="searchTF" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>
             <transparent-text-field class="searchTF" [(text)]="lastName" [fieldName]="'By surname'"></transparent-text-field>

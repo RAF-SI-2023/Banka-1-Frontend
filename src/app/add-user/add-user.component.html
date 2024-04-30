@@ -103,14 +103,16 @@
 <!--          </custom-field>-->
 <!--        </div>-->
 
-        <div class="form-group filter-dropdown">
-          <label for="position" class="label" >Position:</label>
-          <select id="position" class="security-filter-select" [(ngModel)]="addUserData.position">
-            <option value="Admin">Admin</option>
-            <option value="Supervizor">Supervizor</option>
-            <option value="Agent">Agent</option>
-          </select>
+        <div class="form-group">
+          <label class="label" >Position:</label>
+<!--          <select id="position" class="security-filter-select" [(ngModel)]="addUserData.position">-->
+<!--            <option value="Admin">Admin</option>-->
+<!--            <option value="Supervizor">Supervizor</option>-->
+<!--            <option value="Agent">Agent</option>-->
+<!--          </select>-->
+        <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
         </div>
+
 
 
         <div class="form-group">
