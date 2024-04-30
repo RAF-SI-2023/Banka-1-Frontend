@@ -7,8 +7,6 @@ import { SetPasswordComponent } from './set-password/set-password.component';
 import { SecurityListComponent } from './security-list/security-list.component';
 import { NgModule } from "@angular/core";
 import { WelcomeComponent } from './welcome/welcome.component';
-import { BankAccountsComponent } from './bank-accounts/bank-accounts.component';
-import { CardsComponent } from './cards/cards.component';
 import { EmployeeGuard } from './guards/employee.guard';
 import { AdminGuard } from './guards/admin.guard';
 import {ForexViewComponent} from "./forex-view/forex-view.component";
@@ -36,6 +34,7 @@ import { AdminAndEmployeeGuard } from './guards/admin-and-employee.guard';
 import { AgentAndSupervizorGuard } from './guards/agent-and-supervizor.guard';
 import { AgentAndSupervizorAndAdminGuard } from './guards/agent-and-supervizor-and-admin.guard';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
+import { BankAccountsAndCardsComponent } from "./bank-accounts-and-cards/bank-accounts-and-cards.component";
 
 
 export const routes: Routes = [
@@ -84,7 +83,7 @@ export const routes: Routes = [
   {path:'exchange-rate', component: ExchangeRateComponent,canActivate:[CustomerGuard]},
 
 
-  
+
   {
     path: 'customer',
     children: [
@@ -93,9 +92,9 @@ export const routes: Routes = [
     ]
   },
 
-  { path: 'bank-accounts', component: BankAccountsComponent, canActivate: [CustomerGuard]},
+  { path: 'bank-accounts', component: BankAccountsAndCardsComponent, canActivate: [CustomerGuard], data: { type: 'bankAccount' } },
+  { path: 'cards', component: BankAccountsAndCardsComponent, canActivate: [CustomerGuard], data: { type: 'card' } },
   { path: 'recipients', component: RecipientsComponent, canActivate: [CustomerGuard]},
-  { path: 'cards', component: CardsComponent,canActivate: [CustomerGuard]},
   { path: 'loans', component: LoanTableComponent, canActivate: [CustomerGuard]},
   { path: 'new-loan', component: NewLoanComponent, canActivate: [CustomerGuard]},
 
