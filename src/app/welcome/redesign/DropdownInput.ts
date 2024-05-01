@@ -27,6 +27,9 @@ import { CommonModule } from '@angular/common';
     a {
       margin: 7px;
     }
+    li:hover{
+      cursor: pointer;
+    }
   `]
 })
 export class DropdownInput {
