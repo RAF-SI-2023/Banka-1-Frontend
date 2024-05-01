@@ -9,7 +9,6 @@ import {ValidationService} from "../service/validation.service";
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
-import { AdminGuard } from '../guards/admin.guard';
 import { UserService } from '../service/employee.service';
 import { StorageService } from '../service/storage.service';
 import {TransparentTextFieldModule} from "../welcome/redesign/TransparentTextField";
@@ -44,7 +43,6 @@ export class LoginPageComponent {
 
   constructor(
     private authService: AuthService,
-    private adminGuard:AdminGuard,
     public dialog: MatDialog,
     private validator: ValidationService,
     private popupService: PopupService,
@@ -77,12 +75,12 @@ export class LoginPageComponent {
       // kada se uloguje zaposleni u session storage se stavlja pod 'role' pozicija koja je dobijena u objektu
       this.authService.loginEmployee(this.model.email, this.model.password).subscribe(
         (token) => {
-  
+
           // Koristimo ovaj pristup da bi mogao da saceka jwt od beka pa da apdejtuje inicijale
           this.authService.setJwt(token.jwt)
           sessionStorage.setItem('jwt', token.jwt);
           sessionStorage.setItem('permissions', token.permissions);
-  
+
           if (token.jwt !== null && token.jwt.length > 0) {
             this.userService.getEmployee(token.jwt).subscribe(
              response => {
@@ -91,11 +89,11 @@ export class LoginPageComponent {
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
                 console.log(response.position);
-                
+
              }
            );
           }
-  
+
         },
         error => {
           this.popupService.openPopup("Error", "Wrong email or password")
@@ -106,12 +104,12 @@ export class LoginPageComponent {
       console.log("USAO")
       this.authService.loginCustomer(this.model.email, this.model.password).subscribe(
         (token) => {
-  
+
           // Koristimo ovaj pristup da bi mogao da saceka jwt od beka pa da apdejtuje inicijale
           this.authService.setJwt(token.jwt)
           sessionStorage.setItem('jwt', token.jwt);
           sessionStorage.setItem('permissions', token.permissions);
-  
+
           if (token.jwt !== null && token.jwt.length > 0) {
             this.customerService.getCustomer(token.jwt).subscribe(
              response => {
@@ -119,14 +117,14 @@ export class LoginPageComponent {
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
                 console.log('customer');
-                
+
              },
              error =>{
               console.log("Greska")
              }
            );
           }
-  
+
         },
         error => {
           this.popupService.openPopup("Error", "Wrong email or password")
@@ -134,13 +132,13 @@ export class LoginPageComponent {
     }
         // this.authService.login(this.model.email, this.model.password).subscribe(
         //   (token) => {
-    
+
         //     // Koristimo ovaj pristup da bi mogao da saceka jwt od beka pa da apdejtuje inicijale
         //     this.authService.setJwt(token.jwt)
         //     sessionStorage.setItem('jwt', token.jwt);
         //     sessionStorage.setItem('permissions', token.permissions);
         //     this.setUserPropertiesInSessionStorage(token.jwt);
-    
+
         //     if (token.jwt !== null && token.jwt.length > 0) {
         //       this.userService.getUser(token.jwt).subscribe(
         //        response => {
@@ -151,12 +149,12 @@ export class LoginPageComponent {
         //        }
         //      );
         //     }
-    
+
         //   },
         //   error => {
         //     this.popupService.openPopup("Error", "Wrong email or password")
         //   });
-    
+
   }
 
 

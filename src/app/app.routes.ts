@@ -7,10 +7,6 @@ import { SetPasswordComponent } from './set-password/set-password.component';
 import { SecurityListComponent } from './security-list/security-list.component';
 import { NgModule } from "@angular/core";
 import { WelcomeComponent } from './welcome/welcome.component';
-import { BankAccountsComponent } from './bank-accounts/bank-accounts.component';
-import { CardsComponent } from './cards/cards.component';
-import { EmployeeGuard } from './guards/employee.guard';
-import { AdminGuard } from './guards/admin.guard';
 import {ForexViewComponent} from "./forex-view/forex-view.component";
 import {StockViewComponent} from "./stock-view/stock-view.component";
 import {loginGuard} from "./guards/login.guard";
@@ -20,8 +16,6 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { CustomerComponent } from './customer/customer.component';
 import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 import {UserResetPasswordComponent} from "./user-reset-password/user-reset-password.component";
-import {resetPasswordGuard} from "./guards/reset-password.guard";
-import { CustomerGuard } from './guards/customer.guard';
 import {UserDetailComponent} from "./user-detail/user-detail.component";
 import {ActivateAccountComponent} from "./activate-account/activate-account.component";
 import {FutureViewComponent} from "./future-view/future-view.component";
@@ -32,10 +26,9 @@ import {NewLoanComponent} from "./loans/new-loan/new-loan.component";
 import { NewPaymentComponent } from './new-payment/new-payment.component';
 import { TransactionsOverviewComponent } from './transactions-overview/transactions-overview.component';
 import { RecipientsComponent } from './recipients/recipients.component';
-import { AdminAndEmployeeGuard } from './guards/admin-and-employee.guard';
-import { AgentAndSupervizorGuard } from './guards/agent-and-supervizor.guard';
-import { AgentAndSupervizorAndAdminGuard } from './guards/agent-and-supervizor-and-admin.guard';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
+import { BankAccountsAndCardsComponent } from "./bank-accounts-and-cards/bank-accounts-and-cards.component";
+import { PositionsGuard } from './guards/positions.guard';
 
 
 export const routes: Routes = [
@@ -44,67 +37,95 @@ export const routes: Routes = [
   { path: 'welcome', component: WelcomeComponent, canActivate: [welcomeGuard] },
   {
     path: 'user',
-    canActivate: [AgentAndSupervizorAndAdminGuard],
+    canActivate: [PositionsGuard],
     children: [
       { path: 'add', component: AddUserComponent },
       { path: 'update', component: UpdateUserComponent },
       { path: 'list', component: ListUserComponent },
-    ]
+    ],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
   },
-  {path:'customer/set-password/:token', component: SetPasswordComponent},
-  {path:'employee/set-password/:token', component: SetPasswordComponent},
-  {path:'reset-password/:position', component: ResetPasswordComponent, canActivate: [resetPasswordGuard]},
-  {path:'customer/reset-password/:token', component: UserResetPasswordComponent, canActivate: [resetPasswordGuard]},
-  {path:'employee/reset-password/:token', component: UserResetPasswordComponent, canActivate: [resetPasswordGuard]},
+  {
+    path: 'orders', component: OrdersComponent, canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
+  },
+
+  { path: 'activate-account', component: ActivateAccountComponent },
+  { path:'customer/set-password/:token', component: SetPasswordComponent},
+  { path:'employee/set-password/:token', component: SetPasswordComponent},
+  { path:'reset-password/:position', component: ResetPasswordComponent, canActivate: [loginGuard]},
+  { path:'customer/reset-password/:token', component: UserResetPasswordComponent, canActivate: [loginGuard]},
+  { path:'employee/reset-password/:token', component: UserResetPasswordComponent, canActivate: [loginGuard]},
   {
     path: 'security',
-    // canActivate: [AdminAndEmployeeGuard],
     children: [
       { path: 'all', component: SecurityListComponent },
       { path: "stock/:ticker", component: StockViewComponent },
-      {path: 'forex/:ticker', component: ForexViewComponent},
-      {path: 'future/:ticker', component: FutureViewComponent},],
+      { path: 'forex/:ticker', component: ForexViewComponent},
+      { path: 'future/:ticker', component: FutureViewComponent},
+    ],
+    canActivate: [PositionsGuard],
+    data: { roles: ['employee', 'admin'] } // Moci ce svi kad se aktivira prosirenje
   },
 
+  {
+    path:'exchange', component: TransactionComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path:'payment', component: NewPaymentComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
 
+  // {path:'exchange-rate', component: ExchangeRateComponent,canActivate:[ExchangeRateGuard]},
 
-  {path:'exchange', component: TransactionComponent},
-  {path: 'payment', component: NewPaymentComponent},
-
-  //{path:'exchange-rate', component: ExchangeRateComponent,canActivate:[ExchangeRateGuard]},
-
-
-
-  {path:'payment/overview',component:TransactionsOverviewComponent,canActivate: [CustomerGuard]},
-
-  {path:'transaction', component: TransactionComponent,canActivate:[CustomerGuard]},
-
-
-
-  {path:'exchange-rate', component: ExchangeRateComponent,canActivate:[CustomerGuard]},
-
-
-  
   {
     path: 'customer',
     children: [
       {path: 'all', component: CustomerComponent},
       {path: 'view', component: UserDetailComponent}
-    ]
+    ],
+    canActivate: [PositionsGuard],
+    data: { roles: ['admin'] } // Moci ce svi kad se aktivira prosirenje
+  },
+  {
+    path: 'payment/overview',component: TransactionsOverviewComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'transaction', component: TransactionComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'exchange-rate', component: ExchangeRateComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'bank-accounts', component: BankAccountsAndCardsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'], type: 'bankAccount' }
+  },
+  {
+    path: 'recipients', component: RecipientsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'cards', component: BankAccountsAndCardsComponent,canActivate: [PositionsGuard],
+    data: { roles: ['customer'], type: 'card' }
+  },
+  {
+    path: 'loans', component: LoanTableComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'new-loan', component: NewLoanComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'card-transactions', component: CardTransactionsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
   },
 
-  { path: 'bank-accounts', component: BankAccountsComponent, canActivate: [CustomerGuard]},
-  { path: 'recipients', component: RecipientsComponent, canActivate: [CustomerGuard]},
-  { path: 'cards', component: CardsComponent,canActivate: [CustomerGuard]},
-  { path: 'loans', component: LoanTableComponent, canActivate: [CustomerGuard]},
-  { path: 'new-loan', component: NewLoanComponent, canActivate: [CustomerGuard]},
-
-  { path: 'card-transactions', component: CardTransactionsComponent,canActivate: [CustomerGuard]},
-
   // { path: 'customer/:customerId', component: UserDetailComponent},
-
-  { path: 'activate-account', component: ActivateAccountComponent },
-  { path: 'orders', component: OrdersComponent, canActivate: [AgentAndSupervizorAndAdminGuard] }
 
 ];
 
