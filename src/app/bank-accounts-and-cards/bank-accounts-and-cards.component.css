@@ -358,5 +358,5 @@ tr{
 
 .transparent {
   opacity: 0;
-  /*cursor: not-allowed;*/
+  cursor: default;
 }
