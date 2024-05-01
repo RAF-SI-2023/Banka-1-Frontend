@@ -49,9 +49,9 @@
                 <option value="Agent">Agent</option>
               </select>
             </div>
-            <transparent-text-field class="searchTF" [(text)]="firstName" [fieldName]="'By name'"></transparent-text-field>
-            <transparent-text-field class="searchTF" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>
-            <transparent-text-field class="searchTF" [(text)]="lastName" [fieldName]="'By surname'"></transparent-text-field>
+            <transparent-text-field class="searchTF" [type]="'text'" [(text)]="firstName" [fieldName]="'By name'"></transparent-text-field>
+            <transparent-text-field class="searchTF" [type]="'text'" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>
+            <transparent-text-field class="searchTF" [type]="'text'" [(text)]="lastName" [fieldName]="'By surname'"></transparent-text-field>
 
             <!--            <div class="filter-input">-->
 <!--              <input-->
@@ -98,7 +98,7 @@
         <div class="filter-row">
           <div class="left-row">
             <div class="filter-input">
-              <transparent-text-field [(text)]="searchEmail" [fieldName]="'Search by email'"></transparent-text-field>
+              <transparent-text-field [type]="'text'" [(text)]="searchEmail" [fieldName]="'Search by email'"></transparent-text-field>
 <!--              <input-->
 <!--                class="security-filter-input"-->
 <!--                placeholder="Filter by email"-->
