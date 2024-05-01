@@ -10,11 +10,13 @@ import { Router } from '@angular/router';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
+
 
 @Component({
   selector: 'app-add-bank-account',
   standalone: true,
-  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule],
+  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule, DropdownInputModule],
   templateUrl: './add-bank-account.component.html',
   styleUrl: './add-bank-account.component.css'
 })
@@ -32,6 +34,13 @@ export class AddBankAccountComponent {
     maintenanceCost: 0,
     accountName: ''
   };
+
+  dropdownStatusNames = ["Active", "Inactive"]
+  dropdownStatusValues = [false, true]
+
+
+  dropdownType = ["CURRENT", "FOREIGN_CURRENCY"]
+
 
   constructor(
     private customerService: CustomerService,
@@ -129,6 +138,13 @@ export class AddBankAccountComponent {
       this.accountToCreate.currencyCode = '';
       this.isCurrencyReadOnly = false;
     }
+  }
+
+  setType(type: any){
+    this.accountToCreate.accountType = type;
+  }
+  setStatus(status: any){
+    this.accountToCreate.status = status;
   }
 
 }

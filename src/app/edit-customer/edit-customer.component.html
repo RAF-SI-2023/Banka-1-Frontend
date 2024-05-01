@@ -135,16 +135,18 @@
             </div>
 <!--              [pattern]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'"-->
 
-            <div class="form-group px-2 filter-dropdown" >
-                <label for="gender">Gender:</label>
-                <select id="gender" class="security-filter-select" [(ngModel)]="editCustomerData.gender">
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="NonBinary">Non-binary</option>
-                    <option value="They/them">They/them</option>
-                    <option value="Krastavac">Krastavac</option>
-                    <option value="Helikopter">Helikopter</option>
-                </select>
+            <div class="form-group px-2" >
+                <label>Gender:</label>
+<!--                <select id="gender" class="security-filter-select" [(ngModel)]="editCustomerData.gender">-->
+<!--                    <option value="Male">Male</option>-->
+<!--                    <option value="Female">Female</option>-->
+<!--                    <option value="NonBinary">Non-binary</option>-->
+<!--                    <option value="They/them">They/them</option>-->
+<!--                    <option value="Krastavac">Krastavac</option>-->
+<!--                    <option value="Helikopter">Helikopter</option>-->
+<!--                </select>-->
+              <dropdown-input [inputName]="'gender'" [valueNames]="['Male', 'Female']" [values]="['Male', 'Female']" (selectedValue)="setGender($event)"></dropdown-input>
+
             </div>
 
             <div class="form-group buttonSl">

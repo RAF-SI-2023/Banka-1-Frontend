@@ -7,25 +7,30 @@
 
     <div class="popup-body">
         <div class="form-container">
+
             <div class="left-section">
-
-              <div class="form-group filter-dropdown">
-<!--                    <label for="status">Status:</label>-->
-                    <select id="status" class="security-filter-select" [(ngModel)]="accountToCreate.status">
-                        <option value="false">Active</option>
-                        <option value="true">Inactive</option>
-                    </select>
-                </div>
-
-              <div class="form-group filter-dropdown">
-<!--                    <label for="type">Type:</label>-->
-                    <select id="type" class="security-filter-select" [(ngModel)]="accountToCreate.accountType" (change)="onAccountTypeChange()">
-                        <option value="CURRENT">CURRENT</option>
-                        <option value="FOREIGN_CURRENCY">FOREIGN_CURRENCY</option>
-                        <!-- <option value="BUSINESS">BUSINESS</option> -->
-                    </select>
-                </div>
-                <div class="form-group">
+              <div class="form-group">
+                    <label>Status:</label> <br>
+<!--                    <select id="status" class="security-filter-select" [(ngModel)]="accountToCreate.status">-->
+<!--                        <option value="false">Active</option>-->
+<!--                        <option value="true">Inactive</option>-->
+<!--                    </select>-->
+<!--                <div class="dropdown">-->
+<!--                  <button class="btn btn-custom-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                    {{chooseStatus}}-->
+<!--                  </button>-->
+<!--                  <ul class="dropdown-menu dropdown_input">-->
+<!--                    <li><a class="dropdown-item" (click)="setStatus(false)">Active</a></li>-->
+<!--                    <li><a class="dropdown-item" (click)="setStatus(true)">Inactive</a></li>-->
+<!--                  </ul>-->
+<!--                </div>-->
+                <dropdown-input [inputName]="'status'" [valueNames]="dropdownStatusNames" [values]="dropdownStatusValues" (selectedValue)="setStatus($event)"></dropdown-input>
+              </div>
+              <div class="form-group">
+                <label>Type:</label> <br>
+                <dropdown-input [inputName]="'type'" [valueNames]="dropdownType" [values]="dropdownType" (selectedValue)="setType($event)"></dropdown-input>
+              </div>
+              <div class="form-group">
                   <label for="name">Name:</label>
                   <input type="text" id="name" [(ngModel)]="accountToCreate.accountName" name="name"   />
                   <div *ngIf="currency.invalid && (currency.dirty || currency.touched)" class="error-message">

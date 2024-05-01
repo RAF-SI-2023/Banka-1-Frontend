@@ -103,14 +103,15 @@
 
 .left-section input,
 .right-section input,
-.right-section select {
+.right-section select,
+.left-section select{
   width: 90%;
   height:auto;
   box-sizing: border-box;
   border-radius: 5px;
   background-color: var(--banka-dark-gray);
   padding: 8px;
-
+  color: white;
 }
 
 .right-section {
@@ -161,9 +162,19 @@
 .label {
   color: var(--banka-white);
 }
+
 .bottom-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 16px;
+}
+
+
+.btn-custom-dropdown {
+  border-radius: 5px;
+  border-color: white;
+  background-color: #3f3e3e;
+  color: white;
+  width: 90%;
 }
 

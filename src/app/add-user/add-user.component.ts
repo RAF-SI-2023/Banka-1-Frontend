@@ -11,13 +11,14 @@ import {TransparentTextFieldModule} from "../welcome/redesign/TransparentTextFie
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 
 
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [FormsModule, CommonModule, TransparentTextFieldModule, OutlineOrangeButtonModule, OrangeButtonModule, FieldComponentModule],
+  imports: [FormsModule, CommonModule, TransparentTextFieldModule, OutlineOrangeButtonModule, OrangeButtonModule, FieldComponentModule, DropdownInputModule],
   templateUrl: './add-user.component.html',
   styleUrl: './add-user.component.css'
 })
@@ -173,6 +174,10 @@ export class AddUserComponent {
 
   private isValidPhoneNumber(phone: string): boolean {
     return /^\d+$/.test(phone);
+  }
+
+  setPosition(position: any){
+    this.addUserData.position = position;
   }
 
 }

@@ -8,11 +8,12 @@ import { PopupService } from '../service/popup.service';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 
 @Component({
   selector: 'app-edit-customer',
   standalone: true,
-  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule],
+  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule, DropdownInputModule],
   templateUrl: './edit-customer.component.html',
   styleUrl: './edit-customer.component.css'
 })
@@ -122,5 +123,9 @@ export class EditCustomerComponent implements OnInit{
 
   cancel(){
     this.dialogRef.close();
+  }
+
+  setGender(gender: any){
+    this.editCustomerData.gender = gender;
   }
 }
