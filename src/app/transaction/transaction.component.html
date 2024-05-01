@@ -7,7 +7,7 @@
         <hr>
         <div class="form-group mt-5">
             <label for="outflow">Outflow account number:</label>
-            <select [(ngModel)]="transaction.outflow" id="outflow" name="outflow" required (change)="onOutflowChange()" #outflowModel="ngModel" [ngClass]="{ 'invalid-input': outflowModel.invalid && (outflowModel.dirty || outflowModel.touched) }">
+            <select [(ngModel)]="transaction.senderAccountNumber" id="outflow" name="outflow" required (change)="onOutflowChange()" #outflowModel="ngModel" [ngClass]="{ 'invalid-input': outflowModel.invalid && (outflowModel.dirty || outflowModel.touched) }">
                 <option value="" disabled selected>Select Outflow Account</option>
                 <option *ngFor="let account of outflowAccounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
             </select>
@@ -18,7 +18,7 @@
         
         <div class="form-group mt-4">
             <label for="inflow">Inflow account number:</label>
-            <select [(ngModel)]="transaction.inflow" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
+            <select [(ngModel)]="transaction.recipientAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
                 <option value="" disabled selected>Select Inflow Account</option>
                 <option *ngFor="let account of inflowAccounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
             </select>

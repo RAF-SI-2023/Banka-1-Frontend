@@ -14,7 +14,7 @@ export class TransformUsersPipe implements PipeTransform {
       'PHONE NUMBER': user.phoneNumber || 'N/A',
       ACTIVITY: user.active ? 'Active' : 'Inactive',
       originalUser: user // Include the entire original user object for internal use
-    }));
+    })).filter(user => user.ACTIVITY === 'Active');
   }
 }
 @NgModule({

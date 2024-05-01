@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import {DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {CapitalProfitDto, Order, OrderDto, SellingRequest, StatusRequest} from "../model/model";
+import {Component} from '@angular/core';
+import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {CapitalProfitDto, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
-import { OrangeButtonModule } from "../welcome/redesign/OrangeButton";
-import { WhiteTextFieldModule } from "../welcome/redesign/WhiteTextField";
-import { PopupService } from '../service/popup.service';
+import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {WhiteTextFieldModule} from "../welcome/redesign/WhiteTextField";
+import {PopupService} from '../service/popup.service';
 import {TableComponentModule} from "../welcome/redesign/TableComponent";
 import {TransformSecuritiesPipeModule} from "./TransformSecuritiesPipe";
+import {FilterByStatusPipeModule} from "./FilterByStatusPipe";
 
 @Component({
     selector: 'app-orders',
@@ -23,10 +24,13 @@ import {TransformSecuritiesPipeModule} from "./TransformSecuritiesPipe";
     WhiteTextFieldModule,
     DecimalPipe,
     TableComponentModule,
-    TransformSecuritiesPipeModule
+    TransformSecuritiesPipeModule,
+    DatePipe,
+    FilterByStatusPipeModule
   ]
 })
 export class OrdersComponent {
+  public OrderStatus = OrderStatus;
   selectedTab: "order-history" | "requests" | "securities" = "order-history"
   orderHistory: OrderDto[] = [];
   orderRequests: OrderDto[] = [];
@@ -95,7 +99,6 @@ export class OrdersComponent {
       // this.orderService.fetchAccountData(customerId).subscribe(total => {
       //   this.totalAvailableBalance = total;
       // });
-
       this.orderService.fetchUserForLimit(customerId).subscribe(user => {
         this.orderLimitBalance = user.orderlimit;
         // TODO pretpostavka da je available = limitNow
@@ -110,12 +113,18 @@ export class OrdersComponent {
 
     if(this.isSupervizor || this.isAdmin){
     this.orderHistory = await this.orderService.getAllOrdersHistory();
+      console.log("order history")
+      console.log(this.orderHistory);
+
     }else{
       this.orderHistory=await this.orderService.getOrdersHistory();
+      console.log("order history")
+
+      console.log(this.orderHistory);
     }
 
     //Da li zapravo ovde uzimam isti ovaj orderHistory samo filtriram gde je order.status processing
-    this.orderRequests = this.orderHistory.filter(order => order.status.toLowerCase() === 'processing');
+    this.orderRequests = this.orderHistory.filter(order => order.status == OrderStatus.PROCESSING);
     //ili poseban poziv
     //this.orderRequests=await this.orderService.getOrderRequests();
 
@@ -132,6 +141,12 @@ export class OrdersComponent {
       console.log('Response from approveOrder:', response.success);
 
        // Brisem ovaj orderr iz niza i tabele (ako treba, a mislim da treba):
+      if(response.success){
+        const index = this.orderRequests.findIndex(order => order.orderId === order.orderId);
+        if (index !== -1) {
+          this.orderRequests = this.orderRequests.filter((order, idx) => idx !== index);
+        }
+      }
     //  const index = this.orderRequests.findIndex(order => order.orderId === orderr.orderId);
     //   if (index !== -1) {
     //     this.orderRequests = this.orderRequests.filter((order, idx) => idx !== index);
@@ -146,6 +161,12 @@ export class OrdersComponent {
     const response = await this.orderService.denyOrder(orderr.orderId,StatusRequest.DENIED);
     console.log('Response from denyOrder:', response.success);
 
+    if(response.success){
+      const index = this.orderRequests.findIndex(order => order.orderId === orderr.orderId);
+      if (index !== -1) {
+        this.orderRequests = this.orderRequests.filter((order, idx) => idx !== index);
+      }
+    }
     // Brisem ovaj orderr iz niza i tabele (ako treba, a mislim da treba):
     //  const index = this.orderRequests.findIndex(order => order.orderId === orderr.orderId);
     //   if (index !== -1) {

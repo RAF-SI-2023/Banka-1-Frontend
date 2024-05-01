@@ -74,9 +74,6 @@ export class ListUserComponent implements OnInit{
     this.userService.getLimits().subscribe(
       (limitsFromDB: Limit[]) => {
         this.limits = limitsFromDB;
-
-        console.log('Limits from db');
-        console.log(this.limits);
       },
       (error: HttpErrorResponse) => {
         console.error('Error loading limits:', error);
@@ -106,7 +103,7 @@ export class ListUserComponent implements OnInit{
   }
 
   togglePopupAddUser() {
-    this.popup.openAddUserPopup();
+    this.popup.openAddUserPopup(this);
   }
 
   search(){
@@ -123,14 +120,12 @@ export class ListUserComponent implements OnInit{
 
   editUser(user: User){
     this.userService.setUserToEdit(user);
-    this.popup.openUpdateUserPopup();
+    this.popup.openUpdateUserPopup(this);
     // this.router.navigate(['/user/update']);
   }
 
   deleteUser(user: User): void {
-     user.userId=2;
-    // userId sam ovde rucno zadao jer kada se uradi ovaj poziv this.userService.getEmployees() u ngOnInit()
-    // za usera se ne vraca userId (videti sa backend stranom)
+    console.log(user);
     const confirmResult = confirm('Are you sure you want to delete this user?');
      if (confirmResult) {
       this.userService.deleteUser(user.userId).subscribe({
@@ -239,9 +234,9 @@ export class ListUserComponent implements OnInit{
     return sessionStorage.getItem('permissions')?.includes('deleteUser');
   }
 
-  editLimit(originalLimit: Limit) {
+ editLimit(originalLimit: Limit){
     console.log('Edit limit: ', originalLimit)
-    
+
     const dialogRef = this.dialog.open(EditLimitPopUpComponent, {
       width: '50vw',
       height: 'auto',
@@ -249,14 +244,18 @@ export class ListUserComponent implements OnInit{
       disableClose: false // Prevents closing the dialog by clicking outside or pressing ESC
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.delay();
+      this.loadLimit();
     });
+    
   }
 
+  async delay(){
+      await new Promise(resolve => setTimeout(resolve, 200)); // 5000 milliseconds = 5 seconds
+  }
 
-  resetLimit(originalLimit: Limit) {
+  async resetLimit(originalLimit: Limit) {
     console.log('Edit limit: ', originalLimit)
 
     const dialogRef = this.dialog.open(ResetLimitPopupComponent, {
@@ -266,9 +265,11 @@ export class ListUserComponent implements OnInit{
       disableClose: false // Prevents closing the dialog by clicking outside or pressing ESC
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      console.log('The dialog was closed');
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.delay();
+      this.loadLimit();
     });
+
+    this.loadLimit();
   }
 }

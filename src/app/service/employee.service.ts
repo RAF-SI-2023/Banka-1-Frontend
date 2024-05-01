@@ -40,11 +40,8 @@ export class UserService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
     console.log(headers);
-
     const options = { headers: headers };
     let url = environment.baseUrl + `/employee/limits/getAll`;
-    
-
     return this.http.get<Limit[]>(url, options);
   }
 
@@ -111,7 +108,6 @@ export class UserService {
     jmbg: string;
     position: string;
     phoneNumber: string;
-    isActive: boolean;
   }): Observable<any> {
     return this.http.put<User>(this.apiUrl + '/employee/', user,{
       headers: {

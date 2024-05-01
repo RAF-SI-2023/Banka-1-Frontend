@@ -1,8 +1,9 @@
 <div class="container">
   <div class="page">
     <div class="limit-info" *ngIf="isAgent">
-      <h2>Limit: {{ orderLimitBalance | number:'1.2-2' }}</h2>
-      <h2>Available: {{orderLimitBalance - totalAvailableBalance | number:'1.2-2' }}</h2>    </div>
+      <h2>Limit: {{ orderLimitBalance == 0 ? 'no limit' : (orderLimitBalance | number:'1.2-2') }}</h2>
+      <h2>Available: {{orderLimitBalance - totalAvailableBalance | number:'1.2-2' }}</h2>
+    </div>
     <div class="security-title">Orders</div>
     <div class="central-window">
       <div class="tabs-menu">
@@ -34,69 +35,116 @@
         <table>
           <thead>
             <tr>
-              <th>Security</th>
-              <th>Transaction</th>
-              <th>Symbol</th>
-              <th>Amount</th>
-              <th>Price</th>
+              <th>Listing Type</th>
+              <th>Order Type</th>
               <th>Status</th>
-              <th>Last Modified</th>
+              <th>Limit Value</th>
+              <th>Stop Value</th>
+              <th>Fee</th>
+              <th>Price</th>
+              <th>All Or None</th>
+              <th>Updated At</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let order of orderHistory">
               <td>{{ order.listingType }}</td>
               <td>{{ order.orderType }}</td>
-              <td>{{ order.symbol }}</td>
-              <td>{{ order.amount }}</td>
-              <td>{{ order.price }}</td>
               <td>{{ order.status }}</td>
-              <td>{{ order.lastModified }}</td>
-            </tr>
+              <td>{{ order.limitValue }}</td>
+              <td>{{ order.stopValue }}</td>
+              <td>{{ order.fee }}</td>
+              <td>{{ order.price }}</td>
+              <td>{{ order.allOrNone }}</td>
+              <td>{{ order.updatedAt * 1000 | date:'short' }}</td>            </tr>
           </tbody>
         </table>
       </div>
 
-      <div class="requests-tab" *ngIf="selectedTab === 'requests'">
+      <div class="history-tab" *ngIf="selectedTab === 'requests'">
         <table>
           <thead>
-            <tr>
-              <th>Security</th>
-              <th>Transaction</th>
-              <th>Symbol</th>
-              <th>Amount</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Last Modified</th>
-              <th>Actions</th>
-            </tr>
+          <tr>
+            <th>Listing Type</th>
+            <th>Order Type</th>
+            <th>Status</th>
+            <th>Limit Value</th>
+            <th>Stop Value</th>
+            <th>Fee</th>
+            <th>Price</th>
+            <th>All Or None</th>
+            <th>Updated At</th>
+            <th>Actions</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let order of orderRequests">
-              <td>{{ order.listingType }}</td>
-              <td>{{ order.orderType }}</td>
-              <td>{{ order.symbol }}</td>
-              <td>{{ order.amount }}</td>
-              <td>{{ order.price }}</td>
-              <td>{{ order.status }}</td>
-              <td>{{ order.lastModified }}</td>
-              <td>
-                <div
-                  class="table-buttons"
-                  *ngIf="order.status.toLowerCase() === 'processing'"
-                >
-                  <button class="button-primary" (click)="approveOrder(order)">
-                    Approve
-                  </button>
-                  <button class="button-secondary" (click)="denyOrder(order)">
-                    Deny
-                  </button>
-                </div>
-              </td>
-            </tr>
+          <tr *ngFor="let order of orderHistory | filterByStatus: OrderStatus.PROCESSING">
+            <td>{{ order.listingType }}</td>
+            <td>{{ order.orderType }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.limitValue }}</td>
+            <td>{{ order.stopValue }}</td>
+            <td>{{ order.fee }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.allOrNone }}</td>
+            <td>{{ order.updatedAt * 1000 | date:'short' }}</td>
+            <td>
+              <div
+                class="table-buttons">
+<!--                <--*ngIf="order.orderStatus === 'PROCESSING'"-->
+                <button class="button-primary" (click)="approveOrder(order)">
+                  Approve
+                </button>
+                <button class="button-secondary" (click)="denyOrder(order)">
+                  Deny
+                </button>
+              </div>
+            </td>
+          </tr>
           </tbody>
         </table>
       </div>
+
+<!--      <div class="requests-tab" *ngIf="selectedTab === 'requests'">-->
+<!--        <table>-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>Security</th>-->
+<!--              <th>Transaction</th>-->
+<!--              <th>Symbol</th>-->
+<!--              <th>Amount</th>-->
+<!--              <th>Price</th>-->
+<!--              <th>Status</th>-->
+<!--              <th>Last Modified</th>-->
+<!--              <th>Actions</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--            <tr *ngFor="let order of orderRequests">-->
+<!--              <td>{{ order.listingType }}</td>-->
+<!--              <td>{{ order.orderType }}</td>-->
+<!--              <td>{{ order.symbol }}</td>-->
+<!--              <td>{{ order.amount }}</td>-->
+<!--              <td>{{ order.price }}</td>-->
+<!--              <td>{{ order.status }}</td>-->
+<!--              <td>{{ order.lastModified }}</td>-->
+<!--              <td>-->
+<!--                <div-->
+<!--                  class="table-buttons"-->
+<!--                  *ngIf="order.status.toLowerCase() === 'processing'"-->
+<!--                >-->
+<!--                  <button class="button-primary" (click)="approveOrder(order)">-->
+<!--                    Approve-->
+<!--                  </button>-->
+<!--                  <button class="button-secondary" (click)="denyOrder(order)">-->
+<!--                    Deny-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </td>-->
+<!--            </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
 
       <div class="securities-tab" *ngIf="selectedTab === 'securities'">
         <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">

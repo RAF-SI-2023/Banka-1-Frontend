@@ -137,9 +137,9 @@ export class BankAccountService {
     const options = { headers: headers };
     let url = environment.baseUrl + `/employee/limits/newLimit`;
 
-    return this.httpClient.post(url, {
+    return this.httpClient.put(url, {
       userId: newLimitDto.userId,
-      approvalReqired: newLimitDto.approvalReqired,
+      approvalRequired: newLimitDto.approvalRequired,
       limit: newLimitDto.limit
     },{
       headers: headers
@@ -157,9 +157,10 @@ export class BankAccountService {
     const options = { headers: headers };
     let url = environment.baseUrl + `/employee/limits/reset/${userId}`;
 
-    return this.httpClient.put(url,{
+    return this.httpClient.put(url,null,{
       headers: headers
-    });
+    }
+    );
   }
 
   changeBankeAccountName(newName: string, bankAccountNumber: string): Observable<any> {

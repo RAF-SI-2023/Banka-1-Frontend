@@ -129,11 +129,11 @@
               [labelText]="'Password'"
               [(ngModel)]="editCustomerData.password"
               [isPassword]="true"
-              [pattern]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'"
               [requiredErrorText]="'Password is required.'"
               [patternErrorText]="'Must have at least 1 digit, uppercase and lowercase letter.'">
             </custom-field>
           </div>
+<!--              [pattern]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'"-->
 
             <div class="form-group filter-dropdown" >
                 <label for="gender">Gender:</label>

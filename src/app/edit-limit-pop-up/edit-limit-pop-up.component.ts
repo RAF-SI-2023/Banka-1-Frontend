@@ -37,12 +37,16 @@ export class EditLimitPopUpComponent {
     console.log(this.approvalRequired);
   }
 
+
+
+
+
   addNewLimit() {
     
     let newLimitDto:NewLimitDto = {
       userId: Number(this.limit.userId),
-      approvalReqired: this.approvalRequired,
-      limit: this.amount
+      approvalRequired: this.approvalRequired,
+      limit: Number(this.amount)
     }
     //TODO: when this is finished on backend uncoment
     //can not mock beacuse is POST method

@@ -101,7 +101,9 @@ export class OrderService {
     try {
       resp = (await firstValueFrom(
         //this.http.get(environmentMarket.baseUrl + "api", {headers})
-        this.http.get("/assets/orderHistory.json")
+        this.http.get(environment.baseUrl + "/orders/getAll", {headers})
+
+      // this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -152,16 +154,14 @@ export class OrderService {
   }
 
   async approveOrder(orderId: number, request: StatusRequest): Promise<DecideOrderResponse> {
-    const jwt = sessionStorage.getItem('jwt');
-    if (!jwt) return { success: false, message: 'JWT token not found' };
 
     const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
 
     try {
       return await firstValueFrom(
-        this.http.put<DecideOrderResponse>(`${environmentMarket.baseUrl}/orders/decideOrder/${orderId}`, request, { headers })
+        this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "APPROVED"}, { headers })
       );
     } catch (error) {
       console.error('Error while approving order:', error);
@@ -169,20 +169,14 @@ export class OrderService {
     }
   }
 
-
-
-
    async denyOrder(orderId: number, request: StatusRequest): Promise<DecideOrderResponse>{
-    const jwt = sessionStorage.getItem('jwt');
-    if (!jwt) return { success: false, message: 'JWT token not found' };
+     const headers = new HttpHeaders({
+       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+     });
 
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
-    });
-
-    try {
+     try {
       return await firstValueFrom(
-        this.http.put<DecideOrderResponse>(`${environmentMarket.baseUrl}/orders/decideOrder/${orderId}`, request, { headers })
+        this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "DENIED"}, { headers })
       );
     } catch (error) {
       console.error('Error while denying order:', error);

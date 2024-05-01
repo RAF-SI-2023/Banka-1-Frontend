@@ -60,14 +60,6 @@
 <!--            [patternErrorText]="'Last name must contain only letters.'">-->
 <!--          </custom-field>-->
 <!--        </div>-->
-          <div class="form-group">
-            <label for="jmbg">JMBG:</label>
-            <input type="text" id="jmbg" [(ngModel)]="addUserData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
-            <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
-              <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
-              <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
-            </div>
-          </div>
 <!--        <div class="form-group">-->
 <!--          <custom-field-->
 <!--            [labelText]="'JMBG'"-->
@@ -77,6 +69,19 @@
 <!--            [patternErrorText]="'Invalid JMBG format (must be 13 digits).'">-->
 <!--          </custom-field>-->
 <!--        </div>-->
+
+        <div class="form-group active-checkbox" *ngIf="addUserData.position === 'Agent'">
+          <label for="limit" style="font-size:large; color: var(--banka-white)">Limit:</label>
+          <input type="checkbox" id="limit" [(ngModel)]="limit" />
+        </div>
+        <div class="form-group" *ngIf="limit">
+          <label for="order-limit">Insert limit:</label>
+          <input type="number" id="order-limit" [(ngModel)]="addUserData.orderLimit" name="limit"  />
+        </div>
+        <div class="form-group" *ngIf="limit">
+          <label >Approval required:  <input type="checkbox"  [(ngModel)]="addUserData.requireApproval" name="limit"  /></label>
+          
+        </div>
       </div>
 
       <div class="right-section">
@@ -106,25 +111,18 @@
             <option value="Agent">Agent</option>
           </select>
         </div>
+
+
+        <div class="form-group">
+          <label for="jmbg">JMBG:</label>
+          <input type="text" id="jmbg" [(ngModel)]="addUserData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
+          <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
+            <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
+            <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
+          </div>
+        </div>
+
         
-
-        <div class="form-group active-checkbox">
-            <label for="active" style="font-size:large; color: var(--banka-white)">Active:</label>
-            <input type="checkbox" id="active" [(ngModel)]="addUserData.active" />
-        </div>
-
-        <div class="form-group active-checkbox" *ngIf="addUserData.position === 'Agent'">
-           <label for="active" style="font-size:large; color: var(--banka-white)">Limit:</label>
-            <input type="checkbox" id="active" [(ngModel)]="limit" />
-        </div>
-        <div class="form-group" *ngIf="limit">
-          <label for="limit">Insert limit:</label>
-          <input type="text" id="limit" [(ngModel)]="addUserData.orderLimit" name="limit"  />    
-        </div>
-        <div class="form-group" *ngIf="limit">
-          <label for="limit">Approval required:</label>
-          <input type="text" id="limit" [(ngModel)]="addUserData.orderLimit" name="limit"  />    
-        </div>
 
         <!-- <h3 style="margin-bottom: 5px;">Permissions:</h3>
         <div *ngFor="let permission of permissions" style="display: flex; align-items: center; margin-bottom: 5px;">

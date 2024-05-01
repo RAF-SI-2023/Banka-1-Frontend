@@ -16,7 +16,7 @@
       <div class="sidebar-menu-wrapper">
         <div class="sidebar-menu-title">Menu</div>
         <div class="sidebar-items-holder">
-          
+
           <div [routerLink]="'/welcome'" class="sidebar-item">
             <div>Welcome</div>
           </div>
@@ -54,10 +54,9 @@
       </div> -->
 
           <div class="sidebar-item-wrapper" *ngIf="isCustomer">
-            <div class="sidebar-item">
+            <div class="sidebar-item" (click)="setActiveItem('openPayments')">
               <div>Payments</div>
               <img
-                (click)="setActiveItem('openPayments')"
                 src="../assets/expand.png"
                 class="sidebar-icon"
                 [routerLink]="'/welcome'"/>
@@ -77,7 +76,7 @@
                 <div>Exchange</div>
               </div>
 
-             
+
               <div [routerLink]="'/exchange-rate'" class="sidebar-subitem">
                 <div>Exchange rate</div>
               </div>

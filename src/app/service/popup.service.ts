@@ -39,13 +39,15 @@ export class PopupService {
     });
   }
 
-  openAddUserPopup(): void {
+  openAddUserPopup(args: any): void {
     this.dialog.open(AddUserComponent, {
+      data: args
     });
   }
 
-  openUpdateUserPopup(): void {
+  openUpdateUserPopup(args: any): void {
     this.dialog.open(UpdateUserComponent, {
+      data:args
     });
   }
 

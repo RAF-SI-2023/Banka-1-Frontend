@@ -8,11 +8,12 @@
       <div class="left-section">
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="text" id="email" [(ngModel)]="userToEdit.email" name="email" required #emailModel="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [ngClass]="{ 'invalid-input': emailModel.invalid && (emailModel.dirty || emailModel.touched) }"/>
-            <div *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)" class="error-message">
-            <div *ngIf="emailModel.hasError('required')" style="color: red;">Email is required.</div>
-            <div *ngIf="emailModel.hasError('pattern')" style="color: red;">Invalid email format.</div>
-             </div>
+            <input disabled id="email" [(ngModel)]="userToEdit.email">
+<!--            <input type="text" id="email" [(ngModel)]="userToEdit.email" name="email" required #emailModel="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [ngClass]="{ 'invalid-input': emailModel.invalid && (emailModel.dirty || emailModel.touched) }"/>-->
+<!--            <div *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)" class="error-message">-->
+<!--            <div *ngIf="emailModel.hasError('required')" style="color: red;">Email is required.</div>-->
+<!--            <div *ngIf="emailModel.hasError('pattern')" style="color: red;">Invalid email format.</div>-->
+<!--             </div>-->
         </div>
 <!--        <div class="form-group">-->
 <!--          <custom-field-->
@@ -59,11 +60,12 @@
 <!--        </div>-->
         <div class="form-group">
             <label for="jmbg">JMBG:</label>
-            <input type="text" id="jmbg" [(ngModel)]="userToEdit.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }"  />
-            <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
-              <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
-              <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
-            </div>
+<!--          <input type="text" id="jmbg" [(ngModel)]="userToEdit.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }"  />-->
+            <input id="jmbg" [(ngModel)]="userToEdit.jmbg" disabled />
+<!--            <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">-->
+<!--              <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>-->
+<!--              <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>-->
+<!--            </div>-->
           </div>
 <!--        <div class="form-group">-->
 <!--          <custom-field-->
@@ -91,7 +93,9 @@
       <div class="right-section">
         <div class="form-group">
           <label for="password">Password:</label>
-          <input type="password" id="password" [(ngModel)]="password" name="password" required #passwordModel="ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" [ngClass]="{ 'invalid-input': passwordModel.invalid && (passwordModel.dirty || passwordModel.touched) }" />
+          <input type="password" id="password" [(ngModel)]="password" name="password" required #passwordModel="ngModel" required
+                 [ngClass]="{ 'invalid-input': passwordModel.invalid && (passwordModel.dirty || passwordModel.touched) }" />
+          <!--                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"-->
           <div *ngIf="passwordModel.invalid && (passwordModel.dirty || passwordModel.touched)" class="error-message">
             <div *ngIf="passwordModel.hasError('required')" style="color: red;">Password is required.</div>
             <div *ngIf="passwordModel.hasError('pattern')" style="color: red;">Invalid password format.</div>
@@ -127,17 +131,11 @@
         <div class="form-group filter-dropdown">
           <label for="position" class="label" >Position:</label>
           <select id="position" class="security-filter-select" [(ngModel)]="userToEdit.position">
-            <option value="Admin">Admin</option>
-            <option value="Supervizor">Supervizor</option>
-            <option value="Agent">Agent</option>
+            <option value="admin">Admin</option>
+            <option value="supervizor">Supervizor</option>
+            <option value="agent">Agent</option>
           </select>
         </div>
-
-        <div class="form-group active-checkbox">
-            <label for="active" style="font-size:large; color: var(--banka-white)">Active:</label>
-            <input type="checkbox" id="active" [(ngModel)]="userToEdit.active" />
-        </div>
-
 
       </div>
     </div>

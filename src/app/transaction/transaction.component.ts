@@ -19,8 +19,8 @@ import { CustomerService } from '../service/customer.service';
 })
 export class TransactionComponent implements OnInit{
   transaction: TransactionBasics = {
-    outflow: '',
-    inflow: '',
+    senderAccountNumber: '',
+    recipientAccountNumber: '',
     amount: '',
   };
 
@@ -71,7 +71,7 @@ export class TransactionComponent implements OnInit{
   }
 
   updateInflowAccounts() {
-    this.inflowAccounts = this.outflowAccounts.filter(account => account.accountNumber !== this.transaction.outflow);
+    this.inflowAccounts = this.outflowAccounts.filter(account => account.accountNumber !== this.transaction.senderAccountNumber);
   }
 
   onCancel() {
@@ -102,12 +102,12 @@ export class TransactionComponent implements OnInit{
   }
 
   private validateForm(): boolean {
-    if (!this.transaction.outflow || !this.isValidAccountNumber(this.transaction.outflow)) {
+    if (!this.transaction.senderAccountNumber || !this.isValidAccountNumber(this.transaction.senderAccountNumber)) {
       this.popup.openPopup("Error", "Outflow account number is not valid.");
       return false;
     }
 
-    if (!this.transaction.inflow || !this.isValidAccountNumber(this.transaction.inflow)) {
+    if (!this.transaction.recipientAccountNumber || !this.isValidAccountNumber(this.transaction.recipientAccountNumber)) {
       this.popup.openPopup("Error", "Inflow account number is not valid.");
       return false;
     }
