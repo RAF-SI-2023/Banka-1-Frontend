@@ -35,7 +35,6 @@ export class FutureService {
 
     try {
       resp = (await firstValueFrom(
-        // this.http.get("/assets/listing-history.json")
         this.http.get(environmentMarket.baseUrl + `/market/listing/history/future/${futureId}` + query, {headers})
       )) as ListingHistory[];
     } catch (e) {
@@ -56,7 +55,6 @@ export class FutureService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environmentMarket.baseUrl + `/market/listing/future/${futureId}`, {headers})
-        // this.http.get("/assets/futures-mock.json")
       )) as Future;
     } catch (e) {
       return null;

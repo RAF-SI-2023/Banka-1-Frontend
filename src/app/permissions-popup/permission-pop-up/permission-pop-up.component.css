@@ -60,13 +60,11 @@
   }
 
   .security-filter-input {
-    /* border-color: #263238; */
     border-radius: 5px;
-
     height: 60%;
     border: 1.3px solid #263238;
     padding: 5px;
-    font-size: 18px;
+    font-size: 1.2rem;
   }
 
   .add-save-perm-div{
@@ -130,7 +128,7 @@
   border-radius: 15px; /* Soft rounded borders */
   padding: 8px 24px 8px 12px; /* Padding for text and custom arrow space */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 16px; /* Text size */
+  font-size: 1.1rem; /* Text size */
   outline: none; /* Remove default focus outline */
 }
 

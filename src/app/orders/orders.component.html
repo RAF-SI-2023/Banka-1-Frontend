@@ -30,7 +30,6 @@
         </ul>
         <hr />
       </div>
-      <!-- </div> -->
       <div class="history-tab" *ngIf="selectedTab === 'order-history'">
         <table>
           <thead>
@@ -91,7 +90,6 @@
             <td>
               <div
                 class="table-buttons">
-<!--                <--*ngIf="order.orderStatus === 'PROCESSING'"-->
                 <button class="button-primary" (click)="approveOrder(order)">
                   Approve
                 </button>
@@ -105,46 +103,6 @@
         </table>
       </div>
 
-<!--      <div class="requests-tab" *ngIf="selectedTab === 'requests'">-->
-<!--        <table>-->
-<!--          <thead>-->
-<!--            <tr>-->
-<!--              <th>Security</th>-->
-<!--              <th>Transaction</th>-->
-<!--              <th>Symbol</th>-->
-<!--              <th>Amount</th>-->
-<!--              <th>Price</th>-->
-<!--              <th>Status</th>-->
-<!--              <th>Last Modified</th>-->
-<!--              <th>Actions</th>-->
-<!--            </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--            <tr *ngFor="let order of orderRequests">-->
-<!--              <td>{{ order.listingType }}</td>-->
-<!--              <td>{{ order.orderType }}</td>-->
-<!--              <td>{{ order.symbol }}</td>-->
-<!--              <td>{{ order.amount }}</td>-->
-<!--              <td>{{ order.price }}</td>-->
-<!--              <td>{{ order.status }}</td>-->
-<!--              <td>{{ order.lastModified }}</td>-->
-<!--              <td>-->
-<!--                <div-->
-<!--                  class="table-buttons"-->
-<!--                  *ngIf="order.status.toLowerCase() === 'processing'"-->
-<!--                >-->
-<!--                  <button class="button-primary" (click)="approveOrder(order)">-->
-<!--                    Approve-->
-<!--                  </button>-->
-<!--                  <button class="button-secondary" (click)="denyOrder(order)">-->
-<!--                    Deny-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--          </tbody>-->
-<!--        </table>-->
-<!--      </div>-->
 
       <div class="securities-tab" *ngIf="selectedTab === 'securities'">
         <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">
@@ -154,97 +112,8 @@
             </div>
           </ng-template>
         </app-dynamic-table>
-<!--        <table>-->
-<!--          <thead>-->
-<!--            <tr>-->
-<!--              <th>Security</th>-->
-<!--              <th>Symbol</th>-->
-<!--              <th>Amount</th>-->
-<!--              <th>Price</th>-->
-<!--              <th>Last Modified</th>-->
-<!--              <th>Actions</th>-->
-<!--            </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--            <tr *ngFor="let order of orderSecurities">-->
-<!--              <td>{{ order.listingType }}</td>-->
-<!--              <td>{{ order.symbol }}</td>-->
-<!--              <td>{{ order.amount }}</td>-->
-<!--              <td>{{ order.price }}</td>-->
-<!--              <td>{{ order.lastModified }}</td>-->
-<!--              <td>-->
-<!--                <div class="table-buttons">-->
-<!--                  <button class="button-primary" (click)="openSellMenu(order)">-->
-<!--                    Sell-->
-<!--                  </button>-->
-<!--                </div>-->
-<!--              </td>-->
-<!--            </tr>-->
-<!--          </tbody>-->
-<!--        </table>-->
+
       </div>
-<!--      <div class="popup-bg" *ngIf="popupOpen">-->
-<!--        <div class="popup">-->
-<!--          <div class="popup-header">-->
-<!--            <h1>Sell Security</h1>-->
-<!--            <img-->
-<!--              src="/assets/x.svg"-->
-<!--              alt="x button"-->
-<!--              class="x-button"-->
-<!--              height="40"-->
-<!--              width="40"-->
-<!--              (click)="closeSellingMenu()"-->
-<!--            />-->
-<!--          </div>-->
-<!--          <hr />-->
-<!--          <div class="popup-body">-->
-<!--            <div class="input-row">-->
-<!--              <label>Amount:</label>-->
-<!--              &lt;!&ndash; <white-text-field [(text)]="amount"></white-text-field> &ndash;&gt;-->
-<!--                       <input type="number" [(ngModel)]="amount" min="0" placeholder="value...">-->
-<!--            </div>-->
-
-<!--            <div class="input-row">-->
-<!--              <label>Limit value:</label>-->
-<!--              &lt;!&ndash; <white-text-field [(text)]="limitValue"></white-text-field> &ndash;&gt;-->
-<!--                       <input type="number" min="0" placeholder="value..." [(ngModel)]="limitValue">-->
-<!--            </div>-->
-
-<!--            <div class="input-row">-->
-<!--              <label>Stop value:</label>-->
-<!--              &lt;!&ndash; <white-text-field [(text)]="stopValue"></white-text-field> &ndash;&gt;-->
-<!--                       <input type="number" min="0" placeholder="value..." [(ngModel)]="stopValue">-->
-<!--            </div>-->
-
-<!--            <div class="input-row">-->
-<!--              <label>All or None:</label>-->
-<!--              <input type="checkbox" [(ngModel)]="allOrNone" />-->
-<!--            </div>-->
-
-<!--            <div class="input-row">-->
-<!--              <label>Margin:</label>-->
-<!--              <input type="checkbox" [(ngModel)]="margin" />-->
-<!--            </div>-->
-
-<!--            <div class="popup-buttons">-->
-<!--              <div class="button-wrapper">-->
-<!--                <orange-button-->
-<!--                  [buttonName]="'Cancel'"-->
-<!--                  (click)="closeSellingMenu()"-->
-<!--                ></orange-button>-->
-<!--              </div>-->
-<!--              <div class="button-wrapper">-->
-<!--                <orange-button-->
-<!--                  [buttonName]="'Sell'"-->
-<!--                  (click)="sellOrder()"-->
-<!--                ></orange-button>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            &lt;!&ndash;          <button class="button-secondary" (click)="closeSellingMenu()">Cancel</button>&ndash;&gt;-->
-<!--            &lt;!&ndash;          <button class="button-primary" (click)="sellOrder()">Sell</button>&ndash;&gt;-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
     </div>
   </div>
 </div>

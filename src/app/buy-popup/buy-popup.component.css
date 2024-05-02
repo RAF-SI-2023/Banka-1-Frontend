@@ -6,7 +6,6 @@
   padding: 20px; /* Spacing inside the popup */
   font-family: Arial, sans-serif; /* Professional, readable font */
   width: 30vw;
-  /*margin-left: 32px;*/
 }
 
 .popup-header {
@@ -18,7 +17,7 @@
 
 .popup-header h1 {
   margin: 0; /* Remove default margin */
-  font-size: 24px; /* Prominent header size */
+  font-size: 1.8em; /* Prominent header size */
 }
 
 .popup-header .x-button {

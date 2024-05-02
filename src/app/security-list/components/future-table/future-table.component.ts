@@ -30,7 +30,6 @@ export class FutureTableComponent {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    // this.http.get<Future[]>('assets/futures-mock.json')
     this.http.get<Future[]>(environmentMarket.baseUrl + '/market/listing/get/futures', {headers})
       .subscribe(res => this.futuresBackup = this.futures = res.map(val => { val.settlementDate *= 1000; val.lastRefresh *= 1000; return val; }));
   }

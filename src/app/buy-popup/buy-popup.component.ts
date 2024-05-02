@@ -25,7 +25,6 @@ export class BuyPopupComponent {
   limitValue: number = 0;
   stopValue: number = 0;
   allOrNone: boolean = false;
-  // margin: boolean = false;
   isFuture: boolean = false;
   isForex: boolean = false;
   isStock: boolean = false;

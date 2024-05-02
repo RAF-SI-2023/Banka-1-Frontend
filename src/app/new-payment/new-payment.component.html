@@ -7,7 +7,6 @@
             <div class="row justify-content-between">
                 <div class="form-group m-3 col-10 col-md-4 ">
                     <label for="inflow">Account number:</label>
-                    <!-- *ngIf="!selectedAccount; else labelTemplate" -->
                     <ng-container *ngIf="!selectedAccount; else labelTemplate"> 
                         <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
                           <option value="" disabled selected>Select Inflow Account</option>
@@ -19,7 +18,6 @@
                       </ng-container>
                       
                       <ng-template #labelTemplate>
-                        <!-- <label>Selected Account Number: {{ selectedAccount?.accountNumber }}</label> -->
                         <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
                             <option [value]="selectedAccount?.accountNumber" disabled selected>{{ selectedAccount?.accountNumber }}</option>
                             <option class="opt" *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
@@ -28,13 +26,7 @@
                             <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
                           </div>
                       </ng-template>
-                    <!-- <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
-                        <option value="" disabled selected>Select Inflow Account</option>
-                        <option *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
-                    </select>
-                    <div *ngIf="inflowModel.invalid && (inflowModel.dirty || inflowModel.touched)" class="error-message">
-                        <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
-                    </div> -->
+                    
                 </div>
                 <div class="form-group m-3 col-10 col-md-4">
                     <label class="rightText">Available resources:</label>
@@ -89,10 +81,7 @@
 
                             <label for="referenceNumber">Sender account number:</label>
                             <input [disabled]="true" type="text" [(ngModel)]="payment.senderAccountNumber"  id="referenceNumber" name="referenceNumber" required pattern="^\d+(\.\d+)?$"  />
-                            <!-- <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
-                                <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
-                                <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
-                            </div> -->
+                           
 
                         </div>
                     </div>
@@ -118,11 +107,7 @@
                                 <div *ngIf="paymentPurposeModel.hasError('required')" style="font-size: x-small; color: red;">Payment purpose is required.</div>
                             </div>
 
-                            <!-- <input type="text" [(ngModel)]="payment.paymentPurpose"  id="paymentPurpose" name="paymentPurpose" required pattern="^\d+(\.\d+)?$"  /> -->
-                            <!-- <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
-                                <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
-                                <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
-                            </div> -->
+                           
 
                         </div>
                     </div>

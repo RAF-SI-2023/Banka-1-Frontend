@@ -8,14 +8,6 @@
     <div class="popup-body ">
         <div class="form-container">
             <div class="left-section">
-<!--              <div class="form-group">-->
-<!--                  <label for="email">Email:</label>-->
-<!--                  <input type="text" id="email" [(ngModel)]="editCustomerData.email" name="email" required #emailModel="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [ngClass]="{ 'invalid-input': emailModel.invalid && (emailModel.dirty || emailModel.touched) }"/>-->
-<!--                  <div *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)" class="error-message">-->
-<!--                  <div *ngIf="emailModel.hasError('required')" style="color: red;">Email is required.</div>-->
-<!--                  <div *ngIf="emailModel.hasError('pattern')" style="color: red;">Invalid email format.</div>-->
-<!--                   </div>-->
-<!--              </div>-->
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'Email'"
@@ -25,14 +17,7 @@
                   [patternErrorText]="'Invalid email format.'">
                 </custom-field>
               </div>
-<!--              <div class="form-group">-->
-<!--                  <label for="name">Name:</label>-->
-<!--                  <input type="text" id="name" [(ngModel)]="editCustomerData.firstName" name="name" required pattern="[a-zA-Z]+" required #nameModel="ngModel" [ngClass]="{ 'invalid-input': nameModel.invalid && (nameModel.dirty || nameModel.touched) }" />-->
-<!--                  <div *ngIf="nameModel.invalid && (nameModel.dirty || nameModel.touched)" class="error-message">-->
-<!--                    <div *ngIf="nameModel.hasError('required')" style="color: red;">Name is required.</div>-->
-<!--                    <div *ngIf="nameModel.hasError('pattern')" style="color: red;">Name must contain only letters.</div>-->
-<!--                  </div>-->
-<!--                </div>-->
+
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'Name'"
@@ -42,15 +27,7 @@
                   [patternErrorText]="'Name must contain only letters.'">
                 </custom-field>
               </div>
-                <!-- Surname -->
-<!--                <div class="form-group">-->
-<!--                  <label for="surname">LastName:</label>-->
-<!--                  <input type="text" id="surname" [(ngModel)]="editCustomerData.lastName" name="surname" required #surnameModel="ngModel" required pattern="[a-zA-Z]+" [ngClass]="{ 'invalid-input': surnameModel.invalid && (surnameModel.dirty || surnameModel.touched) }"/>-->
-<!--                  <div *ngIf="surnameModel.invalid && (surnameModel.dirty || surnameModel.touched)" class="error-message">-->
-<!--                    <div *ngIf="surnameModel.hasError('required')" style="color: red;">Surname is required.</div>-->
-<!--                    <div *ngIf="surnameModel.hasError('pattern')" style="color: red;">Last name must contain only letters.</div>-->
-<!--                  </div>-->
-<!--                </div>-->
+
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'LastName'"
@@ -60,13 +37,7 @@
                   [patternErrorText]="'Last name must contain only letters.'">
                 </custom-field>
               </div>
-<!--                <div class="form-group">-->
-<!--                    <label for="address">Address:</label>-->
-<!--                    <input type="text" id="address" [(ngModel)]="editCustomerData.address" name="address" required #addressModel="ngModel" required [ngClass]="{ 'invalid-input': addressModel.invalid && (addressModel.dirty || addressModel.touched) }"/>-->
-<!--                    <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="error-message">-->
-<!--                        <div *ngIf="addressModel.hasError('required')" style="color: red;">Address is required.</div>-->
-<!--                    </div>-->
-<!--                </div>-->
+
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'Address'"
@@ -77,14 +48,7 @@
             </div>
 
             <div class="right-section">
-<!--              <div class="form-group">-->
-<!--                  <label for="phone">Phone Number:</label>-->
-<!--                  <input type="text" id="phone" [(ngModel)]="editCustomerData.phoneNumber" name="phone" required pattern="^\d+$" #phoneModel="ngModel" [ngClass]="{ 'invalid-input': phoneModel.invalid && (phoneModel.dirty || phoneModel.touched) }"/>-->
-<!--                  <div *ngIf="phoneModel.invalid && (phoneModel.dirty || phoneModel.touched)" class="error-message">-->
-<!--                    <div *ngIf="phoneModel.hasError('required')" style="color: red;">Phone Number is required.</div>-->
-<!--                    <div *ngIf="phoneModel.hasError('pattern')" style="color: red;">Invalid Phone Number format (must contain only digits).</div>-->
-<!--                  </div>-->
-<!--                </div>-->
+
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'Phone Number'"
@@ -95,14 +59,7 @@
                 </custom-field>
               </div>
 
-<!--            <div class="form-group">-->
-<!--                <label for="jmbg">JMBG:</label>-->
-<!--                <input type="text" id="jmbg" [(ngModel)]="editCustomerData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />-->
-<!--                <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">-->
-<!--                    <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>-->
-<!--                    <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>-->
-<!--                </div>-->
-<!--            </div>-->
+
               <div class="form-group px-2">
                 <custom-field
                   [labelText]="'JMBG'"
@@ -113,17 +70,6 @@
                 </custom-field>
               </div>
 
-
-<!--            <div class="form-group">-->
-<!--                <label for="password">Password:</label>-->
-<!--                <input type="password" id="password" [(ngModel)]="editCustomerData.password" name="password" required #passwordModel="ngModel" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" [ngClass]="{ 'invalid-input': passwordModel.invalid && (passwordModel.dirty || passwordModel.touched) }" />-->
-<!--                <div *ngIf="passwordModel.invalid && (passwordModel.dirty || passwordModel.touched)" class="error-message">-->
-<!--                  <div *ngIf="passwordModel.hasError('required')" style="color: red;">Password is required.</div>-->
-<!--                  <div *ngIf="passwordModel.hasError('pattern')" style="color: red;">Invalid password format.</div>-->
-<!--                  <div *ngIf="passwordModel.hasError('pattern')" style="color: red;">Must have at least 1 digit, uppercase and lowercase letter.</div>-->
-
-<!--                </div>-->
-<!--              </div>-->
             <div class="form-group px-2">
               <custom-field
                 [labelText]="'Password'"
@@ -133,18 +79,10 @@
                 [patternErrorText]="'Must have at least 1 digit, uppercase and lowercase letter.'">
               </custom-field>
             </div>
-<!--              [pattern]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'"-->
 
             <div class="form-group px-2" >
                 <label>Gender:</label>
-<!--                <select id="gender" class="security-filter-select" [(ngModel)]="editCustomerData.gender">-->
-<!--                    <option value="Male">Male</option>-->
-<!--                    <option value="Female">Female</option>-->
-<!--                    <option value="NonBinary">Non-binary</option>-->
-<!--                    <option value="They/them">They/them</option>-->
-<!--                    <option value="Krastavac">Krastavac</option>-->
-<!--                    <option value="Helikopter">Helikopter</option>-->
-<!--                </select>-->
+
               <dropdown-input [inputName]="'gender'" [valueNames]="['Male', 'Female']" [values]="['Male', 'Female']" (selectedValue)="setGender($event)"></dropdown-input>
 
             </div>
@@ -153,8 +91,6 @@
               <outline-orange-button  [buttonName]="'Cancel'" (click)="cancel()"></outline-orange-button>
               <orange-button [buttonName]="'Confirm'" (click)="submit()"></orange-button>
 
-<!--              <button (click)="cancel()">Cancel</button>-->
-<!--                <button (click)="submit()">Confirm</button>-->
             </div>
 
             </div>

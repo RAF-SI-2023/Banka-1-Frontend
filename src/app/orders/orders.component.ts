@@ -39,7 +39,6 @@ export class OrdersComponent {
   public OrderStatus = OrderStatus;
   selectedTab: "order-history" | "requests" | "securities" = "order-history"
   orderHistory: OrderDto[] = [];
-  // orderRequests: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
   isEmployee: boolean = sessionStorage.getItem('role') === "employee";
@@ -63,7 +62,6 @@ export class OrdersComponent {
   allOrNone: boolean = false;
   margin: boolean = false;
 
-  // TODO Pretpostvaljam da je customerId?? jer se on trazi u putanjama za limit i availableBalance
   totalAvailableBalance: number = 0; // Global variable to store the sum
   orderLimitBalance: number = 0;
 
@@ -103,15 +101,9 @@ export class OrdersComponent {
   }
 
   async ngOnInit() {
-    // this.orderHistory = await this.orderService.getOrderHistory();
-    // this.orderRequests = await this.orderService.getOrderRequests();
-    // this.orderSecurities = await this.orderService.getOrderSecurities();
-
+   
     this.customerId = sessionStorage.getItem('loggedUserID');
     if(this.customerId) {
-      // this.orderService.fetchAccountData(customerId).subscribe(total => {
-      //   this.totalAvailableBalance = total;
-      // });
       this.loadLimit()
     }
     this.loadOrders()
@@ -123,7 +115,6 @@ export class OrdersComponent {
     if (this.customerId){
       this.orderService.fetchUserForLimit(this.customerId).subscribe(user => {
         this.orderLimitBalance = user.orderlimit;
-        // TODO pretpostavka da je available = limitNow
         this.totalAvailableBalance = user.limitNow;
       }, error => {
       });
@@ -143,70 +134,19 @@ export class OrdersComponent {
       console.log(this.orderHistory);
     }
 
-    //Da li zapravo ovde uzimam isti ovaj orderHistory samo filtriram gde je order.status processing
-    // this.orderRequests = this.orderHistory.filter(order => order.status == OrderStatus.PROCESSING);
-    //ili poseban poziv
-    //this.orderRequests=await this.orderService.getOrderRequests();
-
-    //Da li zapravo ovde uzimam isti ovaj orderHistory samo filtriram gde je order.orderType "SELL"
-    //this.orderSecurities = this.orderHistory.filter(order => order.orderType === 'SELL');
-    //this.orderSecurities = this.orderService.get
-    //ili poseban poziv
-    // this.orderSecurities=await this.orderService.getOrderSecurities();
   }
 
   async approveOrder(order: OrderDto) {
       this.orderService.decideOrder(order.orderId, StatusRequest.APPROVED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-    // try {
-    //   const response = await this.orderService.approveOrder(order.orderId, StatusRequest.APPROVED);
-      // console.log('Response from approveOrder:', response.success);
-
-      // Brisem ovaj orderr iz niza i tabele (ako treba, a mislim da treba):
-      // if(response.success){
-      //   const index = this.orderSecurities.findIndex(order => order.orderId === order.orderId);
-      //   if (index !== -1) {
-      //     this.orderSecurities = this.orderSecurities.filter((order, idx) => idx !== index);
-      //   }
-      // }
-      //  const index = this.orderRequests.findIndex(order => order.orderId === orderr.orderId);
-      //   if (index !== -1) {
-      //     this.orderRequests = this.orderRequests.filter((order, idx) => idx !== index);
-      //   }
-    // } catch (error) {
-    //   console.error('Error while approving order:', error);
-    // }
+   
   }
 
   async denyOrder(order: OrderDto) {
-    // try {
       this.orderService.decideOrder(order.orderId, StatusRequest.DENIED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-
-      // const response = await this.orderService.denyOrder(orderr.orderId, StatusRequest.DENIED);
-      // console.log('Response from denyOrder:', response.success);
-      //
-      // if (response.success) {
-      //   const index = this.orderSecurities.findIndex(order => order.orderId === orderr.orderId);
-      //   if (index !== -1) {
-      //     this.orderSecurities = this.orderSecurities.filter((order, idx) => idx !== index);
-      //   }
-      // }
-      // Brisem ovaj orderr iz niza i tabele (ako treba, a mislim da treba):
-      //  const index = this.orderRequests.findIndex(order => order.orderId === orderr.orderId);
-      //   if (index !== -1) {
-      //     this.orderRequests = this.orderRequests.filter((order, idx) => idx !== index);
-      //   }
-
-      // }catch (error) {
-      //   console.error('Error while denying order:', error);
-      // }
-    // }
-    // catch (error) {
-    //   console.error('Error while denying order:', error);
-    // }
 }
   sellOrder(original: any) {
     if(original.listingType === 'STOCK') {

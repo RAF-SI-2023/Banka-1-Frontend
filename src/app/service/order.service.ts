@@ -24,20 +24,7 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
 
-//   async getAllOrdersHistory() {
 
-  // fetchAccountData(id: string): Observable<number> {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Authorization': `Bearer ${jwt}`
-  //     })
-  //   };
-  //   return this.http.get<BankAccountDto[]>(environment.baseUrl + '/account/getCustomer/' + id, httpOptions).pipe(
-  //     map(accounts => accounts.reduce((sum, account) => sum + account.availableBalance, 0))
-  //   );
-  // }
 
   fetchUserForLimit(id: string): Observable<User> {
     const jwt = sessionStorage.getItem("jwt");
@@ -66,7 +53,6 @@ export class OrderService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environment.baseUrl + "/orders/getAll", {headers})
-        //this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -86,7 +72,6 @@ export class OrderService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environment.baseUrl + "/orders/supervisor/getAll", {headers})
-        //this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -106,10 +91,7 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get(environment.baseUrl + "/orders/getAll", {headers})
-
-        // this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -129,7 +111,6 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get("/assets/orderRequests.json")
       )) as OrderDto[];
     } catch (e) {
@@ -150,7 +131,6 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get("/assets/orderSecurities.json")
       )) as OrderDto[];
     } catch (e) {
@@ -261,22 +241,6 @@ export class OrderService {
   }
 
 
-  // getSecurityOrders(): Observable<CapitalProfitDto[]> {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Authorization': `Bearer ${jwt}`
-  //     })
-  //   };
-  //   return this.http.get<CapitalProfitDto[]>(environment.baseUrl + 'account/capitals/listings', httpOptions)
-  //     .pipe(
-  //       map((data: CapitalProfitDto[]) => data.map(item => ({
-  //         ...item,
-  //         listingType: ListingType[item.listingType as keyof typeof ListingType] // Assuming listingType in JSON is a string that matches enum keys
-  //       })))
-  //     );
-  // }
 
   getSecurityOrdersMock(): Observable<CapitalProfitDto[]> {
     return this.http.get<CapitalProfitDto[]>('assets/mocked_banking_data/orders-security-mocked.json')
@@ -306,35 +270,6 @@ export class OrderService {
       );
   }
 
-  // getSecurityOrders(): Observable<CapitalProfitDto[]> {
-  //   const url = `${environment.baseUrl}/account/capitals/listings`;
-  //   const token = sessionStorage.getItem("jwt");
-  //
-  //   const headers = new HttpHeaders({
-  //     'Authorization': `Bearer ${token}`
-  //   });
-  //
-  //   return this.http.get<CapitalProfitDto[]>(url, { headers });
-  // }
-  //
-  // async sellOrder(orderId:number,sellingReq:SellingRequest): Promise<DecideOrderResponse> {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   if (!jwt) return { success: false, message: 'JWT token not found' };
-  //
-  //   const headers = new HttpHeaders({
-  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
-  //   });
-  //
-  //   try {
-  //     return await firstValueFrom(
-  //       this.http.put<DecideOrderResponse>(`${environmentMarket.baseUrl}/orders`, sellingReq, { headers })
-  //     );
-  //   } catch (error) {
-  //     console.error('Error while selling order:', error);
-  //     throw error;
-  //   }
-  //
-  // }
+  
 
 }

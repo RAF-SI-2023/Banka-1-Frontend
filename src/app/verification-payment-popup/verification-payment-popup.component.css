@@ -10,10 +10,9 @@
 
 .form-group {
   margin-bottom: 10px;
-  font-size: 15px;
+  font-size: 0.8rem;
   display: flex;
   color: white;
-  font-size: 16px;
   flex-direction: column;
 }
 
@@ -22,7 +21,6 @@
 }
 
 .form-group input[type="text"] {
-  /* box-sizing: border-box; */
   border: #FFF9F0 solid 1px;
   border-radius: 5px; 
   background-color: #26262C; 
@@ -41,138 +39,17 @@
 .closeBtn{
     cursor: pointer;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 1rem;
     border: none;
 }
 
 button{
-  font-size: 20px;
+  font-size: 1rem;
 }
 
 @media (max-width: 576) {
   button {
-    font-size: 10px; /* Adjust for even smaller screens */
+    font-size: 0.5rem; /* Adjust for even smaller screens */
   }
 }
 
-/* DO OVDE */
-
-/* 
-.popup-container {
-  width: 80%;
-  max-width: 600px;
-  border: 1px solid black;
-  position: fixed; 
-  top: 50%; 
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: black; 
-  border-radius: 10px; 
-}
-
-.popup-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: top;
-  padding: 20px 20px 0px 20px;
-
-}
-
-.closeBtn{
-  cursor: pointer;
-  background-color: transparent;
-  font-size: 20px;
-  border: none;
-}
-
-.popup-body{
-  padding: 20px;
-  display: flex;
-  margin: auto;
-  justify-content: center;
-}
-
-.col{
-  flex-direction: column;
-}
-
-
-.form-container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.left-section,
-.right-section {
-  flex: 1;
-}
-
-.form-group {
-  margin-bottom: 10px;
-  font-size: 10px;
-
-}
-
-.form-group.active-checkbox {
-  display: flex;
-  align-items: center;
-}
-
-.form-group.active-checkbox label {
-  margin-top: 15%;
-}
-
-.form-group.buttonSl {
-  margin-top: 20%;
-}
-
-.form-group.buttonSl button:first-child {
-  margin-left: 10%;
-  margin-right: 10%;
-  width:40%;
-  background-color: #f0f8ff; 
-  color: #19B5C7; 
-  border-radius: 5px; 
-}
-
-.form-group.buttonSl button:last-child {
-  background-color: #103145; 
-  color: #fff; 
-  width:40%;
-  border-radius: 5px; 
-}
-
-.form-group.active-checkbox input[type="checkbox"] {
-  margin-top: 15%;
-  transform: scale(1.5); 
-  border: 2px solid #56b214; 
-  border-radius: 5px; 
-}
-
-.left-section input,
-.right-section input,
-.right-section select,
-.left-section select {
-  width: 90%;
-  height:auto;
-  box-sizing: border-box;
-  border-radius: 5px; 
-  background-color: #B3D3DF; 
-  color: #3f3e3e; 
-  padding: 8px; 
-  
-}
-
-.right-section {
-  text-align: left;
-}
-
-.button-section {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-
-.invalid-input {
-  border: 2px solid red;
-} */

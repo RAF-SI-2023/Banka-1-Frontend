@@ -29,13 +29,13 @@
   margin-left: auto;
   color: var(--banka-white);
   cursor: pointer;
-  font-size: 20px;
+  font-size: 1.4em;
   font-family: "Jura", sans-serif;
 }
 
 .act-modal-title {
   text-align: center;
-  font-size: 25px;
+  font-size: 1.8em;
   font-family: "Jura", sans-serif;
   color: var(--banka-white);
   font-weight: 800;
@@ -56,7 +56,7 @@
 
 .act-label {
   font-family: "Jura", sans-serif;
-  font-size: 20px;
+  font-size: 1.4em;
   color: var(--banka-white);
   font-weight: 300;
 }
@@ -64,7 +64,7 @@
 .act-input {
   font-family: "Jura", sans-serif;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.4em;
   border: none;
   outline: none;
   background-color: var(--banka-white);
@@ -83,7 +83,7 @@
 .already-have {
   margin: auto;
   margin-top: 10px;
-  font-size: 15px;
+  font-size: 1em;
   color: var(--banka-orange);
   text-decoration: none;
 }
@@ -108,11 +108,7 @@
 
   justify-content: center;
   align-items: center;
-  /*background-color: var(--banka-orange);*/
-  /*border: none;*/
-  /*border-radius: 3px;*/
-  /*font-weight: 700;*/
-  /*font-family: "Jura", sans-serif;*/
+
 }
 
 .alert {
@@ -130,7 +126,7 @@
   margin: auto;
   margin-bottom: 20px;
 
-  font-size: 20px;
+  font-size: 1.4em;
 }
 
 .stage-2-text {
@@ -144,7 +140,7 @@
   border: none;
   border-radius: 3px;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.4em;
   padding: 10px 5px 10px 5px;
   margin: auto;
 }

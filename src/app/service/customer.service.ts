@@ -48,7 +48,6 @@ export class CustomerService {
     try {
       resp = (await firstValueFrom(
         this.http.post(environment.baseUrl + "/customer/initialActivation", data)
-        //this.http.get("/assets/initialActivation.json")
       )) as boolean;
     } catch (e) {
       return false;
@@ -64,7 +63,6 @@ export class CustomerService {
     try {
       resp = (await firstValueFrom(
         this.http.post(environment.baseUrl + `/customer/activate/${token}`, data)
-        //this.http.get("/assets/finalActivation.json")
       )) as number;
     } catch (e) {
       return false;

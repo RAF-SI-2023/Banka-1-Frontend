@@ -22,10 +22,6 @@ import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 })
 export class AddBankAccountComponent {
 
-  // tekuci -> currency: RSD
-  // devizni -> currency: WHATEVER except RSD
-  // poslovni -> currency: WHATEVER
-
   isCurrencyReadOnly: boolean = false;
   accountToCreate: CreateBankAccountRequest = {
     status: false,
@@ -52,7 +48,6 @@ export class AddBankAccountComponent {
 
   submit() {
     const customer = this.customerService.getCustomerForCreation();
-    // Uncomment this
 
     if(this.validateForm() && customer) {
 
@@ -134,7 +129,7 @@ export class AddBankAccountComponent {
     if (this.accountToCreate.accountType === 'CURRENT') {
       this.accountToCreate.currencyCode = 'RSD';
       this.isCurrencyReadOnly = true;
-    } else { //if (this.accountToCreate.accountType === 'FOREIGN_CURRENCY' || this.accountToCreate.accountType === 'BUSINESS') {
+    } else {
       this.accountToCreate.currencyCode = '';
       this.isCurrencyReadOnly = false;
     }
