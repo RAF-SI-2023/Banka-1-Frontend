@@ -1,0 +1,44 @@
+postsubmits:
+  - name: post-banka-1-frontend-build
+    always_run: true
+    decorate: true
+    max_concurrency: 1
+    labels:
+      preset-harbor-robot-push: "true"
+    spec:
+      containers:
+        - image: harbor.k8s.elab.rs/base-images/base:java-21-node-18-docker
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -euo pipefail
+
+              # PROMENITI PRI KOPIRANJU
+              # Naziv vašeg tima, može biti "banka-1", "banka-2", "banka-3", ili "banka-4"
+              TEAM_NAME="banka-1"
+
+              # Pokreće Docker unutar kontejnera u kome se izvršava ova skripta.
+              # Docker vam omogućava da buildujete images.
+              start-docker.sh
+
+              # Logovanje na našu Harbor instancu na koju ćemo da pushujemo image.
+              docker login -u $HARBOR_USERNAME -p $HARBOR_PASSWORD harbor.k8s.elab.rs
+
+              # Hash commit-a za koji se ovaj job pokrenuo. Ovaj hash koristimo da pushujemo
+              # image koji ima ovaj hash kao svoj tag.
+              commit_hash=$(git rev-parse HEAD)
+
+              # Builduje Docker image sa "latest" tagom i nazivom takvim da možemo da pushujemo
+              # image na našu Harbor instancu.
+              docker build -t harbor.k8s.elab.rs/${TEAM_NAME}/frontend:latest .
+
+              # Pravi kopiju prethodno buildovanog image sa tagom zasnovanim na commit hash-u.
+              docker tag harbor.k8s.elab.rs/${TEAM_NAME}/frontend:latest harbor.k8s.elab.rs/${TEAM_NAME}/frontend:${commit_hash}
+
+              # Pushuje oba image na našu Harbor instancu.
+              docker push harbor.k8s.elab.rs/${TEAM_NAME}/frontend:latest
+              docker push harbor.k8s.elab.rs/${TEAM_NAME}/frontend:${commit_hash}
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
