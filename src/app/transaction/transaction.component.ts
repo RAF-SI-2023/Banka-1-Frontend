@@ -90,12 +90,12 @@ export class TransactionComponent implements OnInit{
 
   private validateForm(): boolean {
     if (!this.transaction.senderAccountNumber || !this.isValidAccountNumber(this.transaction.senderAccountNumber)) {
-      this.popup.openPopup("Error", "Outflow account number is not valid.");
+      this.popup.openPopup("Error", "Outflow account number is not choosen.");
       return false;
     }
 
     if (!this.transaction.recipientAccountNumber || !this.isValidAccountNumber(this.transaction.recipientAccountNumber)) {
-      this.popup.openPopup("Error", "Inflow account number is not valid.");
+      this.popup.openPopup("Error", "Inflow account number is not choosen.");
       return false;
     }
 
@@ -112,7 +112,7 @@ export class TransactionComponent implements OnInit{
   }
 
   private isValidAmount(amount: string): boolean {
-    return /^\d+(\.\d+)?$/.test(amount);
+    return /^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$/.test(amount);
   }
   
 }

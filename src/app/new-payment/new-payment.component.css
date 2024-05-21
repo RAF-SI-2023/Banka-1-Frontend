@@ -79,3 +79,10 @@
 .opt{
     color: #26262C;
 }
+
+.error-style {
+  font-size: small;
+  color: red;
+  padding: 5px;
+  margin-top: 2px;
+}

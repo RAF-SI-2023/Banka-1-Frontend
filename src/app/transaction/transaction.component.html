@@ -29,7 +29,7 @@
         
         <div class="form-group mt-5">
             <label for="amount">Amount:</label>
-            <input type="text" [(ngModel)]="transaction.amount" id="amount" name="amount" required pattern="^\d+(\.\d+)?$" #amountModel="ngModel" [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }" />
+            <input type="text" [(ngModel)]="transaction.amount" id="amount" name="amount" required pattern="^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$" #amountModel="ngModel" [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }" />
             <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
                 <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
                 <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
