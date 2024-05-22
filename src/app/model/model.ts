@@ -74,6 +74,13 @@ export interface Transaction {
   amount: number;
 }
 
+export interface Profit {
+  name: string;
+  totalProfit: number;
+  phoneNumber: string;
+  email: string;
+}
+
 export enum TransactionStatus {
   PROCESSING = 'PROCESSING',
   COMPLETE = 'COMPLETE',
@@ -167,7 +174,7 @@ export interface TransactionDto {
 }
 
 export interface TransactionDetails {
-  recipientName: String;
+  recipientName: String; 
   amount: number;
   referenceNumber: String;
   paymentCode: number;
