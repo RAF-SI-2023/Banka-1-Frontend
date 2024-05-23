@@ -1,0 +1,170 @@
+.pageTitle{
+    color: #ffb72b;
+    font-size: xx-large;
+    font-family: 'Jura';
+    padding-left: 20px;
+}
+
+.AddReciepientBtn{
+    background-color: #ffb72b;
+    border-radius: 10px;
+    font-family: 'Jura';
+    font-weight: bolder;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    height: 80%;
+}
+.container{
+
+  margin-top: 3rem;
+ font-family: "Jura", sans-serif;
+}
+
+
+.addRecipientBtnDiv{
+    height: 100%;
+}
+
+/* TABS CSS */
+
+.tabs{
+    height: 85%;
+    width: 100%;
+}
+
+  .tab-headers {
+    display: flex;
+    margin-left: 0.1vh;
+    width: 100%;
+    border-bottom: 2px solid #fff9f0; /* Only bottom border for the container */
+  }
+  
+  /* Default styles for all tabs */
+  .tab-header {
+    padding: 10px;
+    background-color: #26262c; /* Background color for inactive tabs */
+    color: #b3aba0; /* Text color for inactive tabs */
+    cursor: pointer;
+    font-family: 'Jura';
+  }
+  
+  /* Styles for the active tab */
+  .tab-header.active {
+    background-color: #131319; /* Background color for active tab */
+    color: #ffb72b; /* Text color for active tab */
+    border-bottom: 4px solid #ffb72b; /* Bottom border color for active tab */
+  }
+
+  .tab-content {
+    height: 85%;
+    color: white;
+  }
+
+
+/* TABLE CSS */
+/* TABLE CSS */
+.recepientContentContainer{
+    margin-top: 10vh;
+    height: 60vh;
+    background-color: #26262c;
+    border-radius: 30px;
+    padding: 20px;
+    font-family: 'Jura';
+  }
+
+  .transOverviewDiv{
+    height: 15%;
+    font-family: 'Jura';
+    font-size: large;
+    padding-left: 25px;
+    color: #fff9f0;
+  }
+
+  /* Transaction table */
+  .transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .transactions-table th, .transactions-table td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .transactions-table th {
+    background-color: #131319;
+    color: #b3aba0;
+  }
+  
+  .transactions-table td {
+    border-bottom: 1px solid #fff9f0;
+    color: #fff9f0;
+    background-color: #26262c;
+  }
+  
+  .scrollable-container {
+    max-height: 100%; /* Adjust based on your needs */
+    overflow-y: auto; /* Enables vertical scrolling */
+    height: 100%;
+    padding-top: 10px;
+}
+
+.tableHeaderDiv{
+    height: 15%;
+    width: 100%;
+}
+
+.buttonsTD{
+  display: flex;
+}
+
+.tdBtn{
+    background-color: #ffb72b;
+    font-family: 'Jura';
+    font-weight: bolder;
+    width: 70%;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.addLegalPersonBtn{
+    background-color: #ffb72b;
+    font-family: 'Jura';
+    font-weight: bolder;
+    width: 100%;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.addLegalPersonRow{
+    margin-top: 5vh;
+}
+
+@media (min-width: 1000px) {
+  
+  .AddReciepientBtn{
+    font-size: 10rem;
+    height: 80%;
+  }
+
+  .tdBtn{
+    font-size: xx-large;
+  }
+
+  .myBtn{
+      font-size: large;
+  }
+}
+
+@media (min-width: 300px) {
+  
+  .AddReciepientBtn{
+    font-size: 0.8rem;
+    height: 90%;
+  }
+
+  .tdBtn{
+    font-size: smaller;
+  }
+
+  .myBtn{
+      font-size: smaller;
+  }
+}

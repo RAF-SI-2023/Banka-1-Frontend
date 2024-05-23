@@ -29,6 +29,7 @@ import { RecipientsComponent } from './recipients/recipients.component';
 import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { BankAccountsAndCardsComponent } from "./bank-accounts-and-cards/bank-accounts-and-cards.component";
 import { PositionsGuard } from './guards/positions.guard';
+import { LegalPersonsComponent } from './legal-persons/legal-persons.component';
 
 
 export const routes: Routes = [
@@ -124,6 +125,10 @@ export const routes: Routes = [
   {
     path: 'card-transactions', component: CardTransactionsComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'] }
+  },
+  {
+    path: 'legal-persons', component: LegalPersonsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['admin'] }
   },
 
   // { path: 'customer/:customerId', component: UserDetailComponent},

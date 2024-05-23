@@ -463,3 +463,13 @@ export interface CreatePaymentRequest {
     referenceNumber?: string;
     paymentPurpose?: string;
 }
+
+export interface LegalPerson {
+  firstName?: string;
+  lastName?: string;
+  companyName?: string;
+  jmbg?: string;
+  pib?: string;
+  cba?: number;
+  address?: string;
+}
