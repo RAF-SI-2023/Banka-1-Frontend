@@ -10,9 +10,8 @@
   
   .transaction-title {
     color: #ffb72b;
-    font-size: xx-large;
+    font-size: 1.6rem;
     font-family: 'Jura';
-    font-size: 20px;
     font-weight: 600;
     margin-bottom: 2rem;
     margin-top: 1rem;
@@ -20,9 +19,6 @@
   }
 
   .body-content {
-    /* padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 30px; */
     align-items: center;
     padding-bottom: 30px;
     width: 30vw;
@@ -38,7 +34,7 @@
   .form-group {
     margin-left: 5%;
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 1rem;
     display: flex;
     flex-direction: column; /* Postavljanje labela iznad input polja */
     color: antiquewhite;

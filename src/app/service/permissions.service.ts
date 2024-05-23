@@ -40,14 +40,7 @@ export class PermissionsService {
 
     return this.http.post<boolean>(url, jsonData, { headers });
 
-    // Simulating API call with setTimeout
-    // return new Observable<boolean>(observer => {
-    //   setTimeout(() => {
-    //     // Simulating a successful response for demonstration
-    //     observer.next(true);
-    //     observer.complete();
-    //   }, 1000); // Simulating a delay of 1 second
-    // });
+   
   }
 
   public getPermissions(): Observable<Permissions[]> {
@@ -79,13 +72,6 @@ export class PermissionsService {
 
     return this.http.put<number>(url, jsonData, {headers});
 
-    // // Simulating API call with setTimeout
-    // return new Observable<boolean>((observer) => {
-    //   setTimeout(() => {
-    //     // Simulating a successful response for demonstration
-    //     observer.next(true);
-    //     observer.complete();
-    //   }, 1000); // Simulating a delay of 1 second
-    // });
+  
   }
 }

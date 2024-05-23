@@ -106,7 +106,6 @@ export class FutureViewComponent {
   generateChartData() {
     this.chartData.datasets[0].data = [];
     for(let listingHistory of this.futureHistory) {
-      //this.dps.push({y: stockHistory.price})
       this.chartData.datasets[0].data.push(listingHistory.price)
     }
     this.chart?.chart?.update();

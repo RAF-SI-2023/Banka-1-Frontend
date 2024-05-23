@@ -4,7 +4,6 @@
 
 }
 .container{
-
   margin-top: 3rem;
   font-family: "Jura", sans-serif;
 }
@@ -13,7 +12,7 @@
 /* Css of div where title Bank Accounts is. */
 .title-div{
   color: var(--banka-orange);
-  font-size: 35px;
+  font-size: 2.2rem;
   font-weight: 700;
   margin-bottom: 7rem;
 }
@@ -65,10 +64,7 @@ Grid elements are individual bank accounts of user (grid-item class elements).
   height: 40%;
 }
 
-/* .accBalance{
-    height: 20%;
-    font-size: 1.5rem;
-} */
+
 
 
 /* Media query for screens smaller than 600px */
@@ -86,9 +82,7 @@ Grid elements are individual bank accounts of user (grid-item class elements).
     line-height: 120%;
   }
 
-  /* .accBalance{
-      font-size: 1rem;
-  } */
+
 }
 
 /* NEW CSS FOR NEW DESIGN */
@@ -118,12 +112,10 @@ Grid elements are individual bank accounts of user (grid-item class elements).
   color: #fff9f0;
   font-size: x-large;
   cursor: pointer;
-  /* border: 2px solid greenyellow; */
 }
 
 .sliderMidContent{
   height: 100%;
-  /* border: 2px solid seashell; */
 }
 
 .rightSliderButton{
@@ -131,7 +123,6 @@ Grid elements are individual bank accounts of user (grid-item class elements).
   color: #fff9f0;
   font-size: x-large;
   cursor: pointer;
-  /* border: 2px solid springgreen; */
 }
 
 .accNumAndTitle{
@@ -181,35 +172,10 @@ Grid elements are individual bank accounts of user (grid-item class elements).
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bottom shadow */
 }
 
-/* .aa{
-    margin-top: 100px;
-    height: 200px;
-    color: white;
-} */
 
-/* TABS CSS */
-/* .tab-headers {
-    display: flex;
-    cursor: pointer;
-  }
-
-  .tab-header {
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
-
-  .tab-header.active {
-    background-color: #f0f0f0;
-  }
-
-  .tab-content {
-    border: 1px solid #ccc;
-    padding: 20px;
-  } */
 
 .tabs{
   height: 85%;
-  /* border: 2px solid aqua; */
 }
 
 .tab-headers {
@@ -234,9 +200,7 @@ Grid elements are individual bank accounts of user (grid-item class elements).
 }
 
 .tab-content {
-  /* border: 1px solid red; */
   height: 85%;
-  /* padding: 20px; */
   color: white;
 }
 
@@ -252,7 +216,6 @@ Grid elements are individual bank accounts of user (grid-item class elements).
 
 .transOverviewDiv{
   height: 15%;
-  /* border: 1px solid rebeccapurple; */
   font-family: 'Jura';
   font-size: large;
   padding-left: 25px;

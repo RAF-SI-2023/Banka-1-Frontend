@@ -14,9 +14,7 @@
         <th class="table-head">Price (low)</th>
         <th class="table-head">Change</th>
         <th class="table-head">Volume</th>
-        <!-- <th class="table-head">Contract Size</th>
-        <th class="table-head">Contract Unit</th>
-        <th class="table-head">Open interest</th> -->
+       
         <th class="table-head">Settlement Date</th>
       </tr>
       </thead>
@@ -31,9 +29,7 @@
         <td>{{ future.low }}</td>
         <td>{{ future.priceChange }}</td>
         <td>{{ future.volume }}</td>
-        <!-- <td>{{ future.contractSize }}</td>
-        <td>{{ future.contractUnit }}</td>
-        <td>{{ future.openInterest }}</td> -->
+        
         <td>{{ future.settlementDate | date:'medium' }}</td>
       </tr>
       </tbody>

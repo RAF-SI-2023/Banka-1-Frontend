@@ -65,14 +65,10 @@ export class LoginPageComponent {
       this.popupService.openPopup("Error", "Fields can't be empty")
       return;
     }
-    // if (!emailRegex.test(this.model.email)) {
-    //   this.popupService.openPopup("Error", "Invalid email format")
-    //   return;
-    // }
+   
 
     if(this.isEmployee) {
-      // Ruta auth/login/emplyee POST
-      // kada se uloguje zaposleni u session storage se stavlja pod 'role' pozicija koja je dobijena u objektu
+    
       this.authService.loginEmployee(this.model.email, this.model.password).subscribe(
         (token) => {
 
@@ -84,7 +80,6 @@ export class LoginPageComponent {
           if (token.jwt !== null && token.jwt.length > 0) {
             this.userService.getEmployee(token.jwt).subscribe(
              response => {
-                //this.userInitials = response.firstName.charAt(0) + response.lastName.charAt(0);
                this.storageService.setRole(response.position.toString().toLowerCase());
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
@@ -99,8 +94,7 @@ export class LoginPageComponent {
           this.popupService.openPopup("Error", "Wrong email or password")
         });
     } else {
-      // Ruta auth/login/customer POST
-      // kada se uloguje costumer u session storage se stavlja pod 'role' customer
+      
       console.log("USAO")
       this.authService.loginCustomer(this.model.email, this.model.password).subscribe(
         (token) => {
@@ -130,31 +124,7 @@ export class LoginPageComponent {
           this.popupService.openPopup("Error", "Wrong email or password")
         });
     }
-        // this.authService.login(this.model.email, this.model.password).subscribe(
-        //   (token) => {
-
-        //     // Koristimo ovaj pristup da bi mogao da saceka jwt od beka pa da apdejtuje inicijale
-        //     this.authService.setJwt(token.jwt)
-        //     sessionStorage.setItem('jwt', token.jwt);
-        //     sessionStorage.setItem('permissions', token.permissions);
-        //     this.setUserPropertiesInSessionStorage(token.jwt);
-
-        //     if (token.jwt !== null && token.jwt.length > 0) {
-        //       this.userService.getUser(token.jwt).subscribe(
-        //        response => {
-        //           //this.userInitials = response.firstName.charAt(0) + response.lastName.charAt(0);
-        //          this.storageService.setRole(response.position.toString().toLowerCase());
-        //          this.router.navigate(['/welcome']);
-        //           console.log(response.position);
-        //        }
-        //      );
-        //     }
-
-        //   },
-        //   error => {
-        //     this.popupService.openPopup("Error", "Wrong email or password")
-        //   });
-
+       
   }
 
 
@@ -167,7 +137,6 @@ export class LoginPageComponent {
       pom="customer"
     this.router.navigate(['/reset-password/'+pom]);
   }
-  //activate-account
 
   navigateToActivateAccount() {
     this.router.navigate(['/activate-account']);

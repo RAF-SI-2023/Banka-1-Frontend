@@ -1,10 +1,8 @@
 .form-group {
-    /* margin-left: 20%; */
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 0.8rem;
     display: flex;
     color: white;
-    font-size: 16px;
     flex-direction: column; /* Postavljanje labela iznad input polja */
 }
 .container{
@@ -21,9 +19,6 @@
 
 
 .form-group select {
-    /* width: 55%; Širina select elementa */
-    /* height: auto; */
-    /* box-sizing: border-box; */
     border-radius: 5px;
     background-color: #26262C;
     color: white;
@@ -50,8 +45,6 @@
 }
 
 .form-group input[type="text"] {
-/* width: 55%; */
-    /* height: 44px; */
     box-sizing: border-box;
     border-radius: 5px; 
     background-color: white; 
@@ -61,7 +54,7 @@
 
 @media (min-width: 768px) {
     label {
-      font-size: 18px; /* Adjust for smaller screens */
+      font-size: 1rem; /* Adjust for smaller screens */
     }
     .rightText{
         text-align: end;
@@ -71,7 +64,7 @@
   /* Media query for even smaller screens */
   @media (max-width: 768px) {
     label {
-      font-size: 18px; /* Adjust for even smaller screens */
+      font-size: 1rem; /* Adjust for even smaller screens */
     }
     .rightText{
         text-align: start;

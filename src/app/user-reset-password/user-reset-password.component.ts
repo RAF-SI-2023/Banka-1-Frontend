@@ -52,7 +52,6 @@ export class UserResetPasswordComponent {
 
         this.http.post<{ userId: number }>(url, body).subscribe({
           next: (response) => {
-            // console.log('User activated with ID:', response.userId); // Ovde imate userId ako zatreba
             this.router.navigate(['/login']);
           },
           error: (error) => {

@@ -120,24 +120,7 @@ export class AppComponent implements OnInit {
     this.toggleSideNav();
     this.userInitials = '/';
 
-    // const jwt = sessionStorage.getItem("jwt");
-    //  if (jwt !== null && jwt.length > 0) {
-    // this.userService.getUser(jwt).subscribe(
-    //   response => {
-    //     console.log(response);
-
-    //     this.isCustomer=response.position.toString().toLowerCase()=="customer";
-    //     if (this.isCustomer) {
-    //       //his.testcheckRequiredAccounts();
-    //       // Otkomentarisati kada bek odradi (jedno od ova dva u zavisnosti od implementacije beka)
-    //       //this.checkRequiredAccounts(response.customerId);
-
-    //     }
-
-    //   }, (e) => {
-    //     this.userInitials = "/"
-    //   }
-    // );}
+    
   }
 
   ngOnInit() {
@@ -151,29 +134,7 @@ export class AppComponent implements OnInit {
     });
 
 
-    // console.log(this.storageService.getRole() + "HSHSHSHSHSH");
-
-    
-    // if (this.isEmployee || this.isAdmin) {
-    //   console.log("HIHIHIHIHI");
-    //   this.authService.getJwtObservable().subscribe((jwt) => {
-    //     if (jwt) {
-    //       this.userService.getEmployee(jwt).subscribe({
-    //         next: (response) => {
-    //           console.log("BUUUUUU");
-    //           this.userInitials = response.firstName.concat(
-    //             ' ',
-    //             response.lastName
-    //           );
-    //         },
-    //         error: (e) => {
-    //           this.userInitials = 'Luka Lazarevic';
-    //         },
-    //       });
-    //     }
-    //   });
-    // }
-    // else {
+   
       this.authService.getJwtObservable().subscribe((jwt) => {
         if (jwt) {
           this.customerService.getCustomer(jwt).pipe(
@@ -209,7 +170,6 @@ export class AppComponent implements OnInit {
       if (this.isCustomer) {
         this.customerService.getCustomer(jwt).subscribe(
           (response) => {
-            //this.userInitials = response.firstName.charAt(0) + response.lastName.charAt(0);
             if(response!=null)
             this.checkRequiredAccounts(response.userId);
           },
@@ -295,7 +255,6 @@ export class AppComponent implements OnInit {
     if (loggedUserPositionFromStorage !== null) {
       this.loggedUserPosition = loggedUserPositionFromStorage;
     } else {
-      //console.log('Error occurred: logged user position is null!');
     }
   }
 

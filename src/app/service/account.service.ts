@@ -27,7 +27,6 @@ export class AccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    // TODO Jel ovo uopste korektan path?
     return this.http.get<BankAccountDto>(`${this.apiUrl}/account/${accountNumber}`, { headers });
 
   }

@@ -60,9 +60,7 @@ export class NewRecipientComponent {
     if (this.bankAccountNumber === '') {
       return 'Bank account number cannot be empty!';
     }
-    // if (!/^\d{18}$/.test(this.bankAccountNumber)) {
-    //   return 'Bank account number must be 18 digits.';
-    // }
+   
     return true;
   }
 }

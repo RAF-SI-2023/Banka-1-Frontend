@@ -59,18 +59,14 @@ export class ListUserComponent implements OnInit{
   constructor(private userService: UserService, private router: Router,private popup:PopupService, private dialog: MatDialog, private apiService: PermissionsService) { }
 
   ngOnInit() {
-    //get permission
     const permission = this.getPermission();
-    //this.hasPermission = permission === 'modifyUser';
     this.hasPermission = this.canEditUser();
 
-    //load data from database
     this.loadEmployeesFromDataBase();
     this.loadLimit();
     this.p = sessionStorage.getItem("role");
   }
 
-  // TODO: REPLACE MOCKED WITH getLimits - see the function it is in same file as getLimitsMocked
   loadLimit() {
     this.userService.getLimits().subscribe(
       (limitsFromDB: Limit[]) => {
@@ -122,7 +118,6 @@ export class ListUserComponent implements OnInit{
   editUser(user: User){
     this.userService.setUserToEdit(user);
     this.popup.openUpdateUserPopup(this);
-    // this.router.navigate(['/user/update']);
   }
 
   deleteUser(user: User): void {
@@ -178,7 +173,6 @@ export class ListUserComponent implements OnInit{
     let perm:Permissions = user.permissions[index];
     user.permissions.splice(index, 1);
 
-    // TODO update permissions in database.
     const list: Permissions[] = [perm];
     this.modifyUserPermissions(user, list, false);
   }
@@ -186,7 +180,6 @@ export class ListUserComponent implements OnInit{
   deleteAllPermissions(user: User){
     let list: Permissions[] = user.permissions;
     user.permissions = [];
-    // TODO update permissions in database
     this.modifyUserPermissions(user, list, false);
   }
 
@@ -215,10 +208,6 @@ export class ListUserComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       console.log('The dialog was closed');
-
-      //TODO: two options:
-      //a) refetch users
-      //b) update the modified user using result
       this.loadEmployeesFromDataBase();
     });
   }
@@ -257,7 +246,7 @@ export class ListUserComponent implements OnInit{
   }
 
   async delay(){
-      await new Promise(resolve => setTimeout(resolve, 200)); // 5000 milliseconds = 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 200));
   }
 
   async resetLimit(originalLimit: Limit) {

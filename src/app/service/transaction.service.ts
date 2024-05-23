@@ -20,7 +20,6 @@ export class TransactionService {
   constructor( private http: HttpClient, private router: Router) { }
 
   private apiUrl = environment.baseUrl;
-  // private apiUrl = environmentMarket.baseUrl;
 
 
 

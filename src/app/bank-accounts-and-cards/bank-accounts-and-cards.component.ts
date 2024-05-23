@@ -28,7 +28,6 @@ export class BankAccountsAndCardsComponent implements OnInit {
   displayedPayments: Payment[] = [];
   displayedExchanges:Exchange[] = [];
   displayedModel: any  = {};
-  // displayedModel: BankAccount | Card | null = null;
 
   loggedUserId: number = -1;
   type: string = '';
@@ -178,14 +177,12 @@ export class BankAccountsAndCardsComponent implements OnInit {
   }
 
   newPaymentOnClick(){
-    //TODO: go to new payment page
     console.log("New payment button clicked for account " + this.displayedModel);
     this.paymentService.setSelectedBankAccount(this.displayedModel as BankAccount);
     this.router.navigate(['/payment']);
   }
 
   moreInfoOnClick(){
-    // @ts-ignore
     console.log("More info clicked for account " + this.displayedModel.accountNumber);
     if(this.type === 'bankAccount'){
       const dialogRef = this.dialog.open(AccountDetailsPopUpComponent, {

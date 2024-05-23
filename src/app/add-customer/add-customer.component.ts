@@ -27,7 +27,6 @@ export class AddCustomerComponent {
     address: '',
     gender: '',
     dateOfBirth: 0
-    // permissions: [],
   };
 
   constructor(

@@ -9,21 +9,9 @@
         <div class="form-group">
             <label for="email">Email:</label>
             <input disabled id="email" [(ngModel)]="userToEdit.email">
-<!--            <input type="text" id="email" [(ngModel)]="userToEdit.email" name="email" required #emailModel="ngModel" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [ngClass]="{ 'invalid-input': emailModel.invalid && (emailModel.dirty || emailModel.touched) }"/>-->
-<!--            <div *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)" class="error-message">-->
-<!--            <div *ngIf="emailModel.hasError('required')" style="color: red;">Email is required.</div>-->
-<!--            <div *ngIf="emailModel.hasError('pattern')" style="color: red;">Invalid email format.</div>-->
-<!--             </div>-->
+
         </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Email'"-->
-<!--            [(ngModel)]="userToEdit.email"-->
-<!--            [pattern]="'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'"-->
-<!--            [requiredErrorText]="'Email is required.'"-->
-<!--            [patternErrorText]="'Invalid email format.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
+
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" [(ngModel)]="userToEdit.firstName" name="name" required #nameModel="ngModel" required pattern="[a-zA-Z]+" [ngClass]="{ 'invalid-input': nameModel.invalid && (nameModel.dirty || nameModel.touched) }"/>
@@ -32,15 +20,7 @@
               <div *ngIf="nameModel.hasError('pattern')" style="color: red;">Name must contain only letters.</div>
             </div>
           </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Name'"-->
-<!--            [(ngModel)]="userToEdit.firstName"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'Name is required.'"-->
-<!--            [patternErrorText]="'Name must contain only letters.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
+
           <div class="form-group">
             <label for="surname">Last name:</label>
             <input type="text" id="surname" [(ngModel)]="userToEdit.lastName" name="surname" required #surnameModel="ngModel"  required pattern="[a-zA-Z]+" [ngClass]="{ 'invalid-input': surnameModel.invalid && (surnameModel.dirty || surnameModel.touched) }"/>
@@ -49,36 +29,7 @@
               <div *ngIf="nameModel.hasError('pattern')" style="color: red;">Last name must contain only letters.</div>
             </div>
           </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'LastName'"-->
-<!--            [(ngModel)]="userToEdit.lastName"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'Surname is required.'"-->
-<!--            [patternErrorText]="'Last name must contain only letters.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
 
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'JMBG'"-->
-<!--            [(ngModel)]="userToEdit.jmbg"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'JMBG is required.'"-->
-<!--            [patternErrorText]="'Invalid JMBG format (must be 13 digits).'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
-
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Password'"-->
-<!--            [(ngModel)]="password"-->
-<!--            [isPassword]="true"-->
-<!--            [pattern]="'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$'"-->
-<!--            [requiredErrorText]="'Password is required.'"-->
-<!--            [patternErrorText]="'Must have at least 1 digit, uppercase and lowercase letter.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
       </div>
 
 
@@ -87,7 +38,6 @@
           <label for="password">Password:</label>
           <input type="password" id="password" [(ngModel)]="password" name="password" required #passwordModel="ngModel" required
                  [ngClass]="{ 'invalid-input': passwordModel.invalid && (passwordModel.dirty || passwordModel.touched) }" />
-          <!--                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"-->
           <div *ngIf="passwordModel.invalid && (passwordModel.dirty || passwordModel.touched)" class="error-message">
             <div *ngIf="passwordModel.hasError('required')" style="color: red;">Password is required.</div>
             <div *ngIf="passwordModel.hasError('pattern')" style="color: red;">Invalid password format.</div>
@@ -103,23 +53,7 @@
             <div *ngIf="phoneModel.hasError('pattern')" style="color: red;">Invalid Phone Number format (must contain only digits).</div>
           </div>
         </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Phone Number'"-->
-<!--            [(ngModel)]="userToEdit.phoneNumber"-->
-<!--            [pattern]="'^\\d+$'"-->
-<!--            [requiredErrorText]="'Phone Number is required.'"-->
-<!--            [patternErrorText]="'Invalid Phone Number format (must contain only digits).'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
 
-<!--        <div class="form-group">-->
-<!--          <label for="position">Position:</label>-->
-<!--          <select id="position" [(ngModel)]="userToEdit.position">-->
-<!--            <option value="Admin">Admin</option>-->
-<!--            <option value="Employee">Employee</option>-->
-<!--          </select>-->
-<!--        </div>-->
         <div class="form-group">
           <label for="position" class="label" >Position:</label>
           <select id="position" class="security-filter-select" [(ngModel)]="userToEdit.position">

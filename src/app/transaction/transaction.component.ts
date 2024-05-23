@@ -34,24 +34,11 @@ export class TransactionComponent implements OnInit{
   }
 
   loadAccounts() {
-    //Izbrisati kada bek odradi
-    // const simulatedResponse: Account[] = [
-    //   { accountNumber: '123456789012345678', accountType: AccountType.CURRENT, currencyName: 'USD', maintenanceCost: 10.0 },
-    //   { accountNumber: '987654321098765432', accountType: AccountType.FOREIGN_CURRENCY, currencyName: 'EUR', maintenanceCost: 15.0 },
-    //   { accountNumber: '246801357924680135', accountType: AccountType.FOREIGN_CURRENCY, currencyName: 'GBP', maintenanceCost: 12.0 }
-    // ];
-    // this.outflowAccounts = simulatedResponse;
-    // this.updateInflowAccounts();
-
-
-
-    //Otkomentarisati kada bek odradi
-    const jwt = sessionStorage.getItem("jwt");
+      const jwt = sessionStorage.getItem("jwt");
       if (jwt) {
         this.customerService.getCustomer(jwt).subscribe(
           response => {
             if (response) {
-                                                      //response.userId
               this.accountService.getCustomerAccounts(response.userId).subscribe(
                 (accounts: Account[]) => {
                   this.outflowAccounts = accounts;
@@ -121,7 +108,6 @@ export class TransactionComponent implements OnInit{
   }
 
   private isValidAccountNumber(accountNumber: string): boolean {
-    // return /^\d{18}$/.test(accountNumber);
     return true;
   }
 

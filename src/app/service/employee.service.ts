@@ -60,10 +60,7 @@ export class UserService {
     });
 
     return this.http.delete<boolean>(`${this.apiUrl}/employee/remove/${userId}`, { headers});
-    // Ovako pise da treba po fajlu koji je radjen sa endpointovima, ali ja kad sam preuzeo back
-    // kod je napisan tako da se koristila putanja sa /delete
-    //return this.http.delete<boolean>(`${this.apiUrl}/user/remove/${userId}`, { headers});
-
+ 
   }
 
   public addUser(userData: any): Observable<any>{
@@ -128,17 +125,7 @@ export class UserService {
   getEmployee(jwt: string): Observable<User> {
     const url = `${this.apiUrl}/employee/getEmployee`;
 
-  //getUser(jwt: string | null): Observable<{name: string, lastName: string}> {
-   // let url = `${this.apiUrl}/user/getUser`;
-
-    //ToDo: Da li treba autorizacija
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${sessionStorage.getItem("jwt")}`
-    // });
-
-//     if (!jwt) {
-//       this.router.navigate(['/login']);
-//     }
+  
 
 
     const httpOptions = {
@@ -151,11 +138,9 @@ export class UserService {
 
 
   updateUserState(position: string) {
-    console.log("USAO");
     this.isAdminSubject.next(position.toLowerCase() === "admin");
     this.isEmployeeSubject.next(position.toLowerCase() === "employee");
     this.isCustomerSubject.next(position.toLowerCase() === "customer");
     let p = position.toLowerCase() === "admin";
-    console.log("Prosao"+p);
   }
 }

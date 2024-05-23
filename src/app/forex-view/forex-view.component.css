@@ -12,7 +12,7 @@
 }
 
 .details-title {
-  font-size: 35px;
+  font-size: 2.4rem;
   font-family: "Jura", sans-serif;
   color: var(--banka-orange);
 }
@@ -48,13 +48,13 @@
 .details-name {
   color: var(--banka-white);
   font-family: "Jura", sans-serif;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .details-value {
   color: var(--banka-white);
   font-family: "Jura", sans-serif;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 
@@ -83,7 +83,7 @@
   
   border-radius: 5px;
   font-weight: 800;
-  font-size: 20px;
+  font-size: 1.2rem;
   font-family: 'Jura', sans-serif;
 }
 
@@ -98,7 +98,7 @@
 .tab {
   font-family: 'Jura', sans-serif;
   color: var(--banka-gray);
-  font-size: 20px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: fit-content;
   padding-bottom: 10px;
@@ -117,7 +117,7 @@
   color: var(--banka-orange);
   border-bottom: 3px solid var(--banka-orange);
 
-  font-size: 20px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: fit-content;
   padding-bottom: 10px;

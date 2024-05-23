@@ -16,9 +16,6 @@
     <div class="tabs-content" [ngSwitch]="selectedTab">
       <div *ngSwitchCase="'limits'">
         <app-dynamic-table [headersArray]="headersLimits" [dataArray]="limits | transformLimits" [showActions]="true">
-          <!-- <ng-template #actionsColumn let-row>
-            <orange-button [buttonName]="'Edit'" (click)="editLimit(row.originalLimit)"></orange-button>
-          </ng-template> -->
           <ng-template #actionsColumn let-row>
             <div class="options-menu">
               <span id="options-button" class="material-symbols-outlined">more_vert</span>
@@ -31,24 +28,11 @@
 
         </app-dynamic-table>
       </div>
-<!--      <div class="options-menu">-->
-<!--        <span id="options-button" class="material-symbols-outlined">more_vert</span>-->
-<!--        <div class="options-dropdown">-->
-<!--          <button *ngIf="canEditUser()" id="editProfile-button" (click)="editUser(row.originalUser)">Edit Profile</button>-->
-<!--          <button *ngIf="canDeleteUser()" id="delete-button" (click)="deleteUser(row.originalUser)">Delete</button>-->
-<!--        </div>-->
-<!--      </div>-->
+
       <div *ngSwitchCase="'users'">
         <div class="filter-row">
           <div class="left-row">
-<!--            <div class="filter-dropdown">-->
-<!--              <select class="security-filter-select" [(ngModel)]="position">-->
-<!--                <option value="">All</option>-->
-<!--                <option value="Admin">Admin</option>-->
-<!--                <option value="Supervizor">Supervizor</option>-->
-<!--                <option value="Agent">Agent</option>-->
-<!--              </select>-->
-<!--            </div>-->
+
               <label class="label" >Position:</label>
               <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
 
@@ -56,19 +40,6 @@
             <transparent-text-field class="searchTF" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>
             <transparent-text-field class="searchTF" [(text)]="lastName" [fieldName]="'By surname'"></transparent-text-field>
 
-            <!--            <div class="filter-input">-->
-<!--              <input-->
-<!--                class="security-filter-input"-->
-<!--                placeholder="Search by email"-->
-<!--                [(ngModel)]="email"-->
-<!--              />-->
-<!--            </div>-->
-<!--            <div class="filter-input">-->
-<!--              <input class="security-filter-input" placeholder="By name" [(ngModel)]="firstName" />-->
-<!--            </div>-->
-<!--            <div class="filter-input">-->
-<!--              <input class="security-filter-input" placeholder="By surname" [(ngModel)]="lastName"/>-->
-<!--            </div>-->
             <div class="search-icon">
               <button (click)="search()" class="button-image">
                 <img src="assets/search.png" alt="search" >
@@ -79,7 +50,6 @@
 
           <div class="right-row">
             <orange-button *ngIf="canAddUser()" [buttonName]="'Add new User'" (click)="togglePopupAddUser()"></orange-button>
-<!--            <button *ngIf="canAddUser()" class="add-new-btn" (click)="togglePopupAddUser() ">Add new User</button>-->
           </div>
         </div>
 
@@ -102,11 +72,7 @@
           <div class="left-row">
             <div class="filter-input">
               <transparent-text-field [(text)]="searchEmail" [fieldName]="'Search by email'"></transparent-text-field>
-<!--              <input-->
-<!--                class="security-filter-input"-->
-<!--                placeholder="Filter by email"-->
-<!--                [(ngModel)]="searchEmail"-->
-<!--              />-->
+
             </div>
             <div class="search-icon">
               <button (click)="filter()" class="button-image">

@@ -50,7 +50,6 @@ export class StockService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environmentMarket.baseUrl + "/market/listing/get/stock", {headers})
-        // this.http.get("/assets/stocks.json")
       )) as StockListing[];
     } catch (e) {
       return [];
@@ -83,7 +82,6 @@ export class StockService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environmentMarket.baseUrl + `/market/listing/history/stock/${stockId}` + query, {headers})
-        // this.http.get("/assets/listing-history.json" + query)
       )) as ListingHistory[];
     } catch (e) {
       return [];
@@ -104,7 +102,6 @@ export class StockService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environmentMarket.baseUrl + `/market/listing/stock/${stockId}`, {headers})
-        // this.http.get("/assets/stocks.json")
       )) as StockListing;
     } catch (e) {
       return null;

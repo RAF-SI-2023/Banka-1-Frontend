@@ -78,7 +78,6 @@ this: any;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    // this.http.get<Forex[]>('assets/mock-forex.json')
     this.http.get<ExchangeRate[]>(environment.baseUrl + '/transfer/exchangeRates', {headers})
       .subscribe(res => {
         this.exchangeBackup = this.exchange = res
