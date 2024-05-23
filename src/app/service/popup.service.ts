@@ -16,6 +16,8 @@ import { EditRecipientComponent } from '../edit-recipient/edit-recipient.compone
 import {BuyPopupComponent} from "../buy-popup/buy-popup.component";
 import {SellPopupComponent} from "../sell-popup/sell-popup.component";
 import { DeleteRecipientConfirmationComponent } from '../delete-recipient-confirmation/delete-recipient-confirmation.component';
+import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
+import { LegalPerson } from '../model/model';
 
 
 @Injectable({
@@ -42,6 +44,13 @@ export class PopupService {
   openAddUserPopup(args: any): void {
     this.dialog.open(AddUserComponent, {
       data: args
+    });
+  }
+
+  openAddLegalPersonPopUp(allLegalPersons: LegalPerson[]): void {
+    this.dialog.open(AddNewLegalPersonPopUpComponent, {
+      data: allLegalPersons,
+      disableClose: true // Prevents closing the dialog by clicking outside or pressing ESC
     });
   }
 

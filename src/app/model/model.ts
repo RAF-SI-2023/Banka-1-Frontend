@@ -470,6 +470,6 @@ export interface LegalPerson {
   companyName?: string;
   jmbg?: string;
   pib?: string;
-  cba?: number;
+  cba?: string;
   address?: string;
 }

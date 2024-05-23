@@ -43,4 +43,19 @@ export class LegalPersonService {
       return this.getAllLegalPersonsFromApi();
     }
   }
+
+  saveNewLegalPerson(newLegalPerson: LegalPerson): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    return this.httpClient.post(environment.baseUrl + '/legalPersons/save', {
+      companyName: newLegalPerson.companyName,
+      jmbg: newLegalPerson.jmbg,
+      pib: newLegalPerson.pib,
+      cba: newLegalPerson.cba,
+      address: newLegalPerson.address
+    },{
+      headers: headers
+    });
+  }
 }

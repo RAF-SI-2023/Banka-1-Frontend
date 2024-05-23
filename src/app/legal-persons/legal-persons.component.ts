@@ -5,6 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LegalPersonService } from '../service/legal-person.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import {PopupService} from "../service/popup.service";
+import { MatDialog } from '@angular/material/dialog';
+import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-legal-persons',
@@ -25,7 +29,7 @@ export class LegalPersonsComponent {
   public allLegalPersons: LegalPerson[] = [];
   loggedUserId:number = -1;
 
-  constructor(private legalPersonService: LegalPersonService, private router: Router) {
+  constructor(private legalPersonService: LegalPersonService, private router: Router, private popup:PopupService, private dialog: MatDialog) {
     let loggedUserIdAsString = sessionStorage.getItem('loggedUserID');
     
     if (loggedUserIdAsString !== null) {
@@ -70,11 +74,19 @@ export class LegalPersonsComponent {
   addNewLegalPerson(){
     console.log("Adding new legal person pressed");
 
-    // const dialogRef=this.popupService.openEditRecipientPopup(recipient);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.success) {
-    //     this.loadAllUserRecipients();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(AddNewLegalPersonPopUpComponent, {
+      data: this.allLegalPersons,
+      disableClose: true // Prevents closing the dialog by clicking outside or pressing ESC
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      console.log('The dialog was closed');
+      
+      if(! environment.shouldUseMockedDataForLegalPersons)
+      {
+        this.loadAllLegalPersons();
+      }
+    });
   }
 }
