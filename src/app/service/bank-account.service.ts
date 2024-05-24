@@ -30,6 +30,19 @@ export class BankAccountService {
     return this.httpClient.get<BankAccount[]>(url, options);
   }
 
+  getAdminsBankAccounts(userId: number): Observable<BankAccount[]> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.baseUrl + `/account/getAdminAccounts/${userId}`;
+
+    return this.httpClient.get<BankAccount[]>(url, options);
+  }
+
   //Get all payments for bank account MOCKED
   getPaymentsForAccountMocked(accountNumber: string): Observable<Payment[]> {
     const url = `/assets/mocked_banking_data/mocked_transactions/transactions${accountNumber}.json`;

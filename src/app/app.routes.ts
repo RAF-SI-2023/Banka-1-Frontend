@@ -30,6 +30,9 @@ import { supportsPassiveEventListeners } from '@angular/cdk/platform';
 import { BankAccountsAndCardsComponent } from "./bank-accounts-and-cards/bank-accounts-and-cards.component";
 import { PositionsGuard } from './guards/positions.guard';
 import { LegalPersonsComponent } from './legal-persons/legal-persons.component';
+import { BankProfitComponent } from './bank-profit/bank-profit.component';
+import { BankAccountAdminComponent } from './bank-account-admin/bank-account-admin.component';
+import { TransactionDetailsAdminComponent } from './transaction-details-admin/transaction-details-admin.component';
 
 
 export const routes: Routes = [
@@ -106,6 +109,17 @@ export const routes: Routes = [
     path: 'bank-accounts', component: BankAccountsAndCardsComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'], type: 'bankAccount' }
   },
+
+  {
+    path: 'bank-accounts-admin', component: BankAccountAdminComponent,canActivate: [PositionsGuard],
+    data: { roles: ['admin']}
+
+  },
+
+  { path: 'transaction-details-admin/:accountNumber', component: TransactionDetailsAdminComponent,canActivate: [PositionsGuard],
+  data: { roles: ['admin']} },
+
+
   {
     path: 'recipients', component: RecipientsComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'] }
@@ -117,6 +131,10 @@ export const routes: Routes = [
   {
     path: 'loans', component: LoanTableComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'] }
+  },
+  {
+    path: 'bank-profit', component: BankProfitComponent,canActivate: [PositionsGuard],
+    data: { roles: ['admin']}
   },
   {
     path: 'new-loan', component: NewLoanComponent, canActivate: [PositionsGuard],
