@@ -5,28 +5,59 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-dynamic-table',
   template: `
-    <table>
-      <thead>
-      <tr>
-        <th *ngFor="let header of headersArray">{{ header }}</th>
-        <th *ngIf="showAnotherColumn"></th> <!-- New column header -->
-        <th *ngIf="showActions">Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of dataArray; let i = index">
-        <td *ngFor="let key of objectKeys(row)">
-          {{ row[key] }}
-        </td>
-        <td *ngIf="showAnotherColumn">
-          <ng-container *ngTemplateOutlet="anotherColumnTemplate; context: {$implicit: row, index: i}"></ng-container>
-        </td>
-        <td *ngIf="showActions">
-          <ng-container *ngTemplateOutlet="customTemplate; context: {$implicit: row, index: i}"></ng-container>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div *ngIf="!showStatus">
+      <table>
+        <thead>
+        <tr>
+          <th *ngFor="let header of headersArray">{{ header }}</th>
+          <th *ngIf="showAnotherColumn"></th> <!-- New column header -->
+          <th *ngIf="showActions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of dataArray; let i = index">
+          <td *ngFor="let key of objectKeys(row)">
+            {{ row[key] }}
+          </td>
+          <td *ngIf="showAnotherColumn">
+            <ng-container *ngTemplateOutlet="anotherColumnTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+          <td *ngIf="showActions">
+            <ng-container *ngTemplateOutlet="customTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="showStatus">
+      <table>
+        <thead>
+        <tr>
+          <th *ngFor="let header of headersArray">{{ header }}</th>
+          <th *ngIf="showAnotherColumn"></th> <!-- New column header -->
+          <th *ngIf="showActions">Actions</th>
+          <th *ngIf="showStatus">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of dataArray; let i = index">
+          <td *ngFor="let key of objectKeys(removeStatusKey(row))">
+            {{ row[key] }}
+          </td>
+          <td *ngIf="showAnotherColumn">
+            <ng-container *ngTemplateOutlet="anotherColumnTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+          <td *ngIf="showActions">
+            <ng-container *ngTemplateOutlet="customTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+          <td *ngIf="showStatus">
+            <ng-container *ngTemplateOutlet="statusTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   `,
   styles: [`
     table {
@@ -97,8 +128,10 @@ export class TableComponent {
   @Input() dataArray: any[] = [];
   @Input() showAnotherColumn: boolean = false;
   @Input() showActions: boolean = false;
+  @Input() showStatus: boolean = false;
 
   @ContentChild('actionsColumn', { read: TemplateRef}) customTemplate!: TemplateRef<any>;
+  @ContentChild('statusColumn', { read: TemplateRef}) statusTemplate!: TemplateRef<any>;
   @ContentChild('anotherColumn', { read: TemplateRef }) anotherColumnTemplate!: TemplateRef<any>; // New template reference for the additional column content
 
   // Helper function to get keys from the row object
@@ -109,6 +142,12 @@ export class TableComponent {
     return Object.keys(row).filter(
       (key) => !key.includes('original')
     )
+  }
+
+  removeStatusKey(row: any): any {
+    const newRow = { ...row };
+    delete newRow.status;
+    return newRow;
   }
 }
 @NgModule({

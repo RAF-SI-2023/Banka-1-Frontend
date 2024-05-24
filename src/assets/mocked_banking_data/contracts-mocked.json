@@ -1,0 +1,47 @@
+[
+  {
+    "contractId": 1,
+    "buyerAccountNumber": "buyerAccountNumber",
+    "sellerAccountNumber": "sellerAccountNumber",
+    "bankApproval": true,
+    "sellerApproval": true,
+    "comment": "string",
+    "creationDate": 0,
+    "realizationDate": 0,
+    "referenceNumber": "string",
+    "ticker": "string",
+    "amount": 0,
+    "price": 0,
+    "listingId": 1
+  },
+  {
+    "contractId": 2,
+    "buyerAccountNumber": "buyerAccountNumber",
+    "sellerAccountNumber": "sellerAccountNumber",
+    "bankApproval": true,
+    "sellerApproval": true,
+    "comment": "string",
+    "creationDate": 0,
+    "realizationDate": 0,
+    "referenceNumber": "string",
+    "ticker": "string",
+    "amount": 0,
+    "price": 0,
+    "listingId": 2
+  },
+  {
+    "contractId": 3,
+    "buyerAccountNumber": "buyerAccountNumber",
+    "sellerAccountNumber": "sellerAccountNumber",
+    "bankApproval": true,
+    "sellerApproval": true,
+    "comment": "string",
+    "creationDate": 0,
+    "realizationDate": 0,
+    "referenceNumber": "string",
+    "ticker": "string",
+    "amount": 0,
+    "price": 0,
+    "listingId": 3
+  }
+]

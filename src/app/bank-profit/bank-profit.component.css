@@ -1,0 +1,326 @@
+/* Whole page container css */
+.bank-accs-main-container{
+    background-color: #ebf6f9;
+  
+  }
+  .container{
+    margin-top: 3rem;
+    font-family: "Jura", sans-serif;
+  }
+  
+  
+  /* Css of div where title Bank Accounts is. */
+  .title-div{
+    color: var(--banka-orange);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 7rem;
+  }
+  
+  /*
+  Inside bank-accs-div is a grid-container div that has grid display. For bigger monitors
+  grid will have 2 columns with same size (1fr 1fr) and for smaller monitors just one cloumn.
+  Grid elements are individual bank accounts of user (grid-item class elements).
+   */
+  .bank-accs-div{
+    padding-bottom: 25px;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
+    gap: 1.5rem; /* Adjust the gap between items */
+    padding-left: 2rem;
+    padding-right: 5rem;
+    padding-top: 2rem;
+    overflow-y: auto;
+  }
+  
+  .grid-item {
+    /* Style for each item */
+    border: 2px solid black; /* Example styling */
+    padding: 20px;
+    border-radius: 20px;
+    background-color: white;
+    height: 150px;
+    min-width: 200px;
+  }
+  
+  /*
+      Css of elements inside grid-item
+  */
+  .accType{
+    height: 20%;
+    font-size: 2rem;
+  }
+  
+  .accNumber{
+    height: 20%;
+    font-size: 1.5rem;
+    line-height: 120%;
+  }
+  
+  .accActive{
+    height: 40%;
+  }
+  
+  
+  
+  
+  /* Media query for screens smaller than 600px */
+  @media (max-width: 1000px) {
+    .grid-container {
+      grid-template-columns: 1fr; /* Change to one column */
+    }
+  
+    .accType{
+      font-size: 1.5rem;
+    }
+  
+    .accNumber{
+      font-size: 1rem;
+      line-height: 120%;
+    }
+  
+  
+  }
+  
+  /* NEW CSS FOR NEW DESIGN */
+  
+  .pageTitle{
+    color: #ffb72b;
+    font-size: xx-large;
+    font-family: 'Jura';
+  }
+  
+  .sliderDivWrapper{
+    margin-top: 5vh;
+    height: 20vh;
+    border-radius: 30px;
+    border-bottom: 1px solid white;
+    border-right: 2px solid white;
+  }
+  
+  .sliderDiv{
+    height: 100%;
+    background-color: #26262c;
+    border-radius: 30px;
+  }
+  
+  .leftSliderButton{
+    height: 100%;
+    color: #fff9f0;
+    font-size: x-large;
+    cursor: pointer;
+  }
+  
+  .sliderMidContent{
+    height: 100%;
+  }
+  
+  .rightSliderButton{
+    height: 100%;
+    color: #fff9f0;
+    font-size: x-large;
+    cursor: pointer;
+  }
+  
+  .accNumAndTitle{
+    height: 30%;
+    color: #fff9f0;
+  }
+  
+  .accBalance{
+    height: 30%;
+    font-family: 'Jura';
+    font-size: medium;
+    color: #fff9f0;
+  }
+  
+  .paymentAndInfoDiv{
+    height: 30%;
+  }
+  
+  .accTitleDiv{
+    font-family: 'Jura';
+    font-size: large;
+  }
+  
+  .accNumDiv{
+    font-family: 'Jura';
+    font-size: small;
+  }
+  
+  .threeDots{
+    height: 10%;
+    font-size: small;
+  }
+  
+  .myBtnDiv{
+    height: 100%;
+  }
+  
+  .myBtn{
+    height: 80%;
+    background-color: #ffb72b;
+    color: #131319;
+    font-family: 'Jura';
+    font-size: large;
+    font-weight: bolder;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bottom shadow */
+  }
+  
+  
+  
+  .tabs{
+    height: 85%;
+  }
+  
+  .tab-headers {
+    display: flex;
+    border-bottom: 2px solid #fff9f0; /* Only bottom border for the container */
+  }
+  
+  /* Default styles for all tabs */
+  .tab-header {
+    padding: 10px;
+    background-color: #26262c; /* Background color for inactive tabs */
+    color: #b3aba0; /* Text color for inactive tabs */
+    cursor: pointer;
+    font-family: 'Jura';
+  }
+  
+  /* Styles for the active tab */
+  .tab-header.active {
+    background-color: #131319; /* Background color for active tab */
+    color: #ffb72b; /* Text color for active tab */
+    border-bottom: 4px solid #ffb72b; /* Bottom border color for active tab */
+  }
+  
+  .tab-content {
+    height: 85%;
+    color: white;
+  }
+  
+  /* TABLE CSS */
+  .transactionsContentContainer{
+    margin-top: 10vh;
+    height: 60vh;
+    background-color: #26262c;
+    border-radius: 30px;
+    padding: 20px;
+    font-family: 'Jura';
+  }
+  
+  .transOverviewDiv{
+    height: 15%;
+    font-family: 'Jura';
+    font-size: large;
+    padding-left: 25px;
+    color: #fff9f0;
+  }
+  
+  /* Transaction table */
+  .transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .transactions-table th, .transactions-table td {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .transactions-table th {
+    background-color: #131319;
+    color: #b3aba0;
+  }
+  
+  .transactions-table td {
+    border-bottom: 1px solid #fff9f0;
+    color: #fff9f0;
+    background-color: #26262c;
+  }
+  
+  .scrollable-container {
+    max-height: 100%; /* Adjust based on your needs */
+    overflow-y: auto; /* Enables vertical scrolling */
+    height: 85%;
+    padding-top: 10px;
+  }
+  
+  .tableHeaderDiv{
+    height: 15%;
+    width: 100%;
+  }
+  
+  tr{
+    cursor: pointer;
+  }
+  
+  @media (min-width: 300px) {
+    .leftSliderButton {
+      font-size: smaller; /* Adjust for smaller screens */
+    }
+  
+    .rightSliderButton{
+      font-size: smaller;
+    }
+  
+    .myBtn{
+      font-size: smaller;
+    }
+  
+    .accBalance{
+      font-size: small;
+    }
+  
+    .accNumber{
+      font-size: small;
+    }
+  
+    .accNumDiv{
+      font-size: smaller;
+    }
+  }
+  
+  
+  @media (min-width: 1000px) {
+    .leftSliderButton {
+      font-size: large; /* Adjust for smaller screens */
+    }
+  
+    .rightSliderButton{
+      font-size: large;
+    }
+  
+    .myBtn{
+      font-size: large;
+    }
+  
+    .accBalance{
+      font-size: large;
+    }
+  
+    .accNumber{
+      font-size: large;
+    }
+  
+    .accNumDiv{
+      font-size: large;
+    }
+  }
+  
+  /* POP UP CSS */
+  .rounded-dialog {
+    border-radius: 20px; /* or any other value you prefer */
+    background-color: #26262c;
+  }
+  
+  .transparent {
+    opacity: 0;
+    cursor: default;
+  }
+  

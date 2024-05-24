@@ -1,0 +1,49 @@
+<!-- Page container -->
+<div class="container">
+
+    <div  style="padding-left: 1rem; " class="row pageTitle">
+            Transactions for Bank Account {{accountNumber}}
+    </div>
+    <!-- Table with transactions and exchanges -->
+    <div class="row">
+      <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
+        <!-- Table title, table headers, tabs and table div -->
+        <div class="transactionsContentContainer">
+          <!-- Title transactions overview -->
+          <div style="color: #ffb72b;" class="row transOverviewDiv d-flex align-items-center">
+            Transactions
+          </div>
+          <!-- Tabs -->
+          <div class="tabs">
+            <div class="tab-headers"></div>
+
+            <div class="tab-content">
+              <div class="scrollable-container">
+                <table class="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>Outflow account</th>
+                      <th>Inflow account</th>
+                      <th>Amount</th>
+                      <th>Date and Time</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let transaction of transactions">
+                        <td>{{ transaction.senderAccountNumber }}</td>
+                        <td>{{ transaction.recipientAccountNumber }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.transactionDate }}</td>
+                        <td>{{ transaction.status }}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

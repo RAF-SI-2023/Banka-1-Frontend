@@ -1,0 +1,48 @@
+[
+  {
+    "listingId": 1,
+    "listingType": "Stock",
+    "ticker": "AAPL",
+    "name": "Apple Inc.",
+    "exchangeName": "NASDAQ",
+    "lastRefresh": 1617225600,
+    "price": 123.56,
+    "high": 124.56,
+    "low": 122.56,
+    "priceChange": 1.56,
+    "volume": 1000000,
+    "outstandingShares": 3000000,
+    "dividendYield": 0.052
+  },
+  {
+    "listingId": 2,
+    "listingType": "Stock",
+    "ticker": "GOOGLE",
+    "name": "Alphabet Inc.",
+    "exchangeName": "NASDAQ",
+    "lastRefresh": 1617225600,
+    "price": 1234.56,
+    "high": 1235.56,
+    "low": 1233.56,
+    "priceChange": 1.56,
+    "volume": 1000000,
+    "outstandingShares": 3000000,
+    "dividendYield": 0.052
+
+  },
+  {
+    "listingId": 3,
+    "listingType": "Stock",
+    "ticker": "MSFT",
+    "name": "Microsoft Corporation",
+    "exchangeName": "NASDAQ",
+    "lastRefresh": 1617225600,
+    "price": 234.56,
+    "high": 235.56,
+    "low": 233.56,
+    "priceChange": 1.56,
+    "volume": 1000000,
+    "outstandingShares": 3000000,
+    "dividendYield": 0.052
+  }
+]
