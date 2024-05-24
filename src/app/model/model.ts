@@ -74,6 +74,13 @@ export interface Transaction {
   amount: number;
 }
 
+export interface Profit {
+  name: string;
+  totalProfit: number;
+  phoneNumber: string;
+  email: string;
+}
+
 export enum TransactionStatus {
   PROCESSING = 'PROCESSING',
   COMPLETE = 'COMPLETE',
@@ -462,4 +469,29 @@ export interface CreatePaymentRequest {
     model?: string;
     referenceNumber?: string;
     paymentPurpose?: string;
+}
+
+export interface OTC {
+  owner: string;
+  stock: string;
+  outstandingShares: string;
+  exchangeName: string;
+  dividendYield: string;
+  status: string;
+}
+
+export interface Contract {
+  contractId: number;
+  buyerAccountNumber: string;
+  sellerAccountNumber: string;
+  bankApproval: boolean;
+  sellerApproval: boolean;
+  comment: string;
+  creationDate: number;
+  realizationDate: number;
+  referenceNumber: string;
+  ticker: string;
+  amount: number;
+  price: number;
+  listingId: number;
 }

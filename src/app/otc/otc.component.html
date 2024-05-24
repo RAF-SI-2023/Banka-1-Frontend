@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="page">
+    <div class="security-title">OTCs</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <ul>
+          <li class="{{ selectedTab === 'overview' ? 'active-tab' : '' }}">
+            Overview
+          </li>
+        </ul>
+        <hr />
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'overview'">
+        <app-dynamic-table [headersArray]="headersOTCs" [dataArray]="otcs" [showStatus]="true">
+          <ng-template #statusColumn let-row>
+            <div class="dropdown">
+              <div id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ row.status }}
+              </div>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <li><a class="dropdown-item" (click)="updateOTCStatus(row, 'Approved')">Approve</a></li>
+                <li><a class="dropdown-item" (click)="updateOTCStatus(row, 'Denied')">Deny</a></li>
+              </ul>
+            </div>
+          </ng-template>
+        </app-dynamic-table>
+      </div>
+
+    </div>
+  </div>
+</div>
