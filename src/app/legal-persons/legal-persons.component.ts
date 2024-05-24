@@ -63,12 +63,7 @@ export class LegalPersonsComponent {
     console.log("Join pressed for legal peron at idx " + idx);
     console.log(legalPerson);
 
-    // const dialogRef=this.popupService.openEditRecipientPopup(recipient);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result && result.success) {
-    //     this.loadAllUserRecipients();
-    //   }
-    // });
+    this.popup.openJoinLegalPersonAndCustomerPopUp(legalPerson);
   }
 
   addNewLegalPerson(){

@@ -88,6 +88,7 @@ export class CustomerComponent implements OnInit{
     this.customerService.getAllCustomers().subscribe({
       next: (customers: Customer[]) => {
         this.customers = customers;
+        console.log(customers);
       },
       error: (error: any) => {
         this.popup.openPopup("Error", "Failed to load customers.");

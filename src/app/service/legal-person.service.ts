@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LegalPerson} from '../model/model';
+import { Customer, LegalPerson} from '../model/model';
 import { environment } from '../../../environment';
 
 @Injectable({
@@ -44,6 +44,7 @@ export class LegalPersonService {
     }
   }
 
+  //Save new legal persopn to DB
   saveNewLegalPerson(newLegalPerson: LegalPerson): Observable<any>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -57,5 +58,17 @@ export class LegalPersonService {
     },{
       headers: headers
     });
+  }
+
+  //Join leagal person and customer
+  joinLegalPersonAndCustomer(legalPerson: LegalPerson, customer: Customer): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    const body = {legalPerson, customer};
+    console.log(body);
+
+    return this.httpClient.post(environment.baseUrl + '/legalPersons/join', body, {headers: headers});
   }
 }
