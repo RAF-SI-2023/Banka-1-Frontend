@@ -51,7 +51,7 @@ export class BankAccountService {
     console.log(options);
     console.log(url);
 
-    return this.httpClient.get<Payment[]>(url, options); 
+    return this.httpClient.get<Payment[]>(url, options);
   }
 
   //Get all exchanges for bank account MOCKED
@@ -71,7 +71,7 @@ export class BankAccountService {
     const options = { headers: headers };
     let url = environment.baseUrl + `/transfer/getAll/${accountNumber}`;
 
-    return this.httpClient.get<Exchange[]>(url, options); 
+    return this.httpClient.get<Exchange[]>(url, options);
   }
 
   //Get all recipients for user MOCKED
@@ -81,7 +81,7 @@ export class BankAccountService {
   }
 
   getAllRecipients(): Observable<Recipient[]> {
-    
+
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -92,7 +92,7 @@ export class BankAccountService {
 
   }
 
-  //Add recipient 
+  //Add recipient
   addRecipient(fistName: string, lastName: string, bankAccountNumber: string): Observable<any>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -131,7 +131,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
@@ -151,7 +151,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
@@ -168,7 +168,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
@@ -180,5 +180,10 @@ export class BankAccountService {
     },{
       headers: headers
     });
+  }
+
+
+  makeAnOffer(security: any, volume: number, offer: number){
+    //ToDo: napraviti HTTP req
   }
 }
