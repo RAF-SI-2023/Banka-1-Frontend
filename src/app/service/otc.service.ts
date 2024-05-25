@@ -41,7 +41,7 @@ export class OtcService {
       message: "Admin denied this contract."
     };
 
-    return this.http.post<boolean>(`${this.apiUrl}/contract/deny/${contractId}`, jsonData, {headers});
+    return this.http.put<boolean>(`${this.apiUrl}/contract/deny/${contractId}`, jsonData, {headers});
   }
 
   public approveOTC(contractId: number): Observable<boolean> {
@@ -49,7 +49,7 @@ export class OtcService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
 
-    return this.http.post<boolean>(`${this.apiUrl}/contract/approve/${contractId}`, {headers});
+    return this.http.put<boolean>(`${this.apiUrl}/contract/approve/${contractId}`, {headers});
   }
 
 }

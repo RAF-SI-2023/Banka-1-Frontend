@@ -12,6 +12,7 @@
       </div>
 
       <div class="overview-tab" *ngIf="selectedTab === 'overview'">
+
         <app-dynamic-table-status [headersArray]="headersOTCs" [dataArray]="otcs" [showStatus]="true">
           <ng-template #statusColumn let-row>
             <div class="dropdown">
