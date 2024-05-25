@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {
   CapitalProfitDto,
+  ListingType,
   OrderDto,
   OrderStatus,
+  OrderType,
   SellingRequest,
   StatusRequest
 } from "../model/model";
@@ -16,6 +18,8 @@ import {PopupService} from '../service/popup.service';
 import {TableComponentModule} from "../welcome/redesign/TableComponent";
 import {TransformSecuritiesPipeModule} from "./TransformSecuritiesPipe";
 import {FilterByStatusPipeModule} from "./FilterByStatusPipe";
+import {ExtendedModule} from "@angular/flex-layout";
+import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPipe";
 
 @Component({
   selector: 'app-orders',
@@ -31,13 +35,16 @@ import {FilterByStatusPipeModule} from "./FilterByStatusPipe";
     DecimalPipe,
     TableComponentModule,
     TransformSecuritiesPipeModule,
+    TransformPublicSecuritiesPipeModule,
     DatePipe,
-    FilterByStatusPipeModule
+    FilterByStatusPipeModule,
+    NgClass,
+    ExtendedModule
   ]
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
-  selectedTab: "order-history" | "requests" | "securities" = "order-history"
+  selectedTab: "order-history" | "requests" | "securities" | "public-securities"= "order-history"
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -74,10 +81,15 @@ export class OrdersComponent {
     margin: z.boolean()
   })
 
-  headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved'];
-  securities: CapitalProfitDto[] = [];
+  // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
+  securities: any[] = [];
 
-  constructor(private orderService: OrderService, private popupService: PopupService) {
+  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified', 'Owner'];
+  publicSecurities: any[] = [];
+  changedPublicValue: number = 0;
+
+  constructor(private orderService: OrderService,
+              private popupService: PopupService) {
 
   }
 
@@ -91,23 +103,84 @@ export class OrdersComponent {
       }
     });
 
-    console.log(this.securities);
+   // this.mockSecurityOrders();
+  }
 
+  mockSecurityOrders(){
+    const example1 = {
+      bankAccountNumber: "string",
+      currencyName: "string",
+      listingType: ListingType.FOREX,
+      listingId: 13425,
+      totalPrice: 10000,
+      total: 346457,
+      ticker: "string",
+      reserved: 35556,
+      public: 123,
+      showPopup: false,
+    }
+    const example2 = {
+      bankAccountNumber: "string",
+      currencyName: "string",
+      listingType: ListingType.FOREX,
+      listingId: 13425,
+      totalPrice: 10000,
+      total: 346457,
+      ticker: "string",
+      reserved: 35556,
+      public: 123,
+      showPopup: false,
+    }
+    const example3 = {
+      bankAccountNumber: "string",
+      currencyName: "string",
+      listingType: ListingType.FOREX,
+      listingId: 13425,
+      totalPrice: 10000,
+      total: 346457,
+      ticker: "string",
+      reserved: 35556,
+      public: 123,
+      showPopup: false,
+    }
+
+    this.securities.push(example1)
+    this.securities.push(example2)
+    this.securities.push(example3)
+  }
+
+  getPublicSecurities(){
+    this.orderService.getPublicSecuritiesMock().subscribe( res =>{
+      this.publicSecurities = res;
+    })
+
+    const ex1 = {
+      listingType: "Stock",
+      ticker: "AAPL",
+      amount: 4,
+      price: 1623.6,
+      profit: 1623.6,
+      lastModified: 0,
+      owner: "Customer",
+    }
+
+    this.publicSecurities.push(ex1);
   }
 
 
-  setSelectedTab(tab: "order-history" | "requests" | "securities") {
+  setSelectedTab(tab: "order-history" | "requests" | "securities" | "public-securities") {
     this.selectedTab = tab;
   }
 
   async ngOnInit() {
-   
+
     this.customerId = sessionStorage.getItem('loggedUserID');
     if(this.customerId) {
       this.loadLimit()
     }
     this.loadOrders()
     this.getSecurityOrders();
+    this.getPublicSecurities();
 
   }
 
@@ -124,14 +197,8 @@ export class OrdersComponent {
   async loadOrders(){
     if(this.isSupervizor || this.isAdmin){
       this.orderHistory = await this.orderService.getAllOrdersHistory();
-      console.log("order history")
-      console.log(this.orderHistory);
-
     }else{
       this.orderHistory=await this.orderService.getOrdersHistory();
-      console.log("order history")
-
-      console.log(this.orderHistory);
     }
 
   }
@@ -140,7 +207,7 @@ export class OrdersComponent {
       this.orderService.decideOrder(order.orderId, StatusRequest.APPROVED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-   
+
   }
 
   async denyOrder(order: OrderDto) {
@@ -186,6 +253,28 @@ export class OrdersComponent {
       return 0;
     else
       return available;
+  }
+
+  changePublicValue(element: any){
+    console.log(element);
+    this.orderService.changePublicValueMock(element.listingId, this.changedPublicValue).subscribe(res => {
+      this.getSecurityOrders();
+    })
+    element.showPopup = false;
+  }
+
+  showPopup(security: any){
+    this.securities.forEach(el => el.showPopup = false); // Close other popups
+    this.changedPublicValue = security.public;
+    security.showPopup = true;
+  }
+
+  cancelChangePublic(security: any){
+    security.showPopup = false;
+  }
+
+  offerSecurity(security: any){
+    this.popupService.openPublicSecuritiesPopup(security);
   }
 
 }

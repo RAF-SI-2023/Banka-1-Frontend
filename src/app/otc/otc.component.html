@@ -12,7 +12,7 @@
       </div>
 
       <div class="overview-tab" *ngIf="selectedTab === 'overview'">
-        <app-dynamic-table [headersArray]="headersOTCs" [dataArray]="otcs" [showStatus]="true">
+        <app-dynamic-table-status [headersArray]="headersOTCs" [dataArray]="otcs" [showStatus]="true">
           <ng-template #statusColumn let-row>
             <div class="dropdown">
               <div id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
@@ -24,7 +24,7 @@
               </ul>
             </div>
           </ng-template>
-        </app-dynamic-table>
+        </app-dynamic-table-status>
       </div>
 
     </div>
