@@ -270,6 +270,34 @@ export class OrderService {
       );
   }
 
-  
+
+  getPublicSecuritiesMock(): Observable<any> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<User>(environment.baseUrl + '/publicSecurities', httpOptions);
+  }
+
+  changePublicValueMock(id: number, publicValue: number): Observable<any> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const body = {
+      publicValue: publicValue
+    }
+    return this.http.put<User>(environment.baseUrl + '/changePublicValue/' + id , body, httpOptions);
+  }
+
+
+
 
 }
