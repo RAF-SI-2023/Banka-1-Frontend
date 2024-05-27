@@ -25,6 +25,10 @@
             <div>Admin panel</div>
           </div>
 
+          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin" >
+            <div>Bank accounts</div>
+          </div>
+
           <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
             <div>Customer</div>
           </div>
@@ -43,10 +47,6 @@
 
           <div [routerLink]="'/bank-profit'" class="sidebar-item" routerLinkActive="active"*ngIf="isAdmin" >
             <div>Profit</div>
-          </div>
-
-          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin" >
-            <div>Bank accounts</div>
           </div>
 
           <div [routerLink]="'/otc'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
