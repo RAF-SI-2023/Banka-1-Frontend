@@ -24,14 +24,14 @@
   }
 
   .popup-header span {
-    font-size: 25px;
+    font-size: 2em;
     font-weight: bold;
 
   }
 
   .close-icon {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1.6em;
     color: var(--banka-white);
   }
 
@@ -47,7 +47,7 @@
 
   .form-group {
     margin-bottom: 10px;
-    font-size: 10px;
+    font-size: 0.8;
 
   }
 
@@ -135,7 +135,7 @@
   border-radius: 15px; /* Soft rounded borders */
   padding: 8px 24px 8px 12px; /* Padding for text and custom arrow space */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 16px; /* Text size */
+  font-size: 1.4em; 
   /*outline: none; !* Remove default focus outline *!*/
 }
 

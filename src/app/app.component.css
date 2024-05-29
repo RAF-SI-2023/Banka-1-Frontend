@@ -12,9 +12,10 @@
   margin-right: 16px;
 }
 
+
+
 .logo {
   margin-top: 10px;
-  /*flex-grow: 1;*/
 }
 
 .user-info {
@@ -27,7 +28,7 @@
   height: 35px;
   line-height: 35px;
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 1.2rem;
   color: #fff;
   text-align: center;
   background: #19b5c7;
@@ -36,7 +37,7 @@
 
 .logout-button {
   font-family: Inter, sans-serif;
-  font-size: 20px;
+  font-size: 1.2rem;
   color: red;
   margin-left: 8px;
   margin-right: 10px;
@@ -47,6 +48,19 @@
   flex-grow: 1;
 }
 
+.sidebar-item.active {
+ 
+  cursor: pointer;
+  border-bottom: 5px solid var(--banka-orange);
+}
+
+.sidebar-subitem.active {
+
+  cursor: pointer;
+  border-bottom: 5px solid var(--banka-orange);
+}
+ 
+
 .sidenav {
   width: 35vw;
   background-color: var(--banka-dark-gray);
@@ -55,7 +69,6 @@
   flex-direction: row;
   flex-wrap: nowrap;
   font-family: "Jura", sans-serif;
-  /* box-shadow: 5px 0px 5px 0px rgba(205,212,211,0.7); */
 }
 
 mat-sidenav-content {
@@ -76,7 +89,7 @@ mat-sidenav-content {
   align-items: center;
   justify-content: flex-start;
   padding: 7px;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .sidebar-btn:hover {
@@ -106,7 +119,7 @@ img {
 }
 
 .banka-sidebar-title {
-  font-size: 35px;
+  font-size: 2.2rem;
   font-weight: 300;
 
   margin: 30px;
@@ -134,7 +147,7 @@ img {
 
 
 .banka-user-name {
-  font-size: 25px;
+  font-size: 1.6rem;
   font-weight: 500;
   font-family: 'Jura', sans-serif;
 }
@@ -156,7 +169,6 @@ hr {
 
   display: flex;
   flex-direction: column;
-  /* padding: 10px; */
 }
 
 .sidebar-items-holder {
@@ -167,7 +179,7 @@ hr {
 
 .sidebar-menu-title {
   color: var(--banka-gray);
-  font-size: 22px;
+  font-size: 1.4rem;
   font-family: 'Jura', sans-serif;
 
   padding-left: 30px;
@@ -175,7 +187,7 @@ hr {
 
 .sidebar-item {
   font-family: 'Jura', sans-serif;
-  font-size: 25px;
+  font-size: 1.6rem;
   color: var(--banka-white);
   margin-top: 20px;
   margin-right: auto;
@@ -207,7 +219,7 @@ hr {
 
 .sidebar-subitem {
   font-family: 'Jura', sans-serif;
-  font-size: 23px;
+  font-size: 1.2rem;
   color: var(--banka-white);
   margin-top: 30px;
 }
@@ -223,7 +235,7 @@ hr {
 
 .logout-btn {
   font-family: 'Jura', sans-serif;
-  font-size: 25px;
+  font-size: 1.4rem;
   color: var(--banka-white);
   margin-right: auto;
 

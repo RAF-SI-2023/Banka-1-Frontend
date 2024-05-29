@@ -12,7 +12,7 @@
 h1 {
   color: #FFB72B;
   font-family: Jura;
-  font-size: 36px;
+  font-size: 2.2rem;
 }
 
 .inner-flex {
@@ -43,7 +43,7 @@ button {
   border: none;
   border-radius: 5px;
   font-family: Jura;
-  font-size: 20px;
+  font-size: 1.2rem;
   min-width: 100px;
   cursor: pointer;
 }
@@ -59,7 +59,7 @@ button {
   display: flex;
   align-items: center;
   color: #FFB72B;
-  font-size: 18px;
+  font-size: 1rem;
   font-family: Jura;
 }
 
@@ -71,7 +71,7 @@ button {
 
 td, thead, tr {
   font-family: Jura;
-  font-size: 18px;
+  font-size: 1rem;
 }
 
 tr {

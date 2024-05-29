@@ -34,7 +34,7 @@ export class TransactionPopupComponent implements OnInit{
       if (this.transactionBasics) {
         this.transactionService.createTransaction(this.transactionBasics).subscribe(
           response => {
-            alert('Transaction created successfully: ' + JSON.stringify(response));
+            alert('Transaction created successfully');
             this.dialogRef.close();
           },
           error => {

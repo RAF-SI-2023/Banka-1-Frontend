@@ -8,11 +8,12 @@ import { CreateCustomerRequest, Customer } from '../model/model';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 
 @Component({
   selector: 'app-add-customer',
   standalone: true,
-  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule],
+  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule, DropdownInputModule],
   templateUrl: './add-customer.component.html',
   styleUrl: './add-customer.component.css'
 })
@@ -26,7 +27,6 @@ export class AddCustomerComponent {
     address: '',
     gender: '',
     dateOfBirth: 0
-    // permissions: [],
   };
 
   constructor(
@@ -87,6 +87,10 @@ export class AddCustomerComponent {
 
   private isValidPhoneNumber(phone: string): boolean {
     return /^\d+$/.test(phone);
+  }
+
+  setGender(gender: any){
+    this.addCustomerData.gender = gender;
   }
 
 }

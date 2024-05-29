@@ -12,7 +12,7 @@ export class TransformFuturePipe implements PipeTransform {
         ticker: fut.ticker,
         name: fut.name,
         exchangeName: fut.exchangeName,
-        lastRefresh: fut.lastRefresh,
+        lastRefresh: new Date(fut.lastRefresh).toLocaleString(),
         price: fut.price,
         high: fut.high,
         low: fut.low,

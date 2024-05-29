@@ -32,10 +32,12 @@ export class EditRecipientComponent implements OnInit{
   }
 
   submit(): void {
-    if(!this.validateRecipient()){
-      alert('Invalid recipient data!');
+    const validation = this.validateRecipient();
+    if (validation !== true) {
+      alert(validation);
       return;
     }
+
     let nameParts = this.fullName.split(' ');
     let recipientUpdated: Recipient = {};
     recipientUpdated.id = this.recipient.id;
@@ -54,6 +56,7 @@ export class EditRecipientComponent implements OnInit{
     );
     this.router.navigate(['/recipients']);
     this.dialogRef.close({ success: true });
+    location.reload();
   }
 
   cancel(): void {
@@ -61,14 +64,22 @@ export class EditRecipientComponent implements OnInit{
   }
 
   validateRecipient(){
-    // name has to be first name and last name separated by space
-    let nameParts = this.fullName.split(' ');
-    if(nameParts.length !== 2){
-      return false;
+    let nameParts = this.fullName.trim().split(' ');
+    if (this.fullName === '') {
+      return 'Name cannot be empty!';
     }
-    if(this.fullName === '' || this.recipient.bankAccountNumber === ''){
-      return false;
+    if (nameParts.length !== 2) {
+      return 'Name must include exactly two parts, a first name and a last name.';
     }
+    if (!/^[a-zA-Z]+ [a-zA-Z]+$/.test(this.fullName)) {
+      return 'Name must only contain letters and a single space.';
+    }
+    if (this.recipient.bankAccountNumber === '') {
+      return 'Bank account number cannot be empty!';
+    }
+    // if (!/^\d{18}$/.test(this.bankAccountNumber)) {
+    //   return 'Bank account number must be 18 digits.';
+    // }
     return true;
   }
 }

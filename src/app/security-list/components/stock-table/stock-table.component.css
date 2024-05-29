@@ -29,13 +29,12 @@
 }
 
 .security-filter-input {
-  /* border-color: #263238; */
   border-radius: 5px;
 
   height: 3vh;
   border: 1.3px solid #263238;
   padding: 5px;
-  font-size: 18px;
+  font-size: 1.1rem;
 }
 
 
@@ -63,7 +62,7 @@
   display: flex;
   align-items: center;
   color: #406581;
-  font-size: 18px;
+  font-size: 1.1rem;
 }
 
 .user-table {

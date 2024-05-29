@@ -4,13 +4,11 @@
   color: #fff;
   width: fit-content;
   height: fit-content;
-  /*border-radius: 40px;*/
-  /*font-family: 'Inter', sans-serif;*/
 }
 
 .title {
   margin: 20px;
-  font-size: 36px;
+  font-size: 2.2rem;
   color: #FFB72B;
 }
 
@@ -23,13 +21,13 @@
 
 .label {
   margin-top: 30px;
-  font-size: 24px;
+  font-size: 1.4rem;
   color: #FFF9F0;
   font-weight: lighter;
 }
 
 .value {
-  font-size: 24px;
+  font-size: 1.4rem;
   color: #B3ABA0;
   font-weight: lighter;
   border-bottom: 1px solid #fff;
@@ -44,7 +42,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 1.2rem;
   color: #fff;
 }
 
@@ -53,7 +51,7 @@
 }
 
 .options{
-  font-size: 24px;
+  font-size: 1.4rem;
   margin: 50px 10px;
   color: #B3ABA0
 }
@@ -61,19 +59,19 @@
 @media (max-width: 768px) {
 
   .title {
-    font-size: 30px;
+    font-size: 1.8rem;
   }
 
   .label {
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   .value {
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   .options{
-    font-size: 18px;
+    font-size: 1rem;
   }
 
 }

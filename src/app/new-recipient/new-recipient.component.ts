@@ -21,10 +21,12 @@ export class NewRecipientComponent {
     ){}
 
   submit(){
-    if(!this.validateRecipient()){
-      alert('Invalid recipient data!');
+    const validation = this.validateRecipient();
+    if (validation !== true) {
+      alert(validation);
       return;
     }
+
     let nameParts = this.name.split(' ');
     this.bankAccountService.addRecipient(nameParts[0], nameParts[1], this.bankAccountNumber).subscribe(
       (response: any) => {
@@ -38,21 +40,27 @@ export class NewRecipientComponent {
     );
   }
 
-  
+
 
   cancel(){
     this.dialogRef.close();
   }
 
   validateRecipient(){
-    // name has to be first name and last name separated by space
-    let nameParts = this.name.split(' ');
-    if(nameParts.length !== 2){
-      return false;
+    let nameParts = this.name.trim().split(' ');
+    if (this.name === '') {
+      return 'Name cannot be empty!';
     }
-    if(this.name === '' || this.bankAccountNumber === ''){
-      return false;
+    if (nameParts.length !== 2) {
+      return 'Name must include exactly two parts, a first name and a last name.';
     }
+    if (!/^[a-zA-Z]+ [a-zA-Z]+$/.test(this.name)) {
+      return 'Name must only contain letters and a single space.';
+    }
+    if (this.bankAccountNumber === '') {
+      return 'Bank account number cannot be empty!';
+    }
+   
     return true;
   }
 }

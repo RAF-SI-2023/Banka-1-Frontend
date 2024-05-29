@@ -41,7 +41,6 @@ this: any;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    // this.http.get<Forex[]>('assets/mock-forex.json')
     this.http.get<Forex[]>(environmentMarket.baseUrl + '/market/listing/get/forex', {headers})
       .subscribe(res => this.forexBackup = this.forex = res.map(val => { val.lastRefresh *= 1000; return val; }));
   }

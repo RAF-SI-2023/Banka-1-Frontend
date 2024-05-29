@@ -13,7 +13,7 @@ export class TransformSecurityPipe implements PipeTransform {
         ticker: sec.ticker,
         name: sec.name,
         exchangeName: sec.exchangeName,
-        lastRefresh: sec.lastRefresh,
+        lastRefresh: new Date(sec.lastRefresh).toLocaleString(),
         price: sec.price,
         high: sec.high,
         low: sec.low,

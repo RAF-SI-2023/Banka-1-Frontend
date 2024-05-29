@@ -4,7 +4,13 @@ import {firstValueFrom, Observable} from "rxjs";
 import {environment, environmentMarket} from "../../../environment";
 import {StockListing} from "./stock.service";
 
-import {CapitalProfitDto, DecideOrderResponse, OrderDto, SellingRequest, StatusRequest} from "../model/model";
+import {
+  CapitalProfitDto,
+  DecideOrderResponse,
+  OrderDto,
+  SellingRequest,
+  StatusRequest
+} from "../model/model";
 
 import {BankAccountDto, CreateOrderRequest, ListingType, Order, OrderType, User} from "../model/model";
 import {map} from "rxjs/operators";
@@ -18,20 +24,7 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
 
-//   async getAllOrdersHistory() {
 
-  // fetchAccountData(id: string): Observable<number> {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Authorization': `Bearer ${jwt}`
-  //     })
-  //   };
-  //   return this.http.get<BankAccountDto[]>(environment.baseUrl + '/account/getCustomer/' + id, httpOptions).pipe(
-  //     map(accounts => accounts.reduce((sum, account) => sum + account.availableBalance, 0))
-  //   );
-  // }
 
   fetchUserForLimit(id: string): Observable<User> {
     const jwt = sessionStorage.getItem("jwt");
@@ -60,7 +53,6 @@ export class OrderService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environment.baseUrl + "/orders/getAll", {headers})
-        //this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -80,7 +72,6 @@ export class OrderService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environment.baseUrl + "/orders/supervisor/getAll", {headers})
-        //this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -100,10 +91,7 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get(environment.baseUrl + "/orders/getAll", {headers})
-
-      // this.http.get("/assets/orderHistory.json")
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -123,7 +111,6 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get("/assets/orderRequests.json")
       )) as OrderDto[];
     } catch (e) {
@@ -144,7 +131,6 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        //this.http.get(environmentMarket.baseUrl + "api", {headers})
         this.http.get("/assets/orderSecurities.json")
       )) as OrderDto[];
     } catch (e) {
@@ -159,6 +145,7 @@ export class OrderService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
 
+
     try {
       return await firstValueFrom(
         this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "APPROVED"}, { headers })
@@ -169,12 +156,12 @@ export class OrderService {
     }
   }
 
-   async denyOrder(orderId: number, request: StatusRequest): Promise<DecideOrderResponse>{
-     const headers = new HttpHeaders({
-       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
-     });
+  async denyOrder(orderId: number, request: StatusRequest): Promise<DecideOrderResponse>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
 
-     try {
+    try {
       return await firstValueFrom(
         this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "DENIED"}, { headers })
       );
@@ -184,6 +171,15 @@ export class OrderService {
     }
 
   }
+
+  decideOrder(orderId: number, request: StatusRequest){
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": request}, {headers});
+  }
+
   async buyOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
     const jwt = sessionStorage.getItem("jwt");
 
@@ -244,7 +240,9 @@ export class OrderService {
     }
   }
 
-  getSecurityOrders(): Observable<CapitalProfitDto[]> {
+
+
+  getSecurityOrdersMock(): Observable<CapitalProfitDto[]> {
     return this.http.get<CapitalProfitDto[]>('assets/mocked_banking_data/orders-security-mocked.json')
       .pipe(
         map((data: CapitalProfitDto[]) => data.map(item => ({
@@ -254,7 +252,7 @@ export class OrderService {
       );
   }
 
-  getSecurityOrdersMocked(): Observable<CapitalProfitDto[]> {
+  getSecurityOrders(): Observable<CapitalProfitDto[]> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -263,7 +261,7 @@ export class OrderService {
       })
     };
 
-    return this.http.get<CapitalProfitDto[]>(environment.baseUrl + 'capitals/listings', httpOptions)
+    return this.http.get<CapitalProfitDto[]>(environment.baseUrl + '/account/capitals/listings', httpOptions)
       .pipe(
         map((data: CapitalProfitDto[]) => data.map(item => ({
           ...item,
@@ -271,25 +269,35 @@ export class OrderService {
         })))
       );
   }
-  //
-  // async sellOrder(orderId:number,sellingReq:SellingRequest): Promise<DecideOrderResponse> {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   if (!jwt) return { success: false, message: 'JWT token not found' };
-  //
-  //   const headers = new HttpHeaders({
-  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt')
-  //   });
-  //
-  //   try {
-  //     return await firstValueFrom(
-  //       this.http.put<DecideOrderResponse>(`${environmentMarket.baseUrl}/orders`, sellingReq, { headers })
-  //     );
-  //   } catch (error) {
-  //     console.error('Error while selling order:', error);
-  //     throw error;
-  //   }
-  //
-  // }
+
+
+  getPublicSecuritiesMock(): Observable<any> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<User>(environment.baseUrl + '/publicSecurities', httpOptions);
+  }
+
+  changePublicValueMock(id: number, publicValue: number): Observable<any> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const body = {
+      publicValue: publicValue
+    }
+    return this.http.put<User>(environment.baseUrl + '/changePublicValue/' + id , body, httpOptions);
+  }
+
+
+
 
 }

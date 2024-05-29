@@ -146,7 +146,6 @@ export class StockViewComponent {
   generateChartData() {
     this.chartData.datasets[0].data = [];
     for (let stockHistory of this.stockHistory) {
-      //this.dps.push({y: stockHistory.price})
       this.chartData.datasets[0].data.push(stockHistory.price);
     }
     this.chart?.chart?.update();

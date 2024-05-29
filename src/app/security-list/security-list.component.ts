@@ -102,14 +102,7 @@ export class SecurityListComponent {
   }
 
   async loadSecurities(): Promise<void> {
-    // this.stockService.getStocks().subscribe(
-    //   (securities: Security[]) => {
-    //     this.securities = securities;
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     console.error('Error loading securities:', error);
-    //   }
-    // );
+  
 
     const stocks = await this.stockService.getStocks();
 
@@ -124,7 +117,6 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      // .get<Forex[]>('assets/mock-forex.json')
       this.http.get<Forex[]>(environmentMarket.baseUrl + '/market/listing/get/forex', {headers})
       .subscribe(
         (res) =>
@@ -141,7 +133,6 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      // .get<Future[]>('assets/futures-mock.json')
       this.http.get<Future[]>(environmentMarket.baseUrl + '/market/listing/get/futures',{ headers })
       .subscribe(
         (res) =>

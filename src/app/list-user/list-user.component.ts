@@ -19,11 +19,12 @@ import {TransformLimitsPipeModule} from "./TransformLimitsPipe";
 import {HttpErrorResponse} from "@angular/common/http";
 import { EditLimitPopUpComponent } from '../edit-limit-pop-up/edit-limit-pop-up.component';
 import { ResetLimitPopupComponent } from '../reset-limit-popup/reset-limit-popup.component';
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 
 @Component({
   selector: 'app-list-user',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableComponentModule, OrangeButtonModule, TransformPermissionsPipeModule, TransformUsersPipeModule, LineTextFieldModule, TransparentTextFieldModule, WhiteTextFieldModule, TransformLimitsPipeModule],
+  imports: [CommonModule, FormsModule, TableComponentModule, OrangeButtonModule, TransformPermissionsPipeModule, TransformUsersPipeModule, LineTextFieldModule, TransparentTextFieldModule, WhiteTextFieldModule, TransformLimitsPipeModule, DropdownInputModule],
   templateUrl: './list-user.component.html',
   styleUrl: './list-user.component.css'
 })
@@ -40,8 +41,8 @@ export class ListUserComponent implements OnInit{
   hasPermission?: boolean = false;
   public p:string | null='';
 
-  headersLimits = ['Id','Email', 'Limit', 'Used Limit', 'Needs Approve'];
-  headersUsers = ['NAME', 'EMAIL', 'JMBG', 'POSITION', 'PHONE NUMBER', 'ACTIVITY'];
+  headersLimits = ['Email','Id', 'Limit', 'Used Limit', 'Needs Approve'];
+  headersUsers = ['NAME', 'EMAIL', 'JMBG', 'POSITION', 'PHONE NUMBER'];
   rowsUsers = [
     { 'Header 1': 'Row 1', 'Header 2': 'Row 1', 'Header 3': 'Row 1', 'Header 4': 'Row 1', 'Header 5': 'Row 1','Header 6': 'Row 1', },
     { 'Header 1': 'Row 1', 'Header 2': 'Row 1', 'Header 3': 'Row 1', 'Header 4': 'Row 1', 'Header 5': 'Row 1','Header 6': 'Row 1', },
@@ -58,18 +59,14 @@ export class ListUserComponent implements OnInit{
   constructor(private userService: UserService, private router: Router,private popup:PopupService, private dialog: MatDialog, private apiService: PermissionsService) { }
 
   ngOnInit() {
-    //get permission
     const permission = this.getPermission();
-    //this.hasPermission = permission === 'modifyUser';
     this.hasPermission = this.canEditUser();
 
-    //load data from database
     this.loadEmployeesFromDataBase();
     this.loadLimit();
     this.p = sessionStorage.getItem("role");
   }
 
-  // TODO: REPLACE MOCKED WITH getLimits - see the function it is in same file as getLimitsMocked
   loadLimit() {
     this.userService.getLimits().subscribe(
       (limitsFromDB: Limit[]) => {
@@ -121,7 +118,6 @@ export class ListUserComponent implements OnInit{
   editUser(user: User){
     this.userService.setUserToEdit(user);
     this.popup.openUpdateUserPopup(this);
-    // this.router.navigate(['/user/update']);
   }
 
   deleteUser(user: User): void {
@@ -177,7 +173,6 @@ export class ListUserComponent implements OnInit{
     let perm:Permissions = user.permissions[index];
     user.permissions.splice(index, 1);
 
-    // TODO update permissions in database.
     const list: Permissions[] = [perm];
     this.modifyUserPermissions(user, list, false);
   }
@@ -185,7 +180,6 @@ export class ListUserComponent implements OnInit{
   deleteAllPermissions(user: User){
     let list: Permissions[] = user.permissions;
     user.permissions = [];
-    // TODO update permissions in database
     this.modifyUserPermissions(user, list, false);
   }
 
@@ -214,10 +208,6 @@ export class ListUserComponent implements OnInit{
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       console.log('The dialog was closed');
-
-      //TODO: two options:
-      //a) refetch users
-      //b) update the modified user using result
       this.loadEmployeesFromDataBase();
     });
   }
@@ -234,6 +224,10 @@ export class ListUserComponent implements OnInit{
     return sessionStorage.getItem('permissions')?.includes('deleteUser');
   }
 
+  setPosition(position: any){
+    this.position = position;
+  }
+
  editLimit(originalLimit: Limit){
     console.log('Edit limit: ', originalLimit)
 
@@ -248,11 +242,11 @@ export class ListUserComponent implements OnInit{
       await this.delay();
       this.loadLimit();
     });
-    
+
   }
 
   async delay(){
-      await new Promise(resolve => setTimeout(resolve, 200)); // 5000 milliseconds = 5 seconds
+      await new Promise(resolve => setTimeout(resolve, 200));
   }
 
   async resetLimit(originalLimit: Limit) {

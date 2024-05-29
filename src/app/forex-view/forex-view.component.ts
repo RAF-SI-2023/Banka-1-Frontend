@@ -142,7 +142,6 @@ export class ForexViewComponent {
   generateChartData() {
     this.chartData.datasets[0].data = [];
     for (let listingHistory of this.forexHistory) {
-      //this.dps.push({y: stockHistory.price})
       this.chartData.datasets[0].data.push(listingHistory.price);
     }
     this.chart?.chart?.update();

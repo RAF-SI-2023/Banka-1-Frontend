@@ -1,0 +1,62 @@
+<!-- Page container -->
+<div class="container">
+
+    <div  style="padding-left: 1rem; " class="row pageTitle">
+            Profit
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-6 offset-lg-2 col-md-6 offset-md-2 col-sm-6 offset-sm-2 col-6 offset-2 sliderDivWrapper">
+        <div class="row sliderDiv">
+
+          <div class="col-lg-12 col-md-12 col-sm-12 col-12 sliderMidContent">
+  
+            <div class="row accNumAndTitle">
+                <div style="padding-top: 1.5rem; color: #ffb72b;" class="accNumDiv d-flex justify-content-center align-items-center">Total profit - Bank</div>
+              <div style="padding-top: 1.5rem;" class="accNumDiv d-flex justify-content-center align-items-center">{{sum}}</div>
+            </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Table with transactions and exchanges -->
+    <div class="row">
+      <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
+        <!-- Table title, table headers, tabs and table div -->
+        <div class="transactionsContentContainer">
+          <!-- Title transactions overview -->
+          <div style="color: #ffb72b;" class="row transOverviewDiv d-flex align-items-center">
+            Profit - Agents
+          </div>
+          <!-- Tabs -->
+          <div class="tabs">
+            <div class="tab-headers"></div>
+
+            <div class="tab-content">
+              <div class="scrollable-container">
+                <table class="transactions-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Total profit</th>
+                      <th>Phone number</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let profit of profits">
+                        <td>{{ profit.name }}</td>
+                        <td>{{ profit.totalProfit }}</td>
+                        <td>{{ profit.phoneNumber }}</td>
+                        <td>{{ profit.email }}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

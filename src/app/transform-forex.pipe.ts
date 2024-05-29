@@ -12,7 +12,7 @@ export class TransformForexPipe implements PipeTransform {
         ticker: forex.ticker,
         name: forex.name,
         exchangeName: forex.exchangeName,
-        lastRefresh: forex.lastRefresh,
+        lastRefresh: new Date(forex.lastRefresh).toLocaleString(),
         price: forex.price,
         high: forex.high,
         low: forex.low,

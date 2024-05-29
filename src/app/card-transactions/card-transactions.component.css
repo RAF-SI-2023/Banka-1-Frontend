@@ -3,7 +3,6 @@
   font-family: 'Jura', sans-serif;
   display: block;
   background-color: #0C0C11;
-  /*color: #fff;*/
 }
 
 .container {
@@ -18,7 +17,7 @@
 
 .title {
   grid-column: span 12;
-  font-size: 36px;
+  font-size: 2.2rem;
   color: #FFB72B;
 }
 
@@ -37,23 +36,22 @@
 }
 
 .card-title {
-  font-size: 24px;
+  font-size: 1.6rem;
   margin-bottom: 10px;
 }
 
 .card-acc-num{
   margin-bottom: 30px;
-  font-size:   16px;
+  font-size:   1rem;
 }
 
 .card-balance {
-  font-size: 24px;
-  /*margin-top: 20px;*/
+  font-size: 1.6rem;
   margin-bottom: 30px;
 }
 
 .more-info-btn{
-  font-size: 24px;
+  font-size: 1.6rem;
   background-color: #FFB72B;
   color: #131319;
   border-radius: 5px;
@@ -75,7 +73,7 @@
 }
 
 .arrow {
-  font-size: 24px;
+  font-size: 1.6rem;
   color: #D9D9D9; /* Arrow color */
   position: absolute;
   top: 50%;
@@ -121,7 +119,7 @@
 
 
 .table-title{
-  font-size: 24px;
+  font-size: 1.6rem;
   margin-bottom: 20px;
 }
 
@@ -167,20 +165,20 @@
   }
 
   .card-title {
-    font-size: 20px;
+    font-size: 1.4rem;
   }
 
   .more-info-btn{
-    font-size: 20px;
+    font-size: 1.4rem;
     font-weight: normal;
   }
 
   .card-acc-num{
-    font-size: 13px;
+    font-size: 0.6rem;
   }
 
   .card-balance {
-    font-size: 20px;
+    font-size: 1.4rem;
   }
 
 }

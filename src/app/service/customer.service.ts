@@ -29,18 +29,6 @@ export class CustomerService {
 
   getCustomer(jwt: string): Observable<Customer> {
     const url = `${this.apiUrl}/getCustomer`;
-
-  //getUser(jwt: string | null): Observable<{name: string, lastName: string}> {
-   // let url = `${this.apiUrl}/user/getUser`;
-
-    //ToDo: Da li treba autorizacija
-    // const headers = new HttpHeaders({
-    //   'Authorization': `Bearer ${sessionStorage.getItem("jwt")}`
-    // });
-
-//     if (!jwt) {
-//       this.router.navigate(['/login']);
-//     }
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${jwt}`
@@ -60,7 +48,6 @@ export class CustomerService {
     try {
       resp = (await firstValueFrom(
         this.http.post(environment.baseUrl + "/customer/initialActivation", data)
-        //this.http.get("/assets/initialActivation.json")
       )) as boolean;
     } catch (e) {
       return false;
@@ -76,7 +63,6 @@ export class CustomerService {
     try {
       resp = (await firstValueFrom(
         this.http.post(environment.baseUrl + `/customer/activate/${token}`, data)
-        //this.http.get("/assets/finalActivation.json")
       )) as number;
     } catch (e) {
       return false;

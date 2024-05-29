@@ -43,6 +43,11 @@ export class SellPopupComponent {
   }
 
   async sellOrder() {
+    if(this.amount <= 0 || this.limitValue <= 0 || this.stopValue <= 0){
+      this.popupService.openPopup("Error", "Invalid input values");
+      return;
+    }
+
     var response;
     if(this.isFuture){
       response = await this.orderService.sellOrder(OrderType.SELL, this.listingId, ListingType.FUTURE, this.amount, this.limitValue, this.stopValue, this.allOrNone);

@@ -14,6 +14,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { PopupComponent } from './popup/popup.component';
 import { PopupService } from './service/popup.service';
 
+import { RouterLinkActive } from '@angular/router';
+
 import { AuthService } from './service/auth.service';
 
 import { Account, AccountType } from './model/model';
@@ -21,7 +23,7 @@ import { AccountService } from './service/account.service';
 
 import { OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
-import { filter, Subscription } from 'rxjs';
+import { catchError, filter, Subscription } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { StorageService } from './service/storage.service';
 import {
@@ -118,24 +120,7 @@ export class AppComponent implements OnInit {
     this.toggleSideNav();
     this.userInitials = '/';
 
-    // const jwt = sessionStorage.getItem("jwt");
-    //  if (jwt !== null && jwt.length > 0) {
-    // this.userService.getUser(jwt).subscribe(
-    //   response => {
-    //     console.log(response);
-
-    //     this.isCustomer=response.position.toString().toLowerCase()=="customer";
-    //     if (this.isCustomer) {
-    //       //his.testcheckRequiredAccounts();
-    //       // Otkomentarisati kada bek odradi (jedno od ova dva u zavisnosti od implementacije beka)
-    //       //this.checkRequiredAccounts(response.customerId);
-
-    //     }
-
-    //   }, (e) => {
-    //     this.userInitials = "/"
-    //   }
-    // );}
+    
   }
 
   ngOnInit() {
@@ -148,42 +133,28 @@ export class AppComponent implements OnInit {
       this.isSupervizor = role === 'supervizor';
     });
 
-    
-    if (this.isEmployee || this.isAdmin) {
-      this.authService.getJwtObservable().subscribe((jwt) => {
-        if (jwt) {
-          this.userService.getEmployee(jwt).subscribe({
-            next: (response) => {
-              this.userInitials = response.firstName.concat(
-                ' ',
-                response.lastName
-              );
-            },
-            error: (e) => {
-              this.userInitials = 'Luka Lazarevic';
-            },
-          });
-        }
-      });
-    }
-    else{
-      this.authService.getJwtObservable().subscribe((jwt) => {
-        if (jwt) {
-          this.customerService.getCustomer(jwt).subscribe({
-            next: (response) => {
-              this.userInitials = response.firstName.concat(
-                ' ',
-                response.lastName
-              );
-            },
-            error: (e) => {
-              this.userInitials = 'Luka Lazarevic';
-            },
-          });
-        }
-      });
 
-    }
+   
+      this.authService.getJwtObservable().subscribe((jwt) => {
+        if (jwt) {
+          this.customerService.getCustomer(jwt).pipe(
+            catchError((error) => {
+              return this.userService.getEmployee(jwt);
+            })
+          ).subscribe({
+            next: (response) => {
+              if(response!=null)
+              this.userInitials = response.firstName.concat(
+                ' ',
+                response.lastName
+              );
+            },
+            error: (e) => {
+              this.userInitials = 'Luka Lazarevic';
+            },
+          });
+        }
+      });
   }
 
   checkIsAdminOrEmployeeOrCustomer() {
@@ -199,7 +170,7 @@ export class AppComponent implements OnInit {
       if (this.isCustomer) {
         this.customerService.getCustomer(jwt).subscribe(
           (response) => {
-            //this.userInitials = response.firstName.charAt(0) + response.lastName.charAt(0);
+            if(response!=null)
             this.checkRequiredAccounts(response.userId);
           },
           (e) => {
@@ -284,7 +255,6 @@ export class AppComponent implements OnInit {
     if (loggedUserPositionFromStorage !== null) {
       this.loggedUserPosition = loggedUserPositionFromStorage;
     } else {
-      //console.log('Error occurred: logged user position is null!');
     }
   }
 

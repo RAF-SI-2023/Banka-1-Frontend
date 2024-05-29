@@ -16,6 +16,7 @@ import { EditRecipientComponent } from '../edit-recipient/edit-recipient.compone
 import {BuyPopupComponent} from "../buy-popup/buy-popup.component";
 import {SellPopupComponent} from "../sell-popup/sell-popup.component";
 import { DeleteRecipientConfirmationComponent } from '../delete-recipient-confirmation/delete-recipient-confirmation.component';
+import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
 
 
 @Injectable({
@@ -95,8 +96,8 @@ export class PopupService {
     });
   }
 
-  openSellPopup(listingId: number, future: boolean, forex: boolean, stock: boolean): void {
-    this.dialog.open(SellPopupComponent, {
+  openSellPopup(listingId: number, future: boolean, forex: boolean, stock: boolean) {
+    return this.dialog.open(SellPopupComponent, {
       data: { listingId: listingId, future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
     });
   }
@@ -104,6 +105,12 @@ export class PopupService {
   openEditRecipientPopup(recipient: Recipient): MatDialogRef<EditRecipientComponent> {
     return this.dialog.open(EditRecipientComponent, {
       data: { recipient }
+    });
+  }
+
+  openPublicSecuritiesPopup(args: any): void {
+    this.dialog.open(PublicSecurityOfferPopupComponent, {
+      data: args
     });
   }
 }

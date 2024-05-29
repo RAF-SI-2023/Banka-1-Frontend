@@ -1,6 +1,6 @@
 .transaction-title {
     color: #FFB72B;
-    font-size: 24px;
+    font-size: 1.6rem;
     margin-bottom: 2rem;
     margin-left: 1rem;
   }
@@ -10,7 +10,7 @@
 }
 
 .body-content{
-  font-size: 14px;
+  font-size: 0.6rem;
 }
 .content{
   width: 540px;
@@ -32,7 +32,7 @@
 }
 
 .custom_span{
-  font-size: 12px
+  font-size: 0.5rem
  }
 
 
@@ -40,11 +40,11 @@
 
 @media screen and (max-width: 576px) {
   .body-content{
-    font-size: 8px;
+    font-size: 0.4rem;
   }
 
   .transaction-title {
-    font-size: 14px;
+    font-size: 0.5rem;
   }
 
   .form-group{
@@ -57,7 +57,7 @@
   }
 
    .custom_span{
-    font-size: 6px
+    font-size: 0.3rem
    }
 
    .btn_custom{
@@ -71,11 +71,11 @@
 
 @media screen and (min-width: 576px) and (max-width: 768px) {
   .body-content{
-    font-size: 10px;
+    font-size: 0.4rem;
   }
 
   .transaction-title {
-    font-size: 16px;
+    font-size: 0.8rem;
   }
 
   .form-group{
@@ -89,7 +89,7 @@
   }
 
    .custom_span{
-    font-size: 8px
+    font-size: 0.4rem
    }
 
    .btn_custom{

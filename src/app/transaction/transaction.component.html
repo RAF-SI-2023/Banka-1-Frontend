@@ -2,7 +2,7 @@
     <div class="pageTitle">New Exchange</div>
     <div class="body-content p-5">
         <div class="m-auto">
-            <h1 class="text-center" style="color: white; font-size: 30px;">New Exchange</h1>
+            <h1 class="text-center" style="color: white; font-size: 2rem;">New Exchange</h1>
         </div>
         <hr>
         <div class="form-group mt-5">
@@ -29,7 +29,7 @@
         
         <div class="form-group mt-5">
             <label for="amount">Amount:</label>
-            <input type="text" [(ngModel)]="transaction.amount" id="amount" name="amount" required pattern="^\d+(\.\d+)?$" #amountModel="ngModel" [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }" />
+            <input type="text" [(ngModel)]="transaction.amount" id="amount" name="amount" required pattern="^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$" #amountModel="ngModel" [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }" />
             <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
                 <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
                 <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
@@ -37,8 +37,7 @@
         </div>
         
         <div class="d-flex  mt-5">
-            <!-- <button class="btn btn-warning btn-sm" (click)="onCancel()" style="width: 45%; font-size: 22px;">Cancel</button> -->
-            <button class="btn btn-warning" (click)="onContinue()" style="width: 45%; font-size: 22px;">Continue</button>
+            <button class="btn btn-warning" (click)="onContinue()" style="width: 45%; font-size: 1.4rem;">Continue</button>
         </div>
 
     </div>

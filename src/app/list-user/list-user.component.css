@@ -9,9 +9,8 @@
 
 .security-title {
   color: var(--banka-orange);
-  font-size: 35px;
+  font-size: 2.2rem;
   font-weight: 700;
-
   margin-bottom: 7rem;
 }
 
@@ -40,15 +39,8 @@
 
 .filter-row {
   display: flex;
-
-  /*justify-content: left; /* Center the content */
   padding: 20px; /* Add some padding for spacing */
-  /*background-color: #f2f4f6; !* Light background color for the filter area *!*/
-  /*border-bottom: 2px solid #d1d8e0; !* Add a subtle border for separation *!*/
-
   justify-content: space-between;
-
-
 }
 
 .left-row {
@@ -67,7 +59,7 @@
   border: 2px solid #d1d8e0; /* Border color */
   border-radius: 20px; /* Rounded corners for the input */
   outline: none; /* Remove the default focus outline */
-  font-size: 16px; /* Font size */
+  font-size: 1rem; /* Font size */
   color: #333; /* Text color */
 }
 
@@ -80,27 +72,13 @@
 
 /* Styling for the search button */
 
-/* .filter-input {
-  margin-left: 100px;
-} */
-/*
-.security-filter-input {
-  border-radius: 5px;
-
-  height: 3vh;
-  border: 1.3px solid #263238;
-  padding: 15px;
-  font-size: 18px;
-
-} */
-
 .security-filter-select {
   border-radius: 5px;
 
   height: 4.3vh;
   border: 1.3px solid #263238;
-  padding: 5px;
-  font-size: 18px;
+  padding: 3px;
+  font-size: 1.1rem;
 }
 
 .right-row {
@@ -149,7 +127,7 @@
 
 .tab {
   color: var(--banka-gray);
-  font-size: 20px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: fit-content;
   padding-bottom: 10px;
@@ -167,7 +145,7 @@
   color: var(--banka-orange);
   border-bottom: 3px solid var(--banka-orange);
 
-  font-size: 20px;
+  font-size: 1.2rem;
   cursor: pointer;
   width: fit-content;
   padding-bottom: 10px;
@@ -223,7 +201,7 @@ td {
   background-color: var(--banka-orange);
   border: none;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 1.2rem;
   border-radius: 30px;
   padding-bottom: 4px;
   padding-left: 10px;
@@ -304,20 +282,10 @@ td {
 .search-input, .search-icon-div {
     display: inline-block;
     width: 20%; /* Adjust width as needed */
-    font-size: 16px; /* Restore font size */
+    font-size: 1rem; /* Restore font size */
 
     box-sizing: border-box; /* Include padding and border in width calculation */
     vertical-align: top; /* Align elements to the top */
-/* =======
-.search-input,
-.search-icon-div {
-  display: inline-block;
-  width: 20%;
-  font-size: 16px;
-  margin-left: 5%;
-  margin-right: 5%;
-  box-sizing: border-box;
-  vertical-align: top;  */
 
 }
 
@@ -354,19 +322,12 @@ td {
   gap: 5px;
 }.security-tabs {
   display: flex;
-  /*margin-bottom: 20px; !* Space between tabs and content *!*/
 }
 
 .tabs {
   background-color: var(--banka-dark-gray); /* Light gray background */
   border: 2px solid royalblue;
 }
-
-/*.usersTab {*/
-/*  width: 100%;*/
-/*  background-color: var(--banka-dark-gray); !* Light gray background *!*/
-/*  border: 2px solid red;*/
-/*}*/
 
 .tab {
   max-width: 10vw;
@@ -418,28 +379,21 @@ app-dynamic-table {
 .security-tabs {
   display: flex;
   justify-content: flex-start; /* Align items to the start (left side) */
-  /*min-width: 800px;*/
 }
 
 .tab {
   cursor: pointer;
   padding: 10px 20px; /* Add padding for larger click areas */
-  /*margin: 0 5px; !* Space between tabs *!*/
 }
 
 .tab-active {
   background-color: var(--banka-dark-gray);
-  /*border-bottom: 2px solid var(--banka-white); !* Highlight color for the active tab *!*/
 }
 
 .tab-content {
   text-align: center; /* Center the text within each tab */
 }
-/*.search-icon img {*/
-/*  filter: invert(100%);*/
-/*  margin-left: 5%;*/
-/*  margin-right: 5%; !* Inverts the colors, turning black to white *!*/
-/*}*/
+
 
 .filter-dropdown {
   margin-top: 1.3em;
@@ -458,7 +412,7 @@ app-dynamic-table {
   border-radius: 15px; /* Soft rounded borders */
   padding: 8px 24px 8px 12px; /* Padding for text and custom arrow space */
   cursor: pointer; /* Pointer cursor on hover */
-  font-size: 16px; /* Text size */
+  font-size: 1rem; /* Text size */
   outline: none; /* Remove default focus outline */
 }
 

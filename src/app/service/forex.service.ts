@@ -37,7 +37,6 @@ export class ForexService {
       resp = (await firstValueFrom(
         
         this.http.get(environmentMarket.baseUrl + `/market/listing/history/forex/${forexId}` + query, {headers})
-        // this.http.get("/assets/listing-history.json" + query)
       )) as ListingHistory[];
     } catch (e) {
       return [];
@@ -57,7 +56,6 @@ export class ForexService {
     try {
       resp = (await firstValueFrom(
         this.http.get(environmentMarket.baseUrl + `/market/listing/forex/${forexId}`, {headers})
-        // this.http.get("/assets/mock-forex.json")
       )) as Forex;
     } catch (e) {
       return null;

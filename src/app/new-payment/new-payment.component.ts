@@ -85,37 +85,26 @@ export class NewPaymentComponent implements OnInit{
   }
 
 
-  private validateForm(): boolean {
+  // Regular expressions
+  private positiveIntegerOrEmptyRegex = new RegExp("^([1-9]\\d*|0)?$");
+  private positiveNumberRegex = new RegExp("^(0(\\.\\d+)?|[1-9]\\d*(\\.\\d+)?)$");
+  private numericRegex = new RegExp("^\\d*$");
 
-    if (!this.payment.recipientName) {
-      return false;
-    }
+  // Method to validate the form
+  isFormValid(): boolean {
 
-    if (!this.payment.recipientAccountNumber) {
-      
-      return false;
-    }
+    const recipientNameValid = !!this.payment.recipientName; // Explicitly converts to boolean
+    const recipientAccountNumberValid = !!this.payment.recipientAccountNumber; // Explicitly converts to boolean
+    const amountValid = !!this.payment.amount && this.positiveNumberRegex.test(this.payment.amount.toString()); // Checks both presence and regex
+    const paymentCodeValid = this.positiveIntegerOrEmptyRegex.test(this.payment.paymentCode!); // Correct handling for optional
+    const referenceNumberValid = this.numericRegex.test(this.payment.referenceNumber!); // Ensures boolean
+    const paymentPurposeValid = !!this.payment.paymentPurpose; // Explicitly converts to boolean
 
-    if (!this.payment.amount || this.payment.amount==0) {
-      return false;
-    }
-
-    if (!this.payment.paymentCode || this.payment.paymentCode=="") {
-      return false;
-    }
-
-    if (!this.payment.referenceNumber) {
-      return false;
-    }
-
-    if (!this.payment.paymentPurpose) {
-      return false;
-    }
-    return true;
-  }
+    return recipientNameValid && recipientAccountNumberValid && amountValid && paymentCodeValid && referenceNumberValid && paymentPurposeValid;
+}
   
   submit(){
-    if (this.validateForm()) {
+    if (this.isFormValid()) {
     this.paymentService.initializePayment().subscribe({
       next: (paymentCode: number) => {
         

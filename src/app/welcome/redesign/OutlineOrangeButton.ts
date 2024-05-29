@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
       font-size: 18px; /* Adjust font size to your preference */
       border-radius: 5px; /* Rounded corners */
       cursor: pointer;
+      margin-bottom: 10px;
       transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
     }
 

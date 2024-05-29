@@ -14,15 +14,7 @@
             <div *ngIf="emailModel.hasError('pattern')" style="color: red;">Invalid email format.</div>
              </div>
           </div>
-<!--            <div class="form-group">-->
-<!--              <custom-field-->
-<!--                [labelText]="'Email'"-->
-<!--                [(ngModel)]="addUserData.email"-->
-<!--                [pattern]="'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'"-->
-<!--                [requiredErrorText]="'Email is required.'"-->
-<!--                [patternErrorText]="'Invalid email format.'">-->
-<!--              </custom-field>-->
-<!--            </div>-->
+
           <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" [(ngModel)]="addUserData.firstName" name="name" required pattern="[a-zA-Z]+" required #nameModel="ngModel" [ngClass]="{ 'invalid-input': nameModel.invalid && (nameModel.dirty || nameModel.touched) }" />
@@ -31,18 +23,9 @@
               <div *ngIf="nameModel.hasError('pattern')" style="color: red;">Name must contain only letters.</div>
             </div>
           </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Name'"-->
-<!--            [(ngModel)]="addUserData.firstName"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'Name is required.'"-->
-<!--            [patternErrorText]="'Name must contain only letters.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
 
 
-        <!-- Surname -->
+
           <div class="form-group">
             <label for="surname">LastName:</label>
             <input type="text" id="surname" [(ngModel)]="addUserData.lastName" name="surname" required #surnameModel="ngModel" required pattern="[a-zA-Z]+" [ngClass]="{ 'invalid-input': surnameModel.invalid && (surnameModel.dirty || surnameModel.touched) }"/>
@@ -51,24 +34,7 @@
               <div *ngIf="nameModel.hasError('pattern')" style="color: red;">Last name must contain only letters.</div>
             </div>
           </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'LastName'"-->
-<!--            [(ngModel)]="addUserData.lastName"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'Surname is required.'"-->
-<!--            [patternErrorText]="'Last name must contain only letters.'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'JMBG'"-->
-<!--            [(ngModel)]="addUserData.jmbg"-->
-<!--            [pattern]="'[a-zA-Z]+'"-->
-<!--            [requiredErrorText]="'JMBG is required.'"-->
-<!--            [patternErrorText]="'Invalid JMBG format (must be 13 digits).'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
+
 
         <div class="form-group active-checkbox" *ngIf="addUserData.position === 'Agent'">
           <label for="limit" style="font-size:large; color: var(--banka-white)">Limit:</label>
@@ -80,7 +46,7 @@
         </div>
         <div class="form-group" *ngIf="limit">
           <label >Approval required:  <input type="checkbox"  [(ngModel)]="addUserData.requireApproval" name="limit"  /></label>
-          
+
         </div>
       </div>
 
@@ -93,24 +59,14 @@
               <div *ngIf="phoneModel.hasError('pattern')" style="color: red;">Invalid Phone Number format (must contain only digits).</div>
             </div>
           </div>
-<!--        <div class="form-group">-->
-<!--          <custom-field-->
-<!--            [labelText]="'Phone Number'"-->
-<!--            [(ngModel)]="addUserData.phoneNumber"-->
-<!--            [pattern]="'^\\d+$'"-->
-<!--            [requiredErrorText]="'Phone Number is required.'"-->
-<!--            [patternErrorText]="'Invalid Phone Number format (must contain only digits).'">-->
-<!--          </custom-field>-->
-<!--        </div>-->
 
-        <div class="form-group filter-dropdown">
-          <label for="position" class="label" >Position:</label>
-          <select id="position" class="security-filter-select" [(ngModel)]="addUserData.position">
-            <option value="Admin">Admin</option>
-            <option value="Supervizor">Supervizor</option>
-            <option value="Agent">Agent</option>
-          </select>
+
+        <div class="form-group">
+          <label class="label" >Position:</label>
+
+        <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
         </div>
+
 
 
         <div class="form-group">
@@ -121,22 +77,6 @@
             <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
           </div>
         </div>
-
-        
-
-        <!-- <h3 style="margin-bottom: 5px;">Permissions:</h3>
-        <div *ngFor="let permission of permissions" style="display: flex; align-items: center; margin-bottom: 5px;">
-          <label style="width: 50px;" for="{{permission.name}}">{{permission.name}}</label>
-          <input type="checkbox" id="{{permission.name}}" name="{{permission.name}}" (change)="onPermissionChange(permission, $event)" style="margin-right: 5px;" />
-        </div>
-          -->
-
-<!--        <div class="form-group buttonSl">-->
-<!--          <outline-orange-button [buttonName]="'Cancel'" (click)="onCancelAddUserPopup()"></outline-orange-button>-->
-<!--          <orange-button [buttonName]="'Create'" (click)="onCreateAddUserPopup()"></orange-button>-->
-<!--&lt;!&ndash;          <button (click)="onCancelAddUserPopup()">Cancel</button>&ndash;&gt;-->
-<!--&lt;!&ndash;          <button (click)="onCreateAddUserPopup()">Create</button>&ndash;&gt;-->
-<!--        </div>-->
       </div>
     </div>
 

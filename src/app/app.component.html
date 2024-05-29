@@ -17,28 +17,40 @@
         <div class="sidebar-menu-title">Menu</div>
         <div class="sidebar-items-holder">
 
-          <div [routerLink]="'/welcome'" class="sidebar-item">
+          <div [routerLink]="'/welcome'" class="sidebar-item" routerLinkActive="active">
             <div>Welcome</div>
           </div>
 
-          <div [routerLink]="'/user/list'" class="sidebar-item" *ngIf="isAdmin || isSupervizor">
+          <div [routerLink]="'/user/list'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isSupervizor">
             <div>Admin panel</div>
           </div>
 
-          <div [routerLink]="'/customer/all'" class="sidebar-item" *ngIf="isAdmin">
+          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin" >
+            <div>Bank accounts</div>
+          </div>
+
+          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
             <div>Customer</div>
           </div>
 
-          <div [routerLink]="'/security/all'" class="sidebar-item" *ngIf="isAdmin || isAgent || isSupervizor">
+          <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
             <div>Securities</div>
           </div>
 
-          <div [routerLink]="'/orders'" class="sidebar-item" *ngIf="isAdmin || isAgent || isSupervizor">
+          <div [routerLink]="'/orders'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
             <div>Orders</div>
           </div>
 
-          <div [routerLink]="'/bank-accounts'" class="sidebar-item" *ngIf="isCustomer">
+          <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
             <div>Bank accounts</div>
+          </div>
+
+          <div [routerLink]="'/bank-profit'" class="sidebar-item" routerLinkActive="active"*ngIf="isAdmin" >
+            <div>Profit</div>
+          </div>
+
+          <div [routerLink]="'/otc'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+            <div>OTC</div>
           </div>
 
 
@@ -59,6 +71,7 @@
               <img
                 src="../assets/expand.png"
                 class="sidebar-icon"
+                routerLinkActive="active"
                 [routerLink]="'/welcome'"/>
             </div>
 
@@ -68,30 +81,30 @@
               *ngIf="activeItem === 'openPayments'"
               class="item-subroutes"
             >
-              <div [routerLink]="'/payment'" class="sidebar-subitem">
+              <div [routerLink]="'/payment'" routerLinkActive="active" class="sidebar-subitem">
                 <div>New Payments</div>
               </div>
 
-              <div [routerLink]="'/exchange'" class="sidebar-subitem">
+              <div [routerLink]="'/exchange'" routerLinkActive="active" class="sidebar-subitem">
                 <div>Exchange</div>
               </div>
 
 
-              <div [routerLink]="'/exchange-rate'" class="sidebar-subitem">
+              <div [routerLink]="'/exchange-rate'" routerLinkActive="active" class="sidebar-subitem">
                 <div>Exchange rate</div>
               </div>
 
-              <div [routerLink]="'/recipients'" class="sidebar-subitem">
+              <div [routerLink]="'/recipients'" routerLinkActive="active" class="sidebar-subitem">
                 <div>Recipients</div>
               </div>
 
-              <!-- <div [routerLink]="'/welcome'" class="sidebar-subitem">
-                <div>Overview</div>
-              </div> -->
+
+
+
             </div>
           </div>
 
-          <div [routerLink]="'/cards'" class="sidebar-item" *ngIf="isCustomer">
+          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer">
             <div>Cards</div>
           </div>
 

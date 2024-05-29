@@ -1,0 +1,127 @@
+<!-- Page container -->
+<div class="container">
+
+  <div class="row pageTitle">
+    Bank Accounts
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2 col-8 offset-2 sliderDivWrapper">
+      <div class="row sliderDiv">
+
+        <!-- Left slider button -->
+        <div class="col-lg-1 col-md-1 col-sm-1 col-1 leftSliderButton d-flex justify-content-center align-items-center"
+             [ngClass]="{'transparent': shouldShowLeftArrow()}"
+             (click)="decrementDisplayedModelIndex()">&lt;</div>
+
+        <!-- Slider content in the middle -->
+        <div class="col-lg-10 col-md-10 col-sm-10 col-10 sliderMidContent">
+
+          <!-- Account number and account name -->
+          <div class="row accNumAndTitle">
+            <div class="accTitleDiv d-flex justify-content-center align-items-center" *ngIf="type === 'bankAccount'">{{displayedModel.accountType}}</div>
+            <div class="accTitleDiv d-flex justify-content-center align-items-center" *ngIf="type === 'card'">{{displayedModel.cardType}}</div>
+            <div class="accNumDiv d-flex justify-content-center align-items-center">Account number: {{displayedModel.accountNumber}}</div>
+          </div>
+
+          <!-- Account balance -->
+          <div class="row accBalance d-flex justify-content-center align-items-center" *ngIf="type === 'bankAccount'">{{displayedModel.balance}} {{displayedModel.currency}}</div>
+          <div class="row accBalance d-flex justify-content-center align-items-center" *ngIf="type === 'card'">{{displayedModel.cardLimit}}</div>
+
+          <!-- Div with newPayment and moreInfo buttons -->
+          <div class="row paymentAndInfoDiv " [ngClass]="{'justify-content-center': type !== 'bankAccount'}">
+            <div class="myBtnDiv col-lg-4 offset-lg-2 col-md-4 offset-md-2 col-sm-4 offset-sm-2 col-6 "  *ngIf="type === 'bankAccount'">
+              <button type="button" class="col-lg-12 col-md-12 col-sm-12 col-12 myBtn" (click)="newPaymentOnClick()">New payment</button>
+            </div>
+            <div class="myBtnDiv col-lg-4 col-md-4 col-sm-4 col-6">
+              <button type="button" class="col-lg-12 col-md-12 col-sm-12 col-12 myBtn" (click)="moreInfoOnClick()">More information</button>
+            </div>
+          </div>
+        </div>
+
+        
+        <!-- Right slider button -->
+        <div class="col-lg-1 col-md-1 col-sm-1 col-1 rightSliderButton d-flex justify-content-center align-items-center"
+             [ngClass]="{'transparent': shouldShowRightArrow()}"
+             (click)="incrementDisplayedModelIndex()">&gt;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table with transactions and exchanges -->
+  <div class="row">
+    <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
+      <!-- Table title, table headers, tabs and table div -->
+      <div class="transactionsContentContainer">
+        <!-- Title transactions overview -->
+        <div class="row transOverviewDiv d-flex align-items-center">
+          Transactions overview
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+          <!-- Tab Headers -->
+          <div class="tab-headers">
+            <div class="tab-header active" [ngClass]="{'active': activeTab === 'paymentsTab'}" (click)="setActiveTab('paymentsTab')">Payments</div>
+            <div class="tab-header" [ngClass]="{'active': activeTab === 'exchangesTab'}" (click)="setActiveTab('exchangesTab')">Exchange</div>
+          </div>
+
+          <!-- Tab Content -->
+          <!-- Transactions tab table -->
+          <div class="tab-content" *ngIf="activeTab === 'paymentsTab'">
+            <div class="scrollable-container">
+              <!-- Transactions Table -->
+              <table class="transactions-table">
+                <thead>
+                  <tr>
+                    <th>Bank Account</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let payment of displayedPayments; let idx = index" (click) = "paymentInfoPopUp(idx)">
+                    <td>{{ payment.recipientAccountNumber }}</td>
+                    <td>{{ payment.dateOfPayment | date: 'shortDate' }}</td>
+                    <td [ngStyle]="{'color': payment.status === 'COMPLETE' ? '#7cb94c' : payment.status === 'DENIED' ? '#ff5454' : payment.status === 'PROCESSING' ? '#fff9f0' : ''}">
+                      {{ payment.status }}
+                    </td>
+                    <td>{{ payment.amount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Exchanges tab table -->
+          <div class="tab-content" *ngIf="activeTab === 'exchangesTab'">
+            <div class="scrollable-container">
+              <!-- Transactions Table -->
+              <table class="transactions-table">
+                <thead>
+                  <tr>
+                    <th>Bank Account</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let exchange of displayedExchanges; let idx = index;" (click) = "exchangeInfoPopUp(idx)">
+                    <td>{{ exchange.recipientAccountNumber }}</td>
+                    <td>{{ exchange.dateOfPayment | date: 'shortDate' }}</td>
+                    <td [ngStyle]="{'color': exchange.status === 'COMPLETE' ? '#7cb94c' : exchange.status === 'DENIED' ? '#ff5454' : exchange.status === 'PROCESSING' ? '#fff9f0' : ''}">
+                      {{ exchange.status }}
+                    </td>
+                    <td>{{ exchange.amount }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
