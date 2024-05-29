@@ -7,13 +7,14 @@ import {StockListing} from "./stock.service";
 import {
   CapitalProfitDto,
   DecideOrderResponse,
-  OrderDto,
+  OrderDto, PublicCapitalDto,
   SellingRequest,
   StatusRequest
 } from "../model/model";
 
 import {BankAccountDto, CreateOrderRequest, ListingType, Order, OrderType, User} from "../model/model";
 import {map} from "rxjs/operators";
+import {number} from "zod";
 
 
 @Injectable({
@@ -271,7 +272,7 @@ export class OrderService {
   }
 
 
-  getPublicSecuritiesMock(): Observable<any> {
+  getPublicSecurities(): Observable<PublicCapitalDto[]> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -279,10 +280,10 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<User>(environment.baseUrl + '/publicSecurities', httpOptions);
+    return this.http.get<PublicCapitalDto[]>(environment.baseUrl + '/capital/public/stock/all', httpOptions);
   }
 
-  changePublicValueMock(id: number, publicValue: number): Observable<any> {
+  changePublicValue(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -292,9 +293,11 @@ export class OrderService {
     };
 
     const body = {
-      publicValue: publicValue
+      listingType: listingType,
+      listingId: listingId,
+      addToPublic: publicValue
     }
-    return this.http.put<User>(environment.baseUrl + '/changePublicValue/' + id , body, httpOptions);
+    return this.http.put<boolean>(environment.baseUrl + '/capital/customer/addPublic/', body, httpOptions);
   }
 
 

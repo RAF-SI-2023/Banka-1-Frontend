@@ -144,7 +144,7 @@
             <td>{{ security.reserved }}</td>
             <td [ngClass]="{'selected': security.showPopup}" >
                 <div class="cell-content"  (click)="showPopup(security)">
-                 {{ security.public }}
+                 {{ security.publicTotal }}
                 </div>
                 <div *ngIf="security.showPopup" class="popup">
                   <label for="publicInput">Set number of public actions: </label>

@@ -406,6 +406,7 @@ export interface CapitalProfitDto {
   total: number;
   ticker: string;
   reserved: number;
+  publicTotal: number;
 }
 
 
@@ -493,5 +494,13 @@ export interface Contract {
   ticker: string;
   amount: number;
   price: number;
+  listingId: number;
+}
+
+export interface PublicCapitalDto{
+  publicTotal: number;
+  isIndividual: boolean;
+  bankAccountNumber: string;
+  listingType: ListingType;
   listingId: number;
 }

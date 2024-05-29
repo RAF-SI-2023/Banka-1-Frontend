@@ -51,12 +51,16 @@ export class SecurityListComponent {
   quoteCurrencyFilter: string = '';
   baseCurrencyFilter: string = '';
 
+  isLegalPerson: boolean = false;
+
   constructor(
     private securityService: SecurityService,
     private stockService: StockService,
     private http: HttpClient,
     router: Router
   ) {
+    //ToDo: Da li je ovo rola ili sta
+    this.isLegalPerson = sessionStorage.getItem('role') === 'legalPerson';
     this._router = router;
   }
 

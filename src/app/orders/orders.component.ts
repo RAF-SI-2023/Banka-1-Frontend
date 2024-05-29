@@ -5,7 +5,7 @@ import {
   ListingType,
   OrderDto,
   OrderStatus,
-  OrderType,
+  OrderType, PublicCapitalDto,
   SellingRequest,
   StatusRequest
 } from "../model/model";
@@ -85,7 +85,7 @@ export class OrdersComponent {
   securities: any[] = [];
 
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified', 'Owner'];
-  publicSecurities: any[] = [];
+  publicSecurities: PublicCapitalDto[] = [];
   changedPublicValue: number = 0;
 
   constructor(private orderService: OrderService,
@@ -150,21 +150,23 @@ export class OrdersComponent {
   }
 
   getPublicSecurities(){
-    this.orderService.getPublicSecuritiesMock().subscribe( res =>{
+    this.orderService.getPublicSecurities().subscribe( res =>{
       this.publicSecurities = res;
+      console.log("public securities")
+      console.log(res);
     })
 
-    const ex1 = {
-      listingType: "Stock",
-      ticker: "AAPL",
-      amount: 4,
-      price: 1623.6,
-      profit: 1623.6,
-      lastModified: 0,
-      owner: "Customer",
-    }
-
-    this.publicSecurities.push(ex1);
+    // const ex1 = {
+    //   listingType: "Stock",
+    //   ticker: "AAPL",
+    //   amount: 4,
+    //   price: 1623.6,
+    //   profit: 1623.6,
+    //   lastModified: 0,
+    //   owner: "Customer",
+    // }
+    //
+    // this.publicSecurities.push(ex1);
   }
 
 
@@ -257,8 +259,9 @@ export class OrdersComponent {
 
   changePublicValue(element: any){
     console.log(element);
-    this.orderService.changePublicValueMock(element.listingId, this.changedPublicValue).subscribe(res => {
-      this.getSecurityOrders();
+    this.orderService.changePublicValue(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+      if(res)
+        this.getSecurityOrders();
     })
     element.showPopup = false;
   }
