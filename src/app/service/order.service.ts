@@ -199,7 +199,9 @@ export class OrderService {
       stopValue: stopValue,
       allOrNone: allOrNone
     };
-    console.log(orderRequest);
+
+    console.log("req")
+    console.log(orderRequest)
 
     try {
       const response = await this.http.post<boolean>(

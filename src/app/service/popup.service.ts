@@ -9,7 +9,7 @@ import { AddCustomerComponent } from '../add-customer/add-customer.component';
 import { AddBankAccountComponent } from '../add-bank-account/add-bank-account.component';
 import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
 import { VerificationPaymentPopupComponent } from '../verification-payment-popup/verification-payment-popup.component';
-import {CreatePaymentRequest, Forex, Future, Recipient} from '../model/model';
+import {CreatePaymentRequest, Forex, Future, ListingType, Recipient} from '../model/model';
 import { TransactionsDetailsPopupComponent } from '../transactions-details-popup/transactions-details-popup.component';
 import { NewRecipientComponent } from '../new-recipient/new-recipient.component';
 import { EditRecipientComponent } from '../edit-recipient/edit-recipient.component';
@@ -17,6 +17,8 @@ import {BuyPopupComponent} from "../buy-popup/buy-popup.component";
 import {SellPopupComponent} from "../sell-popup/sell-popup.component";
 import { DeleteRecipientConfirmationComponent } from '../delete-recipient-confirmation/delete-recipient-confirmation.component';
 import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
+import {BuyStockPopupComponent} from "../buy-stock-popup/buy-stock-popup.component";
+import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
 
 
 @Injectable({
@@ -113,4 +115,13 @@ export class PopupService {
       data: args
     });
   }
+
+  openBuyOrderPopup(args: any): void {
+    this.dialog.open(BuyStockPopupComponent, {data: args});
+  }
+
+  openCustomMessage(args: {title: string, header: string, message: string}): void {
+    this.dialog.open(CustomPopupComponent, {data: args})
+  }
+
 }
