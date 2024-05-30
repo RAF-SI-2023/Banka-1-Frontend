@@ -30,6 +30,9 @@ export class PublicSecurityOfferPopupComponent {
 
     security;
 
+    isEmployee: boolean;
+    isCustomer: boolean;
+
 
     constructor(
       public bankAccountService: BankAccountService,
@@ -37,6 +40,11 @@ export class PublicSecurityOfferPopupComponent {
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
       this.security = data;
+      this.isEmployee = sessionStorage.getItem('role') === 'employee' ||
+        sessionStorage.getItem('role') === 'admin' ||
+        sessionStorage.getItem('role') === 'agent' ||
+        sessionStorage.getItem('role') === 'supervizor';
+      this.isCustomer = sessionStorage.getItem('role') === 'customer';
     }
 
     onCancelButton(){
@@ -45,13 +53,18 @@ export class PublicSecurityOfferPopupComponent {
 
     onMakeAnOffer() {
       if (!this.validInputOffer() && !this.validInputVolume()) {
-        if (this.volumeOfStock != '' || this.priceOffer != '') {
+        if (this.volumeOfStock != '' && this.priceOffer != '') {
           const volume = parseFloat(this.volumeOfStock);
           const offer = parseFloat(this.priceOffer);
           if (volume >= 0 || offer >= 0) {
-            if (volume > offer) {
-              this.bankAccountService.makeAnOffer(this.security, volume, offer);
+            if (volume < offer) {
+              if(this.isCustomer){
+                this.bankAccountService.makeAnOfferCustomer(this.security, volume, offer);
+              } else if(this.isEmployee){
+                this.bankAccountService.makeAnOfferEmployee(this.security, volume, offer);
+              }
               this.warnMessage = "";
+              this.dialogRef.close();
             } else {
               this.warnMessage = "Price offer needs to be bigger then volume."
             }

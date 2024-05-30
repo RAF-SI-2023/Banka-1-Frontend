@@ -526,3 +526,12 @@ export interface OptionsDto{
   priceChange: number;
   volume: number;
 }
+
+export interface ContractCreateDto{
+  amountToBuy: number;
+  offerPrice: number;
+  bankAccountNumber: string;
+  listingId: number;
+  listingType: ListingType;
+  ticker: string;
+}

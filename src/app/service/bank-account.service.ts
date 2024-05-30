@@ -1,7 +1,16 @@
 import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
+import {
+  BankAccount,
+  Exchange,
+  Recipient,
+  Payment,
+  NewLimitDto,
+  ListingType,
+  ContractCreateDto,
+  PublicCapitalDto
+} from '../model/model';
 import { environment } from '../../../environment';
 
 @Injectable({
@@ -195,8 +204,39 @@ export class BankAccountService {
     });
   }
 
+  makeAnOfferCustomer(security: PublicCapitalDto, volume: number, offer: number){
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = { headers: headers };
+    const body: ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      // ToDo: gde je ticker?
+      ticker: "AAPL"
+    }
+    return this.httpClient.post("/contract/customer",null,options);
+  }
 
-  makeAnOffer(security: any, volume: number, offer: number){
-    //ToDo: napraviti HTTP req
+
+  makeAnOfferEmployee(security: any, volume: number, offer: number){
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = { headers: headers };
+    const body: ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      // ToDo: gde je ticker?
+      ticker: "AAPL"
+    }
+
+    return this.httpClient.post("/contract/employee",body ,options);
   }
 }

@@ -150,23 +150,21 @@ export class OrdersComponent {
   }
 
   getPublicSecurities(){
-    this.orderService.getPublicSecurities().subscribe( res =>{
-      this.publicSecurities = res;
-      console.log("public securities")
-      console.log(res);
-    })
+    // this.orderService.getPublicSecurities().subscribe( res =>{
+    //   this.publicSecurities = res;
+    //   console.log("public securities")
+    //   console.log(res);
+    // })
 
-    // const ex1 = {
-    //   listingType: "Stock",
-    //   ticker: "AAPL",
-    //   amount: 4,
-    //   price: 1623.6,
-    //   profit: 1623.6,
-    //   lastModified: 0,
-    //   owner: "Customer",
-    // }
-    //
-    // this.publicSecurities.push(ex1);
+    const ex1 : PublicCapitalDto = {
+      publicTotal: 123,
+      isIndividual: true,
+      bankAccountNumber: "string",
+      listingType: ListingType.STOCK,
+      listingId: 123
+    }
+
+    this.publicSecurities.push(ex1);
   }
 
 
@@ -276,7 +274,7 @@ export class OrdersComponent {
     security.showPopup = false;
   }
 
-  offerSecurity(security: any){
+  offerSecurity(security: PublicCapitalDto){
     this.popupService.openPublicSecuritiesPopup(security);
   }
 

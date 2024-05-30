@@ -15,11 +15,11 @@ export class TransformPublicSecuritiesPipe implements PipeTransform {
       // LAST_MODIFIED: security.lastModified,
       // OWNER: security.owner,
       SYMBOL: "AAPL",
-      AMOUNT: 10000,
+      AMOUNT: security.publicTotal,
       PRICE: 3012,
       PROFIT: 3012,
       LAST_MODIFIED: 0,
-      OWNER: "Nastasja",
+      OWNER: security.bankAccountNumber,
       original: security // Include the entire original user object for internal use
     }));
   }
