@@ -33,6 +33,7 @@ import { LegalPersonsComponent } from './legal-persons/legal-persons.component';
 import { BankProfitComponent } from './bank-profit/bank-profit.component';
 import { BankAccountAdminComponent } from './bank-account-admin/bank-account-admin.component';
 import { TransactionDetailsAdminComponent } from './transaction-details-admin/transaction-details-admin.component';
+import {OtcComponent} from "./otc/otc.component";
 
 
 export const routes: Routes = [
@@ -146,6 +147,10 @@ export const routes: Routes = [
   },
   {
     path: 'legal-persons', component: LegalPersonsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['admin'] }
+  },
+  {
+    path: 'otc', component: OtcComponent, canActivate: [PositionsGuard],
     data: { roles: ['admin'] }
   },
 

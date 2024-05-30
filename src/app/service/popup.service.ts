@@ -19,6 +19,7 @@ import { DeleteRecipientConfirmationComponent } from '../delete-recipient-confir
 import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
 import { LegalPerson } from '../model/model';
 import { JoinLegalPersonAndCustomerPopUpComponent } from '../join-legal-person-and-customer-pop-up/join-legal-person-and-customer-pop-up.component';
+import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
 
 
 @Injectable({
@@ -121,6 +122,12 @@ export class PopupService {
   openEditRecipientPopup(recipient: Recipient): MatDialogRef<EditRecipientComponent> {
     return this.dialog.open(EditRecipientComponent, {
       data: { recipient }
+    });
+  }
+
+  openPublicSecuritiesPopup(args: any): void {
+    this.dialog.open(PublicSecurityOfferPopupComponent, {
+      data: args
     });
   }
 }

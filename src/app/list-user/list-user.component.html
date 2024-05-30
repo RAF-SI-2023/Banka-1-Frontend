@@ -33,8 +33,8 @@
         <div class="filter-row">
           <div class="left-row">
 
-              <label class="label" >Position:</label>
-              <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
+            <label class="label" >Position:</label>
+            <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
 
             <transparent-text-field class="searchTF" [(text)]="firstName" [fieldName]="'By name'"></transparent-text-field>
             <transparent-text-field class="searchTF" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>
@@ -72,7 +72,6 @@
           <div class="left-row">
             <div class="filter-input">
               <transparent-text-field [(text)]="searchEmail" [fieldName]="'Search by email'"></transparent-text-field>
-
             </div>
             <div class="search-icon">
               <button (click)="filter()" class="button-image">

@@ -1,0 +1,26 @@
+[
+    {
+        "owner": "ME",
+        "stock": 123123123,
+        "outstandingShares": 3080212,
+        "exchangeName": "name", 
+        "dividendYield": 0.052,
+        "status": "approved"    
+    },
+    {
+        "owner": "ME",
+        "stock": 123123123,
+        "outstandingShares": 3080212,
+        "exchangeName": "name", 
+        "dividendYield": 0.052,
+        "status": "approved"    
+    },
+    {
+        "owner": "ME",
+        "stock": 123123123,
+        "outstandingShares": 3080212,
+        "exchangeName": "name", 
+        "dividendYield": 0.052,
+        "status": "approved"    
+    }
+]
