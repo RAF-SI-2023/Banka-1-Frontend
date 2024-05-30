@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
   template: `
     <div class="line-text-field-container">
 <!--      <label for="lineTextField" class="field-label">{{ fieldName }}</label>-->
-      <input type="text" class="line-text-field" id="lineTextField" [(ngModel)]="text" (ngModelChange)="onTextChange($event)">
+      <input type="text" class="line-text-field" id="lineTextField" [(ngModel)]="text" [type]="type" (ngModelChange)="onTextChange($event)">
     </div>
   `,
   styles: [`
@@ -37,6 +37,7 @@ import { FormsModule } from '@angular/forms';
 export class LineTextField {
   @Input() text: String = "";
   @Input() fieldName: String = ""; // This is the input for the field label
+  @Input() type: String = "";
   @Output() textChange = new EventEmitter<string>();
 
   onTextChange(value: string) {

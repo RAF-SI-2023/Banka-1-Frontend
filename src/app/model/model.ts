@@ -17,6 +17,12 @@ export interface User{
     permissions:Permissions[]
 }
 
+export enum OTCTab {
+  OVERVIEW = "overview",
+  PUBLIC = "public",
+  ACTIVE_SELL =  "active-sell",
+  ACTIVE_BUY = "active-buy"
+}
 
 export enum StatusRequest{
   APPROVED="APPROVED",
@@ -494,4 +500,14 @@ export interface Contract {
   amount: number;
   price: number;
   listingId: number;
+}
+
+export interface PublicOffer {
+  security: string;
+  symbol: string;
+  amount: number;
+  price: number;
+  profit: number;
+  lastModified: Date;
+  owner: string;
 }
