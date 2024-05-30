@@ -6,7 +6,7 @@ presubmits:
   # PROMENITI PRI KOPIRANJU
   # Name treba da bude u formatu "pull-<naziv-repozitorijuma>-test", npr.
   # pull-banka-1-frontend-test ili pull-banka-2-frontend-test
-  - name: pull-vezbe-frontend-test
+  - name: pull-banka-1-frontend-test
     # always_run znači da će se job pokrenuti za svaki commit,
     # nezavisno od toga šta taj commit menja.
     always_run: true
