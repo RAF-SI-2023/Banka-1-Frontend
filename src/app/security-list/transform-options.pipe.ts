@@ -1,29 +1,26 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Future } from './model/model';
+import {OptionsDto} from "../model/model";
 
 @Pipe({
-  name: 'transformFuture',
+  name: 'transformOptions',
   standalone: true,
 })
-export class TransformFuturePipe implements PipeTransform {
-  transform(futures: Future[]): any {
-    return futures.map((fut: Future) => {
+export class TransformOptionsPipe implements PipeTransform {
+  transform(options: OptionsDto[]): any {
+    return options.map((opt: OptionsDto) => {
+      const date = new Date(opt.expirationDate);
+      const formattedDate = new Intl.DateTimeFormat("en", {month: "long", year: "2-digit", day: "numeric"}).format(date);
+
       return {
-        // ticker: fut.ticker,
-        // name: fut.name,
-        // exchangeName: fut.exchangeName,
-        // lastRefresh: new Date(fut.lastRefresh).toLocaleString(),
-        // price: fut.price,
-        // high: fut.high,
-        // low: fut.low,
-        // priceChange: fut.priceChange,
-        // volume: fut.volume,
-        contractSize: fut.contractSize,
-        contractUnit: fut.contractUnit,
-        openInterest: fut.openInterest,
-        settlementDate: fut.settlementDate,
-        originalFuture: fut,
+        stockListing: opt.ticker,
+        optionType: opt.optionType,
+        strikePrice: opt.strikePrice,
+        impliedVolatility: opt.impliedVolatility,
+        openInterest: opt.openInterest,
+        settlementDate: formattedDate,
+        original: opt,
       };
     });
   }
+
 }

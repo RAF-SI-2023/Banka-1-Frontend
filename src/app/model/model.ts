@@ -425,7 +425,8 @@ export interface CreateOrderRequest {
 export enum ListingType {
   STOCK = "STOCK",
   FUTURE = "FUTURE",
-  FOREX = "FOREX"
+  FOREX = "FOREX",
+  OPTIONS = "OPTIONS"
 }
 
 
@@ -503,4 +504,25 @@ export interface PublicCapitalDto{
   bankAccountNumber: string;
   listingType: ListingType;
   listingId: number;
+}
+
+export interface OptionsDto{
+  ticker: string;
+  optionType: string;
+  strikePrice: number;
+  currency: string;
+  impliedVolatility: number;
+  openInterest: number;
+  expirationDate: number;
+
+  listingId: number;
+  listingType: string;
+  name: string;
+  exchangeName: string;
+  lastRefresh: number;
+  price: number;
+  high: number;
+  low: number;
+  priceChange: number;
+  volume: number;
 }
