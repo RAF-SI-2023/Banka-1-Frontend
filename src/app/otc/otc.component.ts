@@ -1,15 +1,22 @@
 import { Component } from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {FilterByStatusPipeModule} from "../orders/FilterByStatusPipe";
-import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
-import {TableComponentModule} from "../welcome/redesign/TableComponent";
-import {TransformSecuritiesPipeModule} from "../orders/TransformSecuritiesPipe";
-import {Contract, OTC, StockListing} from "../model/model";
-import {OtcService} from "../service/otc.service";
-import {StockService} from "../service/stock.service";
-import {forkJoin} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {TableComponentStatusModule} from "../welcome/redesign/TableComponentStatus";
+import { DatePipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
+import { FilterByStatusPipeModule } from '../orders/FilterByStatusPipe';
+import { OrangeButtonModule } from '../welcome/redesign/OrangeButton';
+import { TableComponentModule } from '../welcome/redesign/TableComponent';
+import { TransformSecuritiesPipeModule } from '../orders/TransformSecuritiesPipe';
+import {
+  Contract,
+  OTC,
+  OTCTab,
+  PublicOffer,
+  StockListing,
+} from '../model/model';
+import { OtcService } from '../service/otc.service';
+import { StockService } from '../service/stock.service';
+import { forkJoin } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { TableComponentStatusModule } from '../welcome/redesign/TableComponentStatus';
+import { PopupService } from '../service/popup.service';
 
 @Component({
   selector: 'app-otc',
@@ -23,29 +30,67 @@ import {TableComponentStatusModule} from "../welcome/redesign/TableComponentStat
     OrangeButtonModule,
     TableComponentModule,
     TransformSecuritiesPipeModule,
-    TableComponentStatusModule
+    TableComponentStatusModule,
   ],
   templateUrl: './otc.component.html',
-  styleUrl: './otc.component.css'
+  styleUrl: './otc.component.css',
 })
 export class OtcComponent {
-  headersOTCs = ['Owner', 'Stock', 'Outstanding Shares', 'Exchange Name', 'Divided Yield'];
-  selectedTab: "overview" = "overview";
+  headersOTCs = [
+    'Owner',
+    'Stock',
+    'Outstanding Shares',
+    'Exchange Name',
+    'Divided Yield',
+  ];
+  headersPublic = [
+    'Security',
+    'Symbol',
+    'Amount',
+    'Price',
+    'Profit',
+    'Last Modified',
+    'Owner',
+  ];
+  headersShares = [
+    'Owner',
+    'Stock',
+    'Outstanding Shares',
+    'Exchange Name',
+    'Last Divided Yield',
+  ];
+
+  selectedTab: string = 'overview';
   otcToContractIdMap: Map<OTC, number> = new Map();
   contracts: Contract[] = [];
   stocks: StockListing[] = [];
   otcs: OTC[] = [];
+  publicOffers: PublicOffer[] = [];
+  activeSell: OTC[] = [];
+  activeBuy: OTC[] = []
 
-  constructor(private otcService: OtcService, private stockService: StockService, private http: HttpClient) {}
+  constructor(
+    private otcService: OtcService,
+    private stockService: StockService,
+    private http: HttpClient,
+    private popup: PopupService
+  ) {}
 
   async ngOnInit() {
-    this.loadOTCs()
+    this.loadOTCs();
+    this.loadPublicOffers();
+    this.loadActiveBuy();
+    this.loadActiveSell();
   }
 
-  async loadOTCs(){
+  async loadOTCs() {
     forkJoin({
-      contracts: this.http.get<Contract[]>('/assets/mocked_banking_data/contracts-mocked.json'),
-      stocks: this.http.get<StockListing[]>('/assets/mocked_banking_data/stocks-mocked.json')
+      contracts: this.http.get<Contract[]>(
+        '/assets/mocked_banking_data/contracts-mocked.json'
+      ),
+      stocks: this.http.get<StockListing[]>(
+        '/assets/mocked_banking_data/stocks-mocked.json'
+      ),
     }).subscribe(({ contracts, stocks }) => {
       console.log('Contracts:', contracts);
       console.log('Stocks:', stocks);
@@ -68,37 +113,69 @@ export class OtcComponent {
     // });
   }
 
+  async loadPublicOffers() {
+    this.http
+      .get<PublicOffer[]>('/assets/mocked_banking_data/public-offers.json')
+      .subscribe((offers) => {
+        this.publicOffers = offers;
+      });
+  }
+
+  async loadActiveSell() {
+    this.http
+      .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+      .subscribe((offers) => {
+        this.activeSell = offers;
+      });
+  }
+
+  async loadActiveBuy() {
+    this.http
+      .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+      .subscribe((offers) => {
+        this.activeBuy = offers;
+      });
+  }
+
+  togglePopupOffer() {
+    this.popup.openPublicSecuritiesPopup(this);
+  }
+
+  setTab(tabName: string) {
+    this.selectedTab = tabName;
+  }
+
   updateOTCStatus(otc: any, newStatus: 'Approved' | 'Denied') {
-    if(otc.status === newStatus)
-      return;
+    if (otc.status === newStatus) return;
 
     const contractId = this.otcToContractIdMap.get(otc);
     console.log('Contract ID:', contractId);
 
     if (contractId !== undefined) {
       if (newStatus === 'Approved')
-         this.otcService.approveOTC(contractId).subscribe(
-           response => {
-             console.log('Response to successfully changing status:' + response);
-           },
-           error => {
-             console.error('Error updating status, this is response: ' + error);
-           });
-      else
-        this.otcService.denyOTC(contractId).subscribe(
-          response => {
+        this.otcService.approveOTC(contractId).subscribe(
+          (response) => {
             console.log('Response to successfully changing status:' + response);
           },
-          error => {
+          (error) => {
             console.error('Error updating status, this is response: ' + error);
-          });
-
+          }
+        );
+      else
+        this.otcService.denyOTC(contractId).subscribe(
+          (response) => {
+            console.log('Response to successfully changing status:' + response);
+          },
+          (error) => {
+            console.error('Error updating status, this is response: ' + error);
+          }
+        );
     } else {
       console.error('Contract ID not found for OTC', otc);
     }
 
-    for(let current of this.otcs){
-      if(current === otc){
+    for (let current of this.otcs) {
+      if (current === otc) {
         current.status = newStatus;
         break;
       }
@@ -107,18 +184,16 @@ export class OtcComponent {
     // this.loadOTCs();
   }
 
-
-
   mergeLists(contracts: Contract[], stocks: StockListing[]): OTC[] {
     const stockMap = new Map<number, StockListing>();
 
-    stocks.forEach(stock => {
+    stocks.forEach((stock) => {
       stockMap.set(stock.listingId, stock);
     });
 
     const result: OTC[] = [];
 
-    contracts.forEach(contract => {
+    contracts.forEach((contract) => {
       const stock = stockMap.get(contract.listingId);
       if (stock) {
         const otc: OTC = {
@@ -127,7 +202,7 @@ export class OtcComponent {
           outstandingShares: stock.outstandingShares.toString(),
           exchangeName: stock.exchangeName,
           dividendYield: stock.dividendYield.toString(),
-          status: contract.bankApproval ? 'Approved' : 'Pending'
+          status: contract.bankApproval ? 'Approved' : 'Pending',
         };
         result.push(otc);
         this.otcToContractIdMap.set(otc, contract.contractId);
@@ -136,5 +211,4 @@ export class OtcComponent {
 
     return result;
   }
-
 }
