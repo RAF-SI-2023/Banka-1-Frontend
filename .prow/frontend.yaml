@@ -57,7 +57,7 @@ presubmits:
               # po potrebi promeniti da se pokreću pojedinačni servisi, npr.
               # docker compose up -d <naziv-servisa>
               # Takođe po potrebi dodati --build flag.
-              docker compose -f docker.compose.yaml up -d
+              docker compose up -d
               # popd
 
               ###########################################
