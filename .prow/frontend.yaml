@@ -15,16 +15,6 @@ presubmits:
     # repozitorijuma u kome se izvršava job. Ovde ovu opciju koristimo
     # da kloniramo backend repozitorijum kako bi mogli da pokrenemo
     # potrebne backend servise koristeći Docker Compose.
-    extra_refs:
-      - org: RAF-SI-2023
-        # PROMENITI PRI KOPIRANJU
-        # Ovde ubaciti naziv vašeg backend repozitorijuma
-        repo: Banka-1-Backend
-        # PROMENITI PRI KOPIRANJU
-        # Ovde ubaciti naziv brancha iz backend repozitorijuma
-        # koji hoćete da klonirate
-        base_ref: main
-        path_alias: "backend"
     spec:
       containers:
         # "image" koji se koristi ovde je specijalan tip image-a, tzv. "build image"
@@ -61,14 +51,14 @@ presubmits:
               # backend servise potrebne za rad frontenda.
               start-docker.sh
 
-              pushd ../backend
+              # pushd ../backend
               # PROMENITI PRI KOPIRANJU
               # Pokreće ceo Docker Compose stack za backend,
               # po potrebi promeniti da se pokreću pojedinačni servisi, npr.
               # docker compose up -d <naziv-servisa>
               # Takođe po potrebi dodati --build flag.
               docker compose -f docker.compose.yaml up -d
-              popd
+              # popd
 
               ###########################################
               # PROMENITI PRI KOPIRANJU
