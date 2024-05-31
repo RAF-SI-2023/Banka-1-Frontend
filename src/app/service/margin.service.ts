@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import {Margin} from "../model/model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
-import {environment} from "../../../environment";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarginService {
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.userService;
 
   constructor(private http: HttpClient) { }
 
@@ -37,7 +37,7 @@ export class MarginService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environment.baseUrl + "/contract/supervisor/getAllContracts", {headers})
+        this.http.get(environment.userService + "/", {headers})
       )) as Margin[];
     } catch (e) {
       return [];
