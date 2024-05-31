@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="page">
+    <div class="security-title">Margin</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <div (click)="setTab('margin_accounts')" class="{{ selectedTab === 'margin_accounts' ? 'tab active-tab' : 'tab' }}">
+          Overview
+        </div>
+
+        <hr />
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'margin_accounts'">
+        <app-dynamic-table-margin
+          [headersArray]="headersMargins"
+          [dataArray]="margins"
+          [showMarginAccount]="true"
+        >
+          <ng-template #marginAccountColumn let-row>
+            <div  (click)="navigateToDetails(row.marginAccount)">
+              {{row.marginAccount }}
+            </div>
+          </ng-template>
+
+          <ng-template #marginCallColumn let-row>
+            <orange-button *ngIf="row.marginCall === 'True'" [buttonName]=row.marginCall (click)="openPopUp(row)">
+              {{row.marginCall}}
+            </orange-button>
+
+            <gray-button *ngIf="row.marginCall === 'False'" [buttonName]=row.marginCall>
+              {{row.marginCall}}
+            </gray-button>
+          </ng-template>
+        </app-dynamic-table-margin>
+
+      </div>
+
+    </div>
+  </div>
+</div>

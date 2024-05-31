@@ -521,3 +521,87 @@ export interface PublicOffer {
   lastModified: Date;
   owner: string;
 }
+
+export interface Margin {
+  marginAccount: string;
+  currency: string;
+  security: string;
+  investedFunds: number;
+  borrowedFunds: number;
+  maintenanceMargin: number;
+  marginCall: boolean;
+}
+
+export interface MarginTransactionDetails {
+  order: string;
+  customer: string;
+  type: string;
+  investment: string;
+  date: string;
+  interest: string;
+  borrowedMoney: string;
+  maintenanceMargin: string;
+}
+
+export interface Margin {
+  marginAccount: string;
+  currency: string;
+  security: string;
+  investedFunds: number;
+  borrowedFunds: number;
+  maintenanceMargin: number;
+  marginCall: boolean;
+}
+
+export interface MarginTransactionDetails {
+  order: string;
+  customer: string;
+  type: string;
+  investment: string;
+  date: string;
+  interest: string;
+  borrowedMoney: string;
+  maintenanceMargin: string;
+}
+
+export interface Margin {
+  marginAccount: string;
+  currency: string;
+  security: string;
+  investedFunds: number;
+  borrowedFunds: number;
+  maintenanceMargin: number;
+  marginCall: boolean;
+}
+
+export interface MarginTransactionDetails {
+  order: string;
+  customer: string;
+  type: string;
+  investment: string;
+  date: string;
+  interest: string;
+  borrowedMoney: string;
+  maintenanceMargin: string;
+}
+
+export interface Margin {
+  marginAccount: string;
+  currency: string;
+  security: string;
+  investedFunds: number;
+  borrowedFunds: number;
+  maintenanceMargin: number;
+  marginCall: boolean;
+}
+
+export interface MarginTransactionDetails {
+  order: string;
+  customer: string;
+  type: string;
+  investment: string;
+  date: string;
+  interest: string;
+  borrowedMoney: string;
+  maintenanceMargin: string;
+}

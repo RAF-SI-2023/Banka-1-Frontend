@@ -20,6 +20,7 @@ import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/
 import { LegalPerson } from '../model/model';
 import { JoinLegalPersonAndCustomerPopUpComponent } from '../join-legal-person-and-customer-pop-up/join-legal-person-and-customer-pop-up.component';
 import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
+import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
 
 
 @Injectable({
@@ -129,5 +130,12 @@ export class PopupService {
     this.dialog.open(PublicSecurityOfferPopupComponent, {
       data: args
     });
+  }
+
+  openMarginCallPopup(row: any) {
+    this.dialog.open(MarginCallPopUpComponent, {
+      data: row
+    });
+    console.log('Opening margin call popup...');
   }
 }
