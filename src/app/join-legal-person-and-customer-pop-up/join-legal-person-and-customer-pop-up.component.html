@@ -1,0 +1,21 @@
+<div class="popup-container">
+    <div class="popup-header">
+        <span style="color: var(--banka-white)">Join customer with legal person</span>
+        <span class="close-icon" (click)="close()">X</span>
+    </div>
+
+    <div class="form-group">
+        <label class="label" >Position:</label>
+        <dropdown-input 
+            [inputName]="'position'" 
+            [valueNames]="customersFullNames" 
+            [values]="customers" 
+            (valueToChange)="onSelectionChange($event)">
+        </dropdown-input>
+    </div>
+
+    <div class="bottom-buttons">
+        <outline-orange-button [buttonName]="'Cancel'" (click)="close()"></outline-orange-button>
+        <orange-button [buttonName]="'Join'" (click)="join()"></orange-button>
+      </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <h1 style="color: var(--banka-white)">Add New Legal Person</h1>
+    <button class="closeBtn" (click)="cancel()">X</button>
+  </div>
+  <hr style="background-color: black; margin-top: 0; height: 1px;">
+
+  <div class="popup-body">
+
+      <!-- Row that contains forms fields -->
+      <div class="row">
+        <!-- FROM Fields (Form consists of left and right columns with fields) -->
+        <div class="form-container">
+
+            <!-- Field in the LEFT column of the popUp -->
+            <div class="left-section">
+              <!-- Company name field and validators -->
+              <div class="form-group">
+                  <label for="companyName">Company name:</label>
+                  <input type="text" id="companyName" [(ngModel)]="addNewLegalPersonData.companyName" name="companyName" required #companyNameModel="ngModel" [ngClass]="{ 'invalid-input': companyNameModel.invalid && (companyNameModel.dirty || companyNameModel.touched) }"/>
+                  <div *ngIf="companyNameModel.invalid && (companyNameModel.dirty || companyNameModel.touched)" class="error-message">
+                  <div *ngIf="companyNameModel.hasError('required')" style="color: red;">Company name is required.</div>
+                  <div *ngIf="companyNameModel.hasError('pattern')" style="color: red;">Invalid email format.</div>
+                  </div>
+              </div>
+
+              <!-- PIB field and validators -->
+              <div class="form-group">
+                  <label for="pib">PIB:⠀</label>
+                  <input type="text" id="pib" [(ngModel)]="addNewLegalPersonData.pib" name="pib" required pattern="[0-9]+" required #pibModel="ngModel" [ngClass]="{ 'invalid-input': pibModel.invalid && (pibModel.dirty || pibModel.touched) }" />
+                  <div *ngIf="pibModel.invalid && (pibModel.dirty || pibModel.touched)" class="error-message">
+                    <div *ngIf="pibModel.hasError('required')" style="color: red;">PIB is required.</div>
+                    <div *ngIf="pibModel.hasError('pattern')" style="color: red;">PIB must contain only digits 0-9.</div>
+                  </div>
+              </div>
+
+              <!-- Address and validators -->
+              <div class="form-group">
+                  <label for="address">Address:</label>
+                  <input type="text" id="address" [(ngModel)]="addNewLegalPersonData.address" name="address" required #addressModel="ngModel" required [ngClass]="{ 'invalid-input': addressModel.invalid && (addressModel.dirty || addressModel.touched) }"/>
+                      <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="error-message">
+                      <div *ngIf="addressModel.hasError('required')" style="color: red;">Address is required.</div>
+                  </div>
+              </div>
+
+            </div>
+
+            <!-- Field in the RIGHT column of the popUp -->
+            <div class="right-section">
+
+              <!-- JMBG field and validators -->
+              <div class="form-group">
+                  <label for="jmbg">JMBG:</label>
+                  <input type="text" id="jmbg" [(ngModel)]="addNewLegalPersonData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
+                  <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
+                      <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
+                      <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
+                  </div>
+              </div>
+
+              <!-- CBA field and validators -->
+              <div class="form-group">
+                <label for="cba">CBA:⠀</label>
+                <input type="text" id="cba" [(ngModel)]="addNewLegalPersonData.cba" name="cba" required pattern="[0-9]+" #cbaModel="ngModel" [ngClass]="{ 'invalid-input': cbaModel.invalid && (cbaModel.dirty || cbaModel.touched) }"/>
+                <div *ngIf="cbaModel.invalid && (cbaModel.dirty || cbaModel.touched)" class="error-message">
+                  <div *ngIf="cbaModel.hasError('required')" style="color: red;">CBA is required.</div>
+                  <div *ngIf="cbaModel.hasError('pattern')" style="color: red;">CBA must contain only digits 0-9.</div>
+                </div>
+              </div>
+
+              <!-- cancel and add buttons -->
+              <div class="bottom-buttons">
+                <outline-orange-button [buttonName]="'Cancel'" (click)="cancel()"></outline-orange-button>
+                <orange-button [buttonName]="'Add'" (click)="add()"></orange-button>
+              </div>
+
+            </div>
+        </div>
+      </div>
+
+      
+  </div>
+</div>

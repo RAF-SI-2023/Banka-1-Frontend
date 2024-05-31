@@ -36,9 +36,36 @@
 
 .tabs-menu {
   width: 100%;
+
+  display: flex;
+  list-style: none;
+  margin-bottom: 0px;
+
+  list-style: none;
+
+  gap: 25px;
+
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
 }
 
-.tabs-menu ul {
+.tab {
+
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #B3ABA0;
+
+  border-radius: 14px 12px 0px 0px;
+
+  cursor: pointer;
+
+  padding: 20px 27px 15px;
+
+  user-select: none;
+}
+
+/* .tabs-menu ul {
   display: flex;
   list-style: none;
   gap: 48px;
@@ -62,7 +89,7 @@
 .tabs-menu ul li:hover {
   background: #131319;
   color: #FFB72B;
-}
+} */
 
 .active-tab {
   background: #131319;

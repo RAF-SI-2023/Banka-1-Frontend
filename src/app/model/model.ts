@@ -17,6 +17,12 @@ export interface User{
     permissions:Permissions[]
 }
 
+export enum OTCTab {
+  OVERVIEW = "overview",
+  PUBLIC = "public",
+  ACTIVE_SELL =  "active-sell",
+  ACTIVE_BUY = "active-buy"
+}
 
 export enum StatusRequest{
   APPROVED="APPROVED",
@@ -473,6 +479,16 @@ export interface CreatePaymentRequest {
     paymentPurpose?: string;
 }
 
+export interface LegalPerson {
+  firstName?: string;
+  lastName?: string;
+  companyName?: string;
+  jmbg?: string;
+  pib?: string;
+  cba?: string;
+  address?: string;
+}
+
 export interface OTC {
   owner: string;
   stock: string;
@@ -527,11 +543,20 @@ export interface OptionsDto{
   volume: number;
 }
 
-export interface ContractCreateDto{
+export interface ContractCreateDto {
   amountToBuy: number;
   offerPrice: number;
   bankAccountNumber: string;
   listingId: number;
   listingType: ListingType;
   ticker: string;
+}
+export interface PublicOffer {
+  security: string;
+  symbol: string;
+  amount: number;
+  price: number;
+  profit: number;
+  lastModified: Date;
+  owner: string;
 }

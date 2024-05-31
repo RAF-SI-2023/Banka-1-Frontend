@@ -6,8 +6,8 @@
 
   <div class="login-form-container">
     <h1 style="color: var(--banka-orange)">{{ isEmployee ? 'Employee Sign In' : 'Sign In' }}</h1>
-    <transparent-text-field [(text)]="model.email" fieldName="Email" style="width: 100%; max-width: 400px;" [p]="false"></transparent-text-field>
-    <transparent-text-field [(text)]="model.password" fieldName="Password" type="password" style="width: 100%; max-width: 400px;" [p]="true" ></transparent-text-field>
+    <transparent-text-field [type]="'text'" [(text)]="model.email" fieldName="Email" style="width: 100%; max-width: 400px;" [p]="false"></transparent-text-field>
+    <transparent-text-field [type]="'text'" [(text)]="model.password" fieldName="Password" type="password" style="width: 100%; max-width: 400px;" [p]="true" ></transparent-text-field>
     <orange-button [buttonName]="'Login'" (click)="onSubmit()" style="width: 60%; max-width: 400px;"></orange-button>
 
     <div class="login-links-container">

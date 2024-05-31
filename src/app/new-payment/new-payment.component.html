@@ -1,132 +1,147 @@
 
 <div class="container">
-<div class="pageTitle">New payment</div>
-<div class="container mt-5" style="font-family: Roboto, sans-serif;">
-    <div class="row">
-        <div class="m-auto body-content col-8 ">
-            <div class="row justify-content-between">
-                <div class="form-group m-3 col-10 col-md-4 ">
-                    <label for="inflow">Account number:</label>
-                    <ng-container *ngIf="!selectedAccount; else labelTemplate"> 
-                        <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
-                          <option value="" disabled selected>Select Inflow Account</option>
-                          <option class="opt" *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
+    <div class="pageTitle">New payment</div>
+    <div class="container mt-5" style="font-family: Roboto, sans-serif;">
+        <div class="row">
+            <div class="m-auto body-content col-8 ">
+                <div class="row justify-content-between">
+                    <div class="form-group m-3 col-10 col-md-4 ">
+                        <label for="inflow">Account number:</label>
+                        <!-- *ngIf="!selectedAccount; else labelTemplate" -->
+                        <ng-container *ngIf="!selectedAccount; else labelTemplate"> 
+                            <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
+                              <option value="" disabled selected>Select Inflow Account</option>
+                              <option class="opt" *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
+                            </select>
+                            <div *ngIf="inflowModel.invalid && (inflowModel.dirty || inflowModel.touched)" class="error-message">
+                              <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
+                            </div>
+                          </ng-container>
+                          
+                          <ng-template #labelTemplate>
+                            <!-- <label>Selected Account Number: {{ selectedAccount?.accountNumber }}</label> -->
+                            <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
+                                <option [value]="selectedAccount?.accountNumber" disabled selected>{{ selectedAccount?.accountNumber }}</option>
+                                <option class="opt" *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
+                              </select>
+                              <div *ngIf="inflowModel.invalid && (inflowModel.dirty || inflowModel.touched)" class="error-message">
+                                <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
+                              </div>
+                          </ng-template>
+                        <!-- <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
+                            <option value="" disabled selected>Select Inflow Account</option>
+                            <option *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
                         </select>
                         <div *ngIf="inflowModel.invalid && (inflowModel.dirty || inflowModel.touched)" class="error-message">
-                          <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
-                        </div>
-                      </ng-container>
-                      
-                      <ng-template #labelTemplate>
-                        <select (change)="updateAmount($event)" [(ngModel)]="payment.senderAccountNumber" id="inflow" name="inflow" required #inflowModel="ngModel" [ngClass]="{ 'invalid-input': inflowModel.invalid && (inflowModel.dirty || inflowModel.touched) }">
-                            <option [value]="selectedAccount?.accountNumber" disabled selected>{{ selectedAccount?.accountNumber }}</option>
-                            <option class="opt" *ngFor="let account of accounts" [value]="account.accountNumber">{{ account.accountNumber }}</option>
-                          </select>
-                          <div *ngIf="inflowModel.invalid && (inflowModel.dirty || inflowModel.touched)" class="error-message">
                             <div *ngIf="inflowModel.hasError('required')" style="color: red;">Inflow account number is required.</div>
-                          </div>
-                      </ng-template>
-                    
+                        </div> -->
+                    </div>
+                    <div class="form-group m-3 col-10 col-md-4">
+                        <label class="rightText">Available resources:</label>
+                        <label class="rightText" >
+                            {{ selectedAccount ? selectedAccount.balance?.toFixed(2) + ' ' + selectedAccount.currency : '0.00' }}
+                        </label>                
+                    </div>
                 </div>
-                <div class="form-group m-3 col-10 col-md-4">
-                    <label class="rightText">Available resources:</label>
-                    <label class="rightText" >
-                        {{ selectedAccount ? selectedAccount.balance?.toFixed(2) + ' ' + selectedAccount.currency : '0.00' }}
-                    </label>                
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex flex-column col-4 m-3">
+                        <div class="mt-5">
+                            <div class="form-group">
+                                <label for="recipientName">Recipient Name:</label>
+                                <input type="text" [(ngModel)]="payment.recipientName" id="recipientName" name="recipientName" required pattern="^[a-zA-Z\s]*$" #recipientNameModel="ngModel"
+                                [ngClass]="{ 'invalid-input': recipientNameModel.invalid && (recipientNameModel.dirty || recipientNameModel.touched) }"/>
+                                <div *ngIf="recipientNameModel.invalid && (recipientNameModel.dirty || recipientNameModel.touched)" class="error-message">
+                                <div *ngIf="recipientNameModel.hasError('required')" style="font-size: x-small; color: red;">Recipient name is required.</div>
+                                <div *ngIf="recipientNameModel.errors && recipientNameModel.errors['pattern'] && recipientNameModel.touched" 
+                                    class="error-message" 
+                                    [class.error-style]="recipientNameModel.errors['pattern']">
+                                    Recipient name must only contain letters and spaces.
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="form-group">
+                                <label for="recipientAccountNumber">Recipient Account Number:</label>
+                                <input type="text" [(ngModel)]="payment.recipientAccountNumber" id="recipientAccountNumber" name="recipientAccountNumber"   required #recipientAccountNumberModel="ngModel"
+                                [ngClass]="{ 'invalid-input': recipientAccountNumberModel.invalid && (recipientAccountNumberModel.dirty || recipientAccountNumberModel.touched) }"/>
+                                <div *ngIf="recipientAccountNumberModel.invalid && (recipientAccountNumberModel.dirty || recipientAccountNumberModel.touched)" class="error-message">
+                                <div *ngIf="recipientAccountNumberModel.hasError('required')" style="font-size: x-small; color: red;">Recipient Account Number is required.</div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="form-group">
+                                <label for="amount">Amount:</label>
+                                <input type="text" [(ngModel)]="payment.amount" id="amount" name="amount" 
+                                    required pattern="^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$" #amountModel="ngModel"
+                                    [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }"/>
+                                <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
+                                    <div *ngIf="amountModel.errors && amountModel.errors['required']" style="font-size: x-small; color: red;">Amount is required.</div>
+                                    <div *ngIf="amountModel.errors && amountModel.errors['pattern']" style="font-size: x-small; color: red;">Amount must be a positive number.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="form-group">
+    
+                                <label for="referenceNumber">Reference Number:</label>
+                                <input type="text" [(ngModel)]="payment.referenceNumber" id="referenceNumber" name="referenceNumber" required 
+                                    pattern="^\d*$" #referenceNumberModel="ngModel"
+                                    [ngClass]="{ 'invalid-input': referenceNumberModel.invalid && (referenceNumberModel.dirty || referenceNumberModel.touched) }"/>
+                                <div *ngIf="referenceNumberModel.invalid && (referenceNumberModel.dirty || referenceNumberModel.touched)" class="error-message">
+                                    <div *ngIf="referenceNumberModel.errors && referenceNumberModel.errors['pattern']" style="font-size: x-small; color: red;">Reference Number must be numerical.</div>
+                                </div>
+                               
+    
+                                <label for="referenceNumber">Sender account number:</label>
+                                <input [disabled]="true" type="text" [(ngModel)]="payment.senderAccountNumber"  id="referenceNumber" name="referenceNumber" required pattern="^\d+(\.\d+)?$"  />
+                                <!-- <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
+                                    <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
+                                    <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
+                                </div> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column col-4 m-3">
+                        <div class="mt-5">
+                            <div class="form-group">
+                                <label for="paymentCode">Payment Code:</label>
+                                <input type="text" [(ngModel)]="payment.paymentCode" id="paymentCode" name="paymentCode"
+                                    pattern="^([1-9]\d*|0)?$" #paymentCodeModel="ngModel"
+                                    [ngClass]="{ 'invalid-input': paymentCodeModel.invalid && (paymentCodeModel.dirty || paymentCodeModel.touched) }"/>
+                                <div *ngIf="paymentCodeModel.invalid && (paymentCodeModel.dirty || paymentCodeModel.touched)" class="error-message">
+                                    <div *ngIf="paymentCodeModel.errors && paymentCodeModel.errors['pattern']" style="font-size: x-small; color: red;">Payment code must be a positive integer or empty.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <div class="form-group">
+                                <label for="paymentPurpose">Purpose of payment:</label>
+    
+                                <input type="text" [(ngModel)]="payment.paymentPurpose"  id="paymentPurpose" name="paymentPurpose"required #paymentPurposeModel="ngModel"
+                                [ngClass]="{ 'invalid-input': paymentPurposeModel.invalid && (paymentPurposeModel.dirty || paymentPurposeModel.touched) }"/>
+                                <div *ngIf="paymentPurposeModel.invalid && (paymentPurposeModel.dirty || paymentPurposeModel.touched)" class="error-message">
+                                    <div *ngIf="paymentPurposeModel.hasError('required')" style="font-size: x-small; color: red;">Payment purpose is required.</div>
+                                </div>
+    
+                                <!-- <input type="text" [(ngModel)]="payment.paymentPurpose"  id="paymentPurpose" name="paymentPurpose" required pattern="^\d+(\.\d+)?$"  /> -->
+                                <!-- <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
+                                    <div *ngIf="amountModel.hasError('required')" style="color: red;">Amount is required.</div>
+                                    <div *ngIf="amountModel.hasError('pattern')" style="color: red;">Invalid amount format (must be a number).</div>
+                                </div> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-5 mb-5">
+                    <button class="btn btn-warning btn-lg w-25 m-auto" (click)="submit()">Submit</button>
                 </div>
             </div>
-            <div class="d-flex justify-content-center">
-                <div class="d-flex flex-column col-4 m-3">
-                    <div class="mt-5">
-                        <div class="form-group">
-                            <label for="recipientName">Recipient Name:</label>
-                            <input type="text" [(ngModel)]="payment.recipientName" id="recipientName" name="recipientName" required pattern="^[a-zA-Z\s]*$" #recipientNameModel="ngModel"
-                            [ngClass]="{ 'invalid-input': recipientNameModel.invalid && (recipientNameModel.dirty || recipientNameModel.touched) }"/>
-                            <div *ngIf="recipientNameModel.invalid && (recipientNameModel.dirty || recipientNameModel.touched)" class="error-message">
-                            <div *ngIf="recipientNameModel.hasError('required')" style="font-size: x-small; color: red;">Recipient name is required.</div>
-                            <div *ngIf="recipientNameModel.errors && recipientNameModel.errors['pattern'] && recipientNameModel.touched" 
-                                class="error-message" 
-                                [class.error-style]="recipientNameModel.errors['pattern']">
-                                Recipient name must only contain letters and spaces.
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="form-group">
-                            <label for="recipientAccountNumber">Recipient Account Number:</label>
-                            <input type="text" [(ngModel)]="payment.recipientAccountNumber" id="recipientAccountNumber" name="recipientAccountNumber"   required #recipientAccountNumberModel="ngModel"
-                            [ngClass]="{ 'invalid-input': recipientAccountNumberModel.invalid && (recipientAccountNumberModel.dirty || recipientAccountNumberModel.touched) }"/>
-                            <div *ngIf="recipientAccountNumberModel.invalid && (recipientAccountNumberModel.dirty || recipientAccountNumberModel.touched)" class="error-message">
-                            <div *ngIf="recipientAccountNumberModel.hasError('required')" style="font-size: x-small; color: red;">Recipient Account Number is required.</div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="form-group">
-                            <label for="amount">Amount:</label>
-                            <input type="text" [(ngModel)]="payment.amount" id="amount" name="amount" 
-                                required pattern="^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$" #amountModel="ngModel"
-                                [ngClass]="{ 'invalid-input': amountModel.invalid && (amountModel.dirty || amountModel.touched) }"/>
-                            <div *ngIf="amountModel.invalid && (amountModel.dirty || amountModel.touched)" class="error-message">
-                                <div *ngIf="amountModel.errors && amountModel.errors['required']" style="font-size: x-small; color: red;">Amount is required.</div>
-                                <div *ngIf="amountModel.errors && amountModel.errors['pattern']" style="font-size: x-small; color: red;">Amount must be a positive number.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="form-group">
-
-                            <label for="referenceNumber">Reference Number:</label>
-                            <input type="text" [(ngModel)]="payment.referenceNumber" id="referenceNumber" name="referenceNumber" required 
-                                pattern="^\d*$" #referenceNumberModel="ngModel"
-                                [ngClass]="{ 'invalid-input': referenceNumberModel.invalid && (referenceNumberModel.dirty || referenceNumberModel.touched) }"/>
-                            <div *ngIf="referenceNumberModel.invalid && (referenceNumberModel.dirty || referenceNumberModel.touched)" class="error-message">
-                                <div *ngIf="referenceNumberModel.errors && referenceNumberModel.errors['pattern']" style="font-size: x-small; color: red;">Reference Number must be numerical.</div>
-                            </div>
-                           
-
-                            <label for="referenceNumber">Sender account number:</label>
-                            <input [disabled]="true" type="text" [(ngModel)]="payment.senderAccountNumber"  id="referenceNumber" name="referenceNumber" required pattern="^\d+(\.\d+)?$"  />
-                           
-
-                        </div>
-                    </div>
-                </div>
-                <div class="d-flex flex-column col-4 m-3">
-                    <div class="mt-5">
-                        <div class="form-group">
-                            <label for="paymentCode">Payment Code:</label>
-                            <input type="text" [(ngModel)]="payment.paymentCode" id="paymentCode" name="paymentCode"
-                                pattern="^([1-9]\d*|0)?$" #paymentCodeModel="ngModel"
-                                [ngClass]="{ 'invalid-input': paymentCodeModel.invalid && (paymentCodeModel.dirty || paymentCodeModel.touched) }"/>
-                            <div *ngIf="paymentCodeModel.invalid && (paymentCodeModel.dirty || paymentCodeModel.touched)" class="error-message">
-                                <div *ngIf="paymentCodeModel.errors && paymentCodeModel.errors['pattern']" style="font-size: x-small; color: red;">Payment code must be a positive integer or empty.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <div class="form-group">
-                            <label for="paymentPurpose">Purpose of payment:</label>
-
-                            <input type="text" [(ngModel)]="payment.paymentPurpose"  id="paymentPurpose" name="paymentPurpose"required #paymentPurposeModel="ngModel"
-                            [ngClass]="{ 'invalid-input': paymentPurposeModel.invalid && (paymentPurposeModel.dirty || paymentPurposeModel.touched) }"/>
-                            <div *ngIf="paymentPurposeModel.invalid && (paymentPurposeModel.dirty || paymentPurposeModel.touched)" class="error-message">
-                                <div *ngIf="paymentPurposeModel.hasError('required')" style="font-size: x-small; color: red;">Payment purpose is required.</div>
-                            </div>
-
-                           
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mt-5 mb-5">
-                <button class="btn btn-warning btn-lg w-25 m-auto" (click)="submit()">Submit</button>
-            </div>
+            
         </div>
-        
+    
     </div>
-
-</div>
-</div>
+    </div>
