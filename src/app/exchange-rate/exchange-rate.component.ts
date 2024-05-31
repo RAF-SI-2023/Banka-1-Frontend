@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {NgForOf} from "@angular/common";
-import {environment} from "../../../environment";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {ExchangeRate, TransformedExchangeRate} from "../model/model";
-import {Router} from "@angular/router";
-import {FormsModule} from "@angular/forms";
-import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
-import {TableComponentModule} from "../welcome/redesign/TableComponent";
+import { Component, OnInit } from '@angular/core';
+import { NgForOf } from "@angular/common";
+import { environment } from "../../environments/environment";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { ExchangeRate, TransformedExchangeRate } from "../model/model";
+import { Router } from "@angular/router";
+import { FormsModule } from "@angular/forms";
+import { OrangeButtonModule } from "../welcome/redesign/OrangeButton";
+import { TableComponentModule } from "../welcome/redesign/TableComponent";
 import { TransparentTextFieldModule } from "../welcome/redesign/TransparentTextField";
 
 @Component({
-    selector: 'app-exchange-rate',
-    standalone: true,
-    templateUrl: './exchange-rate.component.html',
-    styleUrl: './exchange-rate.component.css',
-    imports: [NgForOf,
-        FormsModule, OrangeButtonModule, TableComponentModule, TransparentTextFieldModule]
+  selector: 'app-exchange-rate',
+  standalone: true,
+  templateUrl: './exchange-rate.component.html',
+  styleUrl: './exchange-rate.component.css',
+  imports: [NgForOf,
+    FormsModule, OrangeButtonModule, TableComponentModule, TransparentTextFieldModule]
 })
-export class ExchangeRateComponent implements OnInit{
+export class ExchangeRateComponent implements OnInit {
   exchange: ExchangeRate[] = [];
   exchangeBackup: ExchangeRate[] = [];
   transformedExchangeRates: TransformedExchangeRate[] = [];
@@ -26,18 +26,17 @@ export class ExchangeRateComponent implements OnInit{
   headers = ['Selling symbol', 'Buying symbol', 'Selling Price', 'Buying Price'];
   _router: Router;
   searchString = ""
-this: any;
-  constructor(private http: HttpClient, router: Router, ) {
+  this: any;
+  constructor(private http: HttpClient, router: Router,) {
     this._router = router;
   }
 
   search() {
     this.transformedExchangeRates = this.transform(this.exchangeBackup);
-    this.transformedExchangeRates = this.transformedExchangeRates.filter(value =>
-    {
+    this.transformedExchangeRates = this.transformedExchangeRates.filter(value => {
       debugger;
       return value.baseCurrency.toLowerCase().includes(this.sellingFilter.toLowerCase())
-      && value.quoteCurrency.toLowerCase().includes(this.buyingFilter.toLowerCase())
+        && value.quoteCurrency.toLowerCase().includes(this.buyingFilter.toLowerCase())
     });
   }
   transform(exchangeArray: ExchangeRate[]): any[] {
@@ -74,14 +73,14 @@ this: any;
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    this.http.get<ExchangeRate[]>(environment.baseUrl + '/transfer/exchangeRates', {headers})
+    this.http.get<ExchangeRate[]>(environment.userService + '/transfer/exchangeRates', { headers })
       .subscribe(res => {
         this.exchangeBackup = this.exchange = res
         this.transformedExchangeRates = this.transform(this.exchangeBackup);
-      } );
+      });
   }
 }

@@ -1,6 +1,6 @@
-export const prodenvironment = {
+export const environment = {
     production: true,
-    userService: 'http://banka-1-dev.si.raf.edu.rs/user-service/api',
-    marketService: 'http://banka-1-dev.si.raf.edu.rs/market-service/api',
-    fetchingService: 'http://banka-1-dev.si.raf.edu.rs/fetching-service/api'
+    userService: 'http://localhost:8080',
+    marketService: 'http://localhost:8081',
+    fetchingService: 'http://localhost:8082'
 }
