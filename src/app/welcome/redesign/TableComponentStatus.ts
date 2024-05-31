@@ -3,7 +3,7 @@ import {CommonModule} from "@angular/common";
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-dynamic-table',
+  selector: 'app-dynamic-table-status',
   template: `
     <div *ngIf="!showStatus">
       <table>
@@ -123,7 +123,7 @@ import { Component, Input } from '@angular/core';
     /*}*/
   `]
 })
-export class TableComponent {
+export class TableComponentStatus {
   @Input() headersArray: string[] = [];
   @Input() dataArray: any[] = [];
   @Input() showAnotherColumn: boolean = false;
@@ -151,8 +151,8 @@ export class TableComponent {
   }
 }
 @NgModule({
-  declarations: [TableComponent],
+  declarations: [TableComponentStatus],
   imports: [CommonModule],
-  exports: [TableComponent],
+  exports: [TableComponentStatus],
 })
-export class TableComponentModule {}
+export class TableComponentStatusModule {}

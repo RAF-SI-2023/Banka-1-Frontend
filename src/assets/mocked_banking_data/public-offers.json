@@ -1,0 +1,29 @@
+[
+    {
+        "security": "Future",
+        "symbol": "AAPL",
+        "amount": 12,
+        "price": 1231,
+        "profit": 555,
+        "lastModified": "23.3.2024",
+        "owner": "bank3"
+    },
+    {
+        "security": "Future",
+        "symbol": "AAPL",
+        "amount": 12,
+        "price": 1231,
+        "profit": 555,
+        "lastModified": "23.3.2024",
+        "owner": "bank3"
+    },
+    {
+        "security": "Future",
+        "symbol": "AAPL",
+        "amount": 12,
+        "price": 1231,
+        "profit": 555,
+        "lastModified": "23.3.2024",
+        "owner": "bank3"
+    }
+]

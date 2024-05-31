@@ -1,0 +1,163 @@
+.popup-container {
+  width: 80%;
+  max-width: 600px;
+  border: 1px solid #4d5071;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+background-color: var(--banka-dark-gray);
+  border-radius: 10px;
+font-family: "Jura", sans-serif;
+
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  padding: 20px 20px 0px 20px;
+
+}
+
+.closeBtn{
+  cursor: pointer;
+  background-color: transparent;
+color: var(--banka-white);
+  font-size: 0.8em;
+  border: none;
+}
+
+.popup-body{
+  padding: 20px;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+.col{
+  flex-direction: column;
+}
+
+
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+}
+
+.form-group {
+margin-bottom: 10px;
+font-size: 0.8em;
+}
+
+.form-group.active-checkbox {
+display: flex;
+align-items: center;
+}
+
+.form-group.active-checkbox label {
+margin-top: 15%;
+}
+
+.form-group.buttonSl {
+margin-top: 20%;
+}
+
+.form-group.buttonSl button:first-child {
+margin-left: 10%;
+margin-right: 10%;
+width:40%;
+border-radius: 5px;
+}
+
+.form-group input {
+color: var(--banka-white);
+
+border: 2px solid var(--banka-white);
+}
+
+.form-group label {
+color: var(--banka-white);
+
+}
+
+.form-group.buttonSl button:last-child {
+background-color: #103145;
+color: #fff;
+width:40%;
+border-radius: 5px;
+}
+
+.form-group.active-checkbox input[type="checkbox"] {
+margin-top: 15%;
+transform: scale(1.5);
+border: 2px solid #56b214;
+border-radius: 5px;
+}
+
+
+.left-section input,
+.right-section input,
+.right-section select {
+width: 90%;
+height:auto;
+box-sizing: border-box;
+border-radius: 5px;
+background-color: var(--banka-dark-gray);
+padding: 8px;
+
+}
+
+.right-section {
+  text-align: left;
+}
+
+.button-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.invalid-input {
+  border: 2px solid red !important;
+}
+
+.filter-dropdown {
+position: relative; 
+display: inline-block; 
+}
+
+.security-filter-select {
+background-color: var(--banka-dark-gray);
+color: var(--banka-white); 
+border: 2px solid var(--banka-white); 
+border-radius: 15px; 
+padding: 8px 24px 8px 12px; 
+cursor: pointer; 
+font-size: 1em; 
+}
+
+.filter-dropdown-add-customer::after {
+content: ''; 
+position: absolute; 
+border: 5px solid transparent; 
+border-top-color: var(--banka-white); 
+transform: translateY(-50%); 
+pointer-events: none; 
+}
+.label {
+color: var(--banka-white);
+}
+.bottom-buttons {
+margin-top: 25px;
+display: flex;
+justify-content: flex-end;
+gap: 16px;
+}
+
+
