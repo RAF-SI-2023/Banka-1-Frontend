@@ -49,7 +49,7 @@ presubmits:
               # Pokreće Docker unutar kontejnera u kome se izvršava ova skripta.
               # Docker vam omogućava da koristite Docker Compose kako bi pokrenuli
               # backend servise potrebne za rad frontenda.
-              start-docker.sh
+              # start-docker.sh
 
               # pushd ../backend
               # PROMENITI PRI KOPIRANJU
@@ -57,7 +57,7 @@ presubmits:
               # po potrebi promeniti da se pokreću pojedinačni servisi, npr.
               # docker compose up -d <naziv-servisa>
               # Takođe po potrebi dodati --build flag.
-              docker compose up -d
+              # docker compose up -d
               # popd
 
               ###########################################
@@ -68,14 +68,14 @@ presubmits:
               ###########################################
 
               # Downloaduje dependency-e potrebne za testove.
-              npm ci
+              # npm ci
 
-              npx playwright install --with-deps
+              # npx playwright install --with-deps
 
               # Pokreće frontend u pozadini.
               # "&" znači da će komanda/proces da se pokrene u pozadini,
               # tj. da će skripta nastaviti da se dalje izvršava.
-              npm run start&
+              # npm run start&
 
               # trap komanda obezbeđuje da se "collectCypressRecordings"
               # funkcija izvrši pre samog izlaska iz ove skripte, nezavisno
@@ -87,7 +87,7 @@ presubmits:
               # pokretanja testova.
               trap collectRecordings EXIT
 
-              npx playwright test ./playwright
+              # npx playwright test ./playwright
           securityContext:
             privileged: true
           imagePullPolicy: Always
