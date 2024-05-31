@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { BankAccount, CreatePaymentRequest } from '../model/model';
 
@@ -8,7 +8,7 @@ import { BankAccount, CreatePaymentRequest } from '../model/model';
 })
 export class PaymentService {
   
-  private apiUrl = environment.baseUrl+"/payment"; // Set your API endpoint here
+  private apiUrl = environment.userService+"/payment"; // Set your API endpoint here
 
   private selectedBankAccount: BankAccount|undefined;
   

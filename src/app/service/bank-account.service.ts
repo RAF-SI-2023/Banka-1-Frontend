@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getCustomer/${userId}`;
+    let url = environment.userService + `/account/getCustomer/${userId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }
@@ -38,7 +38,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getAdminAccounts/${userId}`;
+    let url = environment.userService + `/account/getAdminAccounts/${userId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }
@@ -57,7 +57,7 @@ export class BankAccountService {
     });
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/payment/getAll/${accountNumber}`;
+    let url = environment.userService + `/payment/getAll/${accountNumber}`;
 
     console.log("getPaymentsForAccount log:");
     console.log(sessionStorage.getItem('jwt'))
@@ -82,7 +82,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/transfer/getAll/${accountNumber}`;
+    let url = environment.userService + `/transfer/getAll/${accountNumber}`;
 
     return this.httpClient.get<Exchange[]>(url, options);
   }
@@ -99,7 +99,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.get<Recipient[]>(environment.baseUrl + '/recipients/getAll',{
+    return this.httpClient.get<Recipient[]>(environment.userService + '/recipients/getAll',{
       headers: headers
     });
 
@@ -110,7 +110,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.post(environment.baseUrl + '/recipients/add', {
+    return this.httpClient.post(environment.userService + '/recipients/add', {
       firstName: fistName,
       lastName: lastName,
       bankAccountNumber: bankAccountNumber
@@ -123,7 +123,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.put(environment.baseUrl + '/recipients/edit', recipient,{
+    return this.httpClient.put(environment.userService + '/recipients/edit', recipient,{
       headers: headers
     });
   }
@@ -132,7 +132,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.delete(environment.baseUrl + '/recipients/remove/'+recipient.id,{
+    return this.httpClient.delete(environment.userService + '/recipients/remove/'+recipient.id,{
       headers: headers
     });
   }
@@ -148,7 +148,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/employee/limits/newLimit`;
+    let url = environment.userService + `/employee/limits/newLimit`;
 
     return this.httpClient.put(url, {
       userId: newLimitDto.userId,
@@ -168,7 +168,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/employee/limits/reset/${userId}`;
+    let url = environment.userService + `/employee/limits/reset/${userId}`;
 
     return this.httpClient.put(url,null,{
       headers: headers
@@ -185,7 +185,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account`;
+    let url = environment.userService + `/account`;
 
     return this.httpClient.put(url, {
       bankAccountNumber: bankAccountNumber,

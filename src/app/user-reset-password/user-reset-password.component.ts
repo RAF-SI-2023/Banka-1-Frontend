@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {PopupService} from "../service/popup.service";
-import {environment} from "../../../environment";
+import {environment} from "../../environments/environment";
 import {FormsModule} from "@angular/forms";
 import {NgOptimizedImage} from "@angular/common";
 
@@ -44,9 +44,9 @@ export class UserResetPasswordComponent {
 
         var url;
         if(this.router.url.includes('employee'))
-          url = `${environment.baseUrl}/employee/newpassword/${this.token}`;
+          url = `${environment.userService}/employee/newpassword/${this.token}`;
         else
-          url = `${environment.baseUrl}/customer/newpassword/${this.token}`;
+          url = `${environment.userService}/customer/newpassword/${this.token}`;
 
         const body = { password: this.password };
 

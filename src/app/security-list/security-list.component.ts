@@ -15,7 +15,7 @@ import { TableComponentModule } from '../welcome/redesign/TableComponent';
 import { TransformSecurityPipe } from '../transform-security.pipe';
 import { Forex, Future, StockListing } from '../model/model';
 import { Router } from '@angular/router';
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { TransformFuturePipe } from '../transform-future.pipe';
 import { TransformForexPipe } from '../transform-forex.pipe';
 
@@ -117,7 +117,7 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      this.http.get<Forex[]>(environmentMarket.baseUrl + '/market/listing/get/forex', {headers})
+      this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
       .subscribe(
         (res) =>
           (this.forexBackup = this.forex =
@@ -133,7 +133,7 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      this.http.get<Future[]>(environmentMarket.baseUrl + '/market/listing/get/futures',{ headers })
+      this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
       .subscribe(
         (res) =>
           (this.futuresBackup = this.futures =

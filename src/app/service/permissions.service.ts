@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { Observable, of } from 'rxjs';
 import { User, Permissions } from '../model/model';
 
@@ -24,7 +24,7 @@ export class PermissionsService {
     permissionsToModify: string[],
     flag: boolean
   ) {
-    let url = environment.baseUrl + `/employee/permission/${userId}`;
+    let url = environment.userService + `/employee/permission/${userId}`;
 
     const jsonData = {
       permissions: permissionsToModify,
@@ -44,13 +44,13 @@ export class PermissionsService {
   }
 
   public getPermissions(): Observable<Permissions[]> {
-    return this.http.get<Permissions[]>(`${environment.baseUrl}/permission/getAll`);
+    return this.http.get<Permissions[]>(`${environment.userService}/permission/getAll`);
   }
 
   addUserPermissions(user: User) {
     let id = user.userId;
     const permissionsToModify: string[] = user.permissions.map(permission => permission.name);
-    let url = environment.baseUrl + '/employee/';
+    let url = environment.userService + '/employee/';
 
     let userToSend = {
       userId: id,

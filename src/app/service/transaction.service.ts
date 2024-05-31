@@ -4,8 +4,7 @@ import {BankAccount, Customer, TransactionBasics, TransactionDetails, Transactio
 
 import {Router} from "@angular/router";
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -19,7 +18,7 @@ export class TransactionService {
 
   constructor( private http: HttpClient, private router: Router) { }
 
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.userService;
 
 
 
@@ -65,7 +64,7 @@ export class TransactionService {
 
     const options = {headers: headers};
 
-    let url = environment.baseUrl + `/transaction/getCardTransactions/${cardNum}`;
+    let url = environment.userService + `/transaction/getCardTransactions/${cardNum}`;
 
     return this.http.get<TransactionDto[]>(url, options);
   }

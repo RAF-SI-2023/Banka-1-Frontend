@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import {Account, BankAccountDto} from '../model/model';
 
@@ -12,7 +12,7 @@ export class AccountService {
 
   constructor( private http: HttpClient, private router: Router) { }
 
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.userService;
 
 
   getCustomerAccounts(customerId: number): Observable<Account[]> {

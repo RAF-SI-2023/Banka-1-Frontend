@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgForOf} from "@angular/common";
-import {environmentMarket} from "../../../../../environment";
+import {environment} from "../../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Forex} from "../../../model/model";
 import {Router} from "@angular/router";
@@ -41,7 +41,7 @@ this: any;
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    this.http.get<Forex[]>(environmentMarket.baseUrl + '/market/listing/get/forex', {headers})
+    this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
       .subscribe(res => this.forexBackup = this.forex = res.map(val => { val.lastRefresh *= 1000; return val; }));
   }
 

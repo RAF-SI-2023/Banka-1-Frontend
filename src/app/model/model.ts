@@ -477,6 +477,16 @@ export interface CreatePaymentRequest {
     paymentPurpose?: string;
 }
 
+export interface LegalPerson {
+  firstName?: string;
+  lastName?: string;
+  companyName?: string;
+  jmbg?: string;
+  pib?: string;
+  cba?: string;
+  address?: string;
+}
+
 export interface OTC {
   owner: string;
   stock: string;

@@ -4,7 +4,7 @@ import {FormsModule} from "@angular/forms";
 import {PopupService} from "../service/popup.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environment";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-reset-password',
@@ -47,9 +47,9 @@ export class ResetPasswordComponent {
 
     var url;
     if(this.position==='customer')
-     url = `${environment.baseUrl}/customer/reset/${(trimmedEmail)}`; // Use encodeURIComponent to ensure the email is properly encoded in the URL
+     url = `${environment.userService}/customer/reset/${(trimmedEmail)}`; // Use encodeURIComponent to ensure the email is properly encoded in the URL
     else
-    url = `${environment.baseUrl}/employee/reset/${encodeURIComponent(trimmedEmail)}`; // Use encodeURIComponent to ensure the email is properly encoded in the URL
+    url = `${environment.userService}/employee/reset/${encodeURIComponent(trimmedEmail)}`; // Use encodeURIComponent to ensure the email is properly encoded in the URL
    
 
     this.http.post(url, {}).subscribe({

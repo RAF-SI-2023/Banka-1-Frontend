@@ -41,6 +41,10 @@
             <div>Orders</div>
           </div>
 
+          <div [routerLink]="'/legal-persons'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+            <div>Legal persons</div>
+          </div>
+
           <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
             <div>Bank accounts</div>
           </div>

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Profit } from '../model/model';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class ProfitService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/allProfit/${userId}`;
+    let url = environment.userService + `/allProfit/${userId}`;
 
     return this.httpClient.get<number>(url, options);
   }
@@ -33,7 +33,7 @@ export class ProfitService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/profitByAgents/${userId}`;
+    let url = environment.userService + `/profitByAgents/${userId}`;
 
     return this.httpClient.get<Profit[]>(url, options);
   }
