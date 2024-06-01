@@ -7,7 +7,7 @@
     <!-- Table with transactions and exchanges -->
     <div class="row">
         <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
-            
+
             <!-- Table title, table headers, tabs and table div -->
             <div class="recepientContentContainer">
                 <!-- Tabs, this page only have one tab for now -->
@@ -16,10 +16,10 @@
                     <div class="row tab-headers">
                         <div class="col-md-2 tab-header active d-flex justify-content-center align-items-center" [ngClass]="{'active': activeTab === 'overviewTab'}" (click)="setActiveTab('recipientsTab')">Overview</div>
                     </div>
-                
+
                     <!-- Tab Content -->
                     <!-- Overview tab  with legal persons table -->
-                    <div class="tab-content" *ngIf="activeTab === 'overviewTab'">                        
+                    <div class="tab-content" *ngIf="activeTab === 'overviewTab'">
                         <div class="scrollable-container">
                             <!-- Legal persons Table (class="transactions-table, this is because this css is copied from similar file, a good idea would be to add a component instead) -->
                             <table class="transactions-table">
@@ -31,7 +31,7 @@
                                         <th>CBA</th>
                                         <th>Address</th>
                                         <!-- blank charachters -->
-                                        <th>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</th> 
+                                        <th>⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Row with add legal person button -->

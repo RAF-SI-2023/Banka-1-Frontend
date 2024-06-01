@@ -26,9 +26,9 @@ export class LegalPersonService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/legalPersons/getAll`;
+    let url = environment.userService + `/company/all`;
 
-    return this.httpClient.get<LegalPerson[]>(url, options); 
+    return this.httpClient.get<LegalPerson[]>(url, options);
   }
 
   //Depending on shouldUseMockedDataForLegalPersons a mocked or real data should be returned
@@ -49,7 +49,7 @@ export class LegalPersonService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.post(environment.userService + '/legalPersons/save', {
+    return this.httpClient.post(environment.userService + '/company/create', {
       companyName: newLegalPerson.companyName,
       jmbg: newLegalPerson.jmbg,
       pib: newLegalPerson.pib,
@@ -69,6 +69,6 @@ export class LegalPersonService {
     const body = {legalPerson, customer};
     console.log(body);
 
-    return this.httpClient.post(environment.userService + '/legalPersons/join', body, {headers: headers});
+    return this.httpClient.post(environment.userService + '/company/join', body, {headers: headers});
   }
 }

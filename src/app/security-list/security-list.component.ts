@@ -102,7 +102,7 @@ export class SecurityListComponent {
   }
 
   async loadSecurities(): Promise<void> {
-  
+
 
     const stocks = await this.stockService.getStocks();
 
