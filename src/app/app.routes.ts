@@ -37,6 +37,8 @@ import {OtcComponent} from "./otc/otc.component";
 import {SecuritiesLegalPersonsComponent} from "./securities-legal-persons/securities-legal-persons.component";
 import {LegalPersonGuard} from "./guards/legalperson.guard";
 import {OrdersLegalPersonsComponent} from "./orders-legal-persons/orders-legal-persons.component";
+import {OtcCustomerComponent} from "./otc-customer/otc-customer.component";
+
 
 
 export const routes: Routes = [
@@ -168,7 +170,10 @@ export const routes: Routes = [
     path: 'otc', component: OtcComponent, canActivate: [PositionsGuard],
     data: { roles: ['admin'] }
   },
-
+  {
+    path: 'otc-customer', component: OtcCustomerComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
   // { path: 'customer/:customerId', component: UserDetailComponent},
 
 ];

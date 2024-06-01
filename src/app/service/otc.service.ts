@@ -12,7 +12,27 @@ export class OtcService {
 
   constructor(private http: HttpClient) { }
 
-  async getAllContracts() {
+  async getAllCustomerContracts() {
+    const jwt = sessionStorage.getItem("jwt");
+
+    if(!jwt) return [];
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    let resp;
+    try {
+      resp = (await firstValueFrom(
+        this.http.get(environment.userService + "/contract/customer/getAllContracts", {headers})
+      )) as Contract[];
+    } catch (e) {
+      return [];
+    }
+    return resp;
+  }
+
+  async getAllSupervisorContracts() {
     const jwt = sessionStorage.getItem("jwt");
 
     if(!jwt) return [];

@@ -45,6 +45,9 @@ export class PublicSecurityOfferPopupComponent {
         sessionStorage.getItem('role') === 'agent' ||
         sessionStorage.getItem('role') === 'supervizor';
       this.isCustomer = sessionStorage.getItem('role') === 'customer';
+      console.log(this.security.amount);
+      // console.log(this.security.publicOffers.id.amount);
+
     }
 
     onCancelButton(){
@@ -57,16 +60,23 @@ export class PublicSecurityOfferPopupComponent {
           const volume = parseFloat(this.volumeOfStock);
           const offer = parseFloat(this.priceOffer);
           if (volume >= 0 || offer >= 0) {
-            if (volume < offer) {
-              if(this.isCustomer){
+            if (volume < offer && volume >= this.security.amount) {
+              this.bankAccountService.makeAnOffer(this.security, volume, offer);
+              if (this.isCustomer) {
                 this.bankAccountService.makeAnOfferCustomer(this.security, volume, offer);
-              } else if(this.isEmployee){
+              } else if (this.isEmployee) {
                 this.bankAccountService.makeAnOfferEmployee(this.security, volume, offer);
               }
               this.warnMessage = "";
               this.dialogRef.close();
+              // if (volume >= 0 || offer >= 0) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+              // if (volume >= this.security.amount) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+              //   this.warnMessage = "Asked volume too high."
+              // } else {
+              //   this.bankAccountService.makeAnOffer(this.security, volume, offer);
+              // }
             } else {
-              this.warnMessage = "Price offer needs to be bigger then volume."
+              this.warnMessage = "Asked volume too high."
             }
           } else {
             this.warnMessage = "Both volume and price need to be positive numbers."

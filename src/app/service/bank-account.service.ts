@@ -224,11 +224,11 @@ export class BankAccountService {
   }
 
 
-  makeAnOfferEmployee(security: any, volume: number, offer: number){
+  makeAnOfferEmployee(security: any, volume: number, offer: number) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    const options = { headers: headers };
+    const options = {headers: headers};
     const body: ContractCreateDto = {
       amountToBuy: volume,
       offerPrice: offer,
@@ -239,6 +239,10 @@ export class BankAccountService {
       ticker: "AAPL"
     }
 
-    return this.httpClient.post("/contract/employee",body ,options);
+    return this.httpClient.post("/contract/employee", body, options);
+  }
+
+  makeAnOffer(security: any, volume: number, offer: number){
+    // Customer salje http, offer na public otc
   }
 }

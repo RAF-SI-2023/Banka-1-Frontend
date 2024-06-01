@@ -319,6 +319,18 @@ export interface Customer {
   isLegalEntity: boolean;
 }
 
+export interface CustomerWithAccounts {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  jmbg: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  accountIds: Account[];
+}
+
 export interface CustomerTable {
   name: string;
   email: string;

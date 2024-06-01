@@ -49,6 +49,7 @@ export class StockService {
     let resp;
     try {
       resp = (await firstValueFrom(
+        // TODO Racunam da radi sa redisom
         this.http.get(environment.marketService + "/market/listing/get/stock", {headers})
       )) as StockListing[];
     } catch (e) {
