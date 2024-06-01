@@ -1,0 +1,82 @@
+<div class="container">
+  <div class="page">
+    <div class="security-title">Security</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <ul>
+          <li
+            class="{{ selectedTab === 'stocks' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('stocks')"
+          >
+            Stock
+          </li>
+          <li
+            class="{{ selectedTab === 'future' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('future')"
+          >
+            Future
+          </li>
+          <li
+            class="{{ selectedTab === 'options' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('options')"
+          >
+            Options
+          </li>
+        </ul>
+        <hr />
+      </div>
+      <div class="history-tab" *ngIf="selectedTab === 'stocks'">
+        <app-dynamic-table
+          [headersArray]="[
+                'Outstanding Shares',
+                'Exchange Name',
+                'Dividend Yield',
+              ]"
+          [dataArray]="securities | transformSecurity"
+          [showActions]="true"
+        >
+          <ng-template #actionsColumn let-row>
+            <orange-button [buttonName]="'BUY'" (click)="openBuyStockPopup(row.originalStock.listingId)"></orange-button>
+          </ng-template>
+        </app-dynamic-table>
+      </div>
+
+      <div class="history-tab" *ngIf="selectedTab === 'future'">
+        <app-dynamic-table
+          [headersArray]="[
+            'Contract Size',
+            'Contract Unit',
+            'Open Interest',
+            'Settlement Date'
+          ]"
+          [dataArray]="futures | transformFuture"
+          [showActions]="true"
+        >
+          <ng-template #actionsColumn let-row>
+            <orange-button [buttonName]="'BUY'" (click)="openBuyFuturePopup(row.original.listingId)"></orange-button>
+          </ng-template>
+        </app-dynamic-table>
+      </div>
+
+      <div class="history-tab" *ngIf="selectedTab === 'options'">
+        <app-dynamic-table
+          [headersArray]="[
+            'Stock listing',
+            'Option type',
+            'Strike price',
+            'Implied volatility',
+            'Open interest',
+            'Settlement date'
+          ]"
+          [dataArray]="options | transformOptions"
+          [showActions]="true"
+        >
+          <ng-template #actionsColumn let-row>
+            <orange-button [buttonName]="'BUY'" (click)="buyOption(row.original)"></orange-button>
+          </ng-template>
+        </app-dynamic-table>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -32,12 +32,13 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
     jmbg: '',
     phoneNumber: '',
     gender: '',
-    address: ''
+    address: '',
+    isLegalEntity: false
   };
 
-  constructor(private dialogRef: MatDialogRef<JoinLegalPersonAndCustomerPopUpComponent>, 
-    @Inject(MAT_DIALOG_DATA) public legalPerson: LegalPerson, 
-    private customerService: CustomerService, 
+  constructor(private dialogRef: MatDialogRef<JoinLegalPersonAndCustomerPopUpComponent>,
+    @Inject(MAT_DIALOG_DATA) public legalPerson: LegalPerson,
+    private customerService: CustomerService,
     private popup:PopupService,
     private legalPersonService: LegalPersonService) {}
 
@@ -75,7 +76,7 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
     else
     {
       this.legalPersonService.joinLegalPersonAndCustomer(this.legalPerson, this.selectedCustomerToJoin);
-      //TODO: this.popup.openPopup("Succcess", "Successfully joined.");  --Add this when backend is done and not mocked
+      this.popup.openPopup("Succcess", "Successfully joined.");
       this.dialogRef.close();
     }
   }

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CreateOrderRequest, ListingType, OptionsDto, OrderType, User} from "../model/model";
-import {environment} from "../../../environment";
 import {number} from "zod";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,6 @@ export class OptionsService {
       })
     };
 
-    return this.http.get<OptionsDto[]>(environment.baseUrl + '/listing/get/options', httpOptions);
+    return this.http.get<OptionsDto[]>(environment.marketService + '/listing/get/options', httpOptions);
   }
 }

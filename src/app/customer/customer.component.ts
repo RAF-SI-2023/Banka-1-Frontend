@@ -53,7 +53,8 @@ export class CustomerComponent implements OnInit{
       jmbg: "1234567890123",
       phoneNumber: "+1234567890",
       gender: "Male",
-      address: "123 Main Street"
+      address: "123 Main Street",
+      isLegalEntity: true,
     },
     {
       userId: 2,
@@ -63,7 +64,8 @@ export class CustomerComponent implements OnInit{
       jmbg: "9876543210987",
       phoneNumber: "+1987654321",
       gender: "Female",
-      address: "456 Elm Street"
+      address: "456 Elm Street",
+      isLegalEntity: false,
     },
     {
       userId: 3,
@@ -73,7 +75,8 @@ export class CustomerComponent implements OnInit{
       jmbg: "5555555555555",
       phoneNumber: "+1555555555",
       gender: "Female",
-      address: "789 Oak Avenue"
+      address: "789 Oak Avenue",
+      isLegalEntity: true,
     }
   ];
 

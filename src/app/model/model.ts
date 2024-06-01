@@ -315,6 +315,8 @@ export interface Customer {
   phoneNumber: string;
   gender: string;
   address: string;
+
+  isLegalEntity: boolean;
 }
 
 export interface CustomerTable {
@@ -405,7 +407,7 @@ export enum OrderType{
 
 export interface CapitalProfitDto {
   bankAccountNumber: string;
-  currencyName: string;
+  // currencyName: string;
   listingType: ListingType;
   listingId: number;
   totalPrice: number;
@@ -413,6 +415,7 @@ export interface CapitalProfitDto {
   ticker: string;
   reserved: number;
   publicTotal: number;
+  averageBuyingPrice: number
 }
 
 

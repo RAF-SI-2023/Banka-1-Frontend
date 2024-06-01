@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders,  HttpParams} from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {Limit, User, UserToEdit} from '../model/model';
-import { environment } from "../../../environment";
+import { environment } from "../../environments/environment";
 import {PopupService} from "./popup.service";
 import {Router} from "@angular/router";
 import { BehaviorSubject } from 'rxjs';
@@ -12,7 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class UserService {
 
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.userService;
 
   private userToEdit: User | undefined;
 
@@ -41,7 +41,7 @@ export class UserService {
     });
     console.log(headers);
     const options = { headers: headers };
-    let url = environment.baseUrl + `/employee/limits/getAll`;
+    let url = environment.userService + `/employee/limits/getAll`;
     return this.http.get<Limit[]>(url, options);
   }
 

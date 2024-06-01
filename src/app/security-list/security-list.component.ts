@@ -15,7 +15,7 @@ import { TableComponentModule } from '../welcome/redesign/TableComponent';
 import { TransformSecurityPipe } from '../transform-security.pipe';
 import {Forex, Future, ListingType, OptionsDto, OrderType, StockListing} from '../model/model';
 import { Router } from '@angular/router';
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { TransformFuturePipe } from '../transform-future.pipe';
 import { TransformForexPipe } from '../transform-forex.pipe';
 import {PopupService} from "../service/popup.service";
@@ -58,6 +58,8 @@ export class SecurityListComponent {
 
   options: any[] = [];
 
+  isLegalPerson: boolean = false;
+
   // isLegalPerson: boolean = false;
 
   constructor(
@@ -69,7 +71,9 @@ export class SecurityListComponent {
     private popupService: PopupService,
     router: Router
   ) {
-    if(!this.isLegalPerson()){
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+
+    if(this.isLegalPerson){
       this.selectedTab = 'options'
     }
     this._router = router;
@@ -83,10 +87,6 @@ export class SecurityListComponent {
 
   }
 
-  isLegalPerson(): boolean{
-    //ToDo: back jos ne zna sta ce
-    return true;
-  }
 
 
 
@@ -131,7 +131,6 @@ export class SecurityListComponent {
 
     const stocks = await this.stockService.getStocks();
 
-    console.log(stocks);
 
     this.securities = stocks;
     this.securitiesBackup = stocks;
@@ -195,7 +194,7 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      this.http.get<Forex[]>(environmentMarket.baseUrl + '/market/listing/get/forex', {headers})
+      this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
       .subscribe(
         (res) =>
           (this.forexBackup = this.forex =
@@ -211,7 +210,7 @@ export class SecurityListComponent {
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      this.http.get<Future[]>(environmentMarket.baseUrl + '/market/listing/get/futures',{ headers })
+      this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
       .subscribe(
         (res) =>
           (this.futuresBackup = this.futures =
@@ -318,7 +317,6 @@ export class SecurityListComponent {
   }
 
   setSelectedTab(tab: string) {
-    console.log(tab);
     this.selectedTab = tab;
   }
 
@@ -331,7 +329,6 @@ export class SecurityListComponent {
   }
 
   navigateToStock(stockId: number): void {
-    console.log(stockId);
     this._router.navigateByUrl(`/security/stock/${stockId}`);
   }
 
@@ -344,8 +341,7 @@ export class SecurityListComponent {
   }
 
   async buyOption(options: OptionsDto){
-    //ToDo: vrednosti za volume, limitValue, stopValue i allOrNone?
-    let response = await this.orderService.buyOrder(OrderType.BUY, options.listingId.toString(), ListingType.OPTIONS, -1, -1, -1, false);
+    let response = await this.orderService.buyOrder(OrderType.BUY, options.listingId.toString(), ListingType.OPTIONS, options.volume, 0, 0, false);
     if (response) {
       this.popupService.openCustomMessage({
         title: "Options",

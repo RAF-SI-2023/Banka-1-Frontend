@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom, Observable} from "rxjs";
-import {environment, environmentMarket} from "../../../environment";
+import {environment} from "../../environments/environment";
 import {StockListing} from "./stock.service";
 
 import {
@@ -35,7 +35,7 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<User>(environment.baseUrl + '/employee/' + id, httpOptions);
+    return this.http.get<User>(environment.userService + '/employee/' + id, httpOptions);
   }
 
 
@@ -53,7 +53,7 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environment.baseUrl + "/orders/getAll", {headers})
+        this.http.get(environment.userService + "/orders/getAll", {headers})
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -72,7 +72,7 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environment.baseUrl + "/orders/supervisor/getAll", {headers})
+        this.http.get(environment.userService + "/orders/supervisor/getAll", {headers})
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -92,7 +92,7 @@ export class OrderService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environment.baseUrl + "/orders/getAll", {headers})
+        this.http.get(environment.userService + "/orders/getAll", {headers})
       )) as OrderDto[];
     } catch (e) {
       return [];
@@ -149,7 +149,7 @@ export class OrderService {
 
     try {
       return await firstValueFrom(
-        this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "APPROVED"}, { headers })
+        this.http.put<DecideOrderResponse>(environment.userService + '/orders/decideOrder/' + orderId, {"status": "APPROVED"}, { headers })
       );
     } catch (error) {
       console.error('Error while approving order:', error);
@@ -164,7 +164,7 @@ export class OrderService {
 
     try {
       return await firstValueFrom(
-        this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": "DENIED"}, { headers })
+        this.http.put<DecideOrderResponse>(environment.userService + '/orders/decideOrder/' + orderId, {"status": "DENIED"}, { headers })
       );
     } catch (error) {
       console.error('Error while denying order:', error);
@@ -178,7 +178,7 @@ export class OrderService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
 
-    return this.http.put<DecideOrderResponse>(environment.baseUrl + '/orders/decideOrder/' + orderId, {"status": request}, {headers});
+    return this.http.put<DecideOrderResponse>(environment.userService + '/orders/decideOrder/' + orderId, {"status": request}, {headers});
   }
 
   async buyOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
@@ -200,12 +200,10 @@ export class OrderService {
       allOrNone: allOrNone
     };
 
-    console.log("req")
-    console.log(orderRequest)
 
     try {
       const response = await this.http.post<boolean>(
-        environment.baseUrl + '/orders', orderRequest, httpOptions).toPromise();
+        environment.userService + '/orders', orderRequest, httpOptions).toPromise();
       return response;
     } catch (error) {
       console.error(error);
@@ -231,11 +229,10 @@ export class OrderService {
       stopValue: stopValue,
       allOrNone: allOrNone
     };
-    console.log(orderRequest);
 
     try {
       const response = await this.http.post<boolean>(
-        environment.baseUrl + '/orders', orderRequest, httpOptions).toPromise();
+        environment.userService + '/orders', orderRequest, httpOptions).toPromise();
       return response;
     } catch (error) {
       console.error(error);
@@ -264,7 +261,7 @@ export class OrderService {
       })
     };
 
-    return this.http.get<CapitalProfitDto[]>(environment.baseUrl + '/account/capitals/listings', httpOptions)
+    return this.http.get<CapitalProfitDto[]>(environment.userService + '/account/capitals/listings', httpOptions)
       .pipe(
         map((data: CapitalProfitDto[]) => data.map(item => ({
           ...item,
@@ -282,7 +279,8 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<PublicCapitalDto[]>(environment.baseUrl + '/capital/public/stock/all', httpOptions);
+    return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/stock/all', httpOptions);
+    // return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
   }
 
   changePublicValue(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
@@ -299,7 +297,8 @@ export class OrderService {
       listingId: listingId,
       addToPublic: publicValue
     }
-    return this.http.put<boolean>(environment.baseUrl + '/capital/customer/addPublic/', body, httpOptions);
+    return this.http.put<boolean>(environment.userService + '/capital/customer/addPublic/', body, httpOptions);
+    // return this.http.put<User>(environment.userService + '/changePublicValue/' + id , body, httpOptions);
   }
 
 

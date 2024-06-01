@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Future} from "../../../model/model";
-import {environmentMarket} from "../../../../../environment";
+import {environment} from "../../../../environments/environment";
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {DatePipe, NgForOf} from "@angular/common";
@@ -30,7 +30,7 @@ export class FutureTableComponent {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    this.http.get<Future[]>(environmentMarket.baseUrl + '/market/listing/get/futures', {headers})
+    this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures', {headers})
       .subscribe(res => this.futuresBackup = this.futures = res.map(val => { val.settlementDate *= 1000; val.lastRefresh *= 1000; return val; }));
   }
 

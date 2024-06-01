@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {PopupService} from "../service/popup.service";
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-legal-persons',

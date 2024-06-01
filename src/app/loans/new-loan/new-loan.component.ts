@@ -4,7 +4,7 @@ import {LoanType} from "../../model/model";
 import {NgForOf} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environmentMarket} from "../../../../environment";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-loans',
@@ -43,7 +43,7 @@ export class NewLoanComponent {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
     let requestBody = this.getRequestBody()
-    this.http.post(environmentMarket.baseUrl + '/loan/requests', requestBody, {headers}).subscribe(res => {
+    this.http.post(environment.marketService + '/loan/requests', requestBody, {headers}).subscribe(res => {
       console.log(res);
       }
     );
