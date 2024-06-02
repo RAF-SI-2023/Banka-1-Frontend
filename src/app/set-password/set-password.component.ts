@@ -2,7 +2,7 @@ import {Component, inject, ViewEncapsulation} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NgOptimizedImage} from "@angular/common";
-import {environment} from "../../../environment";
+import {environment} from "../../environments/environment";
 import {HttpHeaders, HttpParams} from "@angular/common/http";
 import { HttpClient } from '@angular/common/http';
 import {PopupService} from "../service/popup.service";
@@ -46,9 +46,9 @@ export class SetPasswordComponent {
       if (this.password === this.confirmedPassword) {
         var url;
         if(this.router.url.includes('employee'))
-          url = `${environment.baseUrl}/employee/activate/${this.token}`;
+          url = `${environment.userService}/employee/activate/${this.token}`;
         else
-          url = `${environment.baseUrl}/customer/activate/${this.token}`;
+          url = `${environment.userService}/customer/activate/${this.token}`;
 
         const body = { password: this.password };
 

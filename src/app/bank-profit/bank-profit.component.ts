@@ -36,7 +36,7 @@ export class BankProfitComponent implements OnInit {
     }
   }
 
-  
+
 
   ngOnInit() {
       this.loadProfits();
@@ -65,9 +65,9 @@ export class BankProfitComponent implements OnInit {
         phoneNumber: '555-555-5555',
         email: 'bankc@example.com'
       }
-    ];  
+    ];
 
-    
+
     // Otkomentarisati kada bek odradi svoj deo za Profit
 
     // this.profitService.getProfitsByAgents(this.loggedUserId).subscribe(
@@ -78,7 +78,7 @@ export class BankProfitComponent implements OnInit {
     //     console.error('Error loading users:', error);
     //   }
     // );
-    
+
   }
 
   calculateTotalProfit() {
@@ -98,6 +98,6 @@ export class BankProfitComponent implements OnInit {
     // );
   }
 
-  
+
 }
 

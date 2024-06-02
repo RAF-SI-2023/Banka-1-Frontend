@@ -57,6 +57,10 @@
             <div>OTC</div>
           </div>
 
+          <div [routerLink]="'/otc'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+            <div>OTC</div>
+          </div>
+
 
 <!--   Navigation button to Card page.
      <div class="sidebar-btn" [routerLink]="'/cards'" *ngIf="isCustomer">

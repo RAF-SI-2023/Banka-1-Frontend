@@ -1,0 +1,93 @@
+# Obratiti pažnju na komentare "PROMENITI PRI KOPIRANJU" i promeniti
+# to što se traži.
+# "presubmits" su CI jobovi, odnosno jobovi koji su pokreću za svaki
+# Pull Request i za svaki novi commit u okviru Pull Request-a.
+presubmits:
+  # PROMENITI PRI KOPIRANJU
+  # Name treba da bude u formatu "pull-<naziv-repozitorijuma>-test", npr.
+  # pull-banka-1-frontend-test ili pull-banka-2-frontend-test
+  - name: pull-banka-1-frontend-test
+    # always_run znači da će se job pokrenuti za svaki commit,
+    # nezavisno od toga šta taj commit menja.
+    always_run: true
+    decorate: true
+    # extra_refs omogućava kloniranje dodatnih repozitorijuma pored
+    # repozitorijuma u kome se izvršava job. Ovde ovu opciju koristimo
+    # da kloniramo backend repozitorijum kako bi mogli da pokrenemo
+    # potrebne backend servise koristeći Docker Compose.
+    spec:
+      containers:
+        # "image" koji se koristi ovde je specijalan tip image-a, tzv. "build image"
+        # koji ima sve alate potrebne za izvršavanje CI task-ova. Najbitniji alati
+        # uključuju Javu, Maven, Docker i Docker Compose (za pokretanje dependency-a),
+        # npm i Google Chrome (za frontend).
+        # PROMENITI PRI KOPIRANJU
+        # Možete da birate izmenđu dva build image u zavisnosti od Java verzije koju
+        # koristite:
+        #   - harbor.k8s.elab.rs/base-images/base:java-21-node-18-docker (Java 21)
+        #   - harbor.k8s.elab.rs/base-images/base:java-17-node-18-docker (Java 17)
+        # Ovde vam generalno verzija Jave nije bitan faktor, tako da možete bilo
+        # koji image da odaberete.
+        - image: harbor.k8s.elab.rs/base-images/base:java-21-node-18-docker
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -euo pipefail
+
+              collectRecordings() {
+                # NE MENJATI PRI KOPIRANJU
+                # Ovaj deo ostaviti kako jeste.
+                # Kako bi ovo radili kako treba, potrebno je da
+                # izmenite cypress.config.js (ili cypress.json)
+                # da snima testove.
+                cp -r ./test-results /logs/artifacts
+
+                echo "${GCSWEB_URL}/prow-logs/pr-logs/pull/${REPO_OWNER}_${REPO_NAME}/${PULL_NUMBER}/${JOB_NAME}/${BUILD_NUMBER}/artifacts/test-results" > /logs/artifacts/playwright.results.link.txt
+              }
+
+              # Pokreće Docker unutar kontejnera u kome se izvršava ova skripta.
+              # Docker vam omogućava da koristite Docker Compose kako bi pokrenuli
+              # backend servise potrebne za rad frontenda.
+              # start-docker.sh
+
+              # pushd ../backend
+              # PROMENITI PRI KOPIRANJU
+              # Pokreće ceo Docker Compose stack za backend,
+              # po potrebi promeniti da se pokreću pojedinačni servisi, npr.
+              # docker compose up -d <naziv-servisa>
+              # Takođe po potrebi dodati --build flag.
+              # docker compose up -d
+              # popd
+
+              ###########################################
+              # PROMENITI PRI KOPIRANJU
+              # Naredne komande promeniti po potrebi tako da pokrenu Cypress
+              # testove. Tačne komande zavise od framework-a koji koristite,
+              # npr. drugačije je za Angular i React.
+              ###########################################
+
+              # Downloaduje dependency-e potrebne za testove.
+              # npm ci
+
+              # npx playwright install --with-deps
+
+              # Pokreće frontend u pozadini.
+              # "&" znači da će komanda/proces da se pokrene u pozadini,
+              # tj. da će skripta nastaviti da se dalje izvršava.
+              # npm run start&
+
+              # trap komanda obezbeđuje da se "collectCypressRecordings"
+              # funkcija izvrši pre samog izlaska iz ove skripte, nezavisno
+              # od toga da li su testovi prošli uspešno ili neuspšeno.
+              # Ovo je izuzetno važno kako bi uploadovoali snimke nezavisno
+              # od toga da li su testovi prošli ili ne, pošto čak i da nisu,
+              # snimci pomažu pri debagovanju problema.
+              # Takođe je izuzetno važno da se ova trap komnda pokrene pre
+              # pokretanja testova.
+              trap collectRecordings EXIT
+
+              # npx playwright test ./playwright
+          securityContext:
+            privileged: true
+          imagePullPolicy: Always
