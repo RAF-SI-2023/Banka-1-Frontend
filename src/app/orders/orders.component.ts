@@ -108,20 +108,20 @@ export class OrdersComponent {
 
 
   private getSecurityOrders() {
-    // this.orderService.getSecurityOrders().subscribe({
-    //   next: (securities: CapitalProfitDto[]) => {
-    //     this.securities = securities;
-    //     this.allSecurities = securities.map(security => ({
-    //       security: security,
-    //       showPopup: false
-    //     }))
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching securities', error);
-    //   }
-    // });
+    this.orderService.getSecurityOrders().subscribe({
+      next: (securities: CapitalProfitDto[]) => {
+        this.securities = securities;
+        this.allSecurities = securities.map(security => ({
+          security: security,
+          showPopup: false
+        }))
+      },
+      error: (error) => {
+        console.error('Error fetching securities', error);
+      }
+    });
 
-   this.mockSecurityOrders();
+   // this.mockSecurityOrders();
   }
 
   mockSecurityOrders(){

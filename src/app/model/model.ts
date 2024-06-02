@@ -575,3 +575,15 @@ export interface PublicOffer {
   lastModified: Date;
   owner: string;
 }
+
+export interface PublicStock{
+  listingType: string;
+  listingId: number;
+  ticker: string;
+  amount: number;
+  price: number;
+  lastModified: string;
+  bankAccount: string;
+}
+
+

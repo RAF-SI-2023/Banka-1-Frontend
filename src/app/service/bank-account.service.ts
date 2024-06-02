@@ -9,7 +9,7 @@ import {
   NewLimitDto,
   ListingType,
   ContractCreateDto,
-  PublicCapitalDto
+  PublicCapitalDto, StockListing
 } from '../model/model';
 // import { environment } from '../../../environment';
 // import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
@@ -206,7 +206,7 @@ export class BankAccountService {
     });
   }
 
-  makeAnOfferCustomer(security: PublicCapitalDto, volume: number, offer: number){
+  makeAnOfferCustomer(security: any, volume: number, offer: number){
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
@@ -214,11 +214,10 @@ export class BankAccountService {
     const body: ContractCreateDto = {
       amountToBuy: volume,
       offerPrice: offer,
-      bankAccountNumber: security.bankAccountNumber,
+      bankAccountNumber: security.bankAccount,
       listingId: security.listingId,
       listingType: security.listingType,
-      // ToDo: gde je ticker?
-      ticker: "AAPL"
+      ticker: security.ticker
     }
     return this.httpClient.post("/contract/customer",null,options);
   }
@@ -232,11 +231,10 @@ export class BankAccountService {
     const body: ContractCreateDto = {
       amountToBuy: volume,
       offerPrice: offer,
-      bankAccountNumber: security.bankAccountNumber,
+      bankAccountNumber: security.bankAccount,
       listingId: security.listingId,
       listingType: security.listingType,
-      // ToDo: gde je ticker?
-      ticker: "AAPL"
+      ticker: security.ticker
     }
 
     return this.httpClient.post("/contract/employee", body, options);

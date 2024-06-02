@@ -89,7 +89,7 @@ export class SecuritiesLegalPersonsComponent {
     this.securities = stocks;
     this.securitiesBackup = stocks;
 
-    this.stockMockData()
+    // this.stockMockData()
   }
 
   stockMockData(){
@@ -147,18 +147,18 @@ export class SecuritiesLegalPersonsComponent {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
-    // this.http
-    // this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
-    //   .subscribe(
-    //     (res) =>
-    //       (this.futuresBackup = this.futures =
-    //         res.map((val) => {
-    //           val.settlementDate *= 1000;
-    //           val.lastRefresh *= 1000;
-    //           return val;
-    //         }))
-    //   );
-    this.mockFutureData()
+    this.http
+    this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
+      .subscribe(
+        (res) =>
+          (this.futuresBackup = this.futures =
+            res.map((val) => {
+              val.settlementDate *= 1000;
+              val.lastRefresh *= 1000;
+              return val;
+            }))
+      );
+    // this.mockFutureData()
   }
 
   mockFutureData(){
@@ -206,7 +206,7 @@ export class SecuritiesLegalPersonsComponent {
     this.optionsService.getOptions().subscribe(response => {
       this.options = response;
     })
-    this.optionsDataMock()
+    // this.optionsDataMock()
   }
 
   optionsDataMock(){
@@ -269,7 +269,7 @@ export class SecuritiesLegalPersonsComponent {
   }
 
   async buyOption(options: OptionsDto){
-    let response = await this.orderService.buyOrder(OrderType.BUY, options.listingId.toString(), ListingType.OPTIONS, options.volume, 0, 0, false);
+    let response = await this.orderService.buyOrderOptions(options.listingId.toString(), options.volume);
     if (response) {
       this.popupService.openCustomMessage({
         title: "Options",

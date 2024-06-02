@@ -211,6 +211,34 @@ export class OrderService {
     }
   }
 
+  async buyOrderOptions(listingId: string, contractSize: number) {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const orderRequest = {
+      orderType: OrderType.BUY,
+      listingId: listingId,
+      listingType: ListingType.OPTIONS,
+      contractSize: contractSize,
+      allOrNone: false
+    };
+
+
+    try {
+      const response = await this.http.post<boolean>(
+        environment.userService + '/orders', orderRequest, httpOptions).toPromise();
+      return response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   async sellOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
     const jwt = sessionStorage.getItem("jwt");
 
@@ -271,7 +299,7 @@ export class OrderService {
   }
 
 
-  getPublicSecurities(): Observable<PublicCapitalDto[]> {
+  getPublicStocks(): Observable<PublicCapitalDto[]> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -281,6 +309,17 @@ export class OrderService {
     };
     return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/stock/all', httpOptions);
     // return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
+  }
+
+  getAllStocks(): Observable<StockListing[]> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<StockListing[]>(environment.marketService + '/market/listing/get/stock', httpOptions);
   }
 
   changePublicValue(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {

@@ -8,6 +8,7 @@ import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {BankAccountService} from "../service/bank-account.service";
+import {PublicStock, StockListing} from "../model/model";
 
 @Component({
   selector: 'app-public-security-offer-popup',
@@ -28,7 +29,7 @@ export class PublicSecurityOfferPopupComponent {
 
     warnMessage: string = '';
 
-    security;
+    security: PublicStock;
 
     isEmployee: boolean;
     isCustomer: boolean;
@@ -45,7 +46,7 @@ export class PublicSecurityOfferPopupComponent {
         sessionStorage.getItem('role') === 'agent' ||
         sessionStorage.getItem('role') === 'supervizor';
       this.isCustomer = sessionStorage.getItem('role') === 'customer';
-      console.log(this.security.amount);
+      // console.log(this.security.amount);
       // console.log(this.security.publicOffers.id.amount);
 
     }
@@ -60,7 +61,7 @@ export class PublicSecurityOfferPopupComponent {
           const volume = parseFloat(this.volumeOfStock);
           const offer = parseFloat(this.priceOffer);
           if (volume >= 0 || offer >= 0) {
-            if (volume < offer && volume >= this.security.amount) {
+            if (volume < offer && volume <= this.security.amount) {
               this.bankAccountService.makeAnOffer(this.security, volume, offer);
               if (this.isCustomer) {
                 this.bankAccountService.makeAnOfferCustomer(this.security, volume, offer);
