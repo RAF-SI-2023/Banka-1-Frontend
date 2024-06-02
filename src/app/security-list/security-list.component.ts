@@ -60,7 +60,6 @@ export class SecurityListComponent {
 
   isLegalPerson: boolean = false;
 
-  // isLegalPerson: boolean = false;
 
   constructor(
     private securityService: SecurityService,
@@ -71,11 +70,8 @@ export class SecurityListComponent {
     private popupService: PopupService,
     router: Router
   ) {
-    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
 
-    if(this.isLegalPerson){
       this.selectedTab = 'options'
-    }
     this._router = router;
   }
 
@@ -86,9 +82,6 @@ export class SecurityListComponent {
     );
 
   }
-
-
-
 
   searchForex() {
     this.forex = this.forexBackup.filter((value) => {
