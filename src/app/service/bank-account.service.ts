@@ -30,7 +30,7 @@ export class BankAccountService {
     return this.httpClient.get<BankAccount[]>(url, options);
   }
 
-  getAdminsBankAccounts(userId: number): Observable<BankAccount[]> {
+  getAdminBankAccounts(companyId: number): Observable<BankAccount[]> {
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -38,7 +38,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/account/getAdminAccounts/${userId}`;
+    let url = environment.userService + `/account/getCompany/${companyId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }

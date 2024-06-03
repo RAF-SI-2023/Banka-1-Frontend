@@ -31,7 +31,6 @@ export class MarginComponent {
     'Maintenance Margin',
     'Margin Call'
   ];
-
   selectedTab: string = 'margin_accounts';
   margins: Margin[] = [];
 

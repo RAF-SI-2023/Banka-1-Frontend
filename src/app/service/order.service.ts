@@ -14,6 +14,7 @@ import {
 
 import {BankAccountDto, CreateOrderRequest, ListingType, Order, OrderType, User} from "../model/model";
 import {map} from "rxjs/operators";
+import {PopupService} from "./popup.service";
 
 
 @Injectable({
@@ -21,7 +22,7 @@ import {map} from "rxjs/operators";
 })
 export class OrderService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private popUpService: PopupService) { }
 
 
 
@@ -235,7 +236,9 @@ export class OrderService {
         environment.userService + '/orders', orderRequest, httpOptions).toPromise();
       return response;
     } catch (error) {
-      console.error(error);
+      // @ts-ignore
+      this.popUpService.openPopup("Error", error.error);
+      // console.error(error);
       return false;
     }
   }

@@ -45,14 +45,7 @@
           <div class="tab-active">Customers</div>
         </div>
         <app-dynamic-table
-          [headersArray]="[
-            'Name',
-            'Email',
-            'JMBG',
-            'Address',
-            'Phone number',
-            'Gender'
-          ]"
+          [headersArray]="headers"
           [dataArray]="customers | transformCustomer"
           [showActions]="true"
         >

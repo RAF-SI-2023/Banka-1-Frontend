@@ -56,13 +56,13 @@ export interface Permissions {
 export interface BankAccount {
   accountType?: string;
   accountNumber?: string;
+  accountName?: string;
   accountStatus?: string;
   currency?: string;
   balance?: number;
   availableBalance?: number;
   reservedResources?: number;
   accountOwner?: string;
-  accountName?: string;
 }
 
 export interface Account {
@@ -177,6 +177,19 @@ export interface TransactionDto {
   date: number;
   recipientAccountNumber: string;
   status: string;
+}
+
+export interface NewTransactionDto {
+  bankAccount: BankAccount;
+  dateTime: number;
+  marketOrder: OrderDto;
+  employee: User;
+  description: string;
+  currency: string;
+  buy: number;
+  sell: number;
+  reserved: number;
+  reserveUsed: number;
 }
 
 export interface TransactionDetails {
@@ -616,4 +629,12 @@ export interface MarginTransactionDetails {
   interest: string;
   borrowedMoney: string;
   maintenanceMargin: string;
+}
+
+export interface DropdownConfig {
+  selectedValue: number;
+  valueField: string;
+  labelField: string;
+  dropDownList: Array<{ [key: string]: any }>;
+  heading: string;
 }

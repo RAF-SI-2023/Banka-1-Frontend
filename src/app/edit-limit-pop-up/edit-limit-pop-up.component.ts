@@ -23,12 +23,12 @@ export class EditLimitPopUpComponent {
     private bankAccountService: BankAccountService,
     private  popupService: PopupService,
     @Inject(MAT_DIALOG_DATA) public limit: Limit,
-  ) { 
+  ) {
 
 
   }
 
-  amount : number = 0;
+  amount : number | null = null;
   approvalRequired: boolean = false;
 
   handleChange(event: any) {
@@ -42,7 +42,7 @@ export class EditLimitPopUpComponent {
 
 
   addNewLimit() {
-    
+
     let newLimitDto:NewLimitDto = {
       userId: Number(this.limit.userId),
       approvalRequired: this.approvalRequired,

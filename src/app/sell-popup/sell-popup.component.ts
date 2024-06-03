@@ -63,7 +63,7 @@ export class SellPopupComponent {
       this.popupService.openPopup("Success", "Sell order has been placed successfully");
       this.dialogRef.close();
     } else {
-      this.popupService.openPopup("Error", "Error placing sell order, try again later");
+      // this.popupService.openPopup("Error", "Error placing sell order, try again later");
       this.dialogRef.close();
     }
   }

@@ -107,9 +107,9 @@ export class OtcComponent {
       this.contracts = contracts;
       this.stocks = stocks;
       this.otcs = this.mergeLists(contracts, stocks);
-      // console.log('Contracts:', contracts);
-      // console.log('Stocks:', stocks);
-      // console.log('OTCs:', this.otcs);
+      console.log('Contracts:', contracts);
+      console.log('Stocks:', stocks);
+      console.log('OTCs:', this.otcs);
     });
   }
 

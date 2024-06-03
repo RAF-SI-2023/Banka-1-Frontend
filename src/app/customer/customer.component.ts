@@ -16,66 +16,8 @@ import { TransformCustomerPipe } from '../transform-customer.pipe';
     imports: [CommonModule, FormsModule, TableComponentModule, TransformCustomerPipe]
 })
 export class CustomerComponent implements OnInit{
-
-  customersTable: CustomerTable[] = [
-    {
-      name: "Doe",
-      email: "john.doe@example.com",
-      jmbg: "1234567890123",
-      address: "123 Main Street",
-      phoneNumber: "+1234567890",
-      gender: "Male",
-    },
-    {
-      name: "Doe",
-      email: "john.doe@example.com",
-      jmbg: "1234567890123",
-      address: "123 Main Street",
-      phoneNumber: "+1234567890",
-      gender: "Male",
-    },
-    {
-      name: "Doe",
-      email: "john.doe@example.com",
-      jmbg: "1234567890123",
-      address: "123 Main Street",
-      phoneNumber: "+1234567890",
-      gender: "Male",
-    },
-  ]
-
-  customers: Customer[] = [
-    {
-      userId: 1,
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@example.com",
-      jmbg: "1234567890123",
-      phoneNumber: "+1234567890",
-      gender: "Male",
-      address: "123 Main Street"
-    },
-    {
-      userId: 2,
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@example.com",
-      jmbg: "9876543210987",
-      phoneNumber: "+1987654321",
-      gender: "Female",
-      address: "456 Elm Street"
-    },
-    {
-      userId: 3,
-      firstName: "Alice",
-      lastName: "Johnson",
-      email: "alice.johnson@example.com",
-      jmbg: "5555555555555",
-      phoneNumber: "+1555555555",
-      gender: "Female",
-      address: "789 Oak Avenue"
-    }
-  ];
+  customers: Customer[] = [];
+  headers: string[] = ['Name', 'Email', 'JMBG', 'Phone number', 'Gender', 'Address']
 
   constructor(
     private customerService: CustomerService,
@@ -91,7 +33,7 @@ export class CustomerComponent implements OnInit{
         console.log(customers);
       },
       error: (error: any) => {
-        this.popup.openPopup("Error", "Failed to load customers.");
+        this.popup.openPopup("Error", "Failed to load customers: " + error.error);
       }
     });
   }

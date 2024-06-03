@@ -3,9 +3,9 @@ import {CommonModule} from "@angular/common";
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-dynamic-table-margin',
+  selector: 'app-dynamic-table-bank-account',
   template: `
-    <div *ngIf="!showMarginAccount">
+    <div *ngIf="showBankAccount">
       <table>
         <thead>
         <tr>
@@ -16,7 +16,10 @@ import { Component, Input } from '@angular/core';
         </thead>
         <tbody>
         <tr *ngFor="let row of dataArray; let i = index">
-          <td *ngFor="let key of objectKeys(row)">
+          <td *ngIf="showBankAccount" class="bank-account-column">
+            <ng-container *ngTemplateOutlet="bankAccountTemplate; context: {$implicit: row, index: i}"></ng-container>
+          </td>
+          <td *ngFor="let key of objectKeys(removeKey(row))">
             {{ row[key] }}
           </td>
           <td *ngIf="showAnotherColumn">
@@ -24,37 +27,6 @@ import { Component, Input } from '@angular/core';
           </td>
           <td *ngIf="showActions">
             <ng-container *ngTemplateOutlet="customTemplate; context: {$implicit: row, index: i}"></ng-container>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div *ngIf="showMarginAccount">
-      <table>
-        <thead>
-        <tr>
-          <th *ngFor="let header of headersArray">{{ header }}</th>
-          <th *ngIf="showAnotherColumn"></th> <!-- New column header -->
-          <th *ngIf="showActions">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let row of dataArray; let i = index">
-          <td *ngIf="showMarginAccount" class="margin-account-column">
-            <ng-container *ngTemplateOutlet="marginAccountTemplate; context: {$implicit: row, index: i}"></ng-container>
-          </td>
-          <td *ngFor="let key of objectKeys(removeMarginCallKey(row))">
-            {{ row[key] }}
-          </td>
-          <td *ngIf="showAnotherColumn">
-            <ng-container *ngTemplateOutlet="anotherColumnTemplate; context: {$implicit: row, index: i}"></ng-container>
-          </td>
-          <td *ngIf="showActions">
-            <ng-container *ngTemplateOutlet="customTemplate; context: {$implicit: row, index: i}"></ng-container>
-          </td>
-          <td *ngIf="showMarginAccount">
-            <ng-container *ngTemplateOutlet="marginCallTemplate; context: {$implicit: row, index: i}"></ng-container>
           </td>
         </tr>
         </tbody>
@@ -115,21 +87,20 @@ import { Component, Input } from '@angular/core';
       margin-bottom: 200px;
     }
 
-    .margin-account-column {
-      cursor: pointer; /* Change cursor style when hovering over the margin account column */
+    .bank-account-column {
+      cursor: pointer; /* Change cursor style when hovering over the bank account column */
     }
   `]
 })
-export class TableComponentMargin {
+export class TableComponentBankAccount {
   @Input() headersArray: string[] = [];
   @Input() dataArray: any[] = [];
   @Input() showAnotherColumn: boolean = false;
   @Input() showActions: boolean = false;
-  @Input() showMarginAccount: boolean = false;
+  @Input() showBankAccount: boolean = false;
 
   @ContentChild('actionsColumn', { read: TemplateRef}) customTemplate!: TemplateRef<any>;
-  @ContentChild('marginCallColumn', { read: TemplateRef}) marginCallTemplate!: TemplateRef<any>;
-  @ContentChild('marginAccountColumn', { read: TemplateRef}) marginAccountTemplate!: TemplateRef<any>;
+  @ContentChild('bankAccountColumn', { read: TemplateRef}) bankAccountTemplate!: TemplateRef<any>;
   @ContentChild('anotherColumn', { read: TemplateRef }) anotherColumnTemplate!: TemplateRef<any>; // New template reference for the additional column content
 
   // Helper function to get keys from the row object
@@ -142,16 +113,15 @@ export class TableComponentMargin {
     )
   }
 
-  removeMarginCallKey(row: any): any {
+  removeKey(row: any): any {
     const newRow = { ...row };
-    delete newRow.marginAccount;
-    delete newRow.marginCall;
+    delete newRow.accountNumber;
     return newRow;
   }
 }
 @NgModule({
-  declarations: [TableComponentMargin],
+  declarations: [TableComponentBankAccount],
   imports: [CommonModule],
-  exports: [TableComponentMargin],
+  exports: [TableComponentBankAccount],
 })
-export class TableComponentMarginModule {}
+export class TableComponentBankAccountModule {}

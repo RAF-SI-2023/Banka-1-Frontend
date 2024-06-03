@@ -1,50 +1,30 @@
-<!-- Page container -->
 <div class="container">
-
-    <div  style="padding-left: 1rem; " class="row pageTitle">
-            Bank Accounts
-    </div>
-  
-    <!-- Table with transactions and exchanges -->
-    <div class="row">
-      <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
-        <!-- Table title, table headers, tabs and table div -->
-        <div class="transactionsContentContainer">
-          <!-- Title transactions overview -->
-          <div style="color: #ffb72b;" class="row transOverviewDiv d-flex align-items-center">
-            Overview
-          </div>
-          <!-- Tabs -->
-          <div class="tabs">
-            <div class="tab-headers"></div>
-
-            <div class="tab-content">
-              <div class="scrollable-container">
-                <table class="transactions-table">
-                  <thead>
-                    <tr>
-                      <th>Bank Account</th>
-                      <th>Currency</th>
-                      <th>Account Balance</th>
-                      <th>Reserved</th>
-                      <th>Available</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let userAcc of userBankAccounts" (click)="navigateToDetails(userAcc.accountNumber)">
-                        <td>{{ userAcc.accountNumber }}</td>
-                        <td>{{ userAcc.currency }}</td>
-                        <td>{{ userAcc.balance }}</td>
-                        <td>{{ userAcc.reservedResources }}</td>
-                        <td>{{ userAcc.availableBalance }}</td>
-                      </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+  <div class="page">
+    <div class="security-title">Bank Accounts</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <div (click)="setTab('bank_accounts')" class="{{ selectedTab === 'bank_accounts' ? 'tab active-tab' : 'tab' }}">
+          Overview
         </div>
+        <hr />
       </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'bank_accounts'">
+        <app-dynamic-table-bank-account
+          [headersArray]="headers"
+          [dataArray]="bankAccounts | transformBankAccounts"
+          [showBankAccount]="true"
+        >
+          <ng-template #bankAccountColumn let-row>
+            <div (click)="navigateToDetails(row.accountNumber)">
+              {{row.accountNumber }}
+            </div>
+          </ng-template>
+
+        </app-dynamic-table-bank-account>
+
+      </div>
+
     </div>
   </div>
-  
+</div>

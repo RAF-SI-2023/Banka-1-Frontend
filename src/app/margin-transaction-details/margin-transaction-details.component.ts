@@ -36,7 +36,6 @@ export class MarginTransactionDetailsComponent implements OnInit {
   }
 
   async loadMarginTransactionsDetails() {
-
     this.http.get<MarginTransactionDetails[]>('/assets/mocked_banking_data/margin-transactions-mocked.json').subscribe(data => {
       this.marginTransactions = data
       console.log('Margin Transactions:', this.marginTransactions);
