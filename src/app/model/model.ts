@@ -332,6 +332,15 @@ export interface Customer {
   address: string;
 }
 
+
+export interface PublicCapitalDto {
+  publicTotal: number;
+  isIndividual: boolean;
+  bankAccountNumber: string;
+  listingType: ListingType;
+  listingId: number;
+}
+
 export interface CustomerWithAccounts {
   userId: number;
   firstName: string;
@@ -505,10 +514,8 @@ export interface CreatePaymentRequest {
 }
 
 export interface LegalPerson {
-  firstName?: string;
-  lastName?: string;
   companyName?: string;
-  jmbg?: string;
+  idNumber?: string;
   pib?: string;
   cba?: string;
   address?: string;
@@ -540,6 +547,7 @@ export interface Contract {
 }
 
 export interface PublicOffer {
+  listingId: number;
   security: string;
   symbol: string;
   amount: number;

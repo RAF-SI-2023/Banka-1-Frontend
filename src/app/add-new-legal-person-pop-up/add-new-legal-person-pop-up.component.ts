@@ -30,7 +30,7 @@ export class AddNewLegalPersonPopUpComponent {
 
   addNewLegalPersonData: LegalPerson = {
     companyName: '',
-    jmbg: '',
+    idNumber: '',
     pib: '',
     cba: '',
     address: ''
@@ -67,8 +67,8 @@ export class AddNewLegalPersonPopUpComponent {
       return false;
     }
 
-    if (!this.addNewLegalPersonData.jmbg || !this.isValidJMBG(this.addNewLegalPersonData.jmbg)) {
-      this.popupService.openPopup("Error", "JMBG is not valid.");
+    if (!this.addNewLegalPersonData.idNumber) {
+      this.popupService.openPopup("Error", "idNumber must be filled");
       return false;
     }
 
@@ -83,7 +83,7 @@ export class AddNewLegalPersonPopUpComponent {
     return /[0-9]+/.test(testingString);
   }
 
-  private isValidJMBG(jmbg: string): boolean {
-    return /^\d{13}$/.test(jmbg);
+  private isValidJMBG(idNumber: string): boolean {
+    return /^\d{13}$/.test(idNumber);
   }
 }

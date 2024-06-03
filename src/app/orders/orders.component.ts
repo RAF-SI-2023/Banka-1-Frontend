@@ -150,21 +150,9 @@ export class OrdersComponent {
   }
 
   getPublicSecurities(){
-    // this.orderService.getPublicSecuritiesMock().subscribe( res =>{
-    //   this.publicSecurities = res;
-    // })
-
-    const ex1 = {
-      listingType: "Stock",
-      ticker: "AAPL",
-      amount: 4,
-      price: 1623.6,
-      profit: 1623.6,
-      lastModified: 0,
-      owner: "Customer",
-    }
-
-    this.publicSecurities.push(ex1);
+    this.orderService.getPublicSecurities().subscribe(res =>{
+      this.publicSecurities = res;
+    })
   }
 
 

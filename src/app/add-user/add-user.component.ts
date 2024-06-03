@@ -101,12 +101,15 @@ export class AddUserComponent {
   // }
 
   onCreateAddUserPopup() {
+    console.log("Usaooo");
+
     if (this.validateForm()) {
       this.addUserData.orderLimit = this.addUserData.orderLimit + 0.0;
       this.userService.addUser(this.addUserData).subscribe(
         response => {
           this.data.loadEmployeesFromDataBase();
           alert('Successfully created user ' + JSON.stringify(this.addUserData));
+          console.log(response);
           this.dialogRef.close();
           // this.router.navigate(['/user/list']);
         },
@@ -136,18 +139,21 @@ export class AddUserComponent {
 
   private validateForm(): boolean {
 
+    console.log(this.addUserData);
 
     if (!this.addUserData.email || !this.isValidEmail(this.addUserData.email)) {
       this.popupService.openPopup("Error", "Email nije validan.");
       return false;
     }
 
-    if (!this.addUserData.firstName) {
+    if (!this.addUserData.firstName || !this.isValidFirstName(this.addUserData.firstName)) {
+      console.log("Usao da testira ime");
       this.popupService.openPopup("Error", "Name nije validan.");
       return false;
     }
 
-    if (!this.addUserData.lastName) {
+    if (!this.addUserData.lastName || !this.isValidLastName(this.addUserData.lastName)) {
+      console.log("Usao da testira prezime");
       this.popupService.openPopup("Error", "Surname nije validan.");
       return false;
     }
@@ -174,6 +180,15 @@ export class AddUserComponent {
 
   private isValidPhoneNumber(phone: string): boolean {
     return /^\d+$/.test(phone);
+  }
+
+  private isValidFirstName(firstName: string): boolean {
+    console.log("called isValidFirstName with string: " + firstName + " result: " + /[a-zA-Z]+/.test(firstName));
+    return /[a-zA-Z]+$/.test(firstName);
+  }
+
+  private isValidLastName(lastName: string): boolean {
+    return /[a-zA-Z]+$/.test(lastName);
   }
 
   setPosition(position: any){

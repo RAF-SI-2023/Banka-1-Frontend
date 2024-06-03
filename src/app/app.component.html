@@ -57,6 +57,10 @@
             <div>OTC</div>
           </div>
 
+          <div [routerLink]="'/otc-customer'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
+            <div>OTC</div>
+          </div>
+
           <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
             <div>Margin</div>
           </div>
@@ -66,16 +70,16 @@
           </div>
 
 
-          <!--   Navigation button to Card page.
-               <div class="sidebar-btn" [routerLink]="'/cards'" *ngIf="isCustomer">
-                  <img src="assets/admin.png"/>
-                 <span>Cards</span>
-               </div>
+<!--   Navigation button to Card page.
+     <div class="sidebar-btn" [routerLink]="'/cards'" *ngIf="isCustomer">
+        <img src="assets/admin.png"/>
+       <span>Cards</span>
+     </div>
 
-                <div class="sidebar-btn" [routerLink]="'/card-transactions'" *ngIf="isCustomer">
-                  <img src="assets/admin.png"/>
-                  <span>Cards</span>
-                </div> -->
+      <div class="sidebar-btn" [routerLink]="'/card-transactions'" *ngIf="isCustomer">
+        <img src="assets/admin.png"/>
+        <span>Cards</span>
+      </div> -->
 
           <div class="sidebar-item-wrapper" *ngIf="isCustomer">
             <div class="sidebar-item" (click)="setActiveItem('openPayments')">

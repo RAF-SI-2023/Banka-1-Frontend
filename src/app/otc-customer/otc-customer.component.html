@@ -52,16 +52,14 @@
         </app-dynamic-table-status>
       </div>
 
-      <div class="overview-tab" *ngIf="selectedTab === 'public'">
-        <app-dynamic-table-status
-          [headersArray]="headersPublic"
-          [dataArray]="publicOffers"
-          [showStatus]="true"
-        >
-          <ng-template #statusColumn let-row>
-            <orange-button buttonName="OFFER" (click)="togglePopupOffer(row)"></orange-button>
+      <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
+        <app-dynamic-table [headersArray]="headersPublic" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
+          <ng-template #actionsColumn let-row>
+            <div id="helperDiv">
+              <orange-button [buttonName]="'Offer'" (click)="togglePopupOffer(row.original)"></orange-button>
+            </div>
           </ng-template>
-        </app-dynamic-table-status>
+        </app-dynamic-table>
       </div>
 
       <div class="overview-tab" *ngIf="selectedTab === 'active-sell'">

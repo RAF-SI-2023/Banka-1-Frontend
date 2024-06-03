@@ -264,7 +264,7 @@ export class OrderService {
       })
     };
 
-    return this.http.get<CapitalProfitDto[]>(environment.userService + '/account/capitals/listings', httpOptions)
+    return this.http.get<CapitalProfitDto[]>(environment.userService + '/capital/listings', httpOptions)
       .pipe(
         map((data: CapitalProfitDto[]) => data.map(item => ({
           ...item,
@@ -274,7 +274,7 @@ export class OrderService {
   }
 
 
-  getPublicSecuritiesMock(): Observable<any> {
+  getPublicSecurities(): Observable<any> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -282,7 +282,7 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
+    return this.http.get<User>(environment.userService + '/capital/public/listing/all', httpOptions);
   }
 
   changePublicValueMock(id: number, publicValue: number): Observable<any> {

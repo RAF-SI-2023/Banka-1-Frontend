@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
+import {BankAccount, Exchange, Recipient, Payment, NewLimitDto, User} from '../model/model';
 import { environment } from '../../environments/environment';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -196,7 +197,32 @@ export class BankAccountService {
   }
 
 
-  makeAnOffer(security: any, volume: number, offer: number){
-    // Customer salje http, offer na public otc
+  makeAnOffer(security: any, volume: number, offer: number) {
+    const jwt = sessionStorage.getItem('jwtToken');
+    if (!jwt) {
+      console.error('JWT token not found in session storage.');
+      return;
+    }
+
+    const url = `${environment.userService}/contract/customer`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const requestBody = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.owner,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.symbol
+    };
+
+    return this.httpClient.post<{ result: boolean }>(url, requestBody, httpOptions).pipe(
+      map(response => response.result)
+    );
   }
 }
