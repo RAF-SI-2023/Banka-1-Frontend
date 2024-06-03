@@ -4,12 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../service/customer.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PopupService } from '../service/popup.service';
-import {CreateCustomerRequest, Customer, DropdownConfig} from '../model/model';
+import {CreateCustomerRequest, Customer} from '../model/model';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
-import {DropdownSelector, DropdownSelectorModule} from "../welcome/redesign/DropDownSelector";
+import {DropdownSelectorModule} from "../welcome/redesign/DropDownSelector";
 
 @Component({
   selector: 'app-add-customer',
@@ -29,13 +29,12 @@ export class AddCustomerComponent {
     gender: '',
     dateOfBirth: 0
   };
-  dropdownConfig: DropdownConfig = this.getConfig();
 
   constructor(
     private customerService: CustomerService,
     private dialogRef: MatDialogRef<AddCustomerComponent>,
     private popupService: PopupService,
-    ){}
+  ){}
 
   submit() {
     if(this.validateForm()) {
@@ -113,19 +112,6 @@ export class AddCustomerComponent {
   updateUid(Uid: any) {
     console.log("gender:" + Uid);
     this.addCustomerData.gender = Uid;
-  }
-
-  getConfig(): DropdownConfig {
-    return {
-      selectedValue: -1,
-      valueField: 'gender',
-      labelField: 'optionDescription',
-      dropDownList: [
-        { uId: 1, optionDescription: 'Male' },
-        { uId: 2, optionDescription: 'Female' },
-      ],
-      heading: 'Title'
-    };
   }
 
 }

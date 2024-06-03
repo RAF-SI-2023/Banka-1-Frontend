@@ -1,20 +1,22 @@
+import {ExchangeTransactionReportComponent} from "../exchange-transaction-report/exchange-transaction-report.component";
+
 export interface User{
-    userId: number;
-    username:string;
-    password:string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    jmbg: string;
-    position: string;
-    phoneNumber: string;
-    active: boolean;
+  userId: number;
+  username:string;
+  password:string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  jmbg: string;
+  position: string;
+  phoneNumber: string;
+  active: boolean;
 
-    limitNow: number;
-    orderlimit: number;
-    requireApproval: boolean;
+  limitNow: number;
+  orderlimit: number;
+  requireApproval: boolean;
 
-    permissions:Permissions[]
+  permissions:Permissions[]
 }
 
 export enum OTCTab {
@@ -35,9 +37,9 @@ export interface DecideOrderResponse{
 }
 
 export interface Permissions{
-    permission_id?:number;
-    name:string;
-    description?:string;
+  permission_id?:number;
+  name:string;
+  description?:string;
 }
 export interface Limit{
   userId: number;
@@ -491,15 +493,15 @@ export interface Loan {
 }
 
 export interface CreatePaymentRequest {
-    singleUseCode?: string; //verifikacija
-    senderAccountNumber?: string;
-    recipientName?: string;
-    recipientAccountNumber?: string;
-    amount?: number
-    paymentCode?: string;
-    model?: string;
-    referenceNumber?: string;
-    paymentPurpose?: string;
+  singleUseCode?: string; //verifikacija
+  senderAccountNumber?: string;
+  recipientName?: string;
+  recipientAccountNumber?: string;
+  amount?: number
+  paymentCode?: string;
+  model?: string;
+  referenceNumber?: string;
+  paymentPurpose?: string;
 }
 
 export interface LegalPerson {
@@ -631,10 +633,11 @@ export interface MarginTransactionDetails {
   maintenanceMargin: string;
 }
 
-export interface DropdownConfig {
-  selectedValue: number;
-  valueField: string;
-  labelField: string;
-  dropDownList: Array<{ [key: string]: any }>;
-  heading: string;
+export interface ExchangeTransactionReport {
+  outflowAccount: number;
+  inflowAccount: string;
+  amount: number;
+  previousCurrency: string;
+  exchangedTo: string;
+  profit: number;
 }

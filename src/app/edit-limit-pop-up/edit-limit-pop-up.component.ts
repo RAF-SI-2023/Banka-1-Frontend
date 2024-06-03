@@ -16,30 +16,27 @@ import { CdkObserveContent } from '@angular/cdk/observers';
   templateUrl: './edit-limit-pop-up.component.html',
   styleUrl: './edit-limit-pop-up.component.css'
 })
-export class EditLimitPopUpComponent {
+export class EditLimitPopUpComponent implements OnInit{
 
   constructor(
     private dialogRef: MatDialogRef<EditLimitPopUpComponent>,
     private bankAccountService: BankAccountService,
     private  popupService: PopupService,
     @Inject(MAT_DIALOG_DATA) public limit: Limit,
-  ) {
+  ) {}
 
-
-  }
-
-  amount : number | null = null;
+  amount : number | undefined;
   approvalRequired: boolean = false;
+
+  ngOnInit(): void {
+    this.amount = this.limit.limit;
+  }
 
   handleChange(event: any) {
     // Update isChecked variable when the checkbox state changes
     this.approvalRequired = event.target.checked;
     console.log(this.approvalRequired);
   }
-
-
-
-
 
   addNewLimit() {
 
@@ -70,6 +67,5 @@ export class EditLimitPopUpComponent {
     this.addNewLimit();
     this.dialogRef.close();
   }
-
 
 }

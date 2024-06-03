@@ -54,10 +54,6 @@ export class MarginComponent {
     // this.margins = await this.marginService.getAllMargins();
   }
 
-  togglePopupOffer() {
-    this.popup.openPublicSecuritiesPopup(this);
-  }
-
   setTab(tabName: string) {
     this.selectedTab = tabName;
   }

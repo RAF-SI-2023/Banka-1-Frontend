@@ -37,6 +37,7 @@ import {OtcComponent} from "./otc/otc.component";
 import {OtcCustomerComponent} from "./otc-customer/otc-customer.component";
 import {MarginComponent} from "./margin/margin.component";
 import {MarginTransactionDetailsComponent} from "./margin-transaction-details/margin-transaction-details.component";
+import {ExchangeTransactionReportComponent} from "./exchange-transaction-report/exchange-transaction-report.component";
 
 
 export const routes: Routes = [
@@ -165,6 +166,13 @@ export const routes: Routes = [
     path: 'margin-transaction-details/:accountNumber', component: MarginTransactionDetailsComponent, canActivate: [PositionsGuard],
     data: { roles: ['agent', 'supervizor', 'admin'] }
   },
+  {
+    path: 'exchange-transaction-report', component: ExchangeTransactionReportComponent, canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
+  },
+
+
+
 
   // { path: 'customer/:customerId', component: UserDetailComponent},
 
