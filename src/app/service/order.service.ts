@@ -15,6 +15,7 @@ import {
 import {BankAccountDto, CreateOrderRequest, ListingType, Order, OrderType, User} from "../model/model";
 import {map} from "rxjs/operators";
 import {number} from "zod";
+import {PopupService} from "./popup.service";
 
 
 @Injectable({
@@ -22,7 +23,7 @@ import {number} from "zod";
 })
 export class OrderService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private popUpService: PopupService) { }
 
 
 
@@ -263,7 +264,9 @@ export class OrderService {
         environment.userService + '/orders', orderRequest, httpOptions).toPromise();
       return response;
     } catch (error) {
-      console.error(error);
+      // @ts-ignore
+      this.popUpService.openPopup("Error", error.error);
+      // console.error(error);
       return false;
     }
   }
@@ -289,7 +292,7 @@ export class OrderService {
       })
     };
 
-    return this.http.get<CapitalProfitDto[]>(environment.userService + '/account/capitals/listings', httpOptions)
+    return this.http.get<CapitalProfitDto[]>(environment.userService + '/capital/listings', httpOptions)
       .pipe(
         map((data: CapitalProfitDto[]) => data.map(item => ({
           ...item,
@@ -300,6 +303,7 @@ export class OrderService {
 
 
   getPublicStocks(): Observable<PublicCapitalDto[]> {
+  // getPublicSecurities(): Observable<any> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -309,6 +313,7 @@ export class OrderService {
     };
     return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/stock/all', httpOptions);
     // return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
+    // return this.http.get<User>(environment.userService + '/capital/public/listing/all', httpOptions);
   }
 
   getAllStocks(): Observable<StockListing[]> {

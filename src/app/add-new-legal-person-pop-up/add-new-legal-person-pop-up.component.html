@@ -48,13 +48,12 @@
             <!-- Field in the RIGHT column of the popUp -->
             <div class="right-section">
 
-              <!-- JMBG field and validators -->
+              <!-- idNumber field and validators -->
               <div class="form-group">
-                  <label for="jmbg">JMBG:</label>
-                  <input type="text" id="jmbg" [(ngModel)]="addNewLegalPersonData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
-                  <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
-                      <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
-                      <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
+                  <label for="idNumber">idNumber:</label>
+                  <input type="text" id="idNumber" [(ngModel)]="addNewLegalPersonData.idNumber" name="idNumber" #idNumberModel="ngModel" [ngClass]="{ 'invalid-input': idNumberModel.invalid && (idNumberModel.dirty || idNumberModel.touched) }" />
+                  <div *ngIf="idNumberModel.invalid && (idNumberModel.dirty || idNumberModel.touched)" class="error-message">
+                      <div *ngIf="idNumberModel.hasError('required')" style="color: red;">JMBG is required.</div>
                   </div>
               </div>
 

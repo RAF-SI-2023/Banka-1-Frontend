@@ -97,13 +97,23 @@ export class EditCustomerComponent implements OnInit{
       return false;
     }
 
-    if (!this.editCustomerData.jmbg || !this.isValidJMBG(this.editCustomerData.jmbg)) {
-      this.popupService.openPopup("Error", "JMBG nije validan.");
+    if (!this.editCustomerData.address || !this.isAdressValid(this.editCustomerData.address)) {
+      this.popupService.openPopup("Error", "Adresa nije validna.");
       return false;
     }
 
     if (!this.editCustomerData.phoneNumber || !this.isValidPhoneNumber(this.editCustomerData.phoneNumber)) {
       this.popupService.openPopup("Error", "Broj telefona nije validan.");
+      return false;
+    }
+
+    if (!this.editCustomerData.jmbg || !this.isValidJMBG(this.editCustomerData.jmbg)) {
+      this.popupService.openPopup("Error", "JMBG nije validan.");
+      return false;
+    }
+
+    if (!this.editCustomerData.gender) {
+      this.popupService.openPopup("Error", "Izaberite pol.");
       return false;
     }
     return true;
@@ -119,6 +129,10 @@ export class EditCustomerComponent implements OnInit{
 
   private isValidPhoneNumber(phone: string): boolean {
     return /^\d+$/.test(phone);
+  }
+
+  private isAdressValid(address: string): boolean {
+    return address.length > 0;
   }
 
   cancel(){

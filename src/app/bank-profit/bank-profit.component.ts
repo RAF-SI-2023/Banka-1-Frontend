@@ -1,33 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { BankAccount, Exchange, Payment, Card } from '../model/model';
+import { User} from '../model/model';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BankAccountService } from '../service/bank-account.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AccountDetailsPopUpComponent } from '../account-details-pop-up/account-details-pop-up.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaymentService } from '../service/payment.service';
-import { PaymentDetailsPopUpComponent } from '../payment-details-pop-up/payment-details-pop-up.component';
-import { ExchangeDetailsPopUpComponent } from '../exchange-details-pop-up/exchange-details-pop-up.component';
 import { CardService } from "../service/card.service";
-import { CardDetailsPopupComponent } from "../card-details-popup/card-details-popup.component";
 import { Profit } from '../model/model';
 import { ProfitService } from '../service/profit.service';
+import {UserService} from "../service/employee.service";
+import {forkJoin} from "rxjs";
+import {map} from "rxjs/operators";
+import {TableComponentModule} from "../welcome/redesign/TableComponent";
 
 @Component({
   selector: 'app-bank-profit',
   standalone: true,
-  imports: [DatePipe, NgForOf, NgIf, CommonModule, FormsModule],
+  imports: [DatePipe, NgForOf, NgIf, CommonModule, FormsModule, TableComponentModule],
   templateUrl: './bank-profit.component.html',
   styleUrl: './bank-profit.component.css'
 })
 export class BankProfitComponent implements OnInit {
-  public profits:Profit[]=[];
-  public sum:number=0;
+  public headers = ['Name', 'Total Profit', 'Phone Number', 'Email'];
+  selectedTab: string = 'profits';
+  public agents: User[] = [];
+  public profits: Profit[] = [];
+  public bankProfit: number = 0;
   loggedUserId: number = -1;
 
-  constructor(private bankAccountService: BankAccountService, private cardService: CardService, private router: Router, private dialog: MatDialog, private paymentService: PaymentService, private activatedRoute: ActivatedRoute,private profitService:ProfitService) {
+  constructor(private profitService: ProfitService, private userService: UserService) {
     let loggedUserIdAsString = sessionStorage.getItem('loggedUserID');
     if (loggedUserIdAsString !== null) {
       this.loggedUserId = parseInt(loggedUserIdAsString);
@@ -36,16 +39,13 @@ export class BankProfitComponent implements OnInit {
     }
   }
 
-
-
   ngOnInit() {
-      this.loadProfits();
-      this.calculateTotalProfit();
-
+    this.loadAgents();
+    this.loadBankProfit();
+    this.loadAgentProfits();
   }
 
-  loadProfits() {
-
+  loadAgentProfits() {
     this.profits = [
       {
         name: 'Milan Aleksic',
@@ -66,38 +66,71 @@ export class BankProfitComponent implements OnInit {
         email: 'bankc@example.com'
       }
     ];
-
-
-    // Otkomentarisati kada bek odradi svoj deo za Profit
-
-    // this.profitService.getProfitsByAgents(this.loggedUserId).subscribe(
-    //   (profitsFromDB: Profit[]) => {
-    //     this.profits = profitsFromDB;
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     console.error('Error loading users:', error);
-    //   }
-    // );
-
   }
 
-  calculateTotalProfit() {
-
-    // 1) racunati od svih agenata zbir ostvarenog profita
-    this.sum = this.profits.reduce((acc, profit) => acc + profit.totalProfit, 0);
-
-    // 2) preko servisa
-
-    //  this.profitService.getAllProfit(this.loggedUserId).subscribe(
-    //   (profit: number) => {
-    //     this.sum = profit;
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     console.error('Error loading users:', error);
-    //   }
-    // );
+  loadBankProfit() {
+    this.bankProfit = this.profits.reduce((acc, profit) => acc + profit.totalProfit, 0);
   }
 
+  private loadAgents() {
+    this.userService.getEmployees().subscribe(
+      (data: User[]) => {
+        this.agents = data;
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading agents:', error);
+      }
+    );
+  }
+
+  // loadAgentProfits() {
+  //   this.userService.getEmployees().subscribe(
+  //     (agents: User[]) => {
+  //       this.agents = agents;
+  //
+  //       const profitObservables = agents.map(agent =>
+  //         this.profitService.getAgentProfit(agent.userId).pipe(
+  //           map((profit: number) => ({
+  //             name: agent.firstName + ' ' + agent.lastName,
+  //             totalProfit: profit,
+  //             phoneNumber: agent.phoneNumber,
+  //             email: agent.email
+  //           }))
+  //         )
+  //       );
+  //
+  //       forkJoin(profitObservables).subscribe(
+  //         (profits: Profit[]) => {
+  //           this.profits = profits;
+  //           console.log('Agent profits:', this.profits);
+  //         },
+  //         (error: HttpErrorResponse) => {
+  //           console.error('Error loading agent profits:', error);
+  //         }
+  //       );
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.error('Error loading agents:', error);
+  //     }
+  //   );
+  // }
+  //
+  // loadBankProfit() {
+  //   this.profitService.getAllProfit().subscribe(
+  //     (profit: number) => {
+  //       this.bankProfit = profit;
+  //       console.log('Bank profit:', this.bankProfit);
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       console.error('Error loading bank profit:', error);
+  //     }
+  //   );
+  // }
+  //
+
+  setTab(tabName: string) {
+    this.selectedTab = tabName;
+  }
 
 }
 

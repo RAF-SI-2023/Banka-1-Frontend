@@ -65,8 +65,16 @@
             <div>OTC</div>
           </div>
 
-          <div [routerLink]="'/otc'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+          <div [routerLink]="'/otc-customer'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
             <div>OTC</div>
+          </div>
+
+          <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
+            <div>Margin</div>
+          </div>
+
+          <div [routerLink]="'/exchange-transaction-report'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
+            <div>Exchange Transaction Report</div>
           </div>
 
 

@@ -12,20 +12,20 @@ export class ProfitService {
   constructor(private httpClient: HttpClient) { }
 
 
-  getAllProfit(userId:number):Observable<number>{
+  getAllProfit():Observable<number>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/allProfit/${userId}`;
+    let url = environment.userService + `/profit/getStockProfitBank`;
 
     return this.httpClient.get<number>(url, options);
   }
 
 
-  getProfitsByAgents(userId: number): Observable<Profit[]> {
+  getAgentProfit(userId: number): Observable<number> {
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -33,9 +33,9 @@ export class ProfitService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/profitByAgents/${userId}`;
+    let url = environment.userService + `/getStockProfitAgent/${userId}`;
 
-    return this.httpClient.get<Profit[]>(url, options);
+    return this.httpClient.get<number>(url, options);
   }
 
 

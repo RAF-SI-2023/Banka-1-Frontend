@@ -117,7 +117,7 @@ export class CustomerService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.put<any>(`${this.apiUrl}/edit`, customer, { headers });
+    return this.http.put<any>(`${this.apiUrl}`, customer, { headers });
   }
 
   public  deleteCustomer(customerId: number): Observable<boolean> {

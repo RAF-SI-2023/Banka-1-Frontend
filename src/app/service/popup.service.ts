@@ -22,6 +22,7 @@ import { JoinLegalPersonAndCustomerPopUpComponent } from '../join-legal-person-a
 import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
 import {BuyStockPopupComponent} from "../buy-stock-popup/buy-stock-popup.component";
 import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
+import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
 
 
 @Injectable({
@@ -141,4 +142,10 @@ export class PopupService {
     this.dialog.open(CustomPopupComponent, {data: args})
   }
 
+  openMarginCallPopup(row: any) {
+    this.dialog.open(MarginCallPopUpComponent, {
+      data: row
+    });
+    console.log('Opening margin call popup...');
+  }
 }

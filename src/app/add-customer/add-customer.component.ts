@@ -4,16 +4,17 @@ import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../service/customer.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { PopupService } from '../service/popup.service';
-import { CreateCustomerRequest, Customer } from '../model/model';
+import {CreateCustomerRequest, Customer} from '../model/model';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
+import {DropdownSelectorModule} from "../welcome/redesign/DropDownSelector";
 
 @Component({
   selector: 'app-add-customer',
   standalone: true,
-  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule, DropdownInputModule],
+  imports: [FormsModule, CommonModule, FieldComponentModule, OutlineOrangeButtonModule, OrangeButtonModule, DropdownSelectorModule, DropdownInputModule],
   templateUrl: './add-customer.component.html',
   styleUrl: './add-customer.component.css'
 })
@@ -33,7 +34,7 @@ export class AddCustomerComponent {
     private customerService: CustomerService,
     private dialogRef: MatDialogRef<AddCustomerComponent>,
     private popupService: PopupService,
-    ){}
+  ){}
 
   submit() {
     if(this.validateForm()) {
@@ -65,8 +66,8 @@ export class AddCustomerComponent {
       return false;
     }
 
-    if (!this.addCustomerData.jmbg || !this.isValidJMBG(this.addCustomerData.jmbg)) {
-      this.popupService.openPopup("Error", "JMBG nije validan.");
+    if (!this.addCustomerData.address || !this.isAdressValid(this.addCustomerData.address)) {
+      this.popupService.openPopup("Error", "Adresa nije validna.");
       return false;
     }
 
@@ -74,6 +75,17 @@ export class AddCustomerComponent {
       this.popupService.openPopup("Error", "Broj telefona nije validan.");
       return false;
     }
+
+    if (!this.addCustomerData.jmbg || !this.isValidJMBG(this.addCustomerData.jmbg)) {
+      this.popupService.openPopup("Error", "JMBG nije validan.");
+      return false;
+    }
+
+    if (!this.addCustomerData.gender) {
+      this.popupService.openPopup("Error", "Izaberite pol.");
+      return false;
+    }
+
     return true;
   }
 
@@ -89,8 +101,17 @@ export class AddCustomerComponent {
     return /^\d+$/.test(phone);
   }
 
-  setGender(gender: any){
+  private isAdressValid(address: string): boolean {
+    return address.length > 0;
+  }
+
+  setGender(gender: any) {
     this.addCustomerData.gender = gender;
+  }
+
+  updateUid(Uid: any) {
+    console.log("gender:" + Uid);
+    this.addCustomerData.gender = Uid;
   }
 
 }

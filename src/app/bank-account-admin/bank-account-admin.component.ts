@@ -1,32 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { BankAccount, Exchange, Payment, Card } from '../model/model';
+import {BankAccount, User} from '../model/model';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BankAccountService } from '../service/bank-account.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AccountDetailsPopUpComponent } from '../account-details-pop-up/account-details-pop-up.component';
-import { MatDialog } from '@angular/material/dialog';
-import { PaymentService } from '../service/payment.service';
-import { PaymentDetailsPopUpComponent } from '../payment-details-pop-up/payment-details-pop-up.component';
-import { ExchangeDetailsPopUpComponent } from '../exchange-details-pop-up/exchange-details-pop-up.component';
-import { CardService } from "../service/card.service";
-import { CardDetailsPopupComponent } from "../card-details-popup/card-details-popup.component";
-import { Profit } from '../model/model';
-
+import {GrayButtonModule} from "../welcome/redesign/GrayButton";
+import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {TableComponentModule} from "../welcome/redesign/TableComponent";
+import {TableComponentMarginModule} from "../welcome/redesign/TableComponentMargin";
+import {TableComponentBankAccountModule} from "../welcome/redesign/TableComponentBankAccount";
+import {UserService} from "../service/employee.service";
+import {TransformBankAccountsPipe} from "../transform-bank-accounts.pipe";
 
 @Component({
   selector: 'app-bank-account-admin',
   standalone: true,
-  imports: [DatePipe, NgForOf, NgIf, CommonModule, FormsModule],
+  imports: [DatePipe, NgForOf, NgIf, CommonModule, FormsModule, GrayButtonModule, OrangeButtonModule, TableComponentModule, TableComponentMarginModule, TableComponentBankAccountModule, TransformBankAccountsPipe],
   templateUrl: './bank-account-admin.component.html',
   styleUrl: './bank-account-admin.component.css'
 })
 export class BankAccountAdminComponent implements OnInit {
-  public userBankAccounts: BankAccount[] = [];
+  headers = ['Bank Account', 'Currency', 'Account Balance', 'Reserved', 'Available'];
+  selectedTab: string = 'bank_accounts';
+  public bankAccounts: BankAccount[] = [];
+  public mappedBankAccounts: any[] = [];
   loggedUserId: number = -1;
+  user: User | undefined ;
 
-  constructor(private bankAccountService: BankAccountService, private cardService: CardService, private router: Router, private dialog: MatDialog, private paymentService: PaymentService, private activatedRoute: ActivatedRoute) {
+  constructor(private bankAccountService: BankAccountService, private router: Router) {
     let loggedUserIdAsString = sessionStorage.getItem('loggedUserID');
     if (loggedUserIdAsString !== null) {
       this.loggedUserId = parseInt(loggedUserIdAsString);
@@ -35,56 +37,27 @@ export class BankAccountAdminComponent implements OnInit {
     }
   }
 
-  
-
   ngOnInit() {
-      this.loadBankAccounts();
+    this.loadBankAccounts();
   }
 
   loadBankAccounts() {
-
-    //Zakomentarisati kada bek bude odradjen
-
-    this.userBankAccounts = [
-      {
-        accountNumber: '215215215225',
-        currency:'RSD',
-        balance:15000,
-        reservedResources:2000,
-        availableBalance:24500
+    this.bankAccountService.getAdminBankAccounts(1).subscribe(
+      (usersBankAccountsFromDB: BankAccount[]) => {
+        this.bankAccounts = usersBankAccountsFromDB;
+        console.log('Bank accounts loaded:', this.bankAccounts);
       },
-      {
-        accountNumber: '636363631316',
-        currency:'RSD',
-        balance:15000,
-        reservedResources:2000,
-        availableBalance:24500
-      },
-      {
-        accountNumber: '61637237327',
-        currency:'RSD',
-        balance:15000,
-        reservedResources:2000,
-        availableBalance:24500
+      (error: HttpErrorResponse) => {
+        console.error('Error loading bank accounts:', error);
       }
-    ];  
-
-    // Potrebno je bek da uradi da se za ulogovanog admina vrate svi BankAccount te banke (Kada odrade otkomentarisati i prilagoditi odgovarajucu putanju GET poziva)
-   
-    // this.bankAccountService.getAdminsBankAccounts(this.loggedUserId).subscribe(
-    //   (usersBankAccountsFromDB: BankAccount[]) => {
-    //     this.userBankAccounts = usersBankAccountsFromDB;
-    //   },
-    //   (error: HttpErrorResponse) => {
-    //     console.error('Error loading users:', error);
-    //   }
-    // );
-
+    );
   }
-
 
   navigateToDetails(accountNumber: string|undefined) {
     this.router.navigate(['/transaction-details-admin', accountNumber]);
   }
 
+  setTab(tabName: string) {
+    this.selectedTab = tabName;
+  }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule, DatePipe} from "@angular/common";
+import {CommonModule, DatePipe, Location} from "@angular/common";
 import {BankAccountService} from "../service/bank-account.service";
 import {BankAccount, Card, Customer} from "../model/model";
 import {ActivatedRoute} from "@angular/router";
@@ -37,7 +37,8 @@ export class UserDetailComponent implements OnInit {
               private cardService: CardService,
               private popup: PopupService,
               private authService: AuthService,
-              private userService: UserService) {}
+              private userService: UserService,
+              private _location: Location) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -134,6 +135,11 @@ export class UserDetailComponent implements OnInit {
 
     // Return the formatted date string in the format "dd-MM-yyyy"
     return formattedDay + '-' + formattedMonth + '-' + year;
+  }
+
+  goBack(): void {
+    console.log('Going back to customer page...');
+    this._location.back();
   }
 
 }

@@ -33,16 +33,11 @@ export class UpdateUserComponent implements OnInit {
   };
   password: string;
 
-  ngOnInit(): void {
-    this.userToEdit = this.userService.getUserToEdit() as User;
-  }
-
-
   constructor(private userService: UserService,private router: Router,
               private popupService: PopupService,
               private dialogRef: MatDialogRef<UpdateUserComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any
-              ) {
+  ) {
     this.userToEdit = {
       userId: 0,
       firstName: '',
@@ -54,6 +49,10 @@ export class UpdateUserComponent implements OnInit {
       password: '',
     };
     this.password = '';
+  }
+
+  ngOnInit(): void {
+    this.userToEdit = this.userService.getUserToEdit() as User;
   }
 
   onCreateUpdateUserPopup() {
@@ -102,18 +101,18 @@ export class UpdateUserComponent implements OnInit {
 
   onCancelUpdateUserPopup() {
     const confirmResult = confirm('Are you sure you want to cancel adding the user?');
-     if (confirmResult) {
+    if (confirmResult) {
       this.dialogRef.close();
       // this.router.navigate(['/user/list']);
-     }
+    }
   }
 
   onCloseUpdateUserPopup() {
     const confirmResult = confirm('Are you sure you want to cancel adding the user?');
-     if (confirmResult) {
+    if (confirmResult) {
       this.dialogRef.close();
       // this.router.navigate(['/user/list']);
-     }
+    }
   }
 
   private validateForm(): boolean {

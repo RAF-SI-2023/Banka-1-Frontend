@@ -109,9 +109,6 @@ export class OrdersComponent {
 
   }
 
-
-
-
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
     this.selectedTab = tab;
   }
