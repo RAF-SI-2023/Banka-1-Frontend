@@ -58,7 +58,7 @@
             <div class="options-menu">
               <span id="options-button" class="material-symbols-outlined">more_vert</span>
               <div class="options-dropdown">
-                <button *ngIf="canEditUser()" id="editProfile-button" (click)="editUser(row.originalUser)">Edit Profile</button>
+                <button *ngIf="canEditUser()" id="editProfile-button" (click)="editUser(row.originalUser)">Update user</button>
                 <button *ngIf="canDeleteUser()" id="delete-button" (click)="deleteUser(row.originalUser)">Delete</button>
               </div>
             </div>

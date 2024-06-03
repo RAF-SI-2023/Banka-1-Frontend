@@ -1,0 +1,22 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <span class="header-title">{{ title }}</span>
+    <span class="close-icon" (click)="onCancelButton()">X</span>
+  </div>
+
+
+  <div class="popup-body">
+    <label class="text">{{ header }}</label>
+    <label class="text">{{ message }}</label>
+
+    <div class="button-container">
+      <button class="button-primary"  (click)="onCancelButton()">
+        OK
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+

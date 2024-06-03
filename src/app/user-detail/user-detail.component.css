@@ -10,6 +10,14 @@
  font-family: "Jura", sans-serif;
 }
 
+.security-title {
+  color: var(--banka-orange);
+  font-size: 2.2rem;
+  font-weight: 700;
+
+  margin-bottom: 7rem;
+}
+
 .title {
   grid-column: span 12;
   font-size: 2.2rem;
@@ -74,4 +82,18 @@
 .selected_tab {
   background-color: #131319;
   color: #FFB72B;
+}
+
+.back-button {
+  color: var(--banka-orange);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 7rem;
+
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px;
+  user-select: none; /* Prevent text selection */
+  /*border: 1px solid #000; !* Optional: Add border *!*/
+  border-radius: 5px; /* Optional: Add rounded corners */
 }

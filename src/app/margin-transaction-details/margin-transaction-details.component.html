@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="page">
+<!--    <div class="security-title">Margin Transactions for account: {{accountNumber}}</div>-->
+    <div class="security-title">
+      <span class="back-button" (click)="goBack()">&lt;</span>
+      Margin Transactions for account: {{accountNumber}}
+    </div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <div (click)="setTab('transaction')" class="{{ selectedTab === 'transaction' ? 'tab active-tab' : 'tab' }}">
+          Transactions
+        </div>
+
+        <hr />
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'transaction'">
+        <app-dynamic-table
+          [headersArray]="headersMargins"
+          [dataArray]="marginTransactions"
+        >
+        </app-dynamic-table>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

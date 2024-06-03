@@ -12,12 +12,23 @@
           </div>
     </div>
     <div class="add-save-perm-div">
-        <div class="left">
+        <div class="left" *ngIf="shouldComboBoxAndButtonBeVisible">
             <div class="filter-input filter-dropdown">
-                <select class="security-filter-select" [(ngModel)]="addedPermission" (change)="onSelectPermission()">
-                    <option *ngFor="let permission of availablePermissions" value="{{permission.name}}">{{permission.description}}</option>
-                </select>
+                <form #myForm="ngForm">
+                    <select name="addedPermission" class="security-filter-select" [(ngModel)]="addedPermission" (change)="onSelectPermission()" ngModel>
+                        <option *ngFor="let permission of availablePermissions" value="{{permission.name}}">{{permission.description}}</option>
+                    </select>
+                </form>
+                
             </div>
+
+            <!-- <dropdown-input 
+                [inputName]="'Permissions user do not have'" 
+                [valueNames]="availablePermissionsNames" 
+                [values]="availablePermissions" 
+                (valueToChange)="onSelectionChange($event)">
+            </dropdown-input> -->
+
             <img (click)="addPermission()" src="assets/ButtonMedium.png" alt="+">
         </div>
 

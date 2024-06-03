@@ -84,33 +84,33 @@ export class OtcComponent {
   }
 
   async loadOTCs() {
-    forkJoin({
-      contracts: this.http.get<Contract[]>(
-        '/assets/mocked_banking_data/contracts-mocked.json'
-      ),
-      stocks: this.http.get<StockListing[]>(
-        '/assets/mocked_banking_data/stocks-mocked.json'
-      ),
-    }).subscribe(({ contracts, stocks }) => {
-      console.log('Contracts:', contracts);
-      console.log('Stocks:', stocks);
-      this.contracts = contracts;
-      this.stocks = stocks;
-      this.otcs = this.mergeLists(contracts, stocks);
-      console.log('OTCs:', this.otcs);
-    });
-
     // forkJoin({
-    //   contracts: this.otcService.getAllContracts(),
-    //   stocks: this.stockService.getStocks()
+    //   contracts: this.http.get<Contract[]>(
+    //     '/assets/mocked_banking_data/contracts-mocked.json'
+    //   ),
+    //   stocks: this.http.get<StockListing[]>(
+    //     '/assets/mocked_banking_data/stocks-mocked.json'
+    //   ),
     // }).subscribe(({ contracts, stocks }) => {
+    //   console.log('Contracts:', contracts);
+    //   console.log('Stocks:', stocks);
     //   this.contracts = contracts;
     //   this.stocks = stocks;
     //   this.otcs = this.mergeLists(contracts, stocks);
-    //   // console.log('Contracts:', contracts);
-    //   // console.log('Stocks:', stocks);
-    //   // console.log('OTCs:', this.otcs);
+    //   console.log('OTCs:', this.otcs);
     // });
+
+    forkJoin({
+      contracts: this.otcService.getAllSupervisorContracts(),
+      stocks: this.stockService.getStocks()
+    }).subscribe(({ contracts, stocks }) => {
+      this.contracts = contracts;
+      this.stocks = stocks;
+      this.otcs = this.mergeLists(contracts, stocks);
+      console.log('Contracts:', contracts);
+      console.log('Stocks:', stocks);
+      console.log('OTCs:', this.otcs);
+    });
   }
 
   async loadPublicOffers() {
@@ -151,7 +151,7 @@ export class OtcComponent {
     const contractId = this.otcToContractIdMap.get(otc);
     console.log('Contract ID:', contractId);
 
-    if (contractId !== undefined) {
+    if (contractId) {
       if (newStatus === 'Approved')
         this.otcService.approveOTC(contractId).subscribe(
           (response) => {

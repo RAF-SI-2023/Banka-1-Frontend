@@ -57,30 +57,33 @@
                 </div>
 
 
-            <div class="form-group">
-                <label for="jmbg">JMBG:</label>
-                <input type="text" id="jmbg" [(ngModel)]="addCustomerData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
-                <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
-                    <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
-                    <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
-                </div>
-            </div>
+              <div class="form-group">
+                  <label for="jmbg">JMBG:</label>
+                  <input type="text" id="jmbg" [(ngModel)]="addCustomerData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
+                  <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
+                      <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
+                      <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
+                  </div>
+              </div>
 
 
-            <div class="form-group">
-                <label for="position">Position:</label>
-                <input type="text" name="position" value="customer" readonly>
-            </div>
+              <div class="form-group">
+                  <label for="position">Position:</label>
+                  <input type="text" name="position" value="customer" readonly>
+              </div>
 
-              <div class="form-group" >
+              <div class="form-group">
                 <label>Gender:</label>
-
                 <dropdown-input [inputName]="'gender'" [valueNames]="['Male', 'Female']" [values]="['Male', 'Female']" (selectedValue)="setGender($event)"></dropdown-input>
               </div>
+<!--              <dropdown-selector [config]="dropdownConfig"-->
+<!--                                     (selectionChanged)="updateUid($event)">-->
+<!--              </dropdown-selector>-->
+
               <div class="bottom-buttons">
-              <outline-orange-button [buttonName]="'Cancel'" (click)="cancel()"></outline-orange-button>
-              <orange-button [buttonName]="'Create'" (click)="submit()"></orange-button>
-            </div>
+                <outline-orange-button [buttonName]="'Cancel'" (click)="cancel()"></outline-orange-button>
+                <orange-button [buttonName]="'Create'" (click)="submit()"></orange-button>
+              </div>
 
             </div>
         </div>

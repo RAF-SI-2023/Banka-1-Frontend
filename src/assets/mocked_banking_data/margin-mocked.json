@@ -1,0 +1,20 @@
+[
+  {
+    "marginAccount": "1234567",
+    "currency": "RSD",
+    "security": "Stock",
+    "investedFunds": 10000,
+    "borrowedFunds": 24000,
+    "maintenanceMargin": 7000,
+    "marginCall": "True"
+  },
+  {
+    "marginAccount": "3342566",
+    "currency": "EUR",
+    "security": "Future",
+    "investedFunds": 1200,
+    "borrowedFunds": 3200,
+    "maintenanceMargin": 50,
+    "marginCall": "False"
+  }
+]

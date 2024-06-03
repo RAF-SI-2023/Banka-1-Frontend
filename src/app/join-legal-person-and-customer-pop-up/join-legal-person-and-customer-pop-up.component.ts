@@ -32,7 +32,8 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
     jmbg: '',
     phoneNumber: '',
     gender: '',
-    address: ''
+    address: '',
+    isLegalEntity: false
   };
 
   constructor(private dialogRef: MatDialogRef<JoinLegalPersonAndCustomerPopUpComponent>, 

@@ -63,6 +63,7 @@
 
 .popup-buttons {
   margin-top: 150px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: space-between;
   /*margin-bottom: 30px;*/

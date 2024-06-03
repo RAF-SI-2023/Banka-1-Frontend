@@ -26,7 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th>Company name</th>
-                                        <th>JMBG</th>
+                                        <th>idNumber</th>
                                         <th>PIB</th>
                                         <th>CBA</th>
                                         <th>Address</th>
@@ -37,7 +37,7 @@
                                 <tbody>
                                     <tr *ngFor="let legalPerson of allLegalPersons; let idx = index">
                                         <td>{{ legalPerson.companyName }}</td>
-                                        <td>{{ legalPerson.jmbg }}</td>
+                                        <td>{{ legalPerson.idNumber }}</td>
                                         <td>{{ legalPerson.pib }}</td>
                                         <td>{{ legalPerson.cba }}</td>
                                         <td>{{ legalPerson.address }}</td>

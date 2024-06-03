@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="page">
+    <div class="security-title">Exchange Transaction Report</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <div (click)="setTab('exchangeTransactions')" class="{{ selectedTab === 'exchangeTransactions' ? 'tab active-tab' : 'tab' }}">
+          Overview
+        </div>
+
+        <hr />
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'exchangeTransactions'">
+        <app-dynamic-table
+          [headersArray]="headersETR"
+          [dataArray]="exchangedTransactions"
+        >
+        </app-dynamic-table>
+
+      </div>
+
+    </div>
+  </div>
+</div>

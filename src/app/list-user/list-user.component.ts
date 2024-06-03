@@ -95,7 +95,6 @@ export class ListUserComponent implements OnInit{
   }
 
   setSelectedTab(tab: string) {
-    console.log(tab)
     this.selectedTab = tab;
   }
 

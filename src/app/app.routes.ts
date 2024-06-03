@@ -34,6 +34,14 @@ import { BankProfitComponent } from './bank-profit/bank-profit.component';
 import { BankAccountAdminComponent } from './bank-account-admin/bank-account-admin.component';
 import { TransactionDetailsAdminComponent } from './transaction-details-admin/transaction-details-admin.component';
 import {OtcComponent} from "./otc/otc.component";
+import {SecuritiesLegalPersonsComponent} from "./securities-legal-persons/securities-legal-persons.component";
+import {LegalPersonGuard} from "./guards/legalperson.guard";
+import {OrdersLegalPersonsComponent} from "./orders-legal-persons/orders-legal-persons.component";
+import {OtcCustomerComponent} from "./otc-customer/otc-customer.component";
+import {MarginComponent} from "./margin/margin.component";
+import {MarginTransactionDetailsComponent} from "./margin-transaction-details/margin-transaction-details.component";
+import {ExchangeTransactionReportComponent} from "./exchange-transaction-report/exchange-transaction-report.component";
+
 
 
 export const routes: Routes = [
@@ -50,10 +58,21 @@ export const routes: Routes = [
     ],
     data: { roles: ['agent', 'supervizor', 'admin'] }
   },
+  // {
+  //   path: 'orders', component: OrdersComponent, canActivate: [LegalPersonGuard],
+  //   data: { roles: ['agent', 'supervizor', 'admin'] }
+  // },
+
   {
-    path: 'orders', component: OrdersComponent, canActivate: [PositionsGuard],
-    data: { roles: ['agent', 'supervizor', 'admin'] }
+    path: 'orders',
+    children: [
+      { path: 'regular', component: OrdersComponent,
+        canActivate: [PositionsGuard],
+        data: { roles: ['agent', 'supervizor', 'admin'] }},
+      { path: 'legal', component: OrdersLegalPersonsComponent, canActivate: [LegalPersonGuard]},
+    ]
   },
+
 
   { path: 'activate-account', component: ActivateAccountComponent },
   { path:'customer/set-password/:token', component: SetPasswordComponent},
@@ -64,12 +83,13 @@ export const routes: Routes = [
   {
     path: 'security',
     children: [
-      { path: 'all', component: SecurityListComponent },
+      // { path: 'all', component: SecurityListComponent },
       { path: "stock/:ticker", component: StockViewComponent },
       { path: 'forex/:ticker', component: ForexViewComponent},
       { path: 'future/:ticker', component: FutureViewComponent},
+      { path: 'legal', component: SecuritiesLegalPersonsComponent},
     ],
-    // canActivate: [PositionsGuard],
+    canActivate: [LegalPersonGuard],
     // data: { roles: ['employee', 'admin'] } // Moci ce svi kad se aktivira prosirenje
   },
 
@@ -110,17 +130,14 @@ export const routes: Routes = [
     path: 'bank-accounts', component: BankAccountsAndCardsComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'], type: 'bankAccount' }
   },
-
   {
     path: 'bank-accounts-admin', component: BankAccountAdminComponent,canActivate: [PositionsGuard],
     data: { roles: ['admin']}
-
   },
-
-  { path: 'transaction-details-admin/:accountNumber', component: TransactionDetailsAdminComponent,canActivate: [PositionsGuard],
-  data: { roles: ['admin']} },
-
-
+  {
+    path: 'transaction-details-admin/:accountNumber', component: TransactionDetailsAdminComponent,canActivate: [PositionsGuard],
+    data: { roles: ['admin']}
+  },
   {
     path: 'recipients', component: RecipientsComponent, canActivate: [PositionsGuard],
     data: { roles: ['customer'] }
@@ -153,6 +170,25 @@ export const routes: Routes = [
     path: 'otc', component: OtcComponent, canActivate: [PositionsGuard],
     data: { roles: ['admin'] }
   },
+  {
+    path: 'otc-customer', component: OtcCustomerComponent, canActivate: [PositionsGuard],
+    data: { roles: ['customer'] }
+  },
+  {
+    path: 'margin', component: MarginComponent, canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
+  },
+  {
+    path: 'margin-transaction-details/:accountNumber', component: MarginTransactionDetailsComponent, canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
+  },
+  {
+    path: 'exchange-transaction-report', component: ExchangeTransactionReportComponent, canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
+  },
+
+
+
 
   // { path: 'customer/:customerId', component: UserDetailComponent},
 
