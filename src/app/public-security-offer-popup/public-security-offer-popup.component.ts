@@ -37,6 +37,9 @@ export class PublicSecurityOfferPopupComponent {
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
       this.security = data;
+      console.log(this.security.amount);
+      // console.log(this.security.publicOffers.id.amount);
+
     }
 
     onCancelButton(){
@@ -48,12 +51,11 @@ export class PublicSecurityOfferPopupComponent {
         if (this.volumeOfStock != '' || this.priceOffer != '') {
           const volume = parseFloat(this.volumeOfStock);
           const offer = parseFloat(this.priceOffer);
-          if (volume >= 0 || offer >= 0) {
-            if (volume > offer) {
-              this.bankAccountService.makeAnOffer(this.security, volume, offer);
-              this.warnMessage = "";
+          if (volume >= 0 || offer >= 0) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+            if (volume >= this.security.amount) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+              this.warnMessage = "Asked volume too high."
             } else {
-              this.warnMessage = "Price offer needs to be bigger then volume."
+              this.bankAccountService.makeAnOffer(this.security, volume, offer);
             }
           } else {
             this.warnMessage = "Both volume and price need to be positive numbers."

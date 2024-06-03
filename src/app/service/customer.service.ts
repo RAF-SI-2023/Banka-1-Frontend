@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {firstValueFrom} from "rxjs";
-import { CreateBankAccountRequest, CreateCustomerRequest, Customer, EditCustomerRequest } from '../model/model';
+import {
+  CreateBankAccountRequest,
+  CreateCustomerRequest,
+  Customer,
+  CustomerWithAccounts,
+  EditCustomerRequest
+} from '../model/model';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -28,6 +34,17 @@ export class CustomerService {
   ) { }
 
   getCustomer(jwt: string): Observable<Customer> {
+    const url = `${this.apiUrl}/getCustomer`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<any>(url, httpOptions);
+  }
+
+  getCustomer2(): Observable<CustomerWithAccounts> {
+    const jwt = sessionStorage.getItem('jwt');
     const url = `${this.apiUrl}/getCustomer`;
     const httpOptions = {
       headers: new HttpHeaders({

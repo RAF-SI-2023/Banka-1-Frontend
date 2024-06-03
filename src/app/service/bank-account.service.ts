@@ -197,6 +197,6 @@ export class BankAccountService {
 
 
   makeAnOffer(security: any, volume: number, offer: number){
-    //ToDo: napraviti HTTP req
+    // Customer salje http, offer na public otc
   }
 }

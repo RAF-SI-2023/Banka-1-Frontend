@@ -1,0 +1,124 @@
+<div class="container">
+  <div class="page">
+    <div class="security-title">OTCs</div>
+    <div class="central-window">
+      <div class="tabs-menu">
+        <div (click)="setTab('public')" class="{{ selectedTab === 'public' ? 'tab active-tab' : 'tab' }}">
+          Public Offers
+        </div>
+
+        <div (click)="setTab('active-sell')" class="{{ selectedTab === 'active-sell' ? 'tab active-tab' : 'tab' }}">
+          Active - SELL
+        </div>
+
+        <div (click)="setTab('active-buy')" class="{{ selectedTab === 'active-buy' ? 'tab active-tab' : 'tab' }}">
+          Active - BUY
+        </div>
+
+        <div (click)="setTab('otc-history')" class="{{ selectedTab === 'otc-history' ? 'tab active-tab' : 'tab' }}">
+          OTC History
+        </div>
+        <hr />
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'otc-history'">
+        <app-dynamic-table-status
+          [headersArray]="headersOTCs"
+          [dataArray]="otcs"
+          [showStatus]="true"
+        >
+          <ng-template #statusColumn let-row>
+            <div class="dropdown">
+
+                {{ row.status }}
+<!--              <ul class="dropdown-menu" aria-labelledby="dropdownMenu">-->
+<!--                <li>-->
+<!--                  <a-->
+<!--                    class="dropdown-item"-->
+<!--                    (click)="updateOTCStatus(row, 'Approved')"-->
+<!--                    >Approve</a-->
+<!--                  >-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                  <a-->
+<!--                    class="dropdown-item"-->
+<!--                    (click)="updateOTCStatus(row, 'Denied')"-->
+<!--                    >Deny</a-->
+<!--                  >-->
+<!--                </li>-->
+<!--              </ul>-->
+            </div>
+          </ng-template>
+        </app-dynamic-table-status>
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'public'">
+        <app-dynamic-table-status
+          [headersArray]="headersPublic"
+          [dataArray]="publicOffers"
+          [showStatus]="true"
+        >
+          <ng-template #statusColumn let-row>
+            <orange-button buttonName="OFFER" (click)="togglePopupOffer(row)"></orange-button>
+          </ng-template>
+        </app-dynamic-table-status>
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'active-sell'">
+        <app-dynamic-table-status
+          [headersArray]="headersOTCs"
+          [dataArray]="activeSell"
+          [showStatus]="true"
+        >
+          <ng-template #statusColumn let-row>
+            <div class="dropdown">
+              <div
+                id="dropdownMenu"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{ row.status }}
+              </div>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                <li>
+                  <a
+                    class="dropdown-item"
+                    (click)="updateOTCStatus(row, 'Approved')"
+                    >Approve</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    (click)="updateOTCStatus(row, 'Denied')"
+                    >Deny</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </ng-template>
+        </app-dynamic-table-status>
+      </div>
+
+      <div class="overview-tab" *ngIf="selectedTab === 'active-buy'">
+        <app-dynamic-table-status
+          [headersArray]="headersOTCs"
+          [dataArray]="activeBuy"
+          [showStatus]="true"
+        >
+          <ng-template #statusColumn let-row>
+            <div class="dropdown">
+              <div
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                {{ row.status }}
+              </div>
+
+            </div>
+          </ng-template>
+        </app-dynamic-table-status>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { OrangeButtonModule } from '../welcome/redesign/OrangeButton';
 import { TableComponentModule } from '../welcome/redesign/TableComponent';
 import { TransformSecuritiesPipeModule } from '../orders/TransformSecuritiesPipe';
 import {
-  Contract,
+  Contract, Customer, CustomerWithAccounts,
   OTC,
   OTCTab,
   PublicOffer,
@@ -17,6 +17,7 @@ import { forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TableComponentStatusModule } from '../welcome/redesign/TableComponentStatus';
 import { PopupService } from '../service/popup.service';
+import {CustomerService} from "../service/customer.service";
 
 @Component({
   selector: 'app-otc',
@@ -32,10 +33,10 @@ import { PopupService } from '../service/popup.service';
     TransformSecuritiesPipeModule,
     TableComponentStatusModule,
   ],
-  templateUrl: './otc.component.html',
-  styleUrl: './otc.component.css',
+  templateUrl: './otc-customer.component.html',
+  styleUrl: './otc-customer.component.css',
 })
-export class OtcComponent {
+export class OtcCustomerComponent {
   headersOTCs = [
     'Owner',
     'Stock',
@@ -60,7 +61,7 @@ export class OtcComponent {
     'Last Divided Yield',
   ];
 
-  selectedTab: string = 'overview';
+  selectedTab: string = 'public';
   otcToContractIdMap: Map<OTC, number> = new Map();
   contracts: Contract[] = [];
   stocks: StockListing[] = [];
@@ -69,18 +70,50 @@ export class OtcComponent {
   activeSell: OTC[] = [];
   activeBuy: OTC[] = []
 
+  customer: CustomerWithAccounts = {} as CustomerWithAccounts;
+
+
   constructor(
     private otcService: OtcService,
+    private customerService: CustomerService,
     private stockService: StockService,
     private http: HttpClient,
     private popup: PopupService
   ) {}
 
   async ngOnInit() {
+    this.initializeCustomer();
     this.loadOTCs();
     this.loadPublicOffers();
-    this.loadActiveBuy();
-    this.loadActiveSell();
+    // this.loadActiveBuy();
+    // this.loadActiveSell();
+  }
+
+  private initializeCustomer(): void {
+    this.customerService.getCustomer2().subscribe({
+      next: (customer) => {
+        this.customer = customer;
+        console.log('Customer:', customer);
+        console.log("Load active sell");
+        console.log(this.customer);
+        console.log(this.otcs);
+        if (this.customer && this.customer.accountIds && this.otcs.length > 0) {
+          this.customer.accountIds.forEach(account => {
+            const matchingOtcs = this.otcs.filter(otc => otc.owner === account.accountNumber);
+            if (matchingOtcs.length > 0) {
+              console.log(`Matching OTCs for account ${account.accountNumber}:`, matchingOtcs);
+              this.activeSell = matchingOtcs.filter(otc => otc.status !== 'approved' && otc.status !== 'denied');
+              this.activeBuy = matchingOtcs;
+            }
+          });
+        } else {
+          console.log("Nema customera ili otca");
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching customer:', error);
+      }
+    });
   }
 
   async loadOTCs() {
@@ -99,9 +132,8 @@ export class OtcComponent {
     //   this.otcs = this.mergeLists(contracts, stocks);
     //   console.log('OTCs:', this.otcs);
     // });
-
     forkJoin({
-      contracts: this.otcService.getAllSupervisorContracts(),
+      contracts: this.otcService.getAllCustomerContracts(),
       stocks: this.stockService.getStocks()
     }).subscribe(({ contracts, stocks }) => {
       this.contracts = contracts;
@@ -111,6 +143,7 @@ export class OtcComponent {
       // console.log('Stocks:', stocks);
       // console.log('OTCs:', this.otcs);
     });
+
   }
 
   async loadPublicOffers() {
@@ -121,24 +154,29 @@ export class OtcComponent {
       });
   }
 
-  async loadActiveSell() {
-    this.http
-      .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
-      .subscribe((offers) => {
-        this.activeSell = offers;
-      });
-  }
+  // async loadActiveSell() {
+  //   // Customer->accountIds->accountNumber
+  //   // I onda upored accountNumber sa svim contractima i ako se poklapa
+  //   // Sad je pitanje ako je SELL onda offeri koje sam ja dobio
+  //   // Ako je BUY onda offeri koje sam ja poslao
+  //
+  //   this.http
+  //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+  //     .subscribe((offers) => {
+  //       this.activeSell = offers;
+  //     });
+  // }
+  //
+  // async loadActiveBuy() {
+  //   this.http
+  //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+  //     .subscribe((offers) => {
+  //       this.activeBuy = offers;
+  //     });
+  // }
 
-  async loadActiveBuy() {
-    this.http
-      .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
-      .subscribe((offers) => {
-        this.activeBuy = offers;
-      });
-  }
-
-  togglePopupOffer() {
-    this.popup.openPublicSecuritiesPopup(this);
+  togglePopupOffer(row: any) {
+    this.popup.openPublicSecuritiesPopup(row);
   }
 
   setTab(tabName: string) {
@@ -149,6 +187,8 @@ export class OtcComponent {
     if (otc.status === newStatus) return;
 
     const contractId = this.otcToContractIdMap.get(otc);
+    console.log(otc);
+
     console.log('Contract ID:', contractId);
 
     if (contractId) {
@@ -192,6 +232,7 @@ export class OtcComponent {
     });
 
     const result: OTC[] = [];
+    console.log("AAAAAAAAAAAAAAAA");
 
     contracts.forEach((contract) => {
       const stock = stockMap.get(contract.listingId);
@@ -205,6 +246,7 @@ export class OtcComponent {
           status: contract.bankApproval ? 'Approved' : 'Pending',
         };
         result.push(otc);
+        console.log(otc);
         this.otcToContractIdMap.set(otc, contract.contractId);
       }
     });

@@ -2,27 +2,27 @@
   {
     "owner": "sony",
     "stock": "12349123",
-    "outstanding_shares": 3000000,
-    "exchange_name": "name",
-    "divided_yield": "0.052",
+    "outstandingShares": 3000000,
+    "exchangeName": "name",
+    "dividedYield": "0.052",
     "status": "Approved"
   },
 
   {
     "owner": "abc itd",
     "stock": "1234",
-    "outstanding_shares": 3000000,
-    "exchange_name": "name",
-    "divided_yield": "0.052",
+    "outstandingShares": 3000000,
+    "exchangeName": "name",
+    "dividedYield": "0.052",
     "status": "Denied"
   },
 
   {
     "owner": "customer1",
     "stock": "",
-    "outstanding_shares": 3000000,
-    "exchange_name": "name",
-    "divided_yield": "0.052",
+    "outstandingShares": 3000000,
+    "exchangeName": "name",
+    "dividedYield": "0.052",
     "status": "Approved"
   }
 ]

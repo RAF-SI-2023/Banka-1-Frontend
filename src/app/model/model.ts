@@ -317,6 +317,18 @@ export interface Customer {
   address: string;
 }
 
+export interface CustomerWithAccounts {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  jmbg: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  accountIds: Account[];
+}
+
 export interface CustomerTable {
   name: string;
   email: string;
