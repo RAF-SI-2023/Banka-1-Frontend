@@ -26,7 +26,7 @@ export class LegalPersonService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/legalPersons/getAll`;
+    let url = environment.baseUrl + `/company/all`;
 
     return this.httpClient.get<LegalPerson[]>(url, options); 
   }
@@ -49,9 +49,9 @@ export class LegalPersonService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.post(environment.baseUrl + '/legalPersons/save', {
+    return this.httpClient.post(environment.baseUrl + '/company/create', {
       companyName: newLegalPerson.companyName,
-      jmbg: newLegalPerson.jmbg,
+      idNumber: newLegalPerson.idNumber,
       pib: newLegalPerson.pib,
       cba: newLegalPerson.cba,
       address: newLegalPerson.address
@@ -69,6 +69,11 @@ export class LegalPersonService {
     const body = {legalPerson, customer};
     console.log(body);
 
-    return this.httpClient.post(environment.baseUrl + '/legalPersons/join', body, {headers: headers});
+    return this.httpClient.post(environment.baseUrl + '/company/join', {
+      email: customer.email,
+      pib: legalPerson.pib
+    },{
+      headers: headers
+    });
   }
 }
