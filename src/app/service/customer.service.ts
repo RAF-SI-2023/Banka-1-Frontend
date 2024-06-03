@@ -40,7 +40,7 @@ export class CustomerService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<any>(url, httpOptions);
+    return this.http.get<Customer>(url, httpOptions);
   }
 
   getCustomer2(): Observable<CustomerWithAccounts> {

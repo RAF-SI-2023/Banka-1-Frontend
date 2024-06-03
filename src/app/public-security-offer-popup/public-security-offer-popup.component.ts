@@ -8,6 +8,7 @@ import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {BankAccountService} from "../service/bank-account.service";
+import {PublicStock, StockListing} from "../model/model";
 
 @Component({
   selector: 'app-public-security-offer-popup',
@@ -28,7 +29,10 @@ export class PublicSecurityOfferPopupComponent {
 
     warnMessage: string = '';
 
-    security;
+    security: PublicStock;
+
+    isEmployee: boolean;
+    isCustomer: boolean;
 
 
     constructor(
@@ -37,6 +41,12 @@ export class PublicSecurityOfferPopupComponent {
       @Inject(MAT_DIALOG_DATA) public data: any
     ) {
       this.security = data;
+      this.isEmployee = sessionStorage.getItem('role') === 'employee' ||
+        sessionStorage.getItem('role') === 'admin' ||
+        sessionStorage.getItem('role') === 'agent' ||
+        sessionStorage.getItem('role') === 'supervizor';
+      this.isCustomer = sessionStorage.getItem('role') === 'customer';
+      // console.log(this.security.amount);
       // console.log(this.security.publicOffers.id.amount);
 
     }
@@ -47,14 +57,27 @@ export class PublicSecurityOfferPopupComponent {
 
     onMakeAnOffer() {
       if (!this.validInputOffer() && !this.validInputVolume()) {
-        if (this.volumeOfStock != '' || this.priceOffer != '') {
+        if (this.volumeOfStock != '' && this.priceOffer != '') {
           const volume = parseFloat(this.volumeOfStock);
           const offer = parseFloat(this.priceOffer);
-          if (volume >= 0 || offer >= 0) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
-            if (volume >= this.security.amount) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
-              this.warnMessage = "Asked volume too high."
-            } else {
+          if (volume >= 0 || offer >= 0) {
+            if (volume < offer && volume <= this.security.amount) {
               this.bankAccountService.makeAnOffer(this.security, volume, offer);
+              if (this.isCustomer) {
+                this.bankAccountService.makeAnOfferCustomer(this.security, volume, offer);
+              } else if (this.isEmployee) {
+                this.bankAccountService.makeAnOfferEmployee(this.security, volume, offer);
+              }
+              this.warnMessage = "";
+              this.dialogRef.close();
+              // if (volume >= 0 || offer >= 0) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+              // if (volume >= this.security.amount) { // Ako je volume vece od onoga sto je ponudjeno na trzistu
+              //   this.warnMessage = "Asked volume too high."
+              // } else {
+              //   this.bankAccountService.makeAnOffer(this.security, volume, offer);
+              // }
+            } else {
+              this.warnMessage = "Asked volume too high."
             }
           } else {
             this.warnMessage = "Both volume and price need to be positive numbers."
@@ -76,6 +99,8 @@ export class PublicSecurityOfferPopupComponent {
       if(this.priceOffer == '') return false;
       return isNaN(parseFloat(this.priceOffer));
     }
+
+
 
 
 }

@@ -33,11 +33,19 @@
             <div>Customer</div>
           </div>
 
-          <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
-            <div>Securities</div>
+<!--          <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active"  *ngIf="!isLegalPerson">-->
+<!--            <div>Securities</div>-->
+<!--          </div>-->
+
+          <div [routerLink]="'/security/legal'" class="sidebar-item" routerLinkActive="active" *ngIf="isLegalPerson">
+            <div>Security</div>
           </div>
 
-          <div [routerLink]="'/orders'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
+          <div [routerLink]="'/orders/legal'" class="sidebar-item" routerLinkActive="active" *ngIf="isLegalPerson">
+            <div>Orders</div>
+          </div>
+
+          <div [routerLink]="'/orders/regular'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor || isAgent) && !isLegalPerson">
             <div>Orders</div>
           </div>
 

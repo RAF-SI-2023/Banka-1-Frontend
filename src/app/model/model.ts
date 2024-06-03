@@ -1,5 +1,3 @@
-import {ExchangeTransactionReportComponent} from "../exchange-transaction-report/exchange-transaction-report.component";
-
 export interface User{
   userId: number;
   username:string;
@@ -330,6 +328,8 @@ export interface Customer {
   phoneNumber: string;
   gender: string;
   address: string;
+
+  isLegalEntity: boolean;
 }
 
 
@@ -441,13 +441,15 @@ export enum OrderType{
 
 export interface CapitalProfitDto {
   bankAccountNumber: string;
-  currencyName: string;
+  // currencyName: string;
   listingType: ListingType;
   listingId: number;
   totalPrice: number;
   total: number;
   ticker: string;
   reserved: number;
+  publicTotal: number;
+  averageBuyingPrice: number
 }
 
 
@@ -466,7 +468,8 @@ export interface CreateOrderRequest {
 export enum ListingType {
   STOCK = "STOCK",
   FUTURE = "FUTURE",
-  FOREX = "FOREX"
+  FOREX = "FOREX",
+  OPTIONS = "OPTIONS"
 }
 
 
@@ -546,6 +549,43 @@ export interface Contract {
   listingId: number;
 }
 
+export interface PublicCapitalDto{
+  publicTotal: number;
+  isIndividual: boolean;
+  bankAccountNumber: string;
+  listingType: ListingType;
+  listingId: number;
+}
+
+export interface OptionsDto{
+  ticker: string;
+  optionType: string;
+  strikePrice: number;
+  currency: string;
+  impliedVolatility: number;
+  openInterest: number;
+  expirationDate: number;
+
+  listingId: number;
+  listingType: string;
+  name: string;
+  exchangeName: string;
+  lastRefresh: number;
+  price: number;
+  high: number;
+  low: number;
+  priceChange: number;
+  volume: number;
+}
+
+export interface ContractCreateDto {
+  amountToBuy: number;
+  offerPrice: number;
+  bankAccountNumber: string;
+  listingId: number;
+  listingType: ListingType;
+  ticker: string;
+}
 export interface PublicOffer {
   listingId: number;
   security: string;
@@ -556,6 +596,17 @@ export interface PublicOffer {
   lastModified: Date;
   owner: string;
 }
+
+export interface PublicStock{
+  listingType: string;
+  listingId: number;
+  ticker: string;
+  amount: number;
+  price: number;
+  lastModified: string;
+  bankAccount: string;
+}
+
 
 export interface Margin {
   marginAccount: string;

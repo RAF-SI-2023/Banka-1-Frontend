@@ -1,4 +1,4 @@
-.popup-container {
+.popup-container{
   width: 80%;
   max-width: 750px;
   /*padding: 20px;*/
@@ -36,64 +36,38 @@
   margin-right: 30px;
 }
 
-.popup-body {
+.popup-body{
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  color: #FFFFFF;
-  margin: 50px;
-  /*margin-left: 30px;*/
-  font-size: 24px;
-}
-
-.popup-input{
-  width: 250px;
-  border-radius: 30px;
-  /*text-align: center;*/
-}
-
-.body-element {
   margin-top: 50px;
+  flex-direction: column;
 }
 
-.popup-buttons {
-  margin-top: 150px;
-  margin-bottom: 40px;
+.text {
+  color: #FFFFFF;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.button-container{
   display: flex;
-  justify-content: space-between;
-  /*margin-bottom: 30px;*/
-  /*flex-direction: row;*/
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.button-primary {
-  padding: 10px 35px;
-  border-radius: 10px;
+.button-primary{
+  padding: 10px 30px;
+  /*width: fit-content;*/
+  border-radius: 5px;
   color: black;
   background: #FFB72B;
   border: none;
   cursor: pointer;
   font-size: 20px;
-  margin-left: 35px;
-  margin-right: 35px;
-}
-
-.invalid-input{
-  width: 250px;
-  border-radius: 30px;
-  text-align: center;
-  /*border-color: var(--banka-red);*/
-  border: 5px solid var(--banka-red);
-}
-
-.warning {
-  color: var(--banka-red);
   margin-top: 50px;
+  margin-bottom: 30px;
+  width: 200px;
+  align-items: center;
+  text-align: center;
 }
-
-
-

@@ -52,9 +52,16 @@
 }
 
 .popup-input{
-  width: 250px;
+  width: 223px;
+  height: 41px;
   border-radius: 30px;
   /*text-align: center;*/
+}
+
+.popup-input-short{
+  width: 80px;
+  height: 41px;
+  border-radius: 30px;
 }
 
 .body-element {
@@ -63,7 +70,7 @@
 
 .popup-buttons {
   margin-top: 150px;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
   display: flex;
   justify-content: space-between;
   /*margin-bottom: 30px;*/
@@ -71,8 +78,8 @@
 }
 
 .button-primary {
-  padding: 10px 35px;
-  border-radius: 10px;
+  padding: 10px 50px;
+  border-radius: 5px;
   color: black;
   background: #FFB72B;
   border: none;
@@ -86,13 +93,30 @@
   width: 250px;
   border-radius: 30px;
   text-align: center;
-  /*border-color: var(--banka-red);*/
   border: 5px solid var(--banka-red);
 }
 
 .warning {
   color: var(--banka-red);
   margin-top: 50px;
+}
+
+.btn-custom-dropdown {
+  border-radius: 30px;
+  /*border-color: white;*/
+  background-color: white;
+  color: black;
+  width: 80px;
+  height: 41px;
+  /*width: 90%;*/
+}
+
+a {
+  margin: 7px;
+}
+
+li:hover{
+  cursor: pointer;
 }
 
 

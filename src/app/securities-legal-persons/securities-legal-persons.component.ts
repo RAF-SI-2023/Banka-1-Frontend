@@ -1,47 +1,41 @@
 import { Component } from '@angular/core';
-import { Security, SecurityService } from '../service/security.service';
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { ForexTableComponent } from './components/forex-table/forex-table.component';
-import { StockService } from '../service/stock.service';
-import { FormsModule } from '@angular/forms';
-import { StockTableComponent } from './components/stock-table/stock-table.component';
-import { FutureTableComponent } from './components/future-table/future-table.component';
-import { TableComponentModule } from '../welcome/redesign/TableComponent';
-import { TransformSecurityPipe } from '../transform-security.pipe';
-import {Forex, Future, ListingType, OptionsDto, OrderType, StockListing} from '../model/model';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { TransformFuturePipe } from '../transform-future.pipe';
-import { TransformForexPipe } from '../transform-forex.pipe';
-import {PopupService} from "../service/popup.service";
-import {TransformOptionsPipe} from "./transform-options.pipe";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
+import {TableComponentModule} from "../welcome/redesign/TableComponent";
+import {TransformForexPipe} from "../transform-forex.pipe";
+import {TransformFuturePipe} from "../transform-future.pipe";
+import {TransformOptionsPipe} from "../security-list/transform-options.pipe";
+import {TransformSecurityPipe} from "../transform-security.pipe";
+import {Forex, Future, ListingType, OptionsDto, OrderType, StockListing} from "../model/model";
+import {Router} from "@angular/router";
+import {SecurityService} from "../service/security.service";
 import {OptionsService} from "../service/options.service";
 import {OrderService} from "../service/order.service";
+import {StockService} from "../service/stock.service";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {PopupService} from "../service/popup.service";
+import {environment} from "../../environments/environment";
+import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 
 @Component({
-  selector: 'app-security-list',
+  selector: 'app-securities-legal-persons',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    StockTableComponent,
-    ForexTableComponent,
-    FutureTableComponent,
+    NgIf,
+    ReactiveFormsModule,
     TableComponentModule,
-    TransformSecurityPipe,
     TransformFuturePipe,
-    TransformForexPipe,
-    TransformOptionsPipe
+    TransformOptionsPipe,
+    TransformSecurityPipe,
+    DatePipe,
+    NgForOf,
+    OrangeButtonModule,
   ],
-  templateUrl: './security-list.component.html',
-  styleUrl: './security-list.component.css',
+  templateUrl: './securities-legal-persons.component.html',
+  styleUrl: './securities-legal-persons.component.css'
 })
-export class SecurityListComponent {
+export class SecuritiesLegalPersonsComponent {
+
   securities: StockListing[] = [];
   securitiesBackup: StockListing[] = [];
   selectedTab: string = 'stocks';
@@ -60,7 +54,6 @@ export class SecurityListComponent {
 
   isLegalPerson: boolean = false;
 
-
   constructor(
     private securityService: SecurityService,
     private optionsService: OptionsService,
@@ -70,60 +63,28 @@ export class SecurityListComponent {
     private popupService: PopupService,
     router: Router
   ) {
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
 
+    if(!this.isLegalPerson){
       this.selectedTab = 'options'
+    }
     this._router = router;
   }
 
-  searchFutures() {
-    this.futures = this.futuresBackup.filter(
-      (val) =>
-        val.ticker.toLowerCase().includes(this.symbol.toLowerCase())
-    );
-
-  }
-
-  searchForex() {
-    this.forex = this.forexBackup.filter((value) => {
-      return (
-        value.ticker.toLowerCase().includes(this.symbol.toLowerCase())
-      );
-    });
-  }
-
-  searchStocks() {
-    if (this.symbol.length === 0) this.securities = this.securitiesBackup;
-    this.securities = this.securities.filter((stock) => {
-      return stock.ticker.toLowerCase().includes(this.symbol.toLowerCase());
-    });
-  }
-
-  search() {
-    switch (this.selectedTab) {
-      case 'future':
-        this.searchFutures();
-        break;
-      case 'forex':
-        this.searchForex();
-        break;
-      case 'stocks':
-        this.searchStocks();
-    }
-  }
 
   async ngOnInit() {
-    this.loadSecurities();
+    await this.loadStocks();
     this.loadFutures();
-    this.loadForex();
 
     this.loadOptions()
   }
 
-  async loadSecurities(): Promise<void> {
+  async loadStocks(): Promise<void> {
 
 
     const stocks = await this.stockService.getStocks();
 
+    console.log(stocks);
 
     this.securities = stocks;
     this.securitiesBackup = stocks;
@@ -182,28 +143,12 @@ export class SecurityListComponent {
     this.securities.push(exp3)
   }
 
-  loadForex(): void {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-    });
-    this.http
-      this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
-      .subscribe(
-        (res) =>
-          (this.forexBackup = this.forex =
-            res.map((val) => {
-              val.lastRefresh *= 1000;
-              return val;
-            }))
-      );
-  }
-
   loadFutures(): void {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
     });
     this.http
-      this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
+    this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
       .subscribe(
         (res) =>
           (this.futuresBackup = this.futures =
@@ -265,65 +210,55 @@ export class SecurityListComponent {
   }
 
   optionsDataMock(){
-      const exp1: OptionsDto = {
-        ticker: "string",
-        optionType: "string",
-        strikePrice: 123,
-        currency: "string",
-        impliedVolatility: 123,
-        openInterest: 123,
-        expirationDate: 1717024395,
+    const exp1: OptionsDto = {
+      ticker: "string",
+      optionType: "string",
+      strikePrice: 123,
+      currency: "string",
+      impliedVolatility: 123,
+      openInterest: 123,
+      expirationDate: 1717024395,
 
-        listingId: 123,
-        listingType: "string",
-        name: "string",
-        exchangeName: "string",
-        lastRefresh: 123,
-        price: 123,
-        high: 123,
-        low: 123,
-        priceChange: 123,
-        volume: 123
-      }
-      const exp2: OptionsDto = {
-        ticker: "string",
-        optionType: "string",
-        strikePrice: 123,
-        currency: "string",
-        impliedVolatility: 123,
-        openInterest: 123,
-        expirationDate: 1717024395,
+      listingId: 123,
+      listingType: "string",
+      name: "string",
+      exchangeName: "string",
+      lastRefresh: 123,
+      price: 123,
+      high: 123,
+      low: 123,
+      priceChange: 123,
+      volume: 123
+    }
+    const exp2: OptionsDto = {
+      ticker: "string",
+      optionType: "string",
+      strikePrice: 123,
+      currency: "string",
+      impliedVolatility: 123,
+      openInterest: 123,
+      expirationDate: 1717024395,
 
-        listingId: 123,
-        listingType: "string",
-        name: "string",
-        exchangeName: "string",
-        lastRefresh: 123,
-        price: 123,
-        high: 123,
-        low: 123,
-        priceChange: 123,
-        volume: 123,
-      }
-      this.options.push(exp1)
-      this.options.push(exp2)
+      listingId: 123,
+      listingType: "string",
+      name: "string",
+      exchangeName: "string",
+      lastRefresh: 123,
+      price: 123,
+      high: 123,
+      low: 123,
+      priceChange: 123,
+      volume: 123,
+    }
+    this.options.push(exp1)
+    this.options.push(exp2)
   }
 
   setSelectedTab(tab: string) {
+    console.log(tab);
     this.selectedTab = tab;
   }
 
-  navigateToFuture(listingId: any) {
-    this._router.navigateByUrl(`/security/future/${listingId}`);
-  }
-
-  navigateToForex(forexId: number): void {
-    this._router.navigateByUrl(`/security/forex/${forexId}`);
-  }
-
-  navigateToStock(stockId: number): void {
-    this._router.navigateByUrl(`/security/stock/${stockId}`);
-  }
 
   openBuyStockPopup(stockId: number): void{
     this.popupService.openBuyOrderPopup({id: stockId, type: ListingType.STOCK});
@@ -334,7 +269,7 @@ export class SecurityListComponent {
   }
 
   async buyOption(options: OptionsDto){
-    let response = await this.orderService.buyOrder(OrderType.BUY, options.listingId.toString(), ListingType.OPTIONS, options.volume, 0, 0, false);
+    let response = await this.orderService.buyOrderOptions(options.listingId.toString(), options.volume);
     if (response) {
       this.popupService.openCustomMessage({
         title: "Options",
@@ -349,7 +284,5 @@ export class SecurityListComponent {
       })
     }
   }
-
-
 
 }

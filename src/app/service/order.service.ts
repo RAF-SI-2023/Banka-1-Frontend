@@ -7,13 +7,14 @@ import {StockListing} from "./stock.service";
 import {
   CapitalProfitDto,
   DecideOrderResponse,
-  OrderDto,
+  OrderDto, PublicCapitalDto,
   SellingRequest,
   StatusRequest
 } from "../model/model";
 
 import {BankAccountDto, CreateOrderRequest, ListingType, Order, OrderType, User} from "../model/model";
 import {map} from "rxjs/operators";
+import {number} from "zod";
 import {PopupService} from "./popup.service";
 
 
@@ -199,7 +200,35 @@ export class OrderService {
       stopValue: stopValue,
       allOrNone: allOrNone
     };
-    console.log(orderRequest);
+
+
+    try {
+      const response = await this.http.post<boolean>(
+        environment.userService + '/orders', orderRequest, httpOptions).toPromise();
+      return response;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  async buyOrderOptions(listingId: string, contractSize: number) {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const orderRequest = {
+      orderType: OrderType.BUY,
+      listingId: listingId,
+      listingType: ListingType.OPTIONS,
+      contractSize: contractSize,
+      allOrNone: false
+    };
+
 
     try {
       const response = await this.http.post<boolean>(
@@ -274,7 +303,8 @@ export class OrderService {
   }
 
 
-  getPublicSecurities(): Observable<any> {
+  getPublicStocks(): Observable<PublicCapitalDto[]> {
+  // getPublicSecurities(): Observable<any> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -282,10 +312,23 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<User>(environment.userService + '/capital/public/listing/all', httpOptions);
+    return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/stock/all', httpOptions);
+    // return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
+    // return this.http.get<User>(environment.userService + '/capital/public/listing/all', httpOptions);
   }
 
-  changePublicValueMock(id: number, publicValue: number): Observable<any> {
+  getAllStocks(): Observable<StockListing[]> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<StockListing[]>(environment.marketService + '/market/listing/get/stock', httpOptions);
+  }
+
+  changePublicValue(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -295,9 +338,12 @@ export class OrderService {
     };
 
     const body = {
-      publicValue: publicValue
+      listingType: listingType,
+      listingId: listingId,
+      addToPublic: publicValue
     }
-    return this.http.put<User>(environment.userService + '/changePublicValue/' + id , body, httpOptions);
+    return this.http.put<boolean>(environment.userService + '/capital/customer/addPublic/', body, httpOptions);
+    // return this.http.put<User>(environment.userService + '/changePublicValue/' + id , body, httpOptions);
   }
 
 
