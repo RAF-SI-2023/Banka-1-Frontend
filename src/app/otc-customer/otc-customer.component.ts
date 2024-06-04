@@ -162,62 +162,62 @@ export class OtcCustomerComponent {
   //       this.publicOffers = offers;
   //     });
   // }
-  getPublicSecurities(){
-    this.orderService.getPublicSecurities().subscribe(res =>{
+  getPublicSecurities() {
+    this.orderService.getPublicStocks().subscribe(res => {
       this.publicSecurities = res;
     })
+  }
 
-
-
-  // async getPublicSecurities() {
-  //   const jwt = sessionStorage.getItem("jwt");
-  //
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Authorization': `Bearer ${jwt}`
-  //     })
-  //   };
-  //   this.http.get<PublicCapitalDto[]>(`${environment.userService}/capital/public/listing/all`, httpOptions)
-  //     .subscribe({
-  //       next: (offers) => {
-  //         this.publicSecurities = offers;
-  //         this.matchPublicSecuritiesWithOrders();
-  //         console.log(this.orders);
-  //       },
-  //       error: (error) => {
-  //         console.error('Error fetching public securities:', error);
-  //       }
-  //     });
-  //
-  // }
-  // private matchPublicSecuritiesWithOrders(): void {
-  //   this.publicSecurities.forEach(security => {
-  //     const matchingOrders = this.orders.filter(order => order.listingId === security.listingId);
-  //     if (matchingOrders.length > 0) {
-  //       // Handle the matched orders as needed
-  //     }
-  //   });
-  // }
-  // async loadActiveSell() {
-  //   // Customer->accountIds->accountNumber
-  //   // I onda upored accountNumber sa svim contractima i ako se poklapa
-  //   // Sad je pitanje ako je SELL onda offeri koje sam ja dobio
-  //   // Ako je BUY onda offeri koje sam ja poslao
-  //
-  //   this.http
-  //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
-  //     .subscribe((offers) => {
-  //       this.activeSell = offers;
-  //     });
-  // }
-  //
-  // async loadActiveBuy() {
-  //   this.http
-  //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
-  //     .subscribe((offers) => {
-  //       this.activeBuy = offers;
-  //     });
-  // }
+    // async getPublicSecurities() {
+    //   const jwt = sessionStorage.getItem("jwt");
+    //
+    //   const httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Authorization': `Bearer ${jwt}`
+    //     })
+    //   };
+    //   this.http.get<PublicCapitalDto[]>(`${environment.userService}/capital/public/listing/all`, httpOptions)
+    //     .subscribe({
+    //       next: (offers) => {
+    //         this.publicSecurities = offers;
+    //         this.matchPublicSecuritiesWithOrders();
+    //         console.log(this.orders);
+    //       },
+    //       error: (error) => {
+    //         console.error('Error fetching public securities:', error);
+    //       }
+    //     });
+    //
+    // }
+    // private matchPublicSecuritiesWithOrders(): void {
+    //   this.publicSecurities.forEach(security => {
+    //     const matchingOrders = this.orders.filter(order => order.listingId === security.listingId);
+    //     if (matchingOrders.length > 0) {
+    //       // Handle the matched orders as needed
+    //     }
+    //   });
+    // }
+    // async loadActiveSell() {
+    //   // Customer->accountIds->accountNumber
+    //   // I onda upored accountNumber sa svim contractima i ako se poklapa
+    //   // Sad je pitanje ako je SELL onda offeri koje sam ja dobio
+    //   // Ako je BUY onda offeri koje sam ja poslao
+    //
+    //   this.http
+    //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+    //     .subscribe((offers) => {
+    //       this.activeSell = offers;
+    //     });
+    // }
+    //
+    // async loadActiveBuy() {
+    //   this.http
+    //     .get<OTC[]>('/assets/mocked_banking_data/otc-mocked.json')
+    //     .subscribe((offers) => {
+    //       this.activeBuy = offers;
+    //     });
+    // }
+  }
 
   togglePopupOffer(row: any) {
     this.popup.openPublicSecuritiesPopup(row);

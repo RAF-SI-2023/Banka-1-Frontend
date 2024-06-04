@@ -106,7 +106,6 @@ export class OrdersComponent {
         console.error('Error fetching securities', error);
       }
     });
-
   }
 
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
