@@ -82,8 +82,8 @@ export class OrdersComponent {
   })
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
-  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified'];
-  securities: CapitalProfitDto[] = [];
+  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Last Modified', 'Owner'];
+  securities: any[] = [];
 
 
 
@@ -98,8 +98,8 @@ export class OrdersComponent {
 
 
   private getSecurityOrders() {
-    this.orderService.getSecurityOrders().subscribe({
-      next: (securities: CapitalProfitDto[]) => {
+    this.orderService.getPublicStocks().subscribe({
+      next: (securities: any[]) => {
         this.securities = securities;
       },
       error: (error) => {

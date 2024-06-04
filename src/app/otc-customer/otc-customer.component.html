@@ -52,7 +52,7 @@
         </app-dynamic-table-status>
       </div>
 
-      <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
+      <div class="securities-tab" *ngIf="selectedTab === 'public'">
         <app-dynamic-table [headersArray]="headersPublic" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
           <ng-template #actionsColumn let-row>
             <div id="helperDiv">

@@ -54,7 +54,6 @@ export class OtcCustomerComponent {
     'Symbol',
     'Amount',
     'Price',
-    'Profit',
     'Last Modified',
     'Owner',
   ];
@@ -167,7 +166,6 @@ export class OtcCustomerComponent {
     this.orderService.getPublicStocks().subscribe(res => {
       this.publicSecurities = res;
     })
-
   }
 
   // async getPublicSecurities() {
@@ -277,7 +275,6 @@ export class OtcCustomerComponent {
     });
 
     const result: OTC[] = [];
-    console.log("AAAAAAAAAAAAAAAA");
 
     this.contracts.forEach((contract) => {
       const stock = stockMap.get(contract.listingId);

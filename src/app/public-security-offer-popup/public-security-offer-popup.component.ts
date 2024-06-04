@@ -62,7 +62,7 @@ export class PublicSecurityOfferPopupComponent {
           const offer = parseFloat(this.priceOffer);
           if (volume >= 0 || offer >= 0) {
             if (volume < offer && volume <= this.security.amount) {
-              this.bankAccountService.makeAnOffer(this.security, volume, offer);
+              // this.bankAccountService.makeAnOffer(this.security, volume, offer);
               if (this.isCustomer) {
                 this.bankAccountService.makeAnOfferCustomer(this.security, volume, offer);
               } else if (this.isEmployee) {

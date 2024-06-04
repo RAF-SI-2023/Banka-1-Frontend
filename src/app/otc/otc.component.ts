@@ -78,9 +78,9 @@ export class OtcComponent {
 
   async ngOnInit() {
     this.loadOTCs();
-    this.loadPublicOffers();
-    this.loadActiveBuy();
-    this.loadActiveSell();
+    // this.loadPublicOffers();
+    // this.loadActiveBuy();
+    // this.loadActiveSell();
   }
 
   async loadOTCs() {
