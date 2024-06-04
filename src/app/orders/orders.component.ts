@@ -83,7 +83,7 @@ export class OrdersComponent {
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
   headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified'];
-  securities: CapitalProfitDto[] = [];
+  securities: any[] = [];
 
 
 
