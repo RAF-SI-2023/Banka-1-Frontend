@@ -5,7 +5,7 @@ import {CapitalProfitDto, User} from '../model/model'; // Adjust the import path
   name: 'transformSecurities'
 })
 export class TransformSecuritiesPipe implements PipeTransform {
-  transform(securities: CapitalProfitDto[]): any[] {
+  transform(securities: any[]): any[] {
     return securities.map(security => ({
       // ACCOUNT_NUMBER: security.bankAccountNumber,
       // CURRENCY: security.currencyName,

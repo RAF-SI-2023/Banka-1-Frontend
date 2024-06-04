@@ -1,0 +1,33 @@
+.popup-container {
+  background-color: var(--banka-dark-gray); /* Background color for the pop-up container */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px; /* Optional: Add shadow effect */
+  width: 100%; /* Set the width of the pop-up */
+  max-width: 400px; /* Adjust maximum width as needed */
+  margin: auto; /* Center the pop-up horizontally */
+  text-align: center; /* Align text in the center */
+}
+
+.popup-header {
+  color: var(--banka-orange); /* Header color */
+  margin-bottom: 10px;
+}
+
+.popup-message {
+  color: var(--banka-white); /* Message text color */
+  margin-bottom: 15px;
+}
+
+.popup-button {
+  background-color: var(--banka-orange); /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-button:hover {
+  background-color: var(--banka-light-orange); /* Darker color on hover */
+}

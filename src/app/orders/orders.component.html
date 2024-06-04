@@ -106,7 +106,7 @@
 
 
       <div class="securities-tab" *ngIf="selectedTab === 'securities'">
-        <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">
+        <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformPublicSecurities" [showActions]="true">
           <ng-template #actionsColumn let-row>
             <div id="helperDiv">
               <orange-button [buttonName]="'Sell'" (click)="sellOrder(row.original)"></orange-button>
