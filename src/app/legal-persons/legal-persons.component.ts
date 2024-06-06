@@ -51,6 +51,7 @@ export class LegalPersonsComponent {
 
         console.log('All legal persons data loaded');
         console.log(this.allLegalPersons);
+        console.log(allLegalPersonsData);
       },
       (error: HttpErrorResponse) => {
         console.error('Error loading users:', error);
@@ -78,10 +79,11 @@ export class LegalPersonsComponent {
       console.log(result);
       console.log('The dialog was closed');
 
-      if(! environment.shouldUseMockedDataForLegalPersons)
-      {
-        this.loadAllLegalPersons();
-      }
+      // if(! environment.shouldUseMockedDataForLegalPersons)
+      // {
+      //   console.log("usao ovde");
+      //   this.loadAllLegalPersons();
+      // }
     });
   }
 }

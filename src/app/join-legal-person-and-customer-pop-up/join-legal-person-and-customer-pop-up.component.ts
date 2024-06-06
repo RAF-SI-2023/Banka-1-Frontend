@@ -75,7 +75,13 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
     }
     else
     {
-      this.legalPersonService.joinLegalPersonAndCustomer(this.legalPerson, this.selectedCustomerToJoin).subscribe();
+      this.legalPersonService.joinLegalPersonAndCustomer(this.legalPerson, this.selectedCustomerToJoin).subscribe(
+        res => {
+          console.log("res2");
+          console.log(res);
+          alert("Successfully joined customer with legal person");
+        }
+      );
       //TODO: //TODO: this.popup.openPopup("Succcess", "Successfully joined.");  --Add this when backend is done and not mocked  --Add this when backend is done and not mocked
       this.dialogRef.close();
     }

@@ -40,6 +40,7 @@ export class LegalPersonService {
     }
     else
     {
+      console.log("koristim real data za legal persons");
       return this.getAllLegalPersonsFromApi();
     }
   }
@@ -54,7 +55,7 @@ export class LegalPersonService {
       idNumber: newLegalPerson.idNumber,
       pib: newLegalPerson.pib,
       cba: newLegalPerson.cba,
-      address: newLegalPerson.address
+      adress: newLegalPerson.adress
     },{
       headers: headers
     });
@@ -70,8 +71,8 @@ export class LegalPersonService {
     console.log(body);
 
     return this.httpClient.post(environment.baseUrl + '/company/join', {
-      email: customer.email,
-      pib: legalPerson.pib
+      customerEmail: customer.email,
+      companyPib: legalPerson.pib
     },{
       headers: headers
     });

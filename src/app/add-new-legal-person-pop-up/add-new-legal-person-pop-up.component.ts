@@ -33,7 +33,7 @@ export class AddNewLegalPersonPopUpComponent {
     idNumber: '',
     pib: '',
     cba: '',
-    address: ''
+    adress: ''
   };
 
   add() {
@@ -42,14 +42,20 @@ export class AddNewLegalPersonPopUpComponent {
       this.allLegalPersons.push(this.addNewLegalPersonData);
       this.legalPersonService.saveNewLegalPerson(this.addNewLegalPersonData).subscribe(
         res => {
+          console.log("res");
+          console.log(res);
           if(!res) this.popupService.openPopup("Error", "Couldn't add legal person.");
         }
       );
+
+      console.log("nakon add pre close");
+      console.log(this.allLegalPersons);
       this.dialogRef.close();
     }
   }
 
   cancel() {
+    console.log("Posle pop-up:");
     console.log(this.allLegalPersons);
     this.dialogRef.close();
   }
@@ -66,17 +72,17 @@ export class AddNewLegalPersonPopUpComponent {
       return false;
     }
 
-    if (!this.addNewLegalPersonData.cba || !this.hasOnlyDigits(this.addNewLegalPersonData.pib)) {
-      this.popupService.openPopup("Error", "CBA is not valid.");
+    // if (!this.addNewLegalPersonData.cba || !this.hasOnlyDigits(this.addNewLegalPersonData.pib)) {
+    //   this.popupService.openPopup("Error", "CBA is not valid.");
+    //   return false;
+    // }
+
+    if (!this.addNewLegalPersonData.idNumber || !this.hasOnlyDigits(this.addNewLegalPersonData.idNumber)) {
+      this.popupService.openPopup("Error", "idNumber is invalid or not filled");
       return false;
     }
 
-    if (!this.addNewLegalPersonData.idNumber) {
-      this.popupService.openPopup("Error", "idNumber must be filled");
-      return false;
-    }
-
-    if (!this.addNewLegalPersonData.address) {
+    if (!this.addNewLegalPersonData.adress) {
       this.popupService.openPopup("Error", "Address must be filled.");
       return false;
     }
