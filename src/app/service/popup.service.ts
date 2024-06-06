@@ -23,6 +23,7 @@ import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/
 import {BuyStockPopupComponent} from "../buy-stock-popup/buy-stock-popup.component";
 import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
 import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
+import {PopUpWithRefreshComponent} from "../pop-up-with-refresh/pop-up-with-refresh.component";
 
 
 @Injectable({
@@ -34,6 +35,13 @@ export class PopupService {
 
   openPopup(message: string, text: string): void {
     this.dialog.open(PopupComponent, {
+      width: '250px',
+      data: { message, text }
+    });
+  }
+
+  openPopupWithPageRefresh(message: string, text: string): void {
+    this.dialog.open(PopUpWithRefreshComponent, {
       width: '250px',
       data: { message, text }
     });

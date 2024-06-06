@@ -9,7 +9,9 @@ import { CommonModule } from '@angular/common';
         {{chooseValue}}
       </button>
       <ul class="dropdown-menu dropdown-menu-start dropdown_input">
-        <li *ngFor="let name of valueNames; let i = index" ><a (click)="setValue(values[i], name)">{{name}}</a></li>
+        <li *ngFor="let name of valueNames; let i = index" (click)="setValue(values[i], name)">
+          <a>{{name}}</a>
+        </li>
       </ul>
     </div>
   `,
@@ -21,13 +23,13 @@ import { CommonModule } from '@angular/common';
       color: white;
       width: 90%;
     }
-    .custom-container{
+    .custom-container {
       overflow: visible;
     }
     a {
       margin: 7px;
     }
-    li:hover{
+    li:hover {
       cursor: pointer;
     }
   `]
@@ -35,12 +37,19 @@ import { CommonModule } from '@angular/common';
 export class DropdownInput {
   @Input() inputName: string = '';
   @Input() valueNames: string[] = [];
-  @Input() values: any[]= [];
+  @Input() values: any[] = [];
+  @Input() initialValue: any = null;
   @Output() selectedValue = new EventEmitter<any>();
 
   public chooseValue: string = "Choose " + this.inputName;
 
-  setValue(value: any, valueName: string){
+  ngOnInit() {
+    if (this.initialValue !== null) {
+      this.chooseValue = this.valueNames[this.values.indexOf(this.initialValue)];
+    }
+  }
+
+  setValue(value: any, valueName: string) {
     this.selectedValue.emit(value);
     this.chooseValue = valueName;
   }
