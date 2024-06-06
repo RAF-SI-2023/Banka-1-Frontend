@@ -66,9 +66,9 @@ export const routes: Routes = [
   {
     path: 'orders',
     children: [
-      { path: 'regular', component: OrdersComponent,
-        canActivate: [PositionsGuard],
-        data: { roles: ['agent', 'supervizor', 'admin'] }},
+      // { path: 'regular', component: OrdersComponent,
+      //   canActivate: [PositionsGuard],
+      //   data: { roles: ['agent', 'supervizor', 'admin'] }},
       { path: 'legal', component: OrdersLegalPersonsComponent, canActivate: [LegalPersonGuard]},
     ]
   },
@@ -91,6 +91,12 @@ export const routes: Routes = [
     ],
     canActivate: [LegalPersonGuard],
     // data: { roles: ['employee', 'admin'] } // Moci ce svi kad se aktivira prosirenje
+  },
+  {
+    path: 'securities',
+    component: SecurityListComponent,
+    canActivate: [PositionsGuard],
+    data: { roles: ['agent', 'supervizor', 'admin'] }
   },
 
 

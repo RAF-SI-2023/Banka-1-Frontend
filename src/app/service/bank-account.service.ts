@@ -203,19 +203,21 @@ export class BankAccountService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
     const options = { headers: headers };
-    const body: ContractCreateDto = {
+    const body:  ContractCreateDto = {
       amountToBuy: volume,
       offerPrice: offer,
-      bankAccountNumber: security.bankAccount,
+      bankAccountNumber: security.bankAccountNumber,
       listingId: security.listingId,
       listingType: security.listingType,
       ticker: security.ticker
     }
-    return this.httpClient.post("/contract/customer",null,options);
+    console.log("makeAnOffer")
+    console.log(body)
+    return this.httpClient.post(environment.userService + "/contract/customer", body, options);
   }
 
 
-  makeAnOfferEmployee(security: any, volume: number, offer: number) {
+  makeAnOfferEmployee(security: any, volume: number, offer: number) : Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
@@ -223,13 +225,13 @@ export class BankAccountService {
     const body: ContractCreateDto = {
       amountToBuy: volume,
       offerPrice: offer,
-      bankAccountNumber: security.bankAccount,
+      bankAccountNumber: security.bankAccountNumber,
       listingId: security.listingId,
       listingType: security.listingType,
       ticker: security.ticker
     }
 
-    return this.httpClient.post("/contract/employee", body, options);
+    return this.httpClient.post(environment.userService + "/contract/employee", body, options);
   }
 
   makeAnOffer(security: any, volume: number, offer: number) {

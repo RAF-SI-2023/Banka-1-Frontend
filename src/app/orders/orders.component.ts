@@ -5,7 +5,7 @@ import {
   ListingType,
   OrderDto,
   OrderStatus,
-  OrderType, PublicCapitalDto,
+  OrderType, PublicCapitalDto, PublicStock,
   SellingRequest,
   StatusRequest
 } from "../model/model";
@@ -83,9 +83,7 @@ export class OrdersComponent {
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
   headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified'];
-  securities: CapitalProfitDto[] = [];
-
-
+  securities: PublicStock[] = [];
 
 
   constructor(private orderService: OrderService,
@@ -95,18 +93,15 @@ export class OrdersComponent {
 
   }
 
-
-
   private getSecurityOrders() {
-    this.orderService.getSecurityOrders().subscribe({
-      next: (securities: CapitalProfitDto[]) => {
+    this.orderService.getPublicStocks().subscribe({
+      next: (securities: any[]) => {
         this.securities = securities;
       },
       error: (error) => {
         console.error('Error fetching securities', error);
       }
     });
-
   }
 
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
