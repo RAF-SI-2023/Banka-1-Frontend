@@ -66,9 +66,9 @@ export const routes: Routes = [
   {
     path: 'orders',
     children: [
-      // { path: 'regular', component: OrdersComponent,
-      //   canActivate: [PositionsGuard],
-      //   data: { roles: ['agent', 'supervizor', 'admin'] }},
+      { path: 'regular', component: OrdersComponent,
+        canActivate: [PositionsGuard],
+        data: { roles: ['agent', 'supervizor', 'admin'] }},
       { path: 'legal', component: OrdersLegalPersonsComponent, canActivate: [LegalPersonGuard]},
     ]
   },

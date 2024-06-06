@@ -1,14 +1,6 @@
 import {Component} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {
-  CapitalProfitDto,
-  ListingType,
-  OrderDto,
-  OrderStatus,
-  OrderType, PublicCapitalDto, PublicStock,
-  SellingRequest,
-  StatusRequest
-} from "../model/model";
+import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -82,8 +74,8 @@ export class OrdersComponent {
   })
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
-  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified'];
-  securities: PublicStock[] = [];
+  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price'];
+  securities: CapitalProfitDto[] = [];
 
 
   constructor(private orderService: OrderService,
@@ -94,7 +86,7 @@ export class OrdersComponent {
   }
 
   private getSecurityOrders() {
-    this.orderService.getPublicStocks().subscribe({
+    this.orderService.getSecurityOrders().subscribe({
       next: (securities: any[]) => {
         this.securities = securities;
       },
@@ -102,6 +94,18 @@ export class OrdersComponent {
         console.error('Error fetching securities', error);
       }
     });
+    this.securities.push({
+      bankAccountNumber: "string",
+      // currencyName: 123,
+      listingType: ListingType.STOCK,
+      listingId: 123,
+      totalPrice: 123,
+      total: 123,
+      ticker: "string",
+      reserved: 123,
+      publicTotal: 123,
+      averageBuyingPrice: 123,
+    })
   }
 
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
