@@ -258,6 +258,7 @@ export class OrderService {
       stopValue: stopValue,
       allOrNone: allOrNone
     };
+    console.log(orderRequest);
 
     try {
       const response = await this.http.post<boolean>(
@@ -311,7 +312,7 @@ export class OrderService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/stock/all', httpOptions);
+    return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/all', httpOptions);
     // return this.http.get<User>(environment.userService + '/publicSecurities', httpOptions);
     // return this.http.get<User>(environment.userService + '/capital/public/listing/all', httpOptions);
   }

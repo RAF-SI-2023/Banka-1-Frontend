@@ -1,5 +1,3 @@
-import {ExchangeTransactionReportComponent} from "../exchange-transaction-report/exchange-transaction-report.component";
-
 export interface User{
   userId: number;
   username:string;
