@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, NgModule, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -36,15 +36,14 @@ export class DropdownInput {
   @Input() inputName: string = '';
   @Input() valueNames: string[] = [];
   @Input() values: any[]= [];
-  @Output() valueToChange = new EventEmitter<any>();
+  @Output() selectedValue = new EventEmitter<any>();
 
   public chooseValue: string = "Choose " + this.inputName;
 
   setValue(value: any, valueName: string){
-    this.valueToChange.emit(value);
+    this.selectedValue.emit(value);
     this.chooseValue = valueName;
   }
-
 }
 
 @NgModule({

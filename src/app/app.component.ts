@@ -18,7 +18,7 @@ import { RouterLinkActive } from '@angular/router';
 
 import { AuthService } from './service/auth.service';
 
-import { Account, AccountType } from './model/model';
+import { Account, AccountType, Customer } from './model/model';
 import { AccountService } from './service/account.service';
 
 import { OnInit, OnDestroy } from '@angular/core';
@@ -72,6 +72,7 @@ export class AppComponent implements OnInit {
   hasRequiredAccounts: boolean = false;
   loggedUserPosition: string = '';
   showPaymentsSubMenu: boolean = false;
+  isLegalPerson: boolean = false;
 
   //Izbrisati kada bek odradi
   accounts: Account[] = [
@@ -116,11 +117,10 @@ export class AppComponent implements OnInit {
     private storageService: StorageService,
     private customerService: CustomerService
   ) {
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
     this.triggerEventForAlreadyLoadedPage();
     this.toggleSideNav();
     this.userInitials = '/';
-
-    
   }
 
   ngOnInit() {
@@ -134,7 +134,7 @@ export class AppComponent implements OnInit {
     });
 
 
-   
+
       this.authService.getJwtObservable().subscribe((jwt) => {
         if (jwt) {
           this.customerService.getCustomer(jwt).pipe(
@@ -143,11 +143,12 @@ export class AppComponent implements OnInit {
             })
           ).subscribe({
             next: (response) => {
-              if(response!=null)
-              this.userInitials = response.firstName.concat(
-                ' ',
-                response.lastName
-              );
+              if(response!=null){
+                this.userInitials = response.firstName.concat(
+                  ' ',
+                  response.lastName
+                );
+              }
             },
             error: (e) => {
               this.userInitials = 'Luka Lazarevic';
@@ -157,6 +158,8 @@ export class AppComponent implements OnInit {
       });
   }
 
+
+
   checkIsAdminOrEmployeeOrCustomer() {
     this.isAdmin = sessionStorage.getItem('role') === 'admin';
     this.isEmployee = sessionStorage.getItem('role') === 'employee';
@@ -164,6 +167,7 @@ export class AppComponent implements OnInit {
     this.isCustomer = sessionStorage.getItem('role') === 'customer';
     this.isAgent = sessionStorage.getItem('role') === 'agent';
     this.isSupervizor = sessionStorage.getItem('role') === 'supervizor';
+
     const jwt = sessionStorage.getItem('jwt');
 
     if (jwt !== null && jwt.length > 0) {
@@ -256,6 +260,8 @@ export class AppComponent implements OnInit {
       this.loggedUserPosition = loggedUserPositionFromStorage;
     } else {
     }
+
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
   }
 
   /*

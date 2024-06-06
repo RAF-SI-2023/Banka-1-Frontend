@@ -1,8 +1,20 @@
 import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
+// import { environment } from '../../../environment';
+// import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
+import {
+  BankAccount,
+  Exchange,
+  Recipient,
+  Payment,
+  NewLimitDto,
+  User,
+  ContractCreateDto,
+  Contract
+} from '../model/model';
 import { environment } from '../../environments/environment';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +42,7 @@ export class BankAccountService {
     return this.httpClient.get<BankAccount[]>(url, options);
   }
 
-  getAdminsBankAccounts(userId: number): Observable<BankAccount[]> {
+  getAdminBankAccounts(companyId: number): Observable<BankAccount[]> {
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
@@ -38,7 +50,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/account/getAdminAccounts/${userId}`;
+    let url = environment.userService + `/account/getCompany/${companyId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }
@@ -195,8 +207,66 @@ export class BankAccountService {
     });
   }
 
+  makeAnOfferCustomer(security: any, volume: number, offer: number) : Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = { headers: headers };
+    const body: ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.ticker
+    }
+    return this.httpClient.post(environment.userService + "/contract/customer", body, options);
+  }
 
-  makeAnOffer(security: any, volume: number, offer: number){
-    // Customer salje http, offer na public otc
+
+  makeAnOfferEmployee(security: any, volume: number, offer: number) : Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = {headers: headers};
+    const body: ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.ticker
+    }
+
+    return this.httpClient.post(environment.userService + "/contract/employee", body, options);
+  }
+
+  makeAnOffer(security: any, volume: number, offer: number) {
+    const jwt = sessionStorage.getItem('jwtToken');
+    if (!jwt) {
+      console.error('JWT token not found in session storage.');
+      return;
+    }
+
+    const url = `${environment.userService}/contract/customer`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const requestBody = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.owner,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.symbol
+    };
+
+    return this.httpClient.post<{ result: boolean }>(url, requestBody, httpOptions).pipe(
+      map(response => response.result)
+    );
   }
 }

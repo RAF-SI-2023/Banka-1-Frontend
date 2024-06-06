@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders,  HttpParams} from "@angular/common/http";
-import {BankAccount, Customer, TransactionBasics, TransactionDetails, TransactionDto, User} from '../model/model';
+import {
+  BankAccount,
+  Customer,
+  NewTransactionDto,
+  TransactionBasics,
+  TransactionDetails,
+  TransactionDto,
+  User
+} from '../model/model';
 
 import {Router} from "@angular/router";
 import { Observable } from 'rxjs';
@@ -76,11 +84,11 @@ export class TransactionService {
     return this.http.post<any>(`${this.apiUrl}/transaction/printTransaction`, transactionDetails, { headers });
   }
 
-  getAccountTransactions(accountNumber: string): Observable<TransactionDetails[]> {
+  getAccountTransactions(accountNumber: string): Observable<NewTransactionDto[]> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.get<TransactionDetails[]>(`${this.apiUrl}/transaction/getAccountTransactions/${accountNumber}`, { headers });
+    return this.http.get<NewTransactionDto[]>(`${this.apiUrl}/transactions/${accountNumber}`, { headers });
   }
 
 

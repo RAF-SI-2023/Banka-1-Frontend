@@ -1,5 +1,7 @@
 <div class="container">
-  <div class="title">Customer: {{ userName }}</div>
+  <div class="title">
+    <span class="back-button" (click)="goBack()">&lt;</span>
+    Customer: {{userName}}</div>
   <div class="table-box">
     <div class="header">
       <div *ngIf="selectedTab === 'bank_acc'" class="btn-container">

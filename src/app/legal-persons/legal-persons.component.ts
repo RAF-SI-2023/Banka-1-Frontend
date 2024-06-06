@@ -31,7 +31,7 @@ export class LegalPersonsComponent {
 
   constructor(private legalPersonService: LegalPersonService, private router: Router, private popup:PopupService, private dialog: MatDialog) {
     let loggedUserIdAsString = sessionStorage.getItem('loggedUserID');
-    
+
     if (loggedUserIdAsString !== null) {
       this.loggedUserId = parseInt(loggedUserIdAsString);
     } else {
@@ -77,7 +77,7 @@ export class LegalPersonsComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       console.log('The dialog was closed');
-      
+
       if(! environment.shouldUseMockedDataForLegalPersons)
       {
         this.loadAllLegalPersons();

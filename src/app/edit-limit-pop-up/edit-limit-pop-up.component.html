@@ -1,26 +1,26 @@
 <div class="container col-3 popup-container m-auto" style="font-family: Jura, sans-serif; color: white;">
-    <div class="row m-auto mt-3">
-        <div>
-            <h1 style="font-size: 2rem;">Edit limit</h1>
-        </div>
-
-        <div class="form-group m-auto col-sm-12 col-md-8 col-6 mt-5">
-            <label for="name">New limit:</label>
-            <input type="text" [(ngModel)]="amount" id="name" name="name" #nameModel="ngModel" required/>
-            <div *ngIf="nameModel.hasError('required')" style="color: red;">Amount required!</div>
-            
-        </div>
-
-        <div class="form-group m-auto col-sm-12 col-md-8 col-6 mt-4">
-            <label>
-                Approval required
-                <input type="checkbox" [(ngModel)]="approvalRequired" (change)="handleChange($event)">
-              </label>
-        </div>
-
-        <div class="row justify-content-around mt-5 mb-3 ms-auto me-auto">
-            <button (click)="submit()" class="btn btn-warning btn-sm col-sm-10 col-md-8 col-xl-4 mt-3" style="border-radius: 5px">Set new limit</button>
-            <button (click)="cancel()" class="btn btn-warning btn-sm col-sm-10 col-md-8 col-xl-4 mt-3" style="border-radius: 5px;" >Cancel</button>
-        </div>
+  <div class="row m-auto mt-3">
+    <div>
+      <h1 style="font-size: 2rem;">Edit limit</h1>
     </div>
+
+    <div class="form-group m-auto col-sm-12 col-md-8 col-6 mt-5">
+      <label for="name">New limit:</label>
+      <input type="number" [(ngModel)]="amount" id="name" name="name" #nameModel="ngModel" required min="1"/>
+      <div *ngIf="nameModel.hasError('required')" style="color: red;">Amount required!</div>
+      <div *ngIf="nameModel.hasError('min')" style="color: red;">Amount must be greater than 0!</div>
+    </div>
+
+    <div class="form-group m-auto col-sm-12 col-md-8 col-6 mt-4">
+      <label>
+        Approval required
+        <input type="checkbox" [(ngModel)]="approvalRequired" (change)="handleChange($event)">
+      </label>
+    </div>
+
+    <div class="row justify-content-around mt-5 mb-3 ms-auto me-auto">
+      <button (click)="submit()" class="btn btn-warning btn-sm col-sm-10 col-md-8 col-xl-4 mt-3" style="border-radius: 5px" [disabled]="nameModel.invalid">Set new limit</button>
+      <button (click)="cancel()" class="btn btn-warning btn-sm col-sm-10 col-md-8 col-xl-4 mt-3" style="border-radius: 5px;" >Cancel</button>
+    </div>
+  </div>
 </div>

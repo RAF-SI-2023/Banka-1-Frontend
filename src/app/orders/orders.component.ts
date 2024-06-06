@@ -5,7 +5,7 @@ import {
   ListingType,
   OrderDto,
   OrderStatus,
-  OrderType,
+  OrderType, PublicCapitalDto,
   SellingRequest,
   StatusRequest
 } from "../model/model";
@@ -44,7 +44,7 @@ import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPi
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
-  selectedTab: "order-history" | "requests" | "securities" | "public-securities"= "order-history"
+  selectedTab: "order-history" | "requests" | "securities";
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -82,93 +82,33 @@ export class OrdersComponent {
   })
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
+  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Last Modified', 'Owner'];
   securities: any[] = [];
 
-  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Profit', 'Last Modified', 'Owner'];
-  publicSecurities: any[] = [];
-  changedPublicValue: number = 0;
+
+
 
   constructor(private orderService: OrderService,
               private popupService: PopupService) {
 
+      this.selectedTab = "order-history";
+
   }
 
+
+
   private getSecurityOrders() {
-    this.orderService.getSecurityOrders().subscribe({
-      next: (securities: CapitalProfitDto[]) => {
+    this.orderService.getPublicStocks().subscribe({
+      next: (securities: any[]) => {
         this.securities = securities;
       },
       error: (error) => {
         console.error('Error fetching securities', error);
       }
     });
-
-   // this.mockSecurityOrders();
   }
 
-  mockSecurityOrders(){
-    const example1 = {
-      bankAccountNumber: "string",
-      currencyName: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "string",
-      reserved: 35556,
-      public: 123,
-      showPopup: false,
-    }
-    const example2 = {
-      bankAccountNumber: "string",
-      currencyName: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "string",
-      reserved: 35556,
-      public: 123,
-      showPopup: false,
-    }
-    const example3 = {
-      bankAccountNumber: "string",
-      currencyName: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "string",
-      reserved: 35556,
-      public: 123,
-      showPopup: false,
-    }
-
-    this.securities.push(example1)
-    this.securities.push(example2)
-    this.securities.push(example3)
-  }
-
-  getPublicSecurities(){
-    this.orderService.getPublicSecuritiesMock().subscribe( res =>{
-      this.publicSecurities = res;
-    })
-
-    const ex1 = {
-      listingType: "Stock",
-      ticker: "AAPL",
-      amount: 4,
-      price: 1623.6,
-      profit: 1623.6,
-      lastModified: 0,
-      owner: "Customer",
-    }
-
-    this.publicSecurities.push(ex1);
-  }
-
-
-  setSelectedTab(tab: "order-history" | "requests" | "securities" | "public-securities") {
+  setSelectedTab(tab: "order-history" | "requests" | "securities") {
     this.selectedTab = tab;
   }
 
@@ -180,7 +120,6 @@ export class OrdersComponent {
     }
     this.loadOrders()
     this.getSecurityOrders();
-    this.getPublicSecurities();
 
   }
 
@@ -255,26 +194,6 @@ export class OrdersComponent {
       return available;
   }
 
-  changePublicValue(element: any){
-    console.log(element);
-    this.orderService.changePublicValueMock(element.listingId, this.changedPublicValue).subscribe(res => {
-      this.getSecurityOrders();
-    })
-    element.showPopup = false;
-  }
 
-  showPopup(security: any){
-    this.securities.forEach(el => el.showPopup = false); // Close other popups
-    this.changedPublicValue = security.public;
-    security.showPopup = true;
-  }
-
-  cancelChangePublic(security: any){
-    security.showPopup = false;
-  }
-
-  offerSecurity(security: any){
-    this.popupService.openPublicSecuritiesPopup(security);
-  }
 
 }

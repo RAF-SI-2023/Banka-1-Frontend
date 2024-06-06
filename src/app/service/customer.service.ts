@@ -40,7 +40,7 @@ export class CustomerService {
         'Authorization': `Bearer ${jwt}`
       })
     };
-    return this.http.get<any>(url, httpOptions);
+    return this.http.get<Customer>(url, httpOptions);
   }
 
   getCustomer2(): Observable<CustomerWithAccounts> {
@@ -117,7 +117,7 @@ export class CustomerService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.put<any>(`${this.apiUrl}/edit`, customer, { headers });
+    return this.http.put<any>(`${this.apiUrl}`, customer, { headers });
   }
 
   public  deleteCustomer(customerId: number): Observable<boolean> {

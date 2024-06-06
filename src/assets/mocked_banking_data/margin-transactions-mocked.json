@@ -1,0 +1,22 @@
+[
+  {
+    "order": "Reference",
+    "customer": "cust1",
+    "type": "Payment",
+    "investment": "24.000,00",
+    "date": "23.5.2024. 14:00",
+    "interest": "150",
+    "borrowedMoney": "7.000,00 RSD",
+    "maintenanceMargin": "4.000,00"
+  },
+  {
+    "order": "ref",
+    "customer": "cust2",
+    "type": "Payment",
+    "investment": "3.200,00",
+    "date": "23.5.2024. 14:04",
+    "interest": "120",
+    "borrowedMoney": "50,00 EUR",
+    "maintenanceMargin": "52,00"
+  }
+]
