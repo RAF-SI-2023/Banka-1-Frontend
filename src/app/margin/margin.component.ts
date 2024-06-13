@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import {NgIf} from "@angular/common";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
-import {Margin} from "../model/model";
-import {HttpClient} from "@angular/common/http";
+import {ExchangeRate, Margin} from "../model/model";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {PopupService} from "../service/popup.service";
 import {TableComponentMarginModule} from "../welcome/redesign/TableComponentMargin";
 import {Router} from "@angular/router";
 import {GrayButtonModule} from "../welcome/redesign/GrayButton";
 import {MarginService} from "../service/margin.service";
+import {TransformMarginAccountsPipe} from "../transform-margin-accounts.pipe";
 
 @Component({
   selector: 'app-margin',
@@ -17,6 +18,7 @@ import {MarginService} from "../service/margin.service";
     OrangeButtonModule,
     GrayButtonModule,
     TableComponentMarginModule,
+    TransformMarginAccountsPipe,
   ],
   templateUrl: './margin.component.html',
   styleUrl: './margin.component.css'
@@ -33,6 +35,7 @@ export class MarginComponent {
   ];
   selectedTab: string = 'margin_accounts';
   margins: Margin[] = [];
+  backUpMargins: Margin[] = [];
 
   constructor(
     private http: HttpClient,
@@ -46,12 +49,15 @@ export class MarginComponent {
   }
 
   async loadMargins() {
-    this.http.get<Margin[]>('/assets/mocked_banking_data/margin-mocked.json').subscribe(data => {
-      this.margins = data
-      console.log('Margins:', this.margins);
-    });
-
-    // this.margins = await this.marginService.getAllMargins();
+    this.marginService.getAllMargins().subscribe(
+      (margins: Margin[]) => {
+        this.margins = this.backUpMargins = margins;
+        console.log("Margins: ", this.margins);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading margins:', error);
+      }
+    );
   }
 
   setTab(tabName: string) {
@@ -60,9 +66,30 @@ export class MarginComponent {
 
   navigateToDetails(accountNumber: string|undefined) {
     this.router.navigate(['/margin-transaction-details', accountNumber]);
+    const margin = this.margins.find(m => m.bankAccountNumber === accountNumber);
+    console.log('Margin found:', margin);
+
+    if (margin) {
+      const queryParams = {
+        queryParams : {marginId: margin.id, accountNumber: accountNumber }
+      }
+      this.router.navigate(['/margin-transaction-details'], queryParams);
+
+    } else {
+      console.error('No margin found with the given account number.');
+    }
   }
 
   openPopUp(row: any) {
-    this.popup.openMarginCallPopup(row);
+    let selectedMargin: Margin | undefined = undefined;
+
+    this.backUpMargins.forEach(account => {
+      if (account.bankAccountNumber == row.marginAccount) {
+        selectedMargin = account;
+      }
+    });
+
+    // console.log("Selected margin:", selectedMargin);
+    this.popup.openMarginCallPopup(selectedMargin);
   }
 }

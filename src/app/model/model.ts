@@ -607,89 +607,45 @@ export interface PublicStock{
   bankAccount: string;
 }
 
-
-export interface Margin {
-  marginAccount: string;
-  currency: string;
-  security: string;
-  investedFunds: number;
-  borrowedFunds: number;
-  maintenanceMargin: number;
-  marginCall: boolean;
-}
-
-export interface MarginTransactionDetails {
-  order: string;
-  customer: string;
-  type: string;
-  investment: string;
-  date: string;
-  interest: string;
-  borrowedMoney: string;
-  maintenanceMargin: string;
+export interface Currency {
+  currencyId: number;
+  currencyName: string;
+  currencyCode: string;
+  currencySymbol: string;
+  country: string;
+  currencyDesc: string;
+  fromRSD: number;
+  toRSD: number;
 }
 
 export interface Margin {
-  marginAccount: string;
-  currency: string;
-  security: string;
-  investedFunds: number;
-  borrowedFunds: number;
+  id: number;
+  bankAccountNumber: string;
+  currency: Currency;
+  listingType: ListingType;
+  balance: number;
+  loanValue: number;
   maintenanceMargin: number;
-  marginCall: boolean;
+  marginCall: number;
 }
 
 export interface MarginTransactionDetails {
-  order: string;
-  customer: string;
-  type: string;
-  investment: string;
-  date: string;
-  interest: string;
-  borrowedMoney: string;
-  maintenanceMargin: string;
-}
-
-export interface Margin {
-  marginAccount: string;
-  currency: string;
-  security: string;
-  investedFunds: number;
-  borrowedFunds: number;
+  id: number;
+  dateTime: Date;
+  customerAccount: Margin;
+  description: string;
+  currency: Currency;
+  transactionType: TrasactionType;
+  deposit: number;
+  loanValue: number;
   maintenanceMargin: number;
-  marginCall: boolean;
+  interest: number;
+  capitalAmount: number;
 }
 
-export interface MarginTransactionDetails {
-  order: string;
-  customer: string;
-  type: string;
-  investment: string;
-  date: string;
-  interest: string;
-  borrowedMoney: string;
-  maintenanceMargin: string;
-}
-
-export interface Margin {
-  marginAccount: string;
-  currency: string;
-  security: string;
-  investedFunds: number;
-  borrowedFunds: number;
-  maintenanceMargin: number;
-  marginCall: boolean;
-}
-
-export interface MarginTransactionDetails {
-  order: string;
-  customer: string;
-  type: string;
-  investment: string;
-  date: string;
-  interest: string;
-  borrowedMoney: string;
-  maintenanceMargin: string;
+export enum TrasactionType {
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
 }
 
 export interface ExchangeTransactionReport {
