@@ -521,7 +521,7 @@ export interface LegalPerson {
   idNumber?: string;
   pib?: string;
   cba?: string;
-  address?: string;
+  adress?: string; //jelena je misspelovala na bekendu pa moram ovde ovako
 }
 
 export interface OTC {

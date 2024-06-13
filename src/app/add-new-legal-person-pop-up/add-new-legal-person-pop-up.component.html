@@ -34,15 +34,6 @@
                   </div>
               </div>
 
-              <!-- Address and validators -->
-              <div class="form-group">
-                  <label for="address">Address:</label>
-                  <input type="text" id="address" [(ngModel)]="addNewLegalPersonData.address" name="address" required #addressModel="ngModel" required [ngClass]="{ 'invalid-input': addressModel.invalid && (addressModel.dirty || addressModel.touched) }"/>
-                      <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="error-message">
-                      <div *ngIf="addressModel.hasError('required')" style="color: red;">Address is required.</div>
-                  </div>
-              </div>
-
             </div>
 
             <!-- Field in the RIGHT column of the popUp -->
@@ -51,21 +42,31 @@
               <!-- idNumber field and validators -->
               <div class="form-group">
                   <label for="idNumber">idNumber:</label>
-                  <input type="text" id="idNumber" [(ngModel)]="addNewLegalPersonData.idNumber" name="idNumber" #idNumberModel="ngModel" [ngClass]="{ 'invalid-input': idNumberModel.invalid && (idNumberModel.dirty || idNumberModel.touched) }" />
+                  <input type="text" id="idNumber" [(ngModel)]="addNewLegalPersonData.idNumber" name="idNumber" required pattern="[0-9]+" required #idNumberModel="ngModel" [ngClass]="{ 'invalid-input': idNumberModel.invalid && (idNumberModel.dirty || idNumberModel.touched) }" />
                   <div *ngIf="idNumberModel.invalid && (idNumberModel.dirty || idNumberModel.touched)" class="error-message">
-                      <div *ngIf="idNumberModel.hasError('required')" style="color: red;">JMBG is required.</div>
+                      <div *ngIf="idNumberModel.hasError('required')" style="color: red;">idNumber is required.</div>
+                      <div *ngIf="idNumberModel.hasError('pattern')" style="color: red;">idNumber must contain only digits 0-9.</div>
                   </div>
               </div>
 
-              <!-- CBA field and validators -->
+              <!-- Address and validators -->
               <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" [(ngModel)]="addNewLegalPersonData.adress" name="address" required #addressModel="ngModel" required [ngClass]="{ 'invalid-input': addressModel.invalid && (addressModel.dirty || addressModel.touched) }"/>
+                    <div *ngIf="addressModel.invalid && (addressModel.dirty || addressModel.touched)" class="error-message">
+                    <div *ngIf="addressModel.hasError('required')" style="color: red;">Address is required.</div>
+                </div>
+            </div>
+
+              <!-- CBA field and validators -->
+              <!-- <div class="form-group">
                 <label for="cba">CBA:⠀</label>
                 <input type="text" id="cba" [(ngModel)]="addNewLegalPersonData.cba" name="cba" required pattern="[0-9]+" #cbaModel="ngModel" [ngClass]="{ 'invalid-input': cbaModel.invalid && (cbaModel.dirty || cbaModel.touched) }"/>
                 <div *ngIf="cbaModel.invalid && (cbaModel.dirty || cbaModel.touched)" class="error-message">
                   <div *ngIf="cbaModel.hasError('required')" style="color: red;">CBA is required.</div>
                   <div *ngIf="cbaModel.hasError('pattern')" style="color: red;">CBA must contain only digits 0-9.</div>
                 </div>
-              </div>
+              </div> -->
 
               <!-- cancel and add buttons -->
               <div class="bottom-buttons">
