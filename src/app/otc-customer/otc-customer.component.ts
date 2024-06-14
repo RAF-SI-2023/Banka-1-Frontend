@@ -61,6 +61,7 @@ export class OtcCustomerComponent {
     'Security',
     'Symbol',
     'Amount',
+    'Price',
     'Last Modified',
     'Owner',
   ];
@@ -173,7 +174,8 @@ export class OtcCustomerComponent {
 
   updateOTCStatus(contract: any, newStatus: 'Approved' | 'Denied') {
     // if (contract.status === newStatus) return;
-
+    console.log("ASD");
+    console.log(contract);
     // const contractId = this.otcToContractIdMap.get(contract);
     var contractId = contract.contractId;
     // console.log(contract);

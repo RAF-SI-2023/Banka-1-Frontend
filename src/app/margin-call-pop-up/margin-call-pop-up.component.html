@@ -8,23 +8,29 @@
   <div class="popup-body">
     <div class="content">
       <div class="input-container">
-        <label for="margin_call">Amount: </label>
-        <input class="popup-input" id="margin_call" [style.margin-left.px]="100" [(ngModel)]="marginCall" placeholder="value..." [ngClass]="{ 'invalid-input':  isValid() }"/>
+        <label for="phone">Upkeep:</label>
+        <input type="number" id="phone" [(ngModel)]="marginCall" name="phone" [ngClass]="{ 'invalid-input': isValid() }"/>
       </div>
+
+<!--      <div class="input-container">-->
+<!--        <label for="margin_call">Amount:</label>-->
+<!--        <input type="text" class="popup-input" id="margin_call" [style.margin-left.px]="100" [(ngModel)]="marginCall" placeholder="value..." [ngClass]="{ 'invalid-input':  isValid() }"/>-->
+<!--      </div>-->
+
       <span class="hint-text">Minimum: 2.334,00 RSD</span>
       <div class="body-element">
         <label class="warning">{{ warnMessage }}</label>
       </div>
 
-    <div class="popup-buttons">
-      <button class="button-primary"  (click)="closePopUp()">
-        CANCEL
-      </button>
-      <button class="button-primary"  (click)="onMakeAnOffer()">
-        CONFIRM
-      </button>
-    </div>
+      <div class="popup-buttons">
+        <button class="button-primary" (click)="closePopUp()">
+          CANCEL
+        </button>
+        <button class="button-primary" (click)="onMakeAnOffer()">
+          CONFIRM
+        </button>
+      </div>
 
+    </div>
   </div>
-</div>
 </div>

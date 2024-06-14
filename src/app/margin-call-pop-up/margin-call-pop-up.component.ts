@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {NgClass} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import {MarginService} from "../service/margin.service";
 import {Margin} from "../model/model";
 
@@ -10,13 +10,13 @@ import {Margin} from "../model/model";
   standalone: true,
   imports: [
     FormsModule,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './margin-call-pop-up.component.html',
   styleUrl: './margin-call-pop-up.component.css'
 })
 export class MarginCallPopUpComponent {
-  volumeOfStock: string = '';
   marginCall: string = '';
   warnMessage: string = '';
   margin: Margin;
@@ -32,8 +32,17 @@ export class MarginCallPopUpComponent {
   onMakeAnOffer() {
     if (!this.isValid()) {
       const marginCall = parseFloat(this.marginCall);
+      console.log("Margin:", this.margin);
       if(marginCall > 0){
-        this.marginService.depositMoney(this.margin, marginCall);
+        console.log("Margin call:", marginCall);
+        this.marginService.depositMoney(this.margin, marginCall).subscribe(
+          response => {
+            console.log("Response: ", response);
+          },
+          error => {
+            console.error('Error loading margins:', error);
+          }
+        );
         this.warnMessage = "";
         this.closePopUp();
       } else {
@@ -46,6 +55,7 @@ export class MarginCallPopUpComponent {
 
   isValid(){
     if(this.marginCall == '') return false;
+
     return isNaN(parseFloat(this.marginCall));
   }
 

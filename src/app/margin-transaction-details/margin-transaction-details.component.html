@@ -7,17 +7,17 @@
     </div>
     <div class="central-window">
       <div class="tabs-menu">
-        <div (click)="setTab('transaction')" class="{{ selectedTab === 'transaction' ? 'tab active-tab' : 'tab' }}">
+        <div (click)="setTab('margin-transaction')" class="{{ selectedTab === 'margin-transaction' ? 'tab active-tab' : 'tab' }}">
           Transactions
         </div>
 
         <hr />
       </div>
 
-      <div class="overview-tab" *ngIf="selectedTab === 'transaction'">
+      <div class="overview-tab" *ngIf="selectedTab === 'margin-transaction'">
         <app-dynamic-table
           [headersArray]="headersMargins"
-          [dataArray]="marginTransactions"
+          [dataArray]="marginTransactions | transformMarginDetails"
         >
         </app-dynamic-table>
       </div>
