@@ -61,7 +61,8 @@ export class TransactionService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.post<any>(`${this.apiUrl}/transfer`, transactionBasics, { headers });
+
+    return this.http.post(`${this.apiUrl}/transfer`, transactionBasics, { headers, responseType: 'text' });
   }
 
   getCardTransactions(cardNum: string | undefined): Observable<TransactionDto[]> {

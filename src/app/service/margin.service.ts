@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Margin} from "../model/model";
+import {ExchangeRate, Margin, MarginTransactionDetails} from "../model/model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 
 @Injectable({
@@ -10,38 +10,38 @@ import {environment} from "../../environments/environment";
 export class MarginService {
   private apiUrl = environment.userService;
 
-  constructor(private http: HttpClient) { }
+  constructor(private httpClient: HttpClient) { }
 
-  // TODO: Implement the following methods
-  depositMoney(margin: Margin, marginCall: number) {
-    // const headers = new HttpHeaders({
-    //   'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
-    // });
-    //
-    // const jsonData = {
-    //   marginCall: marginCall
-    // };
-    //
-    // return this.http.put<boolean>(`${this.apiUrl}/contract/deny/${margin.marginAccount}`, jsonData, {headers});
+  getAllMargins(): Observable<Margin[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/margin/all`;
+
+    return this.httpClient.get<Margin[]>(url, options);
   }
 
-  async getAllMargins(): Promise<Margin[]> {
-    const jwt = sessionStorage.getItem("jwt");
-
-    if(!jwt) return [];
-
+  depositMoney(margin: Margin, marginCall: number) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
 
-    let resp;
-    try {
-      resp = (await firstValueFrom(
-        this.http.get(environment.userService + "/", {headers})
-      )) as Margin[];
-    } catch (e) {
-      return [];
-    }
-    return resp;
+    return this.httpClient.put<boolean>(`${this.apiUrl}/margin/deposit/${margin.id}`, marginCall, {headers});
   }
+
+  getAllMarginTransactions(id: number): Observable<MarginTransactionDetails[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/margin/transaction/${id}`;
+
+    return this.httpClient.get<MarginTransactionDetails[]>(url, options);
+  }
+
 }

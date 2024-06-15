@@ -21,8 +21,8 @@
             <div>Welcome</div>
           </div>
 
-          <div [routerLink]="'/user/list'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor) && !isLegalPerson">
-            <div>Admin panel</div>
+          <div [routerLink]="'/user/list'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isSupervizor">
+            <div>Employee panel</div>
           </div>
 
           <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson" >

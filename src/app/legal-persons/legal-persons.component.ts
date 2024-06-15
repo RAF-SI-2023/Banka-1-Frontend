@@ -8,7 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {PopupService} from "../service/popup.service";
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-legal-persons',
@@ -51,6 +51,7 @@ export class LegalPersonsComponent {
 
         console.log('All legal persons data loaded');
         console.log(this.allLegalPersons);
+        console.log(allLegalPersonsData);
       },
       (error: HttpErrorResponse) => {
         console.error('Error loading users:', error);
@@ -78,10 +79,11 @@ export class LegalPersonsComponent {
       console.log(result);
       console.log('The dialog was closed');
 
-      if(! environment.shouldUseMockedDataForLegalPersons)
-      {
-        this.loadAllLegalPersons();
-      }
+      // if(! environment.shouldUseMockedDataForLegalPersons)
+      // {
+      //   console.log("usao ovde");
+      //   this.loadAllLegalPersons();
+      // }
     });
   }
 }

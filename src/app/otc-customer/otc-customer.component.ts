@@ -61,6 +61,7 @@ export class OtcCustomerComponent {
     'Security',
     'Symbol',
     'Amount',
+    'Price',
     'Last Modified',
     'Owner',
   ];

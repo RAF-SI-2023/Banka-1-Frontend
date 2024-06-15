@@ -189,7 +189,7 @@ export const routes: Routes = [
     data: { roles: ['agent', 'supervizor', 'admin'] }
   },
   {
-    path: 'margin-transaction-details/:accountNumber', component: MarginTransactionDetailsComponent, canActivate: [PositionsGuard],
+    path: 'margin-transaction-details', component: MarginTransactionDetailsComponent, canActivate: [PositionsGuard],
     data: { roles: ['agent', 'supervizor', 'admin'] }
   },
   {

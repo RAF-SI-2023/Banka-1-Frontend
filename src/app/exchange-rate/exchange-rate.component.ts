@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForOf } from "@angular/common";
 import { environment } from "../../environments/environment";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { ExchangeRate, TransformedExchangeRate } from "../model/model";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {BankAccount, ExchangeRate, TransformedExchangeRate} from "../model/model";
 import { Router } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { OrangeButtonModule } from "../welcome/redesign/OrangeButton";
 import { TableComponentModule } from "../welcome/redesign/TableComponent";
 import { TransparentTextFieldModule } from "../welcome/redesign/TransparentTextField";
+import {ExchangeService} from "../service/exchange.service";
 
 @Component({
   selector: 'app-exchange-rate',
@@ -27,7 +28,7 @@ export class ExchangeRateComponent implements OnInit {
   _router: Router;
   searchString = ""
   this: any;
-  constructor(private http: HttpClient, router: Router,) {
+  constructor(private http: HttpClient, router: Router, private exchangeService: ExchangeService) {
     this._router = router;
   }
 
@@ -74,13 +75,15 @@ export class ExchangeRateComponent implements OnInit {
   }
 
   ngOnInit() {
-    const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
-    });
-    this.http.get<ExchangeRate[]>(environment.userService + '/transfer/exchangeRates', { headers })
-      .subscribe(res => {
-        this.exchangeBackup = this.exchange = res
+    this.exchangeService.getAllExchanges().subscribe(
+      (exchanges: ExchangeRate[]) => {
+        this.exchangeBackup =  this.exchange = exchanges;
         this.transformedExchangeRates = this.transform(this.exchangeBackup);
-      });
+        console.log("Exchanges: ", this.exchange);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading users:', error);
+      }
+    );
   }
 }

@@ -49,17 +49,19 @@ export class AddBankAccountComponent {
   submit() {
     const customer = this.customerService.getCustomerForCreation();
 
-    if(this.validateForm() && customer) {
+    if (!this.validateForm()) {
+      return;
+    }
 
+    if(customer) {
       this.customerService.createCustomerAndBankAccount( customer, this.accountToCreate).subscribe(
         (response) => {
           if (response) {
-            this.popupService.openPopup("Success", "Customer and bank account created successfully.");
+            this.popupService.openPopupWithPageRefresh("Success", "Customer and bank account created successfully.");
             this.customerService.setCustomerForCreation(undefined);
-            this.router.navigate(['customer/all']);
-            this.dialogRef.close();
+            // window.location.reload();
           } else {
-            this.popupService.openPopup("Error", "Failed to create customer and bank account.");
+            this.popupService.openPopupWithPageRefresh("Error", "Failed to create customer and bank account.");
           }
         },
         (error) => {
@@ -68,18 +70,18 @@ export class AddBankAccountComponent {
         }
       );
       this.dialogRef.close();
-    }
-    else if(this.validateForm() && this.customerService.getSelectedCustomer()!==null){
+
+    } else if(this.customerService.getSelectedCustomer()!==null){
        const userId = this.customerService.getSelectedCustomer()?.userId;
        if(userId!==null && userId!==undefined){
         this.customerService.addCustomerBankAccount(userId,this.accountToCreate).subscribe(
           (response) => {
             if (response) {
-              this.popupService.openPopup("Success", "Bank account successfully added.");
+              this.popupService.openPopupWithPageRefresh("Success", "Bank account successfully added.");
               this.router.navigate(['customer/all']);
               this.dialogRef.close();
             } else {
-              this.popupService.openPopup("Error", "Failed to add bank account to a customer.");
+              this.popupService.openPopupWithPageRefresh("Error", "Failed to add bank account to a customer.");
             }
           },
           (error) => {
@@ -89,6 +91,7 @@ export class AddBankAccountComponent {
         );
       }
     }
+
   }
 
   private validateForm(): boolean {
