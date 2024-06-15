@@ -13,7 +13,7 @@
       <div class="overview-tab" *ngIf="selectedTab === 'margin_accounts'">
         <app-dynamic-table-margin
           [headersArray]="headersMargins"
-          [dataArray]="margins"
+          [dataArray]="margins | transformMarginAccounts"
           [showMarginAccount]="true"
         >
           <ng-template #marginAccountColumn let-row>
