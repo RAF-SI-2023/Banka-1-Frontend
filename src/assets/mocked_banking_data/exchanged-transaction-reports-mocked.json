@@ -1,0 +1,26 @@
+[
+  {
+    "outflowAccount": 206839306,
+    "inflowAccount": "365723762",
+    "amount": 1000,
+    "previousCurrency": "USD",
+    "exchangedTo": "EUR",
+    "profit": 100
+  },
+  {
+    "outflowAccount": 571839838,
+    "inflowAccount": "432421567",
+    "amount": 2000,
+    "previousCurrency": "EUR",
+    "exchangedTo": "RSD",
+    "profit": 200
+  },
+  {
+    "outflowAccount": 567567576,
+    "inflowAccount": "325345345",
+    "amount": 3000,
+    "previousCurrency": "JPY",
+    "exchangedTo": "PGK",
+    "profit": 300
+  }
+]

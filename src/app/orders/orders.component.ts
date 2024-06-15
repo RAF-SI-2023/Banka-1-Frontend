@@ -1,12 +1,6 @@
 import {Component} from '@angular/core';
-import {DatePipe, DecimalPipe, NgForOf, NgIf} from "@angular/common";
-import {
-  CapitalProfitDto,
-  OrderDto,
-  OrderStatus,
-  SellingRequest,
-  StatusRequest
-} from "../model/model";
+import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -16,6 +10,8 @@ import {PopupService} from '../service/popup.service';
 import {TableComponentModule} from "../welcome/redesign/TableComponent";
 import {TransformSecuritiesPipeModule} from "./TransformSecuritiesPipe";
 import {FilterByStatusPipeModule} from "./FilterByStatusPipe";
+import {ExtendedModule} from "@angular/flex-layout";
+import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPipe";
 
 @Component({
   selector: 'app-orders',
@@ -31,13 +27,16 @@ import {FilterByStatusPipeModule} from "./FilterByStatusPipe";
     DecimalPipe,
     TableComponentModule,
     TransformSecuritiesPipeModule,
+    TransformPublicSecuritiesPipeModule,
     DatePipe,
-    FilterByStatusPipeModule
+    FilterByStatusPipeModule,
+    NgClass,
+    ExtendedModule
   ]
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
-  selectedTab: "order-history" | "requests" | "securities" = "order-history"
+  selectedTab: "order-history" | "requests" | "securities";
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -74,34 +73,47 @@ export class OrdersComponent {
     margin: z.boolean()
   })
 
-  headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved'];
+  // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
+  headersSecurities = ['Security', 'Symbol', 'Amount', 'Price'];
   securities: CapitalProfitDto[] = [];
 
-  constructor(private orderService: OrderService, private popupService: PopupService) {
+
+  constructor(private orderService: OrderService,
+              private popupService: PopupService) {
+
+      this.selectedTab = "order-history";
 
   }
 
   private getSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({
-      next: (securities: CapitalProfitDto[]) => {
+      next: (securities: any[]) => {
         this.securities = securities;
       },
       error: (error) => {
         console.error('Error fetching securities', error);
       }
     });
-
-    console.log(this.securities);
-
+    this.securities.push({
+      bankAccountNumber: "string",
+      // currencyName: 123,
+      listingType: ListingType.STOCK,
+      listingId: 123,
+      totalPrice: 123,
+      total: 123,
+      ticker: "string",
+      reserved: 123,
+      publicTotal: 123,
+      averageBuyingPrice: 123,
+    })
   }
-
 
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
     this.selectedTab = tab;
   }
 
   async ngOnInit() {
-   
+
     this.customerId = sessionStorage.getItem('loggedUserID');
     if(this.customerId) {
       this.loadLimit()
@@ -124,14 +136,8 @@ export class OrdersComponent {
   async loadOrders(){
     if(this.isSupervizor || this.isAdmin){
       this.orderHistory = await this.orderService.getAllOrdersHistory();
-      console.log("order history")
-      console.log(this.orderHistory);
-
     }else{
       this.orderHistory=await this.orderService.getOrdersHistory();
-      console.log("order history")
-
-      console.log(this.orderHistory);
     }
 
   }
@@ -140,7 +146,7 @@ export class OrdersComponent {
       this.orderService.decideOrder(order.orderId, StatusRequest.APPROVED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-   
+
   }
 
   async denyOrder(order: OrderDto) {
@@ -187,5 +193,7 @@ export class OrdersComponent {
     else
       return available;
   }
+
+
 
 }

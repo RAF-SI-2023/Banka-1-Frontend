@@ -1,0 +1,48 @@
+[
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "companyName": "Doe Enterprises",
+      "jmbg": "1234567890123",
+      "pib": "123456789",
+      "cba": 500,
+      "address": "123 Main Street"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "companyName": "Smith Co.",
+      "jmbg": "9876543210987",
+      "pib": "987654321",
+      "cba": 750,
+      "address": "456 Elm Avenue"
+    },
+    {
+      "firstName": "Alice",
+      "lastName": "Johnson",
+      "companyName": "Johnson Enterprises",
+      "jmbg": "4567890123456",
+      "pib": "456789012",
+      "cba": 600,
+      "address": "789 Oak Street"
+    },
+    {
+      "firstName": "Bob",
+      "lastName": "Williams",
+      "companyName": "Williams Corp.",
+      "jmbg": "3210987654321",
+      "pib": "321098765",
+      "cba": 550,
+      "address": "101 Pine Road"
+    },
+    {
+      "firstName": "Emily",
+      "lastName": "Brown",
+      "companyName": "Brown Industries",
+      "jmbg": "6543210987654",
+      "pib": "654321098",
+      "cba": 700,
+      "address": "222 Cedar Lane"
+    }
+  ]
+  

@@ -42,27 +42,33 @@
           >
             Forex
           </div>
+          <div
+            (click)="setSelectedTab('options')"
+            [ngClass]="selectedTab === 'options' ? 'tab tab-active' : 'tab'"
+          >
+            Options
+          </div>
         </div>
         <app-dynamic-table
           *ngIf="selectedTab === 'stocks'"
           [headersArray]="[
             'Ticker',
             'Name',
-            'Exchange Name',
-            'Last Refresh',
+            'Last updated',
             'Price',
             'High',
             'Low',
-            'Price Change',
+            'Price change',
             'Volume',
             'Outstanding Shares',
+            'Exchange Name',
             'Dividend Yield',
           ]"
           [dataArray]="securities | transformSecurity"
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>
-            <button class="buy-security" (click)="navigateToStock(row.originalStock.listingId)" >Detail</button>
+            <button class="buy-security" (click)="navigateToStock(row.originalStock.listingId)">DETAILS</button>
           </ng-template>
         </app-dynamic-table>
 
@@ -71,12 +77,12 @@
           [headersArray]="[
             'Ticker',
             'Name',
-            'Exchange Name',
-            'Last Refresh',
+            'Exchange',
+            'Last updated',
             'Price',
             'High',
             'Low',
-            'Price Change',
+            'Price change',
             'Volume',
             'Settlement Date'
           ]"
@@ -84,30 +90,42 @@
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>
-            <button class="buy-security" (click)="navigateToFuture(row.originalFuture.listingId)">Detail</button>
+            <button class="buy-security" (click)="navigateToFuture(row.original.listingId)">DETAILS</button>
           </ng-template>
         </app-dynamic-table>
 
         <app-dynamic-table
           *ngIf="selectedTab === 'forex'"
           [headersArray]="[
-            'Ticker',
-            'Name',
-            'Exchange Name',
-            'Last Refresh',
-            'Price',
-            'High',
-            'Low',
-            'Price Change',
-            'Volume',
-            'Base Currency',
             'Quote Currency',
+            'Base Currency',
+            'Price',
+            'Exchange Name'
           ]"
           [dataArray]="forex | transformForex"
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>
-            <button class="buy-security" (click)="navigateToForex(row.originalForex.listingId)">Detail</button>
+            <button class="buy-security" (click)="navigateToForex(row.originalForex.listingId)">DETAILS</button>
+          </ng-template>
+        </app-dynamic-table>
+
+
+        <app-dynamic-table
+          *ngIf="selectedTab === 'options'"
+          [headersArray]="[
+            'Stock listing',
+            'Option type',
+            'Strike price',
+            'Implied volatility',
+            'Open interest',
+            'Settlement date'
+          ]"
+          [dataArray]="options | transformOptions"
+          [showActions]="true"
+        >
+          <ng-template #actionsColumn let-row>
+            <button class="buy-security" (click)="buyOption(row.original)">BUY</button>
           </ng-template>
         </app-dynamic-table>
       </div>

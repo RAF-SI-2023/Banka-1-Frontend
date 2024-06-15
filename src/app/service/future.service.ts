@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 import {Future, ListingHistory} from "../model/model";
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class FutureService {
 
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + `/market/listing/history/future/${futureId}` + query, {headers})
+        this.http.get(environment.marketService + `/market/listing/history/future/${futureId}` + query, {headers})
       )) as ListingHistory[];
     } catch (e) {
       return [];
@@ -54,7 +54,7 @@ export class FutureService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + `/market/listing/future/${futureId}`, {headers})
+        this.http.get(environment.marketService + `/market/listing/future/${futureId}`, {headers})
       )) as Future;
     } catch (e) {
       return null;

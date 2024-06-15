@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders,  HttpParams} from "@angular/common/http";
-import {BankAccount, Customer, TransactionBasics, TransactionDetails, TransactionDto, User} from '../model/model';
+import {
+  BankAccount,
+  Customer,
+  NewTransactionDto,
+  TransactionBasics,
+  TransactionDetails,
+  TransactionDto,
+  User
+} from '../model/model';
 
 import {Router} from "@angular/router";
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -19,7 +26,7 @@ export class TransactionService {
 
   constructor( private http: HttpClient, private router: Router) { }
 
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.userService;
 
 
 
@@ -54,7 +61,8 @@ export class TransactionService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.post<any>(`${this.apiUrl}/transfer`, transactionBasics, { headers });
+
+    return this.http.post(`${this.apiUrl}/transfer`, transactionBasics, { headers, responseType: 'text' });
   }
 
   getCardTransactions(cardNum: string | undefined): Observable<TransactionDto[]> {
@@ -65,7 +73,7 @@ export class TransactionService {
 
     const options = {headers: headers};
 
-    let url = environment.baseUrl + `/transaction/getCardTransactions/${cardNum}`;
+    let url = environment.userService + `/transaction/getCardTransactions/${cardNum}`;
 
     return this.http.get<TransactionDto[]>(url, options);
   }
@@ -77,11 +85,11 @@ export class TransactionService {
     return this.http.post<any>(`${this.apiUrl}/transaction/printTransaction`, transactionDetails, { headers });
   }
 
-  getAccountTransactions(accountNumber: string): Observable<TransactionDetails[]> {
+  getAccountTransactions(accountNumber: string): Observable<NewTransactionDto[]> {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.get<TransactionDetails[]>(`${this.apiUrl}/transaction/getAccountTransactions/${accountNumber}`, { headers });
+    return this.http.get<NewTransactionDto[]>(`${this.apiUrl}/transactions/${accountNumber}`, { headers });
   }
 
 

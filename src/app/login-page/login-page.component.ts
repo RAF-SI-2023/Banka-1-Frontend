@@ -65,10 +65,10 @@ export class LoginPageComponent {
       this.popupService.openPopup("Error", "Fields can't be empty")
       return;
     }
-   
+
 
     if(this.isEmployee) {
-    
+
       this.authService.loginEmployee(this.model.email, this.model.password).subscribe(
         (token) => {
 
@@ -84,7 +84,6 @@ export class LoginPageComponent {
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
                 console.log(response.position);
-
              }
            );
           }
@@ -93,9 +92,10 @@ export class LoginPageComponent {
         error => {
           this.popupService.openPopup("Error", "Wrong email or password")
         });
+      sessionStorage.setItem('isLegalPerson', String(false));
+
     } else {
-      
-      console.log("USAO")
+
       this.authService.loginCustomer(this.model.email, this.model.password).subscribe(
         (token) => {
 
@@ -110,13 +110,14 @@ export class LoginPageComponent {
                this.storageService.setRole('customer');
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
-                console.log('customer');
-
+                sessionStorage.setItem('isLegalPerson', String(response.isLegalEntity));
              },
              error =>{
               console.log("Greska")
              }
            );
+          } else {
+            sessionStorage.setItem('isLegalPerson', String(false));
           }
 
         },
@@ -124,7 +125,7 @@ export class LoginPageComponent {
           this.popupService.openPopup("Error", "Wrong email or password")
         });
     }
-       
+
   }
 
 

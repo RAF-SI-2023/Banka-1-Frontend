@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import {firstValueFrom} from "rxjs";
-import { CreateBankAccountRequest, CreateCustomerRequest, Customer, EditCustomerRequest } from '../model/model';
+import {
+  CreateBankAccountRequest,
+  CreateCustomerRequest,
+  Customer,
+  CustomerWithAccounts,
+  EditCustomerRequest
+} from '../model/model';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -20,7 +26,7 @@ export class CustomerService {
   private customerForEdit: EditCustomerRequest | undefined;
 
 
-  private apiUrl = environment.baseUrl + '/customer';
+  private apiUrl = environment.userService + '/customer';
 
 
   constructor(
@@ -28,6 +34,17 @@ export class CustomerService {
   ) { }
 
   getCustomer(jwt: string): Observable<Customer> {
+    const url = `${this.apiUrl}/getCustomer`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<Customer>(url, httpOptions);
+  }
+
+  getCustomer2(): Observable<CustomerWithAccounts> {
+    const jwt = sessionStorage.getItem('jwt');
     const url = `${this.apiUrl}/getCustomer`;
     const httpOptions = {
       headers: new HttpHeaders({
@@ -47,7 +64,7 @@ export class CustomerService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.post(environment.baseUrl + "/customer/initialActivation", data)
+        this.http.post(environment.userService + "/customer/initialActivation", data)
       )) as boolean;
     } catch (e) {
       return false;
@@ -62,7 +79,7 @@ export class CustomerService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.post(environment.baseUrl + `/customer/activate/${token}`, data)
+        this.http.post(environment.userService + `/customer/activate/${token}`, data)
       )) as number;
     } catch (e) {
       return false;
@@ -84,7 +101,7 @@ export class CustomerService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.post<any>(`${environment.baseUrl }/account/create`, {
+    return this.http.post<any>(`${environment.userService }/account/create`, {
       customerId: customerId,
       account: bankAcc
     }, { headers });
@@ -100,7 +117,7 @@ export class CustomerService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.http.put<any>(`${this.apiUrl}/edit`, customer, { headers });
+    return this.http.put<any>(`${this.apiUrl}`, customer, { headers });
   }
 
   public  deleteCustomer(customerId: number): Observable<boolean> {

@@ -1,0 +1,410 @@
+.container{
+  margin-left: 5rem;
+  margin-top: 5rem;
+  font-family: "Jura", sans-serif;
+
+}
+.page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.security-title {
+  color: var(--banka-orange);
+  font-size: 2.2rem;
+  font-weight: 700;
+
+  margin-bottom: 7rem;
+}
+
+.central-window {
+  position: absolute;
+  background: #26262C;
+  border-radius: 30px;
+
+  width: 100%;
+  min-height: 50%;
+
+  /*overflow-x: auto;*/
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.central-window::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-menu {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.tabs-menu ul {
+  display: flex;
+  list-style: none;
+  gap: 48px;
+  margin-bottom: 0px;
+}
+
+.tabs-menu ul li {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #B3ABA0;
+
+  border-radius: 14px 12px 0px 0px;
+
+  cursor: pointer;
+
+  padding: 20px 27px 15px;
+
+  user-select: none;
+}
+
+.tabs-menu ul li:hover {
+  background: #131319;
+  color: #FFB72B;
+}
+
+.active-tab {
+  background: #131319;
+  color: #FFB72B!important;
+  border-bottom-style: solid;
+  border-color: #FFB72B;
+  border-width: 1px;
+}
+
+hr {
+  width: 100%;
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  border-spacing: 0;
+  border-collapse: collapse;
+  /*margin-bottom: 200px;*/
+}
+
+thead {
+  background: #131319;
+  padding: 0;
+}
+th {
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1rem;
+  position: relative;
+}
+
+td {
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: #FFF9F0;
+  border-bottom-width: 1px;
+  padding: 20px 0;
+  position: relative;
+}
+
+th:nth-child(1) {
+  border-radius: 5px 0 0 5px;
+}
+
+th:nth-last-child(1) {
+  border-radius: 0 5px 5px 0;
+}
+
+.button-primary {
+  padding: 10px 35px;
+  border-radius: 10px;
+  color: white;
+  background: #FFB72B;
+  border: none;
+  cursor: pointer;
+}
+
+.button-secondary {
+  padding: 10px 35px;
+  border-radius: 10px;
+  color: white;
+  background: transparent;
+  border-color: #FFB72B;
+  border-width: 1px;
+  cursor: pointer;
+  border-style: solid;
+}
+
+.table-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.popup-bg {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 99;
+
+  background: rgba(217, 217, 217, 0.45);
+
+}
+
+.popup {
+  height: 100%;
+  width: 60%;
+  background: #26262C;
+
+  position: absolute;
+  z-index: 100;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 40px;
+
+  overflow-x: auto;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.popup-header {
+  position: relative;
+}
+
+.x-button {
+  position: absolute;
+  left: auto;
+  right: 20px;
+  top: 20px;
+  bottom: auto;
+
+  cursor: pointer;
+}
+.limit-info {
+  position: absolute; /* Positioning it relative to the nearest positioned ancestor (or the body) */
+  top: 0; /* At the top */
+  right: 0; /* At the right */
+  text-align: right; /* Align text to the right */
+  color: var(--banka-orange); /* Text color orange */
+  padding: 20px; /* Add some padding */
+}
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.input-row label {
+  color: #FFF9F0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  width: 200px;
+}
+
+.input-row input {
+  border-radius: 20px;
+  height: 41px;
+  width: 223px;
+  background: #D9D9D9;
+}
+
+.popup-buttons {
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.popup::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .central-window {
+    -ms-overflow-style: scrollbar;  /* IE and Edge */
+    scrollbar-width: thin;  /* Firefox */
+  }
+
+  .central-window::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .popup {
+    width: 95%;
+
+    -ms-overflow-style: scrollbar;  /* IE and Edge */
+    scrollbar-width: thin;  /* Firefox */
+  }
+  .popup::-webkit-scrollbar {
+    display: block;
+  }
+}
+
+.popup-buttons {
+  display: flex; /* Enables Flexbox */
+  justify-content: space-around; /* Distributes space evenly around the items */
+}
+
+.button-wrapper {
+  flex: 0.5; /* Each child will take up an equal amount of space */
+  max-width: 13vw;
+  padding: 5px; /* Optional: Adds some space between the buttons */
+}
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  padding: 20px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  width: 80%; /* Set a fixed width for all rows to align them */
+  margin-bottom: 10px; /* Add some space between rows */
+}
+
+.input-row label {
+  color: white; /* Set label text color to white */
+  width: 150px; /* Set a fixed width for all labels to ensure alignment */
+}
+
+white-text-field, input {
+  flex-grow: 1; /* Allow input fields to take up remaining space */
+  padding: 8px;
+}
+
+.input-row input[type="checkbox"] {
+  margin-left: 150px; /* Align checkboxes with other input fields */
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between; /* Evenly distribute space around buttons */
+  width: 80%; /* Match the width of the input rows for alignment */
+  margin-top: 20px; /* Add some space above the button row */
+}
+
+.button-wrapper {
+  flex-grow: 1; /* Allow button wrappers to grow and fill the space */
+  text-align: center; /* Center the buttons within their wrappers */
+}
+.popup {
+  background-color: #333; /* Dark gray background */
+  color: #fff; /* White text color */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  padding: 20px; /* Spacing inside the popup */
+  font-family: Arial, sans-serif; /* Professional, readable font */
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px; /* Space between header and body */
+}
+
+.popup-header h1 {
+  margin: 0; /* Remove default margin */
+  font-size: 1.4rem; /* Prominent header size */
+}
+
+.popup-header .x-button {
+  cursor: pointer; /* Indicates clickable */
+  filter: invert(1); /* Makes the image white */
+}
+
+hr {
+  border-color: #444; /* Slightly lighter line for separation */
+}
+
+.popup-body .input-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px; /* Space between input rows */
+}
+
+.popup-body .input-row label {
+  flex: 0 0 120px; /* Fixed width for labels, ensuring alignment */
+  margin-right: 10px; /* Space between label and input field */
+}
+
+.white-text-field {
+  flex-grow: 1; /* Input field takes remaining space */
+  padding: 8px;
+  background-color: #444; /* Slightly lighter than popup background */
+  border: 1px solid #555; /* Subtle border */
+  border-radius: 4px; /* Rounded corners for input field */
+  color: #fff; /* White text */
+}
+
+.button-wrapper {
+  display: inline-block; /* Allows buttons to sit side by side */
+  margin-right: 10px; /* Space between buttons */
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  margin-top: 20px; /* Space above buttons */
+}
+
+.cell-content {
+  cursor: pointer;
+  position: relative;
+  /*z-index: 10;*/
+}
+
+.field-with-popup{
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 100;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 80px;
+  margin-left: 65px;
+  background-color: #131319;
+
+  width: fit-content;
+  height: fit-content;
+}
+
+.popup label {
+  margin-top: 10px;
+}
+
+.popup input {
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.popup button {
+  margin-top: 10px;
+}
+.selected {
+  background-color: #131319;
+
+}

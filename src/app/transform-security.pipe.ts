@@ -12,7 +12,6 @@ export class TransformSecurityPipe implements PipeTransform {
       return {
         ticker: sec.ticker,
         name: sec.name,
-        exchangeName: sec.exchangeName,
         lastRefresh: new Date(sec.lastRefresh).toLocaleString(),
         price: sec.price,
         high: sec.high,
@@ -20,6 +19,7 @@ export class TransformSecurityPipe implements PipeTransform {
         priceChange: sec.priceChange,
         volume: sec.volume,
         outstandingShares: sec.outstandingShares,
+        exchangeName: sec.exchangeName,
         dividendYield: sec.dividendYield,
         originalStock: sec
       };

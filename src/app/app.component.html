@@ -22,31 +22,59 @@
           </div>
 
           <div [routerLink]="'/user/list'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isSupervizor">
-            <div>Admin panel</div>
+            <div>Employee panel</div>
           </div>
 
-          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson" >
+            <div>Bank accounts</div>
+          </div>
+
+          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson">
             <div>Customer</div>
           </div>
 
-          <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
+          <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active"  *ngIf="!isLegalPerson">
             <div>Securities</div>
           </div>
 
-          <div [routerLink]="'/orders'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin || isAgent || isSupervizor">
+          <div [routerLink]="'/security/legal'" class="sidebar-item" routerLinkActive="active" *ngIf="isLegalPerson">
+            <div>Security</div>
+          </div>
+
+          <div [routerLink]="'/orders/regular'" class="sidebar-item" routerLinkActive="active" *ngIf="!isLegalPerson">
             <div>Orders</div>
           </div>
 
-          <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
+          <div [routerLink]="'/orders/legal'" class="sidebar-item" routerLinkActive="active" *ngIf="isLegalPerson">
+            <div>Orders</div>
+          </div>
+
+          <div [routerLink]="'/legal-persons'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson">
+            <div>Legal persons</div>
+          </div>
+
+          <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer && !isLegalPerson">
             <div>Bank accounts</div>
           </div>
 
-          <div [routerLink]="'/bank-profit'" class="sidebar-item" routerLinkActive="active"*ngIf="isAdmin" >
+          <div [routerLink]="'/bank-profit'" class="sidebar-item" routerLinkActive="active"*ngIf="isAdmin && !isLegalPerson" >
             <div>Profit</div>
           </div>
 
-          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin" >
-            <div>Bank accounts</div>
+          <div [routerLink]="'/otc'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+            <div>OTC</div>
+          </div>
+
+          <div [routerLink]="'/otc-customer'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
+            <div>OTC</div>
+          </div>
+
+          <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor) && !isLegalPerson">
+            <div>Margin</div>
+          </div>
+
+          <div [routerLink]="'/exchange-transaction-report'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor) && !isLegalPerson">
+            <div>Exchange Transaction Report</div>
           </div>
 
 
@@ -61,7 +89,7 @@
         <span>Cards</span>
       </div> -->
 
-          <div class="sidebar-item-wrapper" *ngIf="isCustomer">
+          <div class="sidebar-item-wrapper" *ngIf="isCustomer && !isLegalPerson">
             <div class="sidebar-item" (click)="setActiveItem('openPayments')">
               <div>Payments</div>
               <img
@@ -94,13 +122,13 @@
                 <div>Recipients</div>
               </div>
 
-              
 
-            
+
+
             </div>
           </div>
 
-          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer">
+          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer  && !isLegalPerson">
             <div>Cards</div>
           </div>
 

@@ -9,13 +9,21 @@ import { AddCustomerComponent } from '../add-customer/add-customer.component';
 import { AddBankAccountComponent } from '../add-bank-account/add-bank-account.component';
 import { EditCustomerComponent } from '../edit-customer/edit-customer.component';
 import { VerificationPaymentPopupComponent } from '../verification-payment-popup/verification-payment-popup.component';
-import {CreatePaymentRequest, Forex, Future, Recipient} from '../model/model';
+import {CreatePaymentRequest, Forex, Future, ListingType, Recipient} from '../model/model';
 import { TransactionsDetailsPopupComponent } from '../transactions-details-popup/transactions-details-popup.component';
 import { NewRecipientComponent } from '../new-recipient/new-recipient.component';
 import { EditRecipientComponent } from '../edit-recipient/edit-recipient.component';
 import {BuyPopupComponent} from "../buy-popup/buy-popup.component";
 import {SellPopupComponent} from "../sell-popup/sell-popup.component";
 import { DeleteRecipientConfirmationComponent } from '../delete-recipient-confirmation/delete-recipient-confirmation.component';
+import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
+import { LegalPerson } from '../model/model';
+import { JoinLegalPersonAndCustomerPopUpComponent } from '../join-legal-person-and-customer-pop-up/join-legal-person-and-customer-pop-up.component';
+import {PublicSecurityOfferPopupComponent} from "../public-security-offer-popup/public-security-offer-popup.component";
+import {BuyStockPopupComponent} from "../buy-stock-popup/buy-stock-popup.component";
+import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
+import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
+import {PopUpWithRefreshComponent} from "../pop-up-with-refresh/pop-up-with-refresh.component";
 
 
 @Injectable({
@@ -32,6 +40,13 @@ export class PopupService {
     });
   }
 
+  openPopupWithPageRefresh(message: string, text: string): void {
+    this.dialog.open(PopUpWithRefreshComponent, {
+      width: '250px',
+      data: { message, text }
+    });
+  }
+
   openBiggerPopup(message: string, text: string): void {
     this.dialog.open(PopupComponent, {
       width: '350px',
@@ -42,6 +57,20 @@ export class PopupService {
   openAddUserPopup(args: any): void {
     this.dialog.open(AddUserComponent, {
       data: args
+    });
+  }
+
+  openAddLegalPersonPopUp(allLegalPersons: LegalPerson[]): void {
+    this.dialog.open(AddNewLegalPersonPopUpComponent, {
+      data: allLegalPersons,
+      disableClose: true // Prevents closing the dialog by clicking outside or pressing ESC
+    });
+  }
+
+  openJoinLegalPersonAndCustomerPopUp(legalPerson: LegalPerson): void{
+    this.dialog.open(JoinLegalPersonAndCustomerPopUpComponent, {
+      data: legalPerson,
+      disableClose: false // Prevents closing the dialog by clicking outside or pressing ESC
     });
   }
 
@@ -105,5 +134,26 @@ export class PopupService {
     return this.dialog.open(EditRecipientComponent, {
       data: { recipient }
     });
+  }
+
+  openPublicSecuritiesPopup(args: any): void {
+    this.dialog.open(PublicSecurityOfferPopupComponent, {
+      data: args
+    });
+  }
+
+  openBuyOrderPopup(args: any): void {
+    this.dialog.open(BuyStockPopupComponent, {data: args});
+  }
+
+  openCustomMessage(args: {title: string, header: string, message: string}): void {
+    this.dialog.open(CustomPopupComponent, {data: args})
+  }
+
+  openMarginCallPopup(row: any) {
+    this.dialog.open(MarginCallPopUpComponent, {
+      data: row
+    });
+    console.log('Opening margin call popup...');
   }
 }

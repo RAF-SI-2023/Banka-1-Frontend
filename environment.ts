@@ -1,5 +1,6 @@
 export const environment = {
     production: false,
+    shouldUseMockedDataForLegalPersons: false,
     baseUrl: 'http://localhost:8080'
 };
 

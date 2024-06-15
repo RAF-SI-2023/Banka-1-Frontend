@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
 import {Forex, ListingHistory} from "../model/model";
-import { environmentMarket } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class ForexService {
     try {
       resp = (await firstValueFrom(
         
-        this.http.get(environmentMarket.baseUrl + `/market/listing/history/forex/${forexId}` + query, {headers})
+        this.http.get(environment.marketService + `/market/listing/history/forex/${forexId}` + query, {headers})
       )) as ListingHistory[];
     } catch (e) {
       return [];
@@ -55,7 +55,7 @@ export class ForexService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + `/market/listing/forex/${forexId}`, {headers})
+        this.http.get(environment.marketService + `/market/listing/forex/${forexId}`, {headers})
       )) as Forex;
     } catch (e) {
       return null;

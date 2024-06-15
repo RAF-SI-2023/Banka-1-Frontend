@@ -57,7 +57,7 @@ export class StockViewComponent {
 
 
   goBack() {
-    this.router.navigateByUrl(`/security/all`);
+    this.router.navigateByUrl(`/securities`);
   }
 
   refresh() {
@@ -65,7 +65,7 @@ export class StockViewComponent {
   }
 
   async ngOnInit() {
-    this.stock = await this.stockService.getStockByTicker(this.stockId);
+    this.stock = await this.stockService.getStockById(this.stockId);
     console.log(this.stock);
     await this.handleGraphFilter('d');
   }

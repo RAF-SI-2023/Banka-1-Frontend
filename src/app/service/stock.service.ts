@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
-import {environmentMarket} from "../../../environment";
+import {environment} from "../../environments/environment";
 
 export interface ListingHistory {
   listingId: number;
@@ -49,7 +49,7 @@ export class StockService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + "/market/listing/get/stock", {headers})
+        this.http.get(environment.marketService + "/market/listing/get/stock", {headers})
       )) as StockListing[];
     } catch (e) {
       return [];
@@ -81,7 +81,7 @@ export class StockService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + `/market/listing/history/stock/${stockId}` + query, {headers})
+        this.http.get(environment.marketService + `/market/listing/history/stock/${stockId}` + query, {headers})
       )) as ListingHistory[];
     } catch (e) {
       return [];
@@ -89,7 +89,7 @@ export class StockService {
     return resp;
   }
 
-  async getStockByTicker(stockId: number): Promise<StockListing | null> {
+  async getStockById(stockId: number): Promise<StockListing | null> {
     const jwt = sessionStorage.getItem("jwt");
 
     if(!jwt) return null;
@@ -101,7 +101,7 @@ export class StockService {
     let resp;
     try {
       resp = (await firstValueFrom(
-        this.http.get(environmentMarket.baseUrl + `/market/listing/stock/${stockId}`, {headers})
+        this.http.get(environment.marketService + `/market/listing/stock/${stockId}`, {headers})
       )) as StockListing;
     } catch (e) {
       return null;

@@ -34,17 +34,21 @@ export class TransactionPopupComponent implements OnInit{
       if (this.transactionBasics) {
         this.transactionService.createTransaction(this.transactionBasics).subscribe(
           response => {
-            alert('Transaction created successfully');
-            this.dialogRef.close();
+            if (response === 'ok') {
+              this.popupService.openPopup("Success", "Transaction created successfully");
+              this.dialogRef.close();
+            }
           },
           error => {
-            alert('Dont have enough money on this bank account: ' + JSON.stringify(error));
+            this.popupService.openPopup("Error", error.error);
+            console.log('Error while creating transaction: ', error.error);
+            this.dialogRef.close();
           }
         );
+
       } else {
         alert('Transaction basics are not defined.');
       }
-
     }
 
     onCancel(){

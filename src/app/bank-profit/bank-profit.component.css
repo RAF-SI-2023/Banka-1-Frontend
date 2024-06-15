@@ -1,326 +1,359 @@
-/* Whole page container css */
-.bank-accs-main-container{
-    background-color: #ebf6f9;
-  
+.container {
+  margin-left: 5rem;
+  margin-top: 5rem;
+  font-family: "Jura", sans-serif;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.security-title {
+  color: var(--banka-orange);
+  font-size: 2.2rem;
+  font-weight: 700;
+  flex: 1;
+  min-width: 200px; /* Ensure it stays above a minimum width */
+}
+
+.number-box-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 200px; /* Ensure it stays above a minimum width */
+}
+
+.number-box {
+  background: #26262C;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 20px 40px;
+  border-radius: 10px;
+  height: 150px; /* Adjusted height */
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.number-box-title {
+  color: var(--banka-orange);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.number-box-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.central-window {
+  position: relative;
+  background: #26262C;
+  border-radius: 30px;
+  width: 100%;
+  min-height: 50%;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.central-window::-webkit-scrollbar {
+  display: none;
+}
+
+.tabs-menu {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  margin-bottom: 0px;
+  gap: 25px;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
+}
+
+.tab {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #B3ABA0;
+  border-radius: 14px 12px 0px 0px;
+  cursor: pointer;
+  padding: 20px 27px 15px;
+  user-select: none;
+}
+
+.active-tab {
+  background: #131319;
+  color: #FFB72B !important;
+  border-bottom-style: solid;
+  border-color: #FFB72B;
+  border-width: 1px;
+}
+
+hr {
+  width: 100%;
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  border-spacing: 0;
+}
+
+thead {
+  background: #131319;
+  padding: 0;
+}
+
+th {
+  margin: 0;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 1rem;
+}
+
+td {
+  text-align: center;
+  border-bottom-style: solid;
+  border-bottom-color: #FFF9F0;
+  border-bottom-width: 1px;
+  padding: 20px 0;
+}
+
+th:nth-child(1) {
+  border-radius: 5px 0 0 5px;
+}
+
+th:nth-last-child(1) {
+  border-radius: 0 5px 5px 0;
+}
+
+.button-primary {
+  padding: 10px 35px;
+  border-radius: 10px;
+  color: white;
+  background: #FFB72B;
+  border: none;
+  cursor: pointer;
+}
+
+.button-secondary {
+  padding: 10px 35px;
+  border-radius: 10px;
+  color: white;
+  background: transparent;
+  border-color: #FFB72B;
+  border-width: 1px;
+  cursor: pointer;
+  border-style: solid;
+}
+
+.table-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.popup-bg {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 99;
+  background: rgba(217, 217, 217, 0.45);
+}
+
+.popup {
+  height: 100%;
+  width: 60%;
+  background: #26262C;
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 40px;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.popup-header {
+  position: relative;
+}
+
+.x-button {
+  position: absolute;
+  left: auto;
+  right: 20px;
+  top: 20px;
+  bottom: auto;
+  cursor: pointer;
+}
+
+.limit-info {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  color: var(--banka-orange);
+  padding: 20px;
+}
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.input-row label {
+  color: #FFF9F0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  width: 200px;
+}
+
+.input-row input {
+  border-radius: 20px;
+  height: 41px;
+  width: 223px;
+  background: #D9D9D9;
+}
+
+.popup-buttons {
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+.popup::-webkit-scrollbar {
+  display: none;
+}
+
+@media only screen and (max-width: 1200px) {
+  .central-window {
+    -ms-overflow-style: scrollbar;
+    scrollbar-width: thin;
   }
-  .container{
-    margin-top: 3rem;
-    font-family: "Jura", sans-serif;
+
+  .central-window::-webkit-scrollbar {
+    display: block;
   }
-  
-  
-  /* Css of div where title Bank Accounts is. */
-  .title-div{
-    color: var(--banka-orange);
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 7rem;
+}
+
+@media only screen and (max-width: 800px) {
+  .popup {
+    width: 95%;
+    -ms-overflow-style: scrollbar;
+    scrollbar-width: thin;
   }
-  
-  /*
-  Inside bank-accs-div is a grid-container div that has grid display. For bigger monitors
-  grid will have 2 columns with same size (1fr 1fr) and for smaller monitors just one cloumn.
-  Grid elements are individual bank accounts of user (grid-item class elements).
-   */
-  .bank-accs-div{
-    padding-bottom: 25px;
+  .popup::-webkit-scrollbar {
+    display: block;
   }
-  
-  .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Creates two columns of equal width */
-    gap: 1.5rem; /* Adjust the gap between items */
-    padding-left: 2rem;
-    padding-right: 5rem;
-    padding-top: 2rem;
-    overflow-y: auto;
-  }
-  
-  .grid-item {
-    /* Style for each item */
-    border: 2px solid black; /* Example styling */
-    padding: 20px;
-    border-radius: 20px;
-    background-color: white;
-    height: 150px;
-    min-width: 200px;
-  }
-  
-  /*
-      Css of elements inside grid-item
-  */
-  .accType{
-    height: 20%;
-    font-size: 2rem;
-  }
-  
-  .accNumber{
-    height: 20%;
-    font-size: 1.5rem;
-    line-height: 120%;
-  }
-  
-  .accActive{
-    height: 40%;
-  }
-  
-  
-  
-  
-  /* Media query for screens smaller than 600px */
-  @media (max-width: 1000px) {
-    .grid-container {
-      grid-template-columns: 1fr; /* Change to one column */
-    }
-  
-    .accType{
-      font-size: 1.5rem;
-    }
-  
-    .accNumber{
-      font-size: 1rem;
-      line-height: 120%;
-    }
-  
-  
-  }
-  
-  /* NEW CSS FOR NEW DESIGN */
-  
-  .pageTitle{
-    color: #ffb72b;
-    font-size: xx-large;
-    font-family: 'Jura';
-  }
-  
-  .sliderDivWrapper{
-    margin-top: 5vh;
-    height: 20vh;
-    border-radius: 30px;
-    border-bottom: 1px solid white;
-    border-right: 2px solid white;
-  }
-  
-  .sliderDiv{
-    height: 100%;
-    background-color: #26262c;
-    border-radius: 30px;
-  }
-  
-  .leftSliderButton{
-    height: 100%;
-    color: #fff9f0;
-    font-size: x-large;
-    cursor: pointer;
-  }
-  
-  .sliderMidContent{
-    height: 100%;
-  }
-  
-  .rightSliderButton{
-    height: 100%;
-    color: #fff9f0;
-    font-size: x-large;
-    cursor: pointer;
-  }
-  
-  .accNumAndTitle{
-    height: 30%;
-    color: #fff9f0;
-  }
-  
-  .accBalance{
-    height: 30%;
-    font-family: 'Jura';
-    font-size: medium;
-    color: #fff9f0;
-  }
-  
-  .paymentAndInfoDiv{
-    height: 30%;
-  }
-  
-  .accTitleDiv{
-    font-family: 'Jura';
-    font-size: large;
-  }
-  
-  .accNumDiv{
-    font-family: 'Jura';
-    font-size: small;
-  }
-  
-  .threeDots{
-    height: 10%;
-    font-size: small;
-  }
-  
-  .myBtnDiv{
-    height: 100%;
-  }
-  
-  .myBtn{
-    height: 80%;
-    background-color: #ffb72b;
-    color: #131319;
-    font-family: 'Jura';
-    font-size: large;
-    font-weight: bolder;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Bottom shadow */
-  }
-  
-  
-  
-  .tabs{
-    height: 85%;
-  }
-  
-  .tab-headers {
-    display: flex;
-    border-bottom: 2px solid #fff9f0; /* Only bottom border for the container */
-  }
-  
-  /* Default styles for all tabs */
-  .tab-header {
-    padding: 10px;
-    background-color: #26262c; /* Background color for inactive tabs */
-    color: #b3aba0; /* Text color for inactive tabs */
-    cursor: pointer;
-    font-family: 'Jura';
-  }
-  
-  /* Styles for the active tab */
-  .tab-header.active {
-    background-color: #131319; /* Background color for active tab */
-    color: #ffb72b; /* Text color for active tab */
-    border-bottom: 4px solid #ffb72b; /* Bottom border color for active tab */
-  }
-  
-  .tab-content {
-    height: 85%;
-    color: white;
-  }
-  
-  /* TABLE CSS */
-  .transactionsContentContainer{
-    margin-top: 10vh;
-    height: 60vh;
-    background-color: #26262c;
-    border-radius: 30px;
-    padding: 20px;
-    font-family: 'Jura';
-  }
-  
-  .transOverviewDiv{
-    height: 15%;
-    font-family: 'Jura';
-    font-size: large;
-    padding-left: 25px;
-    color: #fff9f0;
-  }
-  
-  /* Transaction table */
-  .transactions-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .transactions-table th, .transactions-table td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  .transactions-table th {
-    background-color: #131319;
-    color: #b3aba0;
-  }
-  
-  .transactions-table td {
-    border-bottom: 1px solid #fff9f0;
-    color: #fff9f0;
-    background-color: #26262c;
-  }
-  
-  .scrollable-container {
-    max-height: 100%; /* Adjust based on your needs */
-    overflow-y: auto; /* Enables vertical scrolling */
-    height: 85%;
-    padding-top: 10px;
-  }
-  
-  .tableHeaderDiv{
-    height: 15%;
-    width: 100%;
-  }
-  
-  tr{
-    cursor: pointer;
-  }
-  
-  @media (min-width: 300px) {
-    .leftSliderButton {
-      font-size: smaller; /* Adjust for smaller screens */
-    }
-  
-    .rightSliderButton{
-      font-size: smaller;
-    }
-  
-    .myBtn{
-      font-size: smaller;
-    }
-  
-    .accBalance{
-      font-size: small;
-    }
-  
-    .accNumber{
-      font-size: small;
-    }
-  
-    .accNumDiv{
-      font-size: smaller;
-    }
-  }
-  
-  
-  @media (min-width: 1000px) {
-    .leftSliderButton {
-      font-size: large; /* Adjust for smaller screens */
-    }
-  
-    .rightSliderButton{
-      font-size: large;
-    }
-  
-    .myBtn{
-      font-size: large;
-    }
-  
-    .accBalance{
-      font-size: large;
-    }
-  
-    .accNumber{
-      font-size: large;
-    }
-  
-    .accNumDiv{
-      font-size: large;
-    }
-  }
-  
-  /* POP UP CSS */
-  .rounded-dialog {
-    border-radius: 20px; /* or any other value you prefer */
-    background-color: #26262c;
-  }
-  
-  .transparent {
-    opacity: 0;
-    cursor: default;
-  }
-  
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-wrapper {
+  flex: 0.5;
+  max-width: 13vw;
+  padding: 5px;
+}
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+.input-row label {
+  color: white;
+  width: 150px;
+}
+
+.white-text-field, input {
+  flex-grow: 1;
+  padding: 8px;
+}
+
+.input-row input[type="checkbox"] {
+  margin-left: 150px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-top: 20px;
+}
+
+.button-wrapper {
+  flex-grow: 1;
+  text-align: center;
+}
+
+.popup {
+  background-color: #333;
+  color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.popup-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.popup-header .x-button {
+  cursor: pointer;
+  filter: invert(1);
+}

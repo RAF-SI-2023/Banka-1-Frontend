@@ -1,22 +1,28 @@
 export interface User{
-    userId: number;
-    username:string;
-    password:string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    jmbg: string;
-    position: string;
-    phoneNumber: string;
-    active: boolean;
+  userId: number;
+  username:string;
+  password:string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  jmbg: string;
+  position: string;
+  phoneNumber: string;
+  active: boolean;
 
-    limitNow: number;
-    orderlimit: number;
-    requireApproval: boolean;
+  limitNow: number;
+  orderlimit: number;
+  requireApproval: boolean;
 
-    permissions:Permissions[]
+  permissions:Permissions[]
 }
 
+export enum OTCTab {
+  OVERVIEW = "overview",
+  PUBLIC = "public",
+  ACTIVE_SELL =  "active-sell",
+  ACTIVE_BUY = "active-buy"
+}
 
 export enum StatusRequest{
   APPROVED="APPROVED",
@@ -29,9 +35,9 @@ export interface DecideOrderResponse{
 }
 
 export interface Permissions{
-    permission_id?:number;
-    name:string;
-    description?:string;
+  permission_id?:number;
+  name:string;
+  description?:string;
 }
 export interface Limit{
   userId: number;
@@ -50,13 +56,13 @@ export interface Permissions {
 export interface BankAccount {
   accountType?: string;
   accountNumber?: string;
+  accountName?: string;
   accountStatus?: string;
   currency?: string;
   balance?: number;
   availableBalance?: number;
   reservedResources?: number;
   accountOwner?: string;
-  accountName?: string;
 }
 
 export interface Account {
@@ -171,6 +177,19 @@ export interface TransactionDto {
   date: number;
   recipientAccountNumber: string;
   status: string;
+}
+
+export interface NewTransactionDto {
+  bankAccount: BankAccount;
+  dateTime: number;
+  marketOrder: OrderDto;
+  employee: User;
+  description: string;
+  currency: string;
+  buy: number;
+  sell: number;
+  reserved: number;
+  reserveUsed: number;
 }
 
 export interface TransactionDetails {
@@ -309,6 +328,29 @@ export interface Customer {
   phoneNumber: string;
   gender: string;
   address: string;
+
+  isLegalEntity: boolean;
+}
+
+
+export interface PublicCapitalDto {
+  publicTotal: number;
+  isIndividual: boolean;
+  bankAccountNumber: string;
+  listingType: ListingType;
+  listingId: number;
+}
+
+export interface CustomerWithAccounts {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  jmbg: string;
+  phoneNumber: string;
+  gender: string;
+  address: string;
+  accountIds: Account[];
 }
 
 export interface CustomerTable {
@@ -399,13 +441,15 @@ export enum OrderType{
 
 export interface CapitalProfitDto {
   bankAccountNumber: string;
-  currencyName: string;
+  // currencyName: string;
   listingType: ListingType;
   listingId: number;
   totalPrice: number;
   total: number;
   ticker: string;
   reserved: number;
+  publicTotal: number;
+  averageBuyingPrice: number
 }
 
 
@@ -424,7 +468,8 @@ export interface CreateOrderRequest {
 export enum ListingType {
   STOCK = "STOCK",
   FUTURE = "FUTURE",
-  FOREX = "FOREX"
+  FOREX = "FOREX",
+  OPTIONS = "OPTIONS"
 }
 
 
@@ -460,13 +505,161 @@ export interface Loan {
 }
 
 export interface CreatePaymentRequest {
-    singleUseCode?: string; //verifikacija
-    senderAccountNumber?: string;
-    recipientName?: string;
-    recipientAccountNumber?: string;
-    amount?: number
-    paymentCode?: string;
-    model?: string;
-    referenceNumber?: string;
-    paymentPurpose?: string;
+  singleUseCode?: string; //verifikacija
+  senderAccountNumber?: string;
+  recipientName?: string;
+  recipientAccountNumber?: string;
+  amount?: number
+  paymentCode?: string;
+  model?: string;
+  referenceNumber?: string;
+  paymentPurpose?: string;
+}
+
+export interface LegalPerson {
+  companyName?: string;
+  idNumber?: string;
+  pib?: string;
+  cba?: string;
+  adress?: string; //jelena je misspelovala na bekendu pa moram ovde ovako
+}
+
+export interface OTC {
+  owner: string;
+  stock: string;
+  outstandingShares: string;
+  exchangeName: string;
+  dividendYield: string;
+  status: string;
+}
+
+export interface Contract {
+  contractId: number;
+  buyerAccountNumber: string;
+  sellerAccountNumber: string;
+  bankApproval: boolean;
+  sellerApproval: boolean;
+  comment: string;
+  creationDate: number;
+  realizationDate: number;
+  referenceNumber: string;
+  ticker: string;
+  amount: number;
+  price: number;
+  listingId: number;
+}
+
+export interface PublicCapitalDto{
+  publicTotal: number;
+  isIndividual: boolean;
+  bankAccountNumber: string;
+  listingType: ListingType;
+  listingId: number;
+}
+
+export interface OptionsDto{
+  ticker: string;
+  optionType: string;
+  strikePrice: number;
+  currency: string;
+  impliedVolatility: number;
+  openInterest: number;
+  expirationDate: number;
+
+  listingId: number;
+  listingType: string;
+  name: string;
+  exchangeName: string;
+  lastRefresh: number;
+  price: number;
+  high: number;
+  low: number;
+  priceChange: number;
+  volume: number;
+}
+
+export interface ContractCreateDto {
+  amountToBuy: number;
+  offerPrice: number;
+  bankAccountNumber: string;
+  listingId: number;
+  listingType: ListingType;
+  ticker: string;
+}
+export interface PublicOffer {
+  listingId: number;
+  security: string;
+  symbol: string;
+  amount: number;
+  price: number;
+  profit: number;
+  lastModified: Date;
+  owner: string;
+}
+
+export interface PublicStock{
+  listingType: string;
+  listingId: number;
+  ticker: string;
+  amount: number;
+  price: number;
+  lastModified: string;
+  bankAccount: string;
+}
+
+export interface Currency {
+  currencyId: number;
+  currencyName: string;
+  currencyCode: string;
+  currencySymbol: string;
+  country: string;
+  currencyDesc: string;
+  fromRSD: number;
+  toRSD: number;
+}
+
+export interface Margin {
+  id: number;
+  bankAccountNumber: string;
+  currency: Currency;
+  customer:MarginCustomer;
+  listingType: ListingType;
+  balance: number;
+  loanValue: number;
+  maintenanceMargin: number;
+  marginCall: number;
+}
+
+export interface MarginCustomer{
+  id:number;
+  accountNumber:string;
+  customer:Customer;
+}
+
+export interface MarginTransactionDetails {
+  id: number;
+  dateTime: Date;
+  customerAccount: Margin;
+  description: string;
+  currency: Currency;
+  transactionType: TrasactionType;
+  deposit: number;
+  loanValue: number;
+  maintenanceMargin: number;
+  interest: number;
+  capitalAmount: number;
+}
+
+export enum TrasactionType {
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAWAL = 'WITHDRAWAL',
+}
+
+export interface ExchangeTransactionReport {
+  outflowAccount: number;
+  inflowAccount: string;
+  amount: number;
+  previousCurrency: string;
+  exchangedTo: string;
+  profit: number;
 }

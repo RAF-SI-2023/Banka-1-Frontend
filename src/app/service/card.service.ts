@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Card } from '../model/model';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class CardService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getAllCards/${userId}`;
+    let url = environment.userService + `/account/getAllCards/${userId}`;
 
     return this.httpClient.get<Card[]>(url, options);
   }
@@ -33,7 +33,7 @@ export class CardService {
     });
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getAllCards/${userId}`;
+    let url = environment.userService + `/account/getAllCards/${userId}`;
 
     return this.httpClient.get<Card[]>(url, options);
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ import { environment } from '../../../environment';
 export class AuthService {
   private jwtSubject = new BehaviorSubject<string | null>(null);
 
-  private loginUrl = environment.baseUrl+"/auth/login"; // Set your API endpoint here
+  private loginUrl = environment.userService+"/auth/login"; // Set your API endpoint here
 
   constructor(private http: HttpClient) {
     const currentJwt = sessionStorage.getItem("jwt");
@@ -18,7 +18,7 @@ export class AuthService {
   }
   //auth/login/emplyee POST
   loginEmployee(email: string, password: string): Observable<any> {
-    return this.http.post(environment.baseUrl+"/auth/login/employee", { email, password }).pipe(
+    return this.http.post(environment.userService+"/auth/login/employee", { email, password }).pipe(
       map((response: any) => {
         // Assuming the response contains the JWT token
         console.log(response)
@@ -30,7 +30,7 @@ export class AuthService {
 
   // Ruta auth/login/customer POST
   loginCustomer(email: string, password: string): Observable<any> {
-    return this.http.post(environment.baseUrl+"/auth/login/customer", { email, password }).pipe(
+    return this.http.post(environment.userService+"/auth/login/customer", { email, password }).pipe(
       map((response: any) => {
         // Assuming the response contains the JWT token
         console.log(response)
@@ -42,7 +42,7 @@ export class AuthService {
 
 
   login(email: string, password: string): Observable<any> {
-    return this.http.post(environment.baseUrl+"/auth/login", { email, password }).pipe(
+    return this.http.post(environment.userService+"/auth/login", { email, password }).pipe(
       map((response: any) => {
         // Assuming the response contains the JWT token
         console.log(response)

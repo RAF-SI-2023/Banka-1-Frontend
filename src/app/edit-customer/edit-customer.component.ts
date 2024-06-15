@@ -9,6 +9,7 @@ import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-customer',
@@ -17,7 +18,7 @@ import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
   templateUrl: './edit-customer.component.html',
   styleUrl: './edit-customer.component.css'
 })
-export class EditCustomerComponent implements OnInit{
+export class EditCustomerComponent implements OnInit {
 
   editCustomerData: EditCustomerRequest = {
     id: 0,
@@ -29,7 +30,7 @@ export class EditCustomerComponent implements OnInit{
     address: '',
     gender: '',
     password: '',
-    active:false,
+    active: false,
     dateOfBirth: 0
   };
 
@@ -37,10 +38,12 @@ export class EditCustomerComponent implements OnInit{
     private customerService: CustomerService,
     private dialogRef: MatDialogRef<EditCustomerComponent>,
     private popupService: PopupService,
-  ){}
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
-    console.log('Edit customer component initialized', this.customerService.getCustomerForEdit());
+    // console.log('Edit customer component initialized', this.customerService.getCustomerForEdit());
     const userToEdit = this.customerService.getCustomerForEdit();
     this.editCustomerData = {
       id: userToEdit?.id || 0,
@@ -50,14 +53,14 @@ export class EditCustomerComponent implements OnInit{
       jmbg: userToEdit?.jmbg || '',
       phoneNumber: userToEdit?.phoneNumber || '',
       address: userToEdit?.address || '',
-      gender: userToEdit?.gender as string ,
+      gender: userToEdit?.gender as string,
       password: '',
-      active:userToEdit?.active || false,
+      active: userToEdit?.active || false,
       dateOfBirth: 0
     }
   }
 
-  submit(){
+  submit() {
     console.log('Edit customer data: ', this.editCustomerData);
 
     if (!this.validateForm()) {
@@ -67,10 +70,10 @@ export class EditCustomerComponent implements OnInit{
     this.customerService.editCustomer(this.editCustomerData).subscribe(
       (response) => {
         if (response) {
-          this.popupService.openPopup("Success", "Customer data successfully updated.");
-          this.dialogRef.close();
+          this.popupService.openPopupWithPageRefresh("Success", "Customer data successfully updated.");
+          // this.router.navigate(['customer/all']);
         } else {
-          this.popupService.openPopup("Error", "Failed to update customer data.");
+          this.popupService.openPopupWithPageRefresh("Error", "Failed to update customer data.");
         }
       },
       (error) => {
@@ -78,6 +81,7 @@ export class EditCustomerComponent implements OnInit{
         this.popupService.openPopup("Error", "Failed to update customer data.");
       }
     );
+    this.dialogRef.close();
   }
 
   private validateForm(): boolean {
@@ -97,8 +101,8 @@ export class EditCustomerComponent implements OnInit{
       return false;
     }
 
-    if (!this.editCustomerData.jmbg || !this.isValidJMBG(this.editCustomerData.jmbg)) {
-      this.popupService.openPopup("Error", "JMBG nije validan.");
+    if (!this.editCustomerData.address || !this.isAdressValid(this.editCustomerData.address)) {
+      this.popupService.openPopup("Error", "Adresa nije validna.");
       return false;
     }
 
@@ -106,6 +110,17 @@ export class EditCustomerComponent implements OnInit{
       this.popupService.openPopup("Error", "Broj telefona nije validan.");
       return false;
     }
+
+    if (!this.editCustomerData.jmbg || !this.isValidJMBG(this.editCustomerData.jmbg)) {
+      this.popupService.openPopup("Error", "JMBG nije validan.");
+      return false;
+    }
+
+    if (!this.editCustomerData.gender) {
+      this.popupService.openPopup("Error", "Izaberite pol.");
+      return false;
+    }
+
     return true;
   }
 
@@ -121,11 +136,27 @@ export class EditCustomerComponent implements OnInit{
     return /^\d+$/.test(phone);
   }
 
-  cancel(){
+  private isAdressValid(address: string): boolean {
+    return address.length > 0;
+  }
+
+  cancel() {
     this.dialogRef.close();
   }
 
-  setGender(gender: any){
+  setGender(gender: any) {
     this.editCustomerData.gender = gender;
   }
+
+  inputModified: boolean = false;
+
+  isJmbgReadonly(): boolean {
+    return !this.inputModified && !!this.editCustomerData.jmbg;
+  }
+
+  onInputChange(event: any): void {
+    this.inputModified = true;
+    this.editCustomerData.jmbg = event.target.value; // Update the model value
+  }
+
 }

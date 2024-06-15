@@ -1,8 +1,11 @@
 import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
-import { environment } from '../../../environment';
+// import { environment } from '../../../environment';
+// import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
+import {BankAccount, Exchange, Recipient, Payment, NewLimitDto, User, ContractCreateDto} from '../model/model';
+import { environment } from '../../environments/environment';
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +28,20 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getCustomer/${userId}`;
+    let url = environment.userService + `/account/getCustomer/${userId}`;
+
+    return this.httpClient.get<BankAccount[]>(url, options);
+  }
+
+  getAdminBankAccounts(companyId: number): Observable<BankAccount[]> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/account/getCompany/${companyId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }
@@ -38,7 +54,7 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account/getAdminAccounts/${userId}`;
+    let url = environment.userService + `/account/getAdminAccounts/${userId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
   }
@@ -57,14 +73,14 @@ export class BankAccountService {
     });
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/payment/getAll/${accountNumber}`;
+    let url = environment.userService + `/payment/getAll/${accountNumber}`;
 
     console.log("getPaymentsForAccount log:");
     console.log(sessionStorage.getItem('jwt'))
     console.log(options);
     console.log(url);
 
-    return this.httpClient.get<Payment[]>(url, options); 
+    return this.httpClient.get<Payment[]>(url, options);
   }
 
   //Get all exchanges for bank account MOCKED
@@ -82,9 +98,9 @@ export class BankAccountService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/transfer/getAll/${accountNumber}`;
+    let url = environment.userService + `/transfer/getAll/${accountNumber}`;
 
-    return this.httpClient.get<Exchange[]>(url, options); 
+    return this.httpClient.get<Exchange[]>(url, options);
   }
 
   //Get all recipients for user MOCKED
@@ -94,23 +110,23 @@ export class BankAccountService {
   }
 
   getAllRecipients(): Observable<Recipient[]> {
-    
+
 
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.get<Recipient[]>(environment.baseUrl + '/recipients/getAll',{
+    return this.httpClient.get<Recipient[]>(environment.userService + '/recipients/getAll',{
       headers: headers
     });
 
   }
 
-  //Add recipient 
+  //Add recipient
   addRecipient(fistName: string, lastName: string, bankAccountNumber: string): Observable<any>{
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.post(environment.baseUrl + '/recipients/add', {
+    return this.httpClient.post(environment.userService + '/recipients/add', {
       firstName: fistName,
       lastName: lastName,
       bankAccountNumber: bankAccountNumber
@@ -123,7 +139,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.put(environment.baseUrl + '/recipients/edit', recipient,{
+    return this.httpClient.put(environment.userService + '/recipients/edit', recipient,{
       headers: headers
     });
   }
@@ -132,7 +148,7 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.delete(environment.baseUrl + '/recipients/remove/'+recipient.id,{
+    return this.httpClient.delete(environment.userService + '/recipients/remove/'+recipient.id,{
       headers: headers
     });
   }
@@ -144,11 +160,11 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/employee/limits/newLimit`;
+    let url = environment.userService + `/employee/limits/newLimit`;
 
     return this.httpClient.put(url, {
       userId: newLimitDto.userId,
@@ -164,11 +180,11 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/employee/limits/reset/${userId}`;
+    let url = environment.userService + `/employee/limits/reset/${userId}`;
 
     return this.httpClient.put(url,null,{
       headers: headers
@@ -181,11 +197,11 @@ export class BankAccountService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    
+
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.baseUrl + `/account`;
+    let url = environment.userService + `/account`;
 
     return this.httpClient.put(url, {
       bankAccountNumber: bankAccountNumber,
@@ -193,5 +209,70 @@ export class BankAccountService {
     },{
       headers: headers
     });
+  }
+
+  makeAnOfferCustomer(security: any, volume: number, offer: number){
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = { headers: headers };
+    const body:  ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.ticker
+    }
+    console.log("makeAnOffer")
+    console.log(body)
+    return this.httpClient.post(environment.userService + "/contract/customer", body, options);
+  }
+
+
+  makeAnOfferEmployee(security: any, volume: number, offer: number) : Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    const options = {headers: headers};
+    const body: ContractCreateDto = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.bankAccountNumber,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.ticker
+    }
+
+    return this.httpClient.post(environment.userService + "/contract/employee", body, options);
+  }
+
+  makeAnOffer(security: any, volume: number, offer: number) {
+    const jwt = sessionStorage.getItem('jwtToken');
+    if (!jwt) {
+      console.error('JWT token not found in session storage.');
+      return;
+    }
+
+    const url = `${environment.userService}/contract/customer`;
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    const requestBody = {
+      amountToBuy: volume,
+      offerPrice: offer,
+      bankAccountNumber: security.owner,
+      listingId: security.listingId,
+      listingType: security.listingType,
+      ticker: security.symbol
+    };
+
+    return this.httpClient.post<{ result: boolean }>(url, requestBody, httpOptions).pipe(
+      map(response => response.result)
+    );
   }
 }
