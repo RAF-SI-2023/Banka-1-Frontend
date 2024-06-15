@@ -16,6 +16,7 @@
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>
+<!-- 
             <div class="dropdown">
               <div
                 id="dropdownMenu"
@@ -40,7 +41,12 @@
                   >
                 </li>
               </ul>
-            </div>
+            </div> -->
+
+            <dropdown-input-status [initialValues]="[row.original.bankApproval, row.original.sellerApproval]" [initialValue]="row.status"  [inputName]="'status'"
+                            [valueNames]="['Approve', 'Deny']" [values]="['Approve', 'Deny']"
+                            (selectedValue)="setStatus(row.original, $event)">
+            </dropdown-input-status>
           </ng-template>
         </app-dynamic-table-status>
       </div>

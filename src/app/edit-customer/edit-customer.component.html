@@ -59,11 +59,23 @@
 
         <div class="form-group">
           <label for="jmbg">JMBG:</label>
-          <input type="text" id="jmbg" [(ngModel)]="editCustomerData.jmbg" name="jmbg" required pattern="^\d{13}$" #jmbgModel="ngModel" [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }" />
+          <input type="text"
+                 id="jmbg"
+                 [(ngModel)]="editCustomerData.jmbg"
+                 name="jmbg"
+                 required
+                 pattern="^\d{13}$"
+                 #jmbgModel="ngModel"
+                 [readonly]="isJmbgReadonly()"
+                 (input)="onInputChange($event)"
+                 [ngClass]="{ 'invalid-input': jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched) }"/>
+
           <div *ngIf="jmbgModel.invalid && (jmbgModel.dirty || jmbgModel.touched)" class="error-message">
             <div *ngIf="jmbgModel.hasError('required')" style="color: red;">JMBG is required.</div>
             <div *ngIf="jmbgModel.hasError('pattern')" style="color: red;">Invalid JMBG format (must be 13 digits).</div>
           </div>
+
+
         </div>
 
 
@@ -74,7 +86,7 @@
 
         <div class="form-group">
           <label>Gender:</label>
-          <dropdown-input [inputName]="'gender'" [valueNames]="['Male', 'Female']" [values]="['Male', 'Female']" (selectedValue)="setGender($event)"></dropdown-input>
+          <dropdown-input [initialValue]="editCustomerData.gender"  [inputName]="'gender'" [valueNames]="['Male', 'Female']" [values]="['Male', 'Female']" (selectedValue)="setGender($event)"></dropdown-input>
         </div>
         <!--              <dropdown-selector [config]="dropdownConfig"-->
         <!--                                     (selectionChanged)="updateUid($event)">-->

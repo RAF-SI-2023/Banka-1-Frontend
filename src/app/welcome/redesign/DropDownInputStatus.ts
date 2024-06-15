@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'dropdown-input',
+  selector: 'dropdown-input-status',
   template: `
     <div class="dropdown custom-container">
       <button class="btn btn-custom-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,19 +34,33 @@ import { CommonModule } from '@angular/common';
     }
   `]
 })
-export class DropdownInput {
+export class DropdownInputStatus {
   @Input() inputName: string = '';
   @Input() valueNames: string[] = [];
   @Input() values: any[] = [];
   @Input() initialValue: any = null;
+  @Input() initialValues: any[] = [];
   @Output() selectedValue = new EventEmitter<any>();
 
   public chooseValue: string = "Choose " + this.inputName;
 
   ngOnInit() {
-    if (this.initialValue !== null) {
-      this.chooseValue = this.valueNames[this.values.indexOf(this.initialValue)];
+    const bankApproval = this.initialValues[0];
+    const sellerApproval = this.initialValues[1];
+
+    if (bankApproval && !sellerApproval) {
+      this.chooseValue = 'Waiting for bank approval';
+    } else if (!bankApproval || !sellerApproval) {
+      this.chooseValue = 'Denied';
+    } else if (bankApproval && sellerApproval) {
+      this.chooseValue = 'Approved';
+    } else {
+      this.chooseValue = 'Processing';
     }
+
+    // if (this.initialValue !== null) {
+    //   this.chooseValue = this.valueNames[this.values.indexOf(this.initialValue)];
+    // }
   }
 
   setValue(value: any, valueName: string) {
@@ -56,8 +70,8 @@ export class DropdownInput {
 }
 
 @NgModule({
-  declarations: [DropdownInput],
+  declarations: [DropdownInputStatus],
   imports: [CommonModule],
-  exports: [DropdownInput],
+  exports: [DropdownInputStatus],
 })
-export class DropdownInputModule {}
+export class DropdownInputStatusModule {}

@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders   } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Customer, LegalPerson} from '../model/model';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root'
@@ -26,9 +26,9 @@ export class LegalPersonService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/company/all`;
+    let url = environment.baseUrl + `/company/all`;
 
-    return this.httpClient.get<LegalPerson[]>(url, options);
+    return this.httpClient.get<LegalPerson[]>(url, options); 
   }
 
   //Depending on shouldUseMockedDataForLegalPersons a mocked or real data should be returned
@@ -40,6 +40,7 @@ export class LegalPersonService {
     }
     else
     {
+      console.log("koristim real data za legal persons");
       return this.getAllLegalPersonsFromApi();
     }
   }
@@ -49,12 +50,12 @@ export class LegalPersonService {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
-    return this.httpClient.post(environment.userService + '/company/create', {
+    return this.httpClient.post(environment.baseUrl + '/company/create', {
       companyName: newLegalPerson.companyName,
       idNumber: newLegalPerson.idNumber,
       pib: newLegalPerson.pib,
       cba: newLegalPerson.cba,
-      address: newLegalPerson.address
+      adress: newLegalPerson.adress
     },{
       headers: headers
     });
@@ -69,7 +70,7 @@ export class LegalPersonService {
     const body = {legalPerson, customer};
     console.log(body);
 
-    return this.httpClient.post(environment.userService + '/company/join', {
+    return this.httpClient.post(environment.baseUrl + '/company/join', {
       customerEmail: customer.email,
       companyPib: legalPerson.pib
     },{
