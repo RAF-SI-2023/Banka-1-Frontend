@@ -4,6 +4,29 @@
         Legal persons
     </div>
 
+    <!-- filter for legal persons -->
+    <div class="row filterRow">
+        <div class="col- offset-2 col-md-2 offset-md-2 col-sm-2 offset-sm-2 ">
+            <transparent-text-field [(text)]="searchFilterKeyWord" [fieldName]="'Filter'"></transparent-text-field>
+        </div>
+
+        <div class="col-2 col-md-2 col-sm-2">
+            <div class="form-group">
+                <label class="label" >Filter by attribute:</label>
+                <dropdown-input
+                    [inputName]="'Choose atribute to filter by'"
+                    [valueNames]="filterByValues"
+                    [values]="filterByValues"
+                    (selectedValue)="onSelectionChange($event)">
+                </dropdown-input>
+            </div>
+        </div>
+
+        <div class="col-2 col-md-2 col-sm-2 filterBtnDiv">
+            <button class="filterBtn" (click) = "filter()">Filter</button>
+        </div>
+    </div>
+
     <!-- Table with transactions and exchanges -->
     <div class="row">
         <div class="col-8 offset-2 col-md-8 offset-md-2 col-sm-8 offset-sm-2">
