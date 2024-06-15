@@ -182,7 +182,7 @@ export class OrderService {
     return this.http.put<DecideOrderResponse>(environment.userService + '/orders/decideOrder/' + orderId, {"status": request}, {headers});
   }
 
-  async buyOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
+  async buyOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, isMargin: boolean = false) {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -198,7 +198,8 @@ export class OrderService {
       contractSize: contractSize,
       limitValue: limitValue,
       stopValue: stopValue,
-      allOrNone: allOrNone
+      allOrNone: allOrNone,
+      isMargin: isMargin
     };
 
 
