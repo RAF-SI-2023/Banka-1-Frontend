@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
-import {Future, ListingHistory} from "../model/model";
+import {firstValueFrom, Observable} from "rxjs";
+import {Forex, Future, ListingHistory} from "../model/model";
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -61,6 +61,13 @@ export class FutureService {
     }
 
     return resp;
+  }
 
+  getFutures(): Observable<Future[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures', {headers});
   }
 }

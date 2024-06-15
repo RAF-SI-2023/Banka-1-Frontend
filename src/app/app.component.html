@@ -25,11 +25,11 @@
             <div>Employee panel</div>
           </div>
 
-          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson" >
+          <div [routerLink]="'/bank-accounts-admin'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin" >
             <div>Bank accounts</div>
           </div>
 
-          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson">
+          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
             <div>Customer</div>
           </div>
 
@@ -49,11 +49,11 @@
             <div>Orders</div>
           </div>
 
-          <div [routerLink]="'/legal-persons'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson">
+          <div [routerLink]="'/legal-persons'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
             <div>Legal persons</div>
           </div>
 
-          <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer && !isLegalPerson">
+          <div [routerLink]="'/bank-accounts'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
             <div>Bank accounts</div>
           </div>
 
@@ -89,7 +89,7 @@
         <span>Cards</span>
       </div> -->
 
-          <div class="sidebar-item-wrapper" *ngIf="isCustomer && !isLegalPerson">
+          <div class="sidebar-item-wrapper" *ngIf="isCustomer">
             <div class="sidebar-item" (click)="setActiveItem('openPayments')">
               <div>Payments</div>
               <img
@@ -128,7 +128,7 @@
             </div>
           </div>
 
-          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer  && !isLegalPerson">
+          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer">
             <div>Cards</div>
           </div>
 

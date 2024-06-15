@@ -18,6 +18,13 @@
             </button>
           </div>
         </div>
+        <div class="right-row">
+          <div class="search-icon">
+            <button (click)="refresh()" class="button-image">
+              <img src="assets/refresh.png" alt="search" />
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="security-table-wrapper">
@@ -102,7 +109,7 @@
             'Price',
             'Exchange Name'
           ]"
-          [dataArray]="forex | transformForex"
+          [dataArray]="forexes | transformForex"
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>

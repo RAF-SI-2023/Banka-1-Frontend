@@ -12,7 +12,7 @@ export class TransformStatusPipe implements PipeTransform {
     if (contract.bankApproval && !contract.sellerApproval) {
       return 'Waiting for bank approval';
     } else if (!contract.bankApproval || !contract.sellerApproval) {
-      return 'Denied';
+      return 'Review';
     } else if (contract.bankApproval && contract.sellerApproval) {
       return 'Approved';
     } else {

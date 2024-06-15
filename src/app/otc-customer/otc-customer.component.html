@@ -39,7 +39,7 @@
         >
           <ng-template #statusColumn let-row>
             <div class="dropdown">
-                {{ row | transformStatus }}
+                {{ row.original | transformStatus }}
             </div>
           </ng-template>
         </app-dynamic-table-status>
@@ -93,7 +93,7 @@
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                {{ row | transformStatus }}
+                {{ row.original | transformStatus }}
               </div>
 
             </div>
