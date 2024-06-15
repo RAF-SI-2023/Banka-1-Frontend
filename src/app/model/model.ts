@@ -461,6 +461,7 @@ export interface CreateOrderRequest {
   limitValue: number;
   stopValue: number;
   allOrNone: boolean;
+  isMargin?: boolean;
 }
 
 
