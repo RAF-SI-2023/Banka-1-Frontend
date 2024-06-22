@@ -39,7 +39,7 @@
         >
           <ng-template #statusColumn let-row>
             <div class="dropdown">
-                {{ row.original | transformStatus }}
+              {{ row.original | transformStatus }}
             </div>
           </ng-template>
         </app-dynamic-table-status>
@@ -65,14 +65,14 @@
                   <a
                     class="dropdown-item"
                     (click)="updateOTCStatus(row.original, 'Approved')"
-                    >Approve</a
+                  >Approve</a
                   >
                 </li>
                 <li>
                   <a
                     class="dropdown-item"
                     (click)="updateOTCStatus(row.original, 'Denied')"
-                    >Deny</a
+                  >Deny</a
                   >
                 </li>
               </ul>

@@ -44,8 +44,7 @@ export class OtcService {
       message: "Denied this contract."
     };
 
-//     return this.http.put<boolean>(`${this.apiUrl}/contract/deny/${contractId}`, jsonData, {headers});
-    return this.http.put<boolean>(`${this.apiUrl}/contract/deny/${contractId}`, "Denied this Contract", {headers});
+    return this.http.put<boolean>(`${this.apiUrl}/contract/deny/${contractId}`, jsonData, {headers});
 
   }
 

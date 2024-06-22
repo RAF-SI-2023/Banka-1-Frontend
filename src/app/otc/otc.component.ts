@@ -78,17 +78,6 @@ export class OtcComponent {
       this.contracts = contracts;
       console.log("Contracts in admin:", contracts);
     });
-    // forkJoin({
-    //   contracts: this.otcService.getAllSupervisorContracts(),
-    //   stocks: this.stockService.getStocks()
-    // }).subscribe(({ contracts, stocks }) => {
-    //   this.contracts = contracts;
-    //   this.stocks = stocks;
-    //   this.otcs = this.mergeLists(contracts, stocks);
-    //   console.log('Contracts:', contracts);
-    //   console.log('Stocks:', stocks);
-    //   console.log('OTCs:', this.otcs);
-    // });
   }
 
   setTab(tabName: string) {
@@ -113,22 +102,22 @@ export class OtcComponent {
       if (newStatus === 'Approved') {
         this.otcService.approveOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status:' + response);
+            console.log('Response to successfully changing status to approved:' + response);
             location.reload();
           },
           (error) => {
-            console.error('Error updating status, this is response: ' + error);
+            console.error('Error updating status to approved, this is response: ' + error);
           }
         );
 
       } else if(newStatus === 'Denied') {
         this.otcService.denyOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status:' + response);
+            console.log('Response to successfully changing status to denied is:' + response);
             location.reload();
           },
           (error) => {
-            console.error('Error updating status, this is response: ' + error);
+            console.error('Error updating status to denied, this is response: ' + error);
           }
         );
       }

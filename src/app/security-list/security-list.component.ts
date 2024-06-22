@@ -78,6 +78,7 @@ export class SecurityListComponent {
     this.loadFutures();
     this.loadForexes();
     this.loadOptions()
+    console.log("Loaded everything")
   }
 
   searchFutures() {
@@ -117,11 +118,11 @@ export class SecurityListComponent {
   }
 
   refresh() {
-    // this.loadSecurities();
-    this.loadStocks();
-    this.loadFutures();
-    this.loadForexes();
-    this.loadOptions();
+    // this.loadStocks();
+    // this.loadFutures();
+    // this.loadForexes();
+    // this.loadOptions();
+    this.ngOnInit().then();
   }
 
   async buyOption(options: OptionsDto){
@@ -154,7 +155,7 @@ export class SecurityListComponent {
         forex.lastRefresh *= 1000;
         return forex;
       });
-      // console.log("Forexes:" + this.forex)
+      // console.log("Forexes:" + this.forexes)
     });
   }
 
@@ -191,174 +192,5 @@ export class SecurityListComponent {
   setSelectedTab(tab: string) {
     this.selectedTab = tab;
   }
-
-  // loadForexes(): void {
-  //   const headers = new HttpHeaders({
-  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-  //   });
-  //   this.http
-  //     this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
-  //     .subscribe(
-  //       (res) =>
-  //         (this.forexBackup = this.forex =
-  //           res.map((val) => {
-  //             val.lastRefresh *= 1000;
-  //             return val;
-  //           }))
-  //     );
-  // }
-  //
-  // loadFutures(): void {
-  //   const headers = new HttpHeaders({
-  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-  //   });
-  //     this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
-  //     .subscribe(
-  //       (res) =>
-  //         (this.futuresBackup = this.futures =
-  //           res.map((val) => {
-  //             val.settlementDate *= 1000;
-  //             val.lastRefresh *= 1000;
-  //             return val;
-  //           }))
-  //     );
-  // }
-  //
-  // optionsDataMock(){
-  //   const exp1: OptionsDto = {
-  //     ticker: "string",
-  //     optionType: "string",
-  //     strikePrice: 123,
-  //     currency: "string",
-  //     impliedVolatility: 123,
-  //     openInterest: 123,
-  //     expirationDate: 1717024395,
-  //
-  //     listingId: 123,
-  //     listingType: "string",
-  //     name: "string",
-  //     exchangeName: "string",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123
-  //   }
-  //   const exp2: OptionsDto = {
-  //     ticker: "string",
-  //     optionType: "string",
-  //     strikePrice: 123,
-  //     currency: "string",
-  //     impliedVolatility: 123,
-  //     openInterest: 123,
-  //     expirationDate: 1717024395,
-  //
-  //     listingId: 123,
-  //     listingType: "string",
-  //     name: "string",
-  //     exchangeName: "string",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //   }
-  //   this.options.push(exp1)
-  //   this.options.push(exp2)
-  // }
-  //
-  // mockFutureData(){
-  //   const exp1 : Future = {
-  //     listingId: 123,
-  //     ticker: "string",
-  //     listingType: "string",
-  //     name: "string",
-  //     exchangeName: "string",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //     contractSize: 123,
-  //     contractUnit: "string",
-  //     openInterest: 123,
-  //     settlementDate: 123
-  //   }
-  //   const exp2 : Future = {
-  //     listingId: 123,
-  //     ticker: "string",
-  //     listingType: "string",
-  //     name: "string",
-  //     exchangeName: "string",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //     contractSize: 123,
-  //     contractUnit: "string",
-  //     openInterest: 123,
-  //     settlementDate: 123
-  //   }
-  //
-  //   this.futures.push(exp1);
-  //   this.futures.push(exp2);
-  //
-  // }
-  //
-  // stockMockData(){
-  //   const exp1: StockListing = {
-  //     listingId: 123,
-  //     listingType: 'stock',
-  //     ticker: "AAPL",
-  //     name: "NAME",
-  //     exchangeName: "Exchange",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //     outstandingShares: 123,
-  //     dividendYield: 123,
-  //   }
-  //   const exp2: StockListing = {
-  //     listingId: 123,
-  //     listingType: 'stock',
-  //     ticker: "AAPL",
-  //     name: "NAME",
-  //     exchangeName: "Exchange",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //     outstandingShares: 123,
-  //     dividendYield: 123,
-  //   }
-  //   const exp3: StockListing = {
-  //     listingId: 123,
-  //     listingType: 'stock',
-  //     ticker: "AAPL",
-  //     name: "NAME",
-  //     exchangeName: "Exchange",
-  //     lastRefresh: 123,
-  //     price: 123,
-  //     high: 123,
-  //     low: 123,
-  //     priceChange: 123,
-  //     volume: 123,
-  //     outstandingShares: 123,
-  //     dividendYield: 123,
-  //   }
-  //   this.securities.push(exp1)
-  //   this.securities.push(exp2)
-  //   this.securities.push(exp3)
-  // }
 
 }
