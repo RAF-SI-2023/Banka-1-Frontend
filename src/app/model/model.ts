@@ -608,6 +608,16 @@ export interface PublicStock{
   bankAccount: string;
 }
 
+export interface AllPublicCapitalsDto{
+  listingId: number;
+  listingType: string;
+  ticker: string;
+  bankAccountNumber: string;
+  amount: number;
+  lastModified: string;
+  ownerName: string;
+}
+
 export interface Currency {
   currencyId: number;
   currencyName: string;
