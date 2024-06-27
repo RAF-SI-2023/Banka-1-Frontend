@@ -124,9 +124,9 @@ export class PopupService {
     });
   }
 
-  openSellPopup(listingId: number, future: boolean, forex: boolean, stock: boolean) {
+  openSellPopup(listingId: number, amount: number, future: boolean, forex: boolean, stock: boolean) {
     return this.dialog.open(SellPopupComponent, {
-      data: { listingId: listingId, future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
+      data: { listingId: listingId, amount: amount, future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
     });
   }
 

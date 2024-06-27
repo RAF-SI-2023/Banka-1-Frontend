@@ -162,15 +162,15 @@ export class OrdersLegalPersonsComponent {
 
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.security.listingId, false, false, true).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, false, true, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, true, false, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     }

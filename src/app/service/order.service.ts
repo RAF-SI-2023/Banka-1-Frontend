@@ -322,7 +322,7 @@ export class OrderService {
     return this.http.get<AllPublicCapitalsDto[]>(environment.userService + '/capital/public/all', httpOptions);
   }
 
-  //
+
   getAllStocks(): Observable<StockListing[]> {
     const jwt = sessionStorage.getItem("jwt");
 
