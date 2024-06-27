@@ -57,11 +57,41 @@ export class BuyStockPopupComponent {
         switch (this.type){
           case ListingType.FUTURE:
             response = await this.orderService.buyOrder(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone);
+            if (response) {
+              this.popupService.openCustomMessage({
+                title: "Options",
+                header: "Purchase Successful!",
+                message: "Your future option has been successfully bought."
+              })
+            } else {
+              this.popupService.openCustomMessage({
+                title: "Options",
+                header: "Purchase Failed!",
+                // message: "You do not have sufficient funds to buy this stock option."
+                message: ""
+              })
+            }
             break;
           case ListingType.STOCK:
             response = await this.orderService.buyOrder(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone);
+            if (response) {
+              this.popupService.openCustomMessage({
+                title: "Options",
+                header: "Purchase Successful!",
+                message: "Your stock option has been successfully bought."
+              })
+            } else {
+              this.popupService.openCustomMessage({
+                title: "Options",
+                header: "Purchase Failed!",
+                // message: "You do not have sufficient funds to buy this stock option."
+                message: ""
+              })
+            }
             break;
         }
+
+
 
         this.dialogRef.close();
       } else {
