@@ -63,7 +63,7 @@
 /* TABLE CSS */
 /* TABLE CSS */
 .recepientContentContainer{
-    margin-top: 10vh;
+    margin-top: 5vh;
     height: 60vh;
     background-color: #26262c;
     border-radius: 30px;
@@ -167,4 +167,31 @@
   .myBtn{
       font-size: smaller;
   }
+}
+
+.filterDivRow{
+  border: 2px solid black;
+  background-color: aqua;
+}
+
+.filterDivCol{
+  border: 2px solid black;
+  background-color: yellow;
+  height: 100px;
+}
+
+.filterBtn{
+  background-color: #ffb72b;
+    font-family: 'Jura';
+    font-weight: bolder;
+    width: 100%;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.filterBtnDiv{
+  padding-top: 20px;
+}
+
+.filterRow{
+  margin-top: 5vh;
 }

@@ -43,7 +43,7 @@ export class SellPopupComponent {
   }
 
   async sellOrder() {
-    if(this.amount <= 0 || this.limitValue <= 0 || this.stopValue <= 0){
+    if(this.amount <= 0 || this.limitValue < 0 || this.stopValue < 0){
       this.popupService.openPopup("Error", "Invalid input values");
       return;
     }

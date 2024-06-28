@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
-import { NgIf } from "@angular/common";
-import { OrangeButtonModule } from "../welcome/redesign/OrangeButton";
-import { ExchangeRate, Margin } from "../model/model";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { PopupService } from "../service/popup.service";
-import { TableComponentMarginModule } from "../welcome/redesign/TableComponentMargin";
-import { Router } from "@angular/router";
-import { GrayButtonModule } from "../welcome/redesign/GrayButton";
-import { MarginService } from "../service/margin.service";
-import { TransformMarginAccountsPipe } from "../transform-margin-accounts.pipe";
-import { MatDialog } from '@angular/material/dialog';
-import { MarginCallPopUpComponent } from '../margin-call-pop-up/margin-call-pop-up.component';
-
+import {NgIf} from "@angular/common";
+import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {ExchangeRate, Margin} from "../model/model";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {PopupService} from "../service/popup.service";
+import {TableComponentMarginModule} from "../welcome/redesign/TableComponentMargin";
+import {Router} from "@angular/router";
+import {GrayButtonModule} from "../welcome/redesign/GrayButton";
+import {MarginService} from "../service/margin.service";
+import {TransformMarginAccountsPipe} from "../transform-margin-accounts.pipe";
 
 @Component({
   selector: 'app-margin',
@@ -24,7 +21,7 @@ import { MarginCallPopUpComponent } from '../margin-call-pop-up/margin-call-pop-
     TransformMarginAccountsPipe,
   ],
   templateUrl: './margin.component.html',
-  styleUrls: ['./margin.component.css']
+  styleUrl: './margin.component.css'
 })
 export class MarginComponent {
   headersMargins = [
@@ -44,8 +41,7 @@ export class MarginComponent {
     private http: HttpClient,
     private popup: PopupService,
     private router: Router,
-    private marginService: MarginService,
-    private dialog: MatDialog
+    private marginService: MarginService
   ) {}
 
   async ngOnInit() {
@@ -68,16 +64,17 @@ export class MarginComponent {
     this.selectedTab = tabName;
   }
 
-  navigateToDetails(accountNumber: string | undefined) {
+  navigateToDetails(accountNumber: string|undefined) {
     this.router.navigate(['/margin-transaction-details', accountNumber]);
     const margin = this.margins.find(m => m.bankAccountNumber === accountNumber);
     console.log('Margin found:', margin);
 
     if (margin) {
       const queryParams = {
-        queryParams: { marginId: margin.id, accountNumber: accountNumber }
+        queryParams : {marginId: margin.id, accountNumber: accountNumber }
       }
       this.router.navigate(['/margin-transaction-details'], queryParams);
+
     } else {
       console.error('No margin found with the given account number.');
     }
@@ -92,14 +89,7 @@ export class MarginComponent {
       }
     });
 
-    if (selectedMargin) {
-      const dialogRef = this.dialog.open(MarginCallPopUpComponent, {
-        data: selectedMargin
-      });
-
-      dialogRef.afterClosed().subscribe(() => {
-        this.loadMargins();
-      });
-    }
+    // console.log("Selected margin:", selectedMargin);
+    this.popup.openMarginCallPopup(selectedMargin);
   }
 }

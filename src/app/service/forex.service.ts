@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {firstValueFrom} from "rxjs";
-import {Forex, ListingHistory} from "../model/model";
+import {firstValueFrom, Observable} from "rxjs";
+import {Forex, ListingHistory, OptionsDto} from "../model/model";
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class ForexService {
 
     try {
       resp = (await firstValueFrom(
-        
+
         this.http.get(environment.marketService + `/market/listing/history/forex/${forexId}` + query, {headers})
       )) as ListingHistory[];
     } catch (e) {
@@ -60,8 +60,16 @@ export class ForexService {
     } catch (e) {
       return null;
     }
-    
+
     return resp;
 
+  }
+
+  getForexes(): Observable<Forex[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers});
   }
 }

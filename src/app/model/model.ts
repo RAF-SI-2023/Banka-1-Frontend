@@ -461,6 +461,7 @@ export interface CreateOrderRequest {
   limitValue: number;
   stopValue: number;
   allOrNone: boolean;
+  isMargin?: boolean;
 }
 
 
@@ -622,18 +623,11 @@ export interface Margin {
   id: number;
   bankAccountNumber: string;
   currency: Currency;
-  customer:MarginCustomer;
   listingType: ListingType;
   balance: number;
   loanValue: number;
   maintenanceMargin: number;
   marginCall: number;
-}
-
-export interface MarginCustomer{
-  id:number;
-  accountNumber:string;
-  customer:Customer;
 }
 
 export interface MarginTransactionDetails {

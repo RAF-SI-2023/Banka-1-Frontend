@@ -16,6 +16,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PopupService} from "../service/popup.service";
 import {environment} from "../../environments/environment";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {FutureService} from "../service/future.service";
 
 @Component({
   selector: 'app-securities-legal-persons',
@@ -56,6 +57,7 @@ export class SecuritiesLegalPersonsComponent {
 
   constructor(
     private securityService: SecurityService,
+    private futureService: FutureService,
     private optionsService: OptionsService,
     private orderService: OrderService,
     private stockService: StockService,
@@ -92,25 +94,37 @@ export class SecuritiesLegalPersonsComponent {
     // this.stockMockData()
   }
 
-
-
   loadFutures(): void {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-    });
-    this.http
-    this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
-      .subscribe(
-        (res) =>
-          (this.futuresBackup = this.futures =
-            res.map((val) => {
-              val.settlementDate *= 1000;
-              val.lastRefresh *= 1000;
-              return val;
-            }))
+    this.futureService.getFutures().subscribe(response => {
+      this.futures = this.futuresBackup = response.map(
+        val => {
+          val.settlementDate *= 1000;
+          val.lastRefresh *= 1000;
+          return val;
+        }
       );
-    // this.mockFutureData()
+      console.log(response);
+    });
   }
+
+
+  // loadFutures(): void {
+  //   const headers = new HttpHeaders({
+  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
+  //   });
+  //   this.http
+  //   this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
+  //     .subscribe(
+  //       (res) =>
+  //         (this.futuresBackup = this.futures =
+  //           res.map((val) => {
+  //             val.settlementDate *= 1000;
+  //             val.lastRefresh *= 1000;
+  //             return val;
+  //           }))
+  //     );
+  //   // this.mockFutureData()
+  // }
 
 
 

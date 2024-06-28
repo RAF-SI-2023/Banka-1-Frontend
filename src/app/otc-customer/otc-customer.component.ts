@@ -61,7 +61,6 @@ export class OtcCustomerComponent {
     'Security',
     'Symbol',
     'Amount',
-    'Price',
     'Last Modified',
     'Owner',
   ];
@@ -75,8 +74,8 @@ export class OtcCustomerComponent {
   publicSecurities: any[] = [];
   orders: Order[] = []; // Assuming you have a list of orders
 
-  activeSell: OTC[] = [];
-  activeBuy: OTC[] = []
+  activeSell: Contract[] = [];
+  activeBuy: Contract[] = []
 
   customer: CustomerWithAccounts = {} as CustomerWithAccounts;
 
@@ -101,61 +100,36 @@ export class OtcCustomerComponent {
       next: (customer) => {
         this.customer = customer;
         console.log('Customer:', customer);
-        console.log("Load active sell");
-        console.log(this.customer);
-        console.log(this.otcs);
-        if (this.customer && this.customer.accountIds && this.otcs.length > 0) {
-          this.customer.accountIds.forEach(account => {
-            const matchingOtcs = this.otcs.filter(otc => otc.owner === account.accountNumber);
-            if (matchingOtcs.length > 0) {
-              console.log(`Matching OTCs for account ${account.accountNumber}:`, matchingOtcs);
-              this.activeSell = matchingOtcs.filter(otc => otc.status !== 'approved' && otc.status !== 'denied');
-              this.activeBuy = matchingOtcs;
-            }
-          });
-        } else {
-          console.log("Nema customera ili otca");
-        }
+        this.filterActiveSellContracts();
+        this.filterActiveBuyContracts();
       },
-      error: (error) => {
-        console.error('Error fetching customer:', error);
+      error: (err) => {
+        console.error('Error fetching customer:', err);
       }
     });
   }
 
+  filterActiveSellContracts(): void {
+    if (!this.customer || !this.contracts) return;
+
+    const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
+    this.activeSell = this.contracts.filter(contract => accountNumbers.includes(contract.sellerAccountNumber));
+    console.log('Active Sell Contracts:', this.activeSell);
+  }
+
+  filterActiveBuyContracts(): void {
+    if (!this.customer || !this.contracts) return;
+
+    const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
+    this.activeBuy = this.contracts.filter(contract => accountNumbers.includes(contract.buyerAccountNumber));
+    console.log('Active Buy Contracts:', this.activeBuy);
+  }
+
   async loadOTCs() {
-    // forkJoin({
-    //   contracts: this.http.get<Contract[]>(
-    //     '/assets/mocked_banking_data/contracts-mocked.json'
-    //   ),
-    //   stocks: this.http.get<StockListing[]>(
-    //     '/assets/mocked_banking_data/stocks-mocked.json'
-    //   ),
-    // }).subscribe(({ contracts, stocks }) => {
-    //   console.log('Contracts:', contracts);
-    //   console.log('Stocks:', stocks);
-    //   this.contracts = contracts;
-    //   this.stocks = stocks;
-    //   this.otcs = this.mergeLists(contracts, stocks);
-    //   console.log('OTCs:', this.otcs);
-    // });
     this.otcService.getAllCustomerContracts().subscribe((contracts) => {
       this.contracts = contracts;
-      console.log("ASD");
-      console.log(this.contracts);
+      console.log('Contacts: ', this.contracts);
     });
-    // forkJoin({
-    //   contracts: this.otcService.getAllCustomerContracts(),
-    //   stocks: this.stockService.getStocks()
-    // }).subscribe(({ contracts, stocks }) => {
-    //   this.contracts = contracts;
-    //   this.stocks = stocks;
-    //   this.otcs = this.mergeLists(contracts, stocks);
-    //   // console.log('Contracts:', contracts);
-    //   // console.log('Stocks:', stocks);
-    //   // console.log('OTCs:', this.otcs);
-    // });
-
   }
 
   getPublicSecurities() {
@@ -174,8 +148,7 @@ export class OtcCustomerComponent {
 
   updateOTCStatus(contract: any, newStatus: 'Approved' | 'Denied') {
     // if (contract.status === newStatus) return;
-    console.log("ASD");
-    console.log(contract);
+    console.log('Contract:', contract);
     // const contractId = this.otcToContractIdMap.get(contract);
     var contractId = contract.contractId;
     // console.log(contract);
@@ -204,44 +177,6 @@ export class OtcCustomerComponent {
     } else {
       console.error('Contract ID not found for OTC', contract);
     }
-
-    // for (let current of this.otcs) {
-    //   if (current === contract) {
-    //     current.status = newStatus;
-    //     break;
-    //   }
-    // }
-    // this loop above or this below
-    // this.loadOTCs();
-  }
-
-  mergeLists(contracts: Contract[], stocks: StockListing[]): OTC[] {
-    const stockMap = new Map<number, StockListing>();
-
-    this.stocks.forEach((stock) => {
-      stockMap.set(stock.listingId, stock);
-    });
-
-    const result: OTC[] = [];
-
-    this.contracts.forEach((contract) => {
-      const stock = stockMap.get(contract.listingId);
-      if (stock) {
-        const otc: OTC = {
-          owner: contract.buyerAccountNumber,
-          stock: stock.name,
-          outstandingShares: stock.outstandingShares.toString(),
-          exchangeName: stock.exchangeName,
-          dividendYield: stock.dividendYield.toString(),
-          status: contract.bankApproval ? 'Approved' : 'Pending',
-        };
-        result.push(otc);
-        console.log(otc);
-        this.otcToContractIdMap.set(otc, contract.contractId);
-      }
-    });
-
-    return result;
   }
 }
 

@@ -24,6 +24,7 @@ import {BuyStockPopupComponent} from "../buy-stock-popup/buy-stock-popup.compone
 import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
 import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
 import {PopUpWithRefreshComponent} from "../pop-up-with-refresh/pop-up-with-refresh.component";
+import { SuccessfullyCreatedUserComponent } from '../successfully-created-user/successfully-created-user.component';
 
 
 @Injectable({
@@ -56,6 +57,12 @@ export class PopupService {
 
   openAddUserPopup(args: any): void {
     this.dialog.open(AddUserComponent, {
+      data: args
+    });
+  }
+
+  openSuccessfullCreateUserPopup(args: any): void {
+    this.dialog.open(SuccessfullyCreatedUserComponent, {
       data: args
     });
   }

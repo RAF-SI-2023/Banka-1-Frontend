@@ -22,7 +22,7 @@ import {TransformMarginDetailsPipe} from "../transform-margin-details.pipe";
   styleUrl: './margin-transaction-details.component.css'
 })
 export class MarginTransactionDetailsComponent implements OnInit {
-  headersMargins = ['Description', 'Customer', 'Type', 'Investment', 'Date', 'Interest', 'Borrowed Money', 'Maintenance Margin'];
+  headersMargins = ['Order', 'Customer', 'Type', 'Investment', 'Date', 'Interest', 'Borrowed Money', 'Maintenance Margin'];
   selectedTab: string = 'margin-transaction';
   accountNumber: string = '';
   marginId: number = 0;
