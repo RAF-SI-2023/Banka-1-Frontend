@@ -7,17 +7,31 @@ import {Contract} from "../model/model";
 export class TransformStatusPipe implements PipeTransform {
 
   transform(contract: Contract): string {
-    // console.log("CCCCCCCCCCCC");
-    // console.log("Contract in status pipe:", contract);
-    if (contract.bankApproval && !contract.sellerApproval) {
-      return 'Waiting for bank approval';
-    } else if (!contract.bankApproval || !contract.sellerApproval) {
-      return 'Review';
-    } else if (contract.bankApproval && contract.sellerApproval) {
+//     // console.log("CCCCCCCCCCCC");
+//     // console.log("Contract in status pipe:", contract);
+//     if (contract.bankApproval && !contract.sellerApproval) {
+//       return 'Waiting for bank approval';
+//     } else if (!contract.bankApproval || !contract.sellerApproval) {
+//       return 'Review';
+//     } else if (contract.bankApproval && contract.sellerApproval) {
+    console.log("CCCCCCCCCCCC");
+    console.log(contract);
+
+    if (contract.bankApproval && contract.sellerApproval) {
       return 'Approved';
     } else {
-      return 'Processing';
+      return 'Not Approved';
     }
+
+    // if (contract.bankApproval && !contract.sellerApproval) {
+    //   return 'Waiting for bank approval';
+    // } else if (!contract.bankApproval || !contract.sellerApproval) {
+    //   return 'Review';
+    // } else if (contract.bankApproval && contract.sellerApproval) {
+    //   return 'Approved';
+    // } else {
+    //   return 'Processing';
+    // }
   }
 
 }

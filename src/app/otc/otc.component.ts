@@ -53,14 +53,10 @@ export class OtcComponent {
     'Amount',
     'Price',
   ];
+
   selectedTab: string = 'overview';
-  otcToContractIdMap: Map<OTC, number> = new Map();
   contracts: Contract[] = [];
   stocks: StockListing[] = [];
-  otcs: OTC[] = [];
-  publicOffers: PublicOffer[] = [];
-  activeSell: OTC[] = [];
-  activeBuy: OTC[] = []
 
   constructor(
     private otcService: OtcService,
@@ -70,7 +66,10 @@ export class OtcComponent {
   ) {}
 
   async ngOnInit() {
-    this.loadOTCs();
+    await this.loadOTCs();
+    // this.loadPublicOffers();
+    // this.loadActiveBuy();
+    // this.loadActiveSell();
   }
 
   async loadOTCs() {
@@ -84,25 +83,27 @@ export class OtcComponent {
     this.selectedTab = tabName;
   }
 
-  setStatus(contract: any, newStatus: any) {
+//   setStatus(contract: any, newStatus: any) {
+//     var contractId = contract.contractId;
+//     var oldStatus = TransformStatusPipe.prototype.transform(contract);
+
+//     if(newStatus === 'Approve')
+//       newStatus = 'Approved';
+//     else if(newStatus === 'Deny')
+//       newStatus = 'Denied';
+
+//     if (oldStatus === newStatus) {
+//       console.log('Novi status je isti kao trenutni. Nema potrebe za pozivom API-ja.');
+//       return;
+//     }
+  updateOTCStatus(contract: any, newStatus: 'Approved' | 'Denied') {
     var contractId = contract.contractId;
-    var oldStatus = TransformStatusPipe.prototype.transform(contract);
-
-    if(newStatus === 'Approve')
-      newStatus = 'Approved';
-    else if(newStatus === 'Deny')
-      newStatus = 'Denied';
-
-    if (oldStatus === newStatus) {
-      console.log('Novi status je isti kao trenutni. Nema potrebe za pozivom API-ja.');
-      return;
-    }
 
     if (contractId) {
       if (newStatus === 'Approved') {
         this.otcService.approveOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status to approved:' + response);
+            console.log('Response to successfully changing status to approved with acceptOTC():' + response);
             location.reload();
           },
           (error) => {
@@ -113,7 +114,7 @@ export class OtcComponent {
       } else if(newStatus === 'Denied') {
         this.otcService.denyOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status to denied is:' + response);
+            console.log('Response to successfully changing status to denied is with denyOTC():' + response);
             location.reload();
           },
           (error) => {
@@ -125,5 +126,4 @@ export class OtcComponent {
       console.error('Contract ID not found for OTC', contract);
     }
   }
-
 }

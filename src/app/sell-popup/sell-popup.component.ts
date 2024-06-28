@@ -26,6 +26,8 @@ export class SellPopupComponent {
   isForex: boolean = false;
   isStock: boolean = false;
 
+  total: number = 0;
+
   constructor(public dialogRef: MatDialogRef<SellPopupComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,  // Inject the dialog data
               private orderService: OrderService,
@@ -33,6 +35,7 @@ export class SellPopupComponent {
   ) {
     console.log(data)
     this.listingId = this.data.listingId;
+    this.total = this.data.amount;
     this.isFuture = this.data.future;
     this.isForex = this.data.forex;
     this.isStock = this.data.stock;
@@ -47,6 +50,12 @@ export class SellPopupComponent {
       this.popupService.openPopup("Error", "Invalid input values");
       return;
     }
+
+    if(this.total < this.amount){
+      this.popupService.openPopup("Error", "You don't have enough securities.");
+      return;
+    }
+
 
     var response;
     if(this.isFuture){

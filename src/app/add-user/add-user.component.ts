@@ -74,7 +74,7 @@ export class AddUserComponent {
 
   constructor(private router: Router,
     private popupService: PopupService,
-    private userService: UserService,
+    private userService: UserService,private popup: PopupService,
     // private permissionService: PermissionService,
     public dialogRef: MatDialogRef<AddUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -100,17 +100,21 @@ export class AddUserComponent {
   //   }
   // }
 
-  onCreateAddUserPopup() {
-    console.log("Usaooo");
+  togglePopupSuccessfulUser() {
+    this.popup.openSuccessfullCreateUserPopup(this);
+  }
 
+  onCreateAddUserPopup() {
+    console.log("Usaooo");    
     if (this.validateForm()) {
       this.addUserData.orderLimit = this.addUserData.orderLimit + 0.0;
       this.userService.addUser(this.addUserData).subscribe(
         response => {
-          this.data.loadEmployeesFromDataBase();
-          alert('Successfully created user ' + JSON.stringify(this.addUserData));
-          console.log(response);
+          this.togglePopupSuccessfulUser();
           this.dialogRef.close();
+          this.data.loadEmployeesFromDataBase();
+          // alert('Successfully created user ' + JSON.stringify(this.addUserData));
+          // console.log(response);
           // this.router.navigate(['/user/list']);
         },
         error => {
@@ -192,7 +196,11 @@ export class AddUserComponent {
   }
 
   setPosition(position: any){
-    this.addUserData.position = position;
+    this.addUserData.position=position;
+    if(position=='Supervisor')this.addUserData.position='Supervizor';
+    // this.addUserData.position = 'Supervizor';
+    console.log('Pozicija: '+this.addUserData.position);
+    
   }
 
 }
