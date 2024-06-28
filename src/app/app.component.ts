@@ -124,6 +124,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+    console.log("isLegalPerson => " + sessionStorage.getItem('isLegalPerson'));
+
     this.checkIsAdminOrEmployeeOrCustomer();
     this.storageService.role$.subscribe((role) => {
       this.isAdmin = role === 'admin';
@@ -133,29 +136,65 @@ export class AppComponent implements OnInit {
       this.isSupervizor = role === 'supervizor';
     });
 
+    
 
-
-      this.authService.getJwtObservable().subscribe((jwt) => {
-        if (jwt) {
-          this.customerService.getCustomer(jwt).pipe(
-            catchError((error) => {
-              return this.userService.getEmployee(jwt);
-            })
-          ).subscribe({
+    this.authService.getJwtObservable().subscribe((jwt) => {
+      if (jwt) {
+        const userRole = sessionStorage.getItem('loginUserRole');
+    
+        if (userRole === 'customer') {
+          this.customerService.getCustomer(jwt).subscribe({
             next: (response) => {
-              if(response!=null){
-                this.userInitials = response.firstName.concat(
-                  ' ',
-                  response.lastName
-                );
+              if (response != null) {
+                this.userInitials = response.firstName.concat(' ', response.lastName);
               }
             },
             error: (e) => {
               this.userInitials = 'Luka Lazarevic';
             },
           });
+        } else if (userRole === 'employee') {
+          this.userService.getEmployee(jwt).subscribe({
+            next: (response) => {
+              if (response != null) {
+                this.userInitials = response.firstName.concat(' ', response.lastName);
+              }
+            },
+            error: (e) => {
+              this.userInitials = 'Luka Lazarevic';
+            },
+          });
+        } else {
+          console.error('Unknown user role');
+          this.userInitials = 'Luka Lazarevic';
         }
-      });
+      }
+    });
+    
+
+
+
+      // this.authService.getJwtObservable().subscribe((jwt) => {
+      //   if (jwt) {     
+      //     this.customerService.getCustomer(jwt).pipe(
+      //       catchError((error) => {
+      //         return this.userService.getEmployee(jwt);
+      //       })
+      //     ).subscribe({
+      //       next: (response) => {
+      //         if(response!=null){
+      //           this.userInitials = response.firstName.concat(
+      //             ' ',
+      //             response.lastName
+      //           );
+      //         }
+      //       },
+      //       error: (e) => {
+      //         this.userInitials = 'Luka Lazarevic';
+      //       },
+      //     });
+      //   }
+      // });
   }
 
 
@@ -169,6 +208,7 @@ export class AppComponent implements OnInit {
     this.isSupervizor = sessionStorage.getItem('role') === 'supervizor';
 
     const jwt = sessionStorage.getItem('jwt');
+
 
     if (jwt !== null && jwt.length > 0) {
       if (this.isCustomer) {

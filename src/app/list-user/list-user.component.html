@@ -27,14 +27,14 @@
           </ng-template>
 
         </app-dynamic-table>
-      </div>
+      </div> 
 
       <div *ngSwitchCase="'users'">
         <div class="filter-row">
           <div class="left-row">
 
             <label class="label" >Position:</label>
-            <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervisor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
+            <dropdown-input [inputName]="'position'" [valueNames]="['Admin', 'Supervisor', 'Agent']" [values]="['Admin', 'Supervizor', 'Agent']" (selectedValue)="setPosition($event)"></dropdown-input>
 
             <transparent-text-field class="searchTF" [(text)]="firstName" [fieldName]="'By name'"></transparent-text-field>
             <transparent-text-field class="searchTF" [(text)]="email" [fieldName]="'Search by email'"></transparent-text-field>

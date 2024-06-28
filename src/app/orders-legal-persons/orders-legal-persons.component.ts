@@ -7,6 +7,7 @@ import {TableComponentModule} from "../welcome/redesign/TableComponent";
 import {TransformPublicSecuritiesPipeModule} from "../orders/TransformPublicSecuritiesPipe";
 import {TransformSecuritiesPipeModule} from "../orders/TransformSecuritiesPipe";
 import {
+  AllPublicCapitalsDto,
   CapitalProfitDto,
   ListingType,
   OrderDto,
@@ -59,8 +60,8 @@ export class OrdersLegalPersonsComponent {
 
   securities: CapitalProfitDto[] = [];
 
-  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Price', 'Last Modified', 'Owner'];
-  publicSecurities: PublicStock[] = [];
+  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
+  publicSecurities: AllPublicCapitalsDto[] = [];
 
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
@@ -100,38 +101,45 @@ export class OrdersLegalPersonsComponent {
 
 
 
+  // getPublicSecurities(){
+  //   let publicStocks: PublicCapitalDto[] = []
+  //   this.orderService.getPublicStocks().subscribe( res =>{
+  //     publicStocks = res;
+  //   })
+  //
+  //   let allStocks: StockListing[] = []
+  //   this.orderService.getAllStocks().subscribe(res =>{
+  //     allStocks = res;
+  //   })
+  //
+  //   const publicIds = publicStocks.map(stock => stock.listingId);
+  //   const filterAllStocks = allStocks.filter(stock => publicIds.includes(stock.listingId))
+  //   this.publicSecurities = filterAllStocks.map(stock => {
+  //     const date = new Date(stock.lastRefresh);
+  //     const formattedDate = new Intl.DateTimeFormat("en", {month: "long", year: "2-digit", day: "numeric"}).format(date);
+  //
+  //     let publicStock: PublicStock = {
+  //         listingType: stock.listingType,
+  //         listingId: stock.listingId,
+  //         ticker: stock.ticker,
+  //         amount: stock.volume,
+  //         price: stock.price,
+  //         lastModified: formattedDate,
+  //         bankAccount: this.getOwner(publicStocks, stock.listingId),
+  //       }
+  //       return publicStock;
+  //   })
+  //
+  //
+  //  // this.mockPublicSecurities()
+  // }
+
   getPublicSecurities(){
-    let publicStocks: PublicCapitalDto[] = []
     this.orderService.getPublicStocks().subscribe( res =>{
-      publicStocks = res;
+      this.publicSecurities = res
     })
-
-    let allStocks: StockListing[] = []
-    this.orderService.getAllStocks().subscribe(res =>{
-      allStocks = res;
-    })
-
-    const publicIds = publicStocks.map(stock => stock.listingId);
-    const filterAllStocks = allStocks.filter(stock => publicIds.includes(stock.listingId))
-    this.publicSecurities = filterAllStocks.map(stock => {
-      const date = new Date(stock.lastRefresh);
-      const formattedDate = new Intl.DateTimeFormat("en", {month: "long", year: "2-digit", day: "numeric"}).format(date);
-
-      let publicStock: PublicStock = {
-          listingType: stock.listingType,
-          listingId: stock.listingId,
-          ticker: stock.ticker,
-          amount: stock.volume,
-          price: stock.price,
-          lastModified: formattedDate,
-          bankAccount: this.getOwner(publicStocks, stock.listingId),
-        }
-        return publicStock;
-    })
-
-
-   // this.mockPublicSecurities()
   }
+
 
   getOwner(stocks: PublicCapitalDto[], listingId: number){
     const stock = stocks.find(stock => stock.listingId == listingId);
@@ -154,15 +162,15 @@ export class OrdersLegalPersonsComponent {
 
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.security.listingId, false, false, true).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, false, true, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, true, false, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
       });
     }
@@ -201,14 +209,14 @@ export class OrdersLegalPersonsComponent {
 
 
   mockPublicSecurities(){
-    const ex1 : PublicStock = {
+    const ex1 : AllPublicCapitalsDto = {
       listingType: ListingType.STOCK,
       listingId: 456,
       ticker:"AAPL",
       amount: 138,
-      price: 3831,
       lastModified:"Jan 1, 2024",
-      bankAccount: "345677885",
+      bankAccountNumber: "345677885",
+      ownerName: "Nastasja"
     }
 
     this.publicSecurities.push(ex1);

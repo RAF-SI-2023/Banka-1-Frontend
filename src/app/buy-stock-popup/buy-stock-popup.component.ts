@@ -48,7 +48,6 @@ export class BuyStockPopupComponent {
     this.orderId = data.id;
     this.type = data.type;
     this.price = data.price;
-    console.log("Price: " + data.price);
   }
 
   onCancelButton(){
