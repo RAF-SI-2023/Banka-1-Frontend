@@ -124,6 +124,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+    console.log("isLegalPerson => " + sessionStorage.getItem('isLegalPerson'));
+
     this.checkIsAdminOrEmployeeOrCustomer();
     this.storageService.role$.subscribe((role) => {
       this.isAdmin = role === 'admin';
