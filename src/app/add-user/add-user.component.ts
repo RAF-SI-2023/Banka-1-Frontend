@@ -196,6 +196,7 @@ export class AddUserComponent {
   }
 
   setPosition(position: any){
+    this.addUserData.position=position;
     if(position=='Supervisor')this.addUserData.position='Supervizor';
     // this.addUserData.position = 'Supervizor';
     console.log('Pozicija: '+this.addUserData.position);

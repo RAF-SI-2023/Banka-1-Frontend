@@ -85,9 +85,9 @@ export class ListUserComponent implements OnInit {
   loadEmployeesFromDataBase() {
     this.userService.getEmployees().subscribe({
       next: (users: User[]) => {
-        this.users = users;
+        this.users = users.filter(user => user.active == true);
         this.allUsers = [...users]; // Sačuvaj originalnu listu korisnika
-        console.log(users[0]);
+        console.log(this.users[0]);
       },
       error: (error: any) => {
         console.error(error);
