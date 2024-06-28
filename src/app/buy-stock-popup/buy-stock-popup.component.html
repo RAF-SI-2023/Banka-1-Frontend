@@ -1,6 +1,7 @@
 <div class="popup-container">
   <div class="popup-header">
-    <span class="header-title">Stock Order</span>
+    <span *ngIf="type=='STOCK'" class="header-title">Stock Order</span>
+    <span *ngIf="type=='FUTURE'" class="header-title">Future Order</span>
     <span class="close-icon" (click)="onCancelButton()">X</span>
   </div>
 
@@ -8,7 +9,8 @@
   <div class="popup-body">
     <div class="content">
       <div class="body-element">
-        <label for="volume" >Volume of a stock: </label>
+        <label *ngIf="type=='STOCK'" for="volume" >Volume of a stock: </label>
+        <label *ngIf="type=='FUTURE'" for="volume" >Volume of a future: </label>
         <input class="popup-input" id="volume" name="volume" [style.margin-left.px]="20"  [(ngModel)]="volumeOfStock" placeholder="value..." [ngClass]="{ 'invalid-input': validInputVolume() }"/>
 <!--        <input class="popup-input" id="volume" name="volumeInput" [style.margin-left.px]="20" [(ngModel)]="volumeOfStock"/>-->
       </div>

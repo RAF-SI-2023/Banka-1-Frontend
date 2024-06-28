@@ -70,14 +70,7 @@ export class OrdersLegalPersonsComponent {
 
   constructor(private orderService: OrderService,
               private popupService: PopupService) {
-    // this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
-
-    // if(this.isLegalPerson){
       this.selectedTab = "all-securities";
-    // } else {
-    //   this.selectedTab = "order-history";
-    // }
-
   }
 
 

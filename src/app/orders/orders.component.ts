@@ -82,6 +82,8 @@ export class OrdersComponent {
               private popupService: PopupService) {
 
       this.selectedTab = "order-history";
+      console.log("BBBB")
+
 
   }
 
