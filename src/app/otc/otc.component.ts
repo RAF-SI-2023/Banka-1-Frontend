@@ -17,10 +17,8 @@ import { forkJoin } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TableComponentStatusModule } from '../welcome/redesign/TableComponentStatus';
 import { PopupService } from '../service/popup.service';
-import {TransformStatusPipe, TransformStatusPipeModule} from "../otc-customer/TransformStatusPipe";
+import {TransformStatusPipeModule} from "../otc-customer/TransformStatusPipe";
 import {TransformContractsPipeModule} from "../otc-customer/TransformContractsPipe";
-import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
-import {DropdownInputStatusModule} from "../welcome/redesign/DropDownInputStatus";
 
 @Component({
   selector: 'app-otc',
@@ -37,7 +35,6 @@ import {DropdownInputStatusModule} from "../welcome/redesign/DropDownInputStatus
     TableComponentStatusModule,
     TransformStatusPipeModule,
     TransformContractsPipeModule,
-    DropdownInputStatusModule
   ],
   templateUrl: './otc.component.html',
   styleUrl: './otc.component.css',
@@ -53,14 +50,11 @@ export class OtcComponent {
     'Amount',
     'Price',
   ];
+
+
   selectedTab: string = 'overview';
-  otcToContractIdMap: Map<OTC, number> = new Map();
   contracts: Contract[] = [];
   stocks: StockListing[] = [];
-  otcs: OTC[] = [];
-  publicOffers: PublicOffer[] = [];
-  activeSell: OTC[] = [];
-  activeBuy: OTC[] = []
 
   constructor(
     private otcService: OtcService,
@@ -70,71 +64,66 @@ export class OtcComponent {
   ) {}
 
   async ngOnInit() {
-    this.loadOTCs();
+    await this.loadOTCs();
+    // this.loadPublicOffers();
+    // this.loadActiveBuy();
+    // this.loadActiveSell();
   }
 
   async loadOTCs() {
-    this.otcService.getAllSupervisorContracts().subscribe((contracts) => {
-      this.contracts = contracts;
-      console.log("Contracts in admin:", contracts);
-    });
     // forkJoin({
-    //   contracts: this.otcService.getAllSupervisorContracts(),
-    //   stocks: this.stockService.getStocks()
+    //   contracts: this.http.get<Contract[]>(
+    //     '/assets/mocked_banking_data/contracts-mocked.json'
+    //   ),
+    //   stocks: this.http.get<StockListing[]>(
+    //     '/assets/mocked_banking_data/stocks-mocked.json'
+    //   ),
     // }).subscribe(({ contracts, stocks }) => {
+    //   console.log('Contracts:', contracts);
+    //   console.log('Stocks:', stocks);
     //   this.contracts = contracts;
     //   this.stocks = stocks;
     //   this.otcs = this.mergeLists(contracts, stocks);
-    //   console.log('Contracts:', contracts);
-    //   console.log('Stocks:', stocks);
     //   console.log('OTCs:', this.otcs);
     // });
+    this.otcService.getAllSupervisorContracts().subscribe((contracts) => {
+      this.contracts = contracts;
+      console.log("BBSD");
+      console.log(this.contracts);
+    });
   }
+
 
   setTab(tabName: string) {
     this.selectedTab = tabName;
   }
 
-  setStatus(contract: any, newStatus: any) {
+  updateOTCStatus(contract: any, newStatus: 'Approved' | 'Denied') {
     var contractId = contract.contractId;
-    var oldStatus = TransformStatusPipe.prototype.transform(contract);
-
-    if(newStatus === 'Approve')
-      newStatus = 'Approved';
-    else if(newStatus === 'Deny')
-      newStatus = 'Denied';
-
-    if (oldStatus === newStatus) {
-      console.log('Novi status je isti kao trenutni. Nema potrebe za pozivom API-ja.');
-      return;
-    }
 
     if (contractId) {
-      if (newStatus === 'Approved') {
-        this.otcService.approveOTC(contractId).subscribe(
+      if (newStatus === 'Approved')
+        this.otcService.acceptOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status:' + response);
+            console.log('Response to successfully changing status to approved with acceptOTC():' + response);
             location.reload();
           },
           (error) => {
-            console.error('Error updating status, this is response: ' + error);
+            console.error('Error updating status to approved, this is response: ' + error);
           }
         );
-
-      } else if(newStatus === 'Denied') {
+      else
         this.otcService.denyOTC(contractId).subscribe(
           (response) => {
-            console.log('Response to successfully changing status:' + response);
+            console.log('Response to successfully changing status to denied is with denyOTC():' + response);
             location.reload();
           },
           (error) => {
-            console.error('Error updating status, this is response: ' + error);
+            console.error('Error updating status to denied, this is response: ' + error);
           }
         );
-      }
     } else {
       console.error('Contract ID not found for OTC', contract);
     }
   }
-
 }

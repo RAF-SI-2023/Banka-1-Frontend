@@ -1,0 +1,16 @@
+<!-- successfull-create-user.component.html -->
+<div class="popup-container">
+    <div class="popup-header">
+      <span style="color: var(--banka-white)">Success</span>
+      <span class="close-icon" (click)="onClose()">X</span>
+    </div>
+    <div class="form-container">
+      <div class="message">
+        The user has been successfully created.
+      </div>
+    </div>
+    <div class="bottom-buttons">
+      <orange-button [buttonName]="'OK'" (click)="onClose()"></orange-button>
+    </div>
+  </div>
+  

@@ -22,6 +22,8 @@ import {PopupService} from "../service/popup.service";
 import {TransformOptionsPipe} from "./transform-options.pipe";
 import {OptionsService} from "../service/options.service";
 import {OrderService} from "../service/order.service";
+import {ForexService} from "../service/forex.service";
+import {FutureService} from "../service/future.service";
 
 @Component({
   selector: 'app-security-list',
@@ -51,25 +53,32 @@ export class SecurityListComponent {
   futuresBackup: Future[] = [];
   _router: Router;
 
-  forex: Forex[] = [];
-  forexBackup: Forex[] = [];
+  forexes: Forex[] = [];
+  forexesBackup: Forex[] = [];
   quoteCurrencyFilter: string = '';
   baseCurrencyFilter: string = '';
 
   options: any[] = [];
 
   constructor(
-    private securityService: SecurityService,
+    private stockService: StockService,
+    private futureService: FutureService,
+    private forexService: ForexService,
     private optionsService: OptionsService,
     private orderService: OrderService,
-    private stockService: StockService,
-    private http: HttpClient,
     private popupService: PopupService,
     router: Router
   ) {
-
-      this.selectedTab = 'options'
+    this.selectedTab = 'options'
     this._router = router;
+  }
+
+  async ngOnInit() {
+    await this.loadStocks();
+    this.loadFutures();
+    this.loadForexes();
+    this.loadOptions()
+    console.log("Loaded everything")
   }
 
   searchFutures() {
@@ -80,8 +89,8 @@ export class SecurityListComponent {
 
   }
 
-  searchForex() {
-    this.forex = this.forexBackup.filter((value) => {
+  searchForexes() {
+    this.forexes = this.forexesBackup.filter((value) => {
       return (
         value.ticker.toLowerCase().includes(this.symbol.toLowerCase())
       );
@@ -101,90 +110,19 @@ export class SecurityListComponent {
         this.searchFutures();
         break;
       case 'forex':
-        this.searchForex();
+        this.searchForexes();
         break;
       case 'stocks':
         this.searchStocks();
     }
   }
 
-  async ngOnInit() {
-    this.loadSecurities();
-    this.loadFutures();
-    this.loadForex();
-
-    this.loadOptions()
-  }
-
-  async loadSecurities(): Promise<void> {
-
-
-    const stocks = await this.stockService.getStocks();
-
-
-    this.securities = stocks;
-    this.securitiesBackup = stocks;
-
-    // this.stockMockData()
-  }
-
-  loadForex(): void {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-    });
-    this.http
-      this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers})
-      .subscribe(
-        (res) =>
-          (this.forexBackup = this.forex =
-            res.map((val) => {
-              val.lastRefresh *= 1000;
-              return val;
-            }))
-      );
-  }
-
-  loadFutures(): void {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-    });
-    this.http
-      this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
-      .subscribe(
-        (res) =>
-          (this.futuresBackup = this.futures =
-            res.map((val) => {
-              val.settlementDate *= 1000;
-              val.lastRefresh *= 1000;
-              return val;
-            }))
-      );
-    // this.mockFutureData()
-  }
-
-  loadOptions() {
-    this.optionsService.getOptions().subscribe(response => {
-      this.options = response;
-    })
-    // this.optionsDataMock()
-  }
-
-
-
-  setSelectedTab(tab: string) {
-    this.selectedTab = tab;
-  }
-
-  navigateToFuture(listingId: any) {
-    this._router.navigateByUrl(`/security/future/${listingId}`);
-  }
-
-  navigateToForex(forexId: number): void {
-    this._router.navigateByUrl(`/security/forex/${forexId}`);
-  }
-
-  navigateToStock(stockId: number): void {
-    this._router.navigateByUrl(`/security/stock/${stockId}`);
+  refresh() {
+    // this.loadStocks();
+    // this.loadFutures();
+    // this.loadForexes();
+    // this.loadOptions();
+    this.ngOnInit().then();
   }
 
   async buyOption(options: OptionsDto){
@@ -204,146 +142,55 @@ export class SecurityListComponent {
     }
   }
 
-
-  optionsDataMock(){
-    const exp1: OptionsDto = {
-      ticker: "string",
-      optionType: "string",
-      strikePrice: 123,
-      currency: "string",
-      impliedVolatility: 123,
-      openInterest: 123,
-      expirationDate: 1717024395,
-
-      listingId: 123,
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123
-    }
-    const exp2: OptionsDto = {
-      ticker: "string",
-      optionType: "string",
-      strikePrice: 123,
-      currency: "string",
-      impliedVolatility: 123,
-      openInterest: 123,
-      expirationDate: 1717024395,
-
-      listingId: 123,
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-    }
-    this.options.push(exp1)
-    this.options.push(exp2)
+  async loadStocks(): Promise<void> {
+    const stocks = await this.stockService.getStocks();
+    this.securities = stocks;
+    this.securitiesBackup = stocks;
+    // console.log(this.securities)
   }
 
-
-
-  mockFutureData(){
-    const exp1 : Future = {
-      listingId: 123,
-      ticker: "string",
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      contractSize: 123,
-      contractUnit: "string",
-      openInterest: 123,
-      settlementDate: 123
-    }
-    const exp2 : Future = {
-      listingId: 123,
-      ticker: "string",
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      contractSize: 123,
-      contractUnit: "string",
-      openInterest: 123,
-      settlementDate: 123
-    }
-
-    this.futures.push(exp1);
-    this.futures.push(exp2);
-
+  loadForexes(): void {
+    this.forexService.getForexes().subscribe(forexes => {
+      this.forexes = this.forexesBackup = forexes.map(forex => {
+        forex.lastRefresh *= 1000;
+        return forex;
+      });
+      // console.log("Forexes:" + this.forexes)
+    });
   }
 
-
-  stockMockData(){
-    const exp1: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    const exp2: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    const exp3: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    this.securities.push(exp1)
-    this.securities.push(exp2)
-    this.securities.push(exp3)
+  loadFutures(): void {
+    this.futureService.getFutures().subscribe(futures => {
+      this.futures = this.futuresBackup = futures.map(future => {
+        future.settlementDate *= 1000;
+        future.lastRefresh *= 1000;
+        return future;
+      });
+      // console.log("Futures:" + this.futures)
+    });
   }
 
+  loadOptions() {
+    this.optionsService.getOptions().subscribe(response => {
+      this.options = response;
+      // console.log("Options:" + this.options)
+    })
+  }
+
+  navigateToFuture(listingId: any) {
+    this._router.navigateByUrl(`/security/future/${listingId}`);
+  }
+
+  navigateToForex(forexId: number): void {
+    this._router.navigateByUrl(`/security/forex/${forexId}`);
+  }
+
+  navigateToStock(stockId: number): void {
+    this._router.navigateByUrl(`/security/stock/${stockId}`);
+  }
+
+  setSelectedTab(tab: string) {
+    this.selectedTab = tab;
+  }
 
 }

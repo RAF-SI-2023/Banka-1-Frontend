@@ -16,7 +16,6 @@
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>
-<!-- 
             <div class="dropdown">
               <div
                 id="dropdownMenu"
@@ -30,26 +29,25 @@
                   <a
                     class="dropdown-item"
                     (click)="updateOTCStatus(row.original, 'Approved')"
-                    >Approve</a
+                  >Approve</a
                   >
                 </li>
                 <li>
                   <a
                     class="dropdown-item"
                     (click)="updateOTCStatus(row.original, 'Denied')"
-                    >Deny</a
+                  >Deny</a
                   >
                 </li>
               </ul>
-            </div> -->
-
-            <dropdown-input-status [initialValues]="[row.original.bankApproval, row.original.sellerApproval]" [initialValue]="row.status"  [inputName]="'status'"
+            </div>
+<!--             <dropdown-input-status [initialValues]="[row.original.bankApproval, row.original.sellerApproval]" [initialValue]="row.status"  [inputName]="'status'"
                             [valueNames]="['Approve', 'Deny']" [values]="['Approve', 'Deny']"
                             (selectedValue)="setStatus(row.original, $event)">
-            </dropdown-input-status>
+            </dropdown-input-status> -->
           </ng-template>
         </app-dynamic-table-status>
       </div>
-      </div>
-      </div>
     </div>
+  </div>
+</div>

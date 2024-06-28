@@ -5,6 +5,7 @@ import {environment} from "../../environments/environment";
 import {StockListing} from "./stock.service";
 
 import {
+  AllPublicCapitalsDto,
   CapitalProfitDto,
   DecideOrderResponse,
   OrderDto, PublicCapitalDto,
@@ -310,7 +311,7 @@ export class OrderService {
   }
 
 
-  getPublicStocks(): Observable<PublicCapitalDto[]> {
+  getPublicStocks(): Observable<AllPublicCapitalsDto[]> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -318,10 +319,21 @@ export class OrderService {
           'Authorization': `Bearer ${jwt}`
       })
     };
+    return this.http.get<AllPublicCapitalsDto[]>(environment.userService + '/capital/public/all', httpOptions);
+  }
+
+  getPublicStocksOTC(): Observable<PublicCapitalDto[]> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
     return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/all', httpOptions);
   }
 
-  //
+
   getAllStocks(): Observable<StockListing[]> {
     const jwt = sessionStorage.getItem("jwt");
 

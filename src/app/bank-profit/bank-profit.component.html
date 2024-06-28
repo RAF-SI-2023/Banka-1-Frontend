@@ -14,6 +14,13 @@
         <div (click)="setTab('profits')" class="{{ selectedTab === 'profits' ? 'tab active-tab' : 'tab' }}">
           Profit - Agents
         </div>
+        <div class="right-row">
+          <div class="search-icon">
+            <button (click)="refresh()" class="button-image">
+              <img src="assets/refresh.png" alt="search" />
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="overview-tab" *ngIf="selectedTab === 'profits'">

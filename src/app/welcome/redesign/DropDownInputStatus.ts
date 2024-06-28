@@ -48,15 +48,21 @@ export class DropdownInputStatus {
     const bankApproval = this.initialValues[0];
     const sellerApproval = this.initialValues[1];
 
-    if (bankApproval && !sellerApproval) {
-      this.chooseValue = 'Waiting for bank approval';
-    } else if (!bankApproval || !sellerApproval) {
-      this.chooseValue = 'Denied';
-    } else if (bankApproval && sellerApproval) {
+    if (bankApproval && sellerApproval) {
       this.chooseValue = 'Approved';
     } else {
-      this.chooseValue = 'Processing';
+      this.chooseValue = 'Not Approved';
     }
+
+    // if (bankApproval && !sellerApproval) {
+    //   this.chooseValue = 'Waiting for bank approval';
+    // } else if (!bankApproval || !sellerApproval) {
+    //   this.chooseValue = 'Denied';
+    // } else if (bankApproval && sellerApproval) {
+    //   this.chooseValue = 'Approved';
+    // } else {
+    //   this.chooseValue = 'Processing';
+    // }
 
     // if (this.initialValue !== null) {
     //   this.chooseValue = this.valueNames[this.values.indexOf(this.initialValue)];

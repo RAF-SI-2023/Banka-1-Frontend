@@ -39,6 +39,17 @@
   display: flex;
 }
 
+.refresh-icon {
+  cursor: pointer;
+  background-color: var(--banka-orange);
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+}
+
 .filter-row {
   display: flex;
   justify-content: space-between;
@@ -49,6 +60,13 @@
   align-items: center;
   margin-right: auto;
   padding-left: 20px;
+}
+
+.right-row {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-right: 20px;
 }
 
 .filter-input {
@@ -73,12 +91,6 @@
   font-size: 1.1rem;
 }
 
-.right-row {
-  display: flex;
-  align-items: center;
-  padding-right: 20px;
-}
-
 .add-new-btn {
   padding: 12px;
   background-color: var(--banka-orange); /* Initial background color */
@@ -98,7 +110,7 @@
 
 .security-table-wrapper {
   margin-top: 2rem;
-  
+
 }
 
 .wrapper-header {
@@ -244,7 +256,7 @@ td {
 }
 
 /**
-   Permission table and search filter 
+   Permission table and search filter
   **/
 .search-container {
   font-size: 0; /* Remove white space between inline-block elements */
