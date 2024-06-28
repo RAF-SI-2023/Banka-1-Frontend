@@ -322,6 +322,17 @@ export class OrderService {
     return this.http.get<AllPublicCapitalsDto[]>(environment.userService + '/capital/public/all', httpOptions);
   }
 
+  getPublicStocksOTC(): Observable<PublicCapitalDto[]> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+    return this.http.get<PublicCapitalDto[]>(environment.userService + '/capital/public/all', httpOptions);
+  }
+
 
   getAllStocks(): Observable<StockListing[]> {
     const jwt = sessionStorage.getItem("jwt");

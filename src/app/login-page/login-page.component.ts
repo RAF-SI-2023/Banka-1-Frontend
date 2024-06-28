@@ -36,6 +36,7 @@ export class LoginPageComponent {
   toggleRole() {
     this.isEmployee = !this.isEmployee; // Toggle between true and false
     console.log(this.isEmployee ? "employee page" :"customer page")
+    sessionStorage.setItem('loginUserRole',this.isEmployee ? "employee" :"customer")
   }
 
   model: any = {};
@@ -51,6 +52,7 @@ export class LoginPageComponent {
     private storageService: StorageService,
     private customerService: CustomerService,
   ) {
+    sessionStorage.setItem('loginUserRole',"customer")
   }
   loginFormSchema = z.object({
     email: z.string().email(),

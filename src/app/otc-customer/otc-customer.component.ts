@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import { DatePipe, DecimalPipe, NgForOf, NgIf } from '@angular/common';
 import { FilterByStatusPipeModule } from '../orders/FilterByStatusPipe';
 import { OrangeButtonModule } from '../welcome/redesign/OrangeButton';
@@ -75,7 +75,9 @@ export class OtcCustomerComponent {
   orders: Order[] = []; // Assuming you have a list of orders
 
   activeSell: Contract[] = [];
-  activeBuy: Contract[] = []
+  activeBuy: Contract[] = [];
+  history: Contract[] = [];
+
 
   customer: CustomerWithAccounts = {} as CustomerWithAccounts;
 
@@ -86,22 +88,24 @@ export class OtcCustomerComponent {
     private stockService: StockService,
     private http: HttpClient,
     private popup: PopupService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
-    await this.loadOTCs();
-    this.initializeCustomer();
-    this.getPublicSecurities();
+    this.loadOTCs();
   }
 
   private initializeCustomer(): void {
     this.customerService.getCustomer2().subscribe({
       next: (customer) => {
         this.customer = customer;
+        this.getPublicSecurities();
         console.log('Customer:', customer);
         this.filterActiveSellContracts();
         this.filterActiveBuyContracts();
+        this.historyContracts();
+        this.cd.detectChanges(); // Manually trigger change detection
       },
       error: (err) => {
         console.error('Error fetching customer:', err);
@@ -113,7 +117,10 @@ export class OtcCustomerComponent {
     if (!this.customer || !this.contracts) return;
 
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
-    this.activeSell = this.contracts.filter(contract => accountNumbers.includes(contract.sellerAccountNumber));
+    this.activeSell = this.contracts
+      .filter(contract => accountNumbers.includes(contract.sellerAccountNumber))
+      .filter(contract => contract.comment === null || contract.comment === undefined);
+
     console.log('Active Sell Contracts:', this.activeSell);
   }
 
@@ -121,21 +128,41 @@ export class OtcCustomerComponent {
     if (!this.customer || !this.contracts) return;
 
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
-    this.activeBuy = this.contracts.filter(contract => accountNumbers.includes(contract.buyerAccountNumber));
+    this.activeBuy = this.contracts
+      .filter(contract => accountNumbers.includes(contract.buyerAccountNumber))
+      .filter(contract => contract.comment === null || contract.comment === undefined);
+
     console.log('Active Buy Contracts:', this.activeBuy);
   }
 
-  async loadOTCs() {
+  historyContracts(): void {
+
+  }
+
+  loadOTCs() {
     this.otcService.getAllCustomerContracts().subscribe((contracts) => {
       this.contracts = contracts;
       console.log('Contacts: ', this.contracts);
+      this.initializeCustomer();
     });
   }
 
+  // getPublicSecurities() {
+  //   this.orderService.getPublicStocks().subscribe(res => {
+  //     this.publicSecurities = res;
+  //   })
+  // }
+
   getPublicSecurities() {
-    this.orderService.getPublicStocks().subscribe(res => {
-      this.publicSecurities = res;
-    })
+    this.orderService.getPublicStocksOTC().subscribe(res => {
+      this.publicSecurities = res.filter(publicSecurity => {
+        if (this.customer.isLegalEntity) {
+          return !publicSecurity.isIndividual;
+        } else {
+          return publicSecurity.isIndividual;
+        }
+      });
+    });
   }
 
   togglePopupOffer(row: any) {
