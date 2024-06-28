@@ -142,12 +142,12 @@ export class SecuritiesLegalPersonsComponent {
   }
 
 
-  openBuyStockPopup(stockId: number): void{
-    this.popupService.openBuyOrderPopup({id: stockId, type: ListingType.STOCK});
+  openBuyStockPopup(stockId: number, stockPrice: number): void{
+    this.popupService.openBuyOrderPopup({id: stockId, type: ListingType.STOCK, price: stockPrice});
   }
 
-  openBuyFuturePopup(futureId: number): void{
-    this.popupService.openBuyOrderPopup({id: futureId, type: ListingType.FUTURE});
+  openBuyFuturePopup(futureId: number, futurePrice: number): void{
+    this.popupService.openBuyOrderPopup({id: futureId, type: ListingType.FUTURE, price: futurePrice});
   }
 
   async buyOption(options: OptionsDto){

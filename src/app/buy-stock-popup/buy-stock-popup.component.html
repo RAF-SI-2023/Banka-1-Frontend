@@ -1,64 +1,67 @@
 <div class="popup-container">
   <div class="popup-header">
-    <span class="header-title">Stock Order</span>
+    <span class="header-title">{{this.type.charAt(0).toUpperCase() + this.type.slice(1).toLowerCase()}} Order</span>
     <span class="close-icon" (click)="onCancelButton()">X</span>
   </div>
-
 
   <div class="popup-body">
     <div class="content">
       <div class="body-element">
-        <label for="volume" >Volume of a stock: </label>
-        <input class="popup-input" id="volume" name="volume" [style.margin-left.px]="20"  [(ngModel)]="volumeOfStock" placeholder="value..." [ngClass]="{ 'invalid-input': validInputVolume() }"/>
-<!--        <input class="popup-input" id="volume" name="volumeInput" [style.margin-left.px]="20" [(ngModel)]="volumeOfStock"/>-->
+        <label for="volume">Volume of a stock: </label>
+        <input class="popup-input" id="volume" name="volume" [(ngModel)]="volumeOfStock" (input)="calculateValues()" [ngClass]="{ 'invalid-input': validInputVolume() }" min="0"/>
       </div>
       <div class="body-element">
-        <label for="limit" [style.margin-left.px]="80">Limit value: </label>
-        <input class="popup-input" id="limit" name="limit" [style.margin-left.px]="20" [(ngModel)]="limitValue" placeholder="value..." [ngClass]="{ 'invalid-input':  validInputLimit() }"/>
+        <label for="limit">Limit value: </label>
+        <input class="popup-input" id="limit" name="limit" [(ngModel)]="limitValue" [ngClass]="{ 'invalid-input': validInputLimit() }" min="0"/>
       </div>
       <div class="body-element">
-        <label for="stop" [style.margin-left.px]="80">Stop value: </label>
-        <input class="popup-input" id="stop" name="stop" [style.margin-left.px]="20" [(ngModel)]="stopValue" placeholder="value..." [ngClass]="{ 'invalid-input':  validInputStop() }"/>
+        <label for="stop">Stop value: </label>
+        <input class="popup-input" id="stop" name="stop" [(ngModel)]="stopValue" [ngClass]="{ 'invalid-input': validInputStop() }" min="0"/>
       </div>
-
       <div class="body-element">
         <label>All or None: </label>
-          <button class="btn btn-custom-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" [style.margin-left.px]="20">{{ getValue() }}</button>
-          <ul class="dropdown-menu dropdown-menu-start dropdown_input">
-            <li><a (click)="setValue(true)">YES</a></li>
-            <li><a (click)="setValue(false)">NO</a></li>
-          </ul>
+        <button class="btn btn-custom-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{ getValue() }}</button>
+        <ul class="dropdown-menu dropdown-menu-start dropdown_input">
+          <li><a (click)="setValue(true)">YES</a></li>
+          <li><a (click)="setValue(false)">NO</a></li>
+        </ul>
+      </div>
+      <div class="body-element">
+        <label>Is Margin: </label>
+        <button class="btn btn-custom-dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">{{ getMargin() }}</button>
+        <ul class="dropdown-menu dropdown-menu-start dropdown_input">
+          <li><a (click)="setMarginValue(true)">YES</a></li>
+          <li><a (click)="setMarginValue(false)">NO</a></li>
+        </ul>
       </div>
 
-<!--      <div class="body-element">-->
-<!--        <label for="margin">Margin: </label>-->
-<!--        <input class="popup-input-short" id="margin" name="margin" [style.margin-left.px]="65" [(ngModel)]="margin" [ngClass]="{ 'invalid-input':  validInputVolume() }"/>-->
-<!--      </div>-->
-
+      <div *ngIf="isMargin">
+        <div class="body-element">
+          <label>Total value of the security: </label>
+          <label class="popup-output">{{ totalValue | number:'1.2-2' }}</label>
+        </div>
+        <div class="body-element">
+          <label>Maintenance margin: </label>
+          <label class="popup-output">{{ maintenanceMargin | number:'1.2-2' }}</label>
+        </div>
+        <div class="body-element">
+          <label>Initial margin: </label>
+          <label class="popup-output">{{ initialMargin | number:'1.2-2' }}</label>
+        </div>
+        <div class="body-element">
+          <label>Loan margin: </label>
+          <label class="popup-output">{{ loanMargin | number:'1.2-2' }}</label>
+        </div>
+      </div>
 
       <div class="body-element">
         <label class="warning">{{ warnMessage }}</label>
       </div>
     </div>
 
-
     <div class="popup-buttons">
-      <button class="button-primary"  (click)="onCancelButton()">
-        CANCEL
-      </button>
-      <button class="button-primary"  (click)="onBuy()">
-        BUY
-      </button>
+      <button class="button-primary" (click)="onCancelButton()">CANCEL</button>
+      <button class="button-primary" (click)="onBuy()">BUY</button>
     </div>
-
-
   </div>
-
-
-
-
-
-
-
 </div>
-
