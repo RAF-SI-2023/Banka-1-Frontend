@@ -24,6 +24,7 @@ import {TransformPublicSecuritiesPipeModule} from "../orders/TransformPublicSecu
 import {TransformContractsPipeModule} from "./TransformContractsPipe";
 import {TransformStatusPipeModule} from "./TransformStatusPipe";
 import {any, string} from "zod";
+import {TransformContractsHistoryPipeModule} from "./TransformContractsHistoryPipe";
 
 @Component({
   selector: 'app-otc',
@@ -41,6 +42,7 @@ import {any, string} from "zod";
     TransformPublicSecuritiesPipeModule,
     TransformContractsPipeModule,
     TransformStatusPipeModule,
+    TransformContractsHistoryPipeModule,
   ],
   templateUrl: './otc-customer.component.html',
   styleUrl: './otc-customer.component.css',
@@ -119,7 +121,7 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeSell = this.contracts
       .filter(contract => accountNumbers.includes(contract.sellerAccountNumber))
-      .filter(contract => contract.comment === null || contract.comment === undefined);
+      .filter(contract => contract.comment === null && contract.comment === undefined);
 
     console.log('Active Sell Contracts:', this.activeSell);
   }
@@ -130,12 +132,20 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeBuy = this.contracts
       .filter(contract => accountNumbers.includes(contract.buyerAccountNumber))
-      .filter(contract => contract.comment === null || contract.comment === undefined);
+      .filter(contract => contract.comment === null && contract.comment === undefined);
 
     console.log('Active Buy Contracts:', this.activeBuy);
   }
 
   historyContracts(): void {
+    if (!this.customer || !this.contracts) return;
+
+    const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
+    this.history = this.contracts
+      .filter(contract => (contract.bankApproval && contract.sellerApproval) || (contract.comment !== null && contract.comment !== undefined))
+      // .filter(contract => accountNumbers.includes(contract.buyerAccountNumber) || accountNumbers.includes(contract.sellerAccountNumber));
+
+    console.log('History Contracts:', this.history);
 
   }
 
