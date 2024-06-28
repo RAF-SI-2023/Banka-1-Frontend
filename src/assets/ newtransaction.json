@@ -1,0 +1,171 @@
+[
+    {
+        "bankAccount": {
+            "accountType": "BUSINESS",
+            "accountNumber": "131242012178440840",
+            "accountName": "Bank's account",
+            "accountStatus": "INACTIVE",
+            "currency": "RSD",
+            "balance": 988999.0,
+            "availableBalance": 988999.0
+        },
+        "dateTime": null,
+        "marketOrder": {
+            "orderId": 10,
+            "listingId": 2,
+            "listingType": "OPTIONS",
+            "owner": {
+                "userId": 1,
+                "username": null,
+                "password": null,
+                "email": "admin",
+                "firstName": "User1",
+                "lastName": "User1Prezime",
+                "jmbg": null,
+                "position": "admin",
+                "phoneNumber": null,
+                "active": true,
+                "limitNow": 0.0,
+                "orderlimit": 1.0E7,
+                "requireApproval": false,
+                "permissions": [
+                    {
+                        "permissionId": 8,
+                        "name": "manageOrderRequests",
+                        "description": "manageOrderRequests"
+                    },
+                    {
+                        "permissionId": 5,
+                        "name": "manageLoans",
+                        "description": "manageLoans"
+                    },
+                    {
+                        "permissionId": 1,
+                        "name": "addUser",
+                        "description": "addUser"
+                    },
+                    {
+                        "permissionId": 7,
+                        "name": "modifyCustomer",
+                        "description": "modifyCustomer"
+                    },
+                    {
+                        "permissionId": 3,
+                        "name": "deleteUser",
+                        "description": "deleteUser"
+                    },
+                    {
+                        "permissionId": 2,
+                        "name": "modifyUser",
+                        "description": "modifyUser"
+                    },
+                    {
+                        "permissionId": 4,
+                        "name": "readUser",
+                        "description": "readUser"
+                    },
+                    {
+                        "permissionId": 6,
+                        "name": "manageLoanRequests",
+                        "description": "manageLoanRequests"
+                    },
+                    {
+                        "permissionId": 9,
+                        "name": "manageMargins",
+                        "description": "manageMargins"
+                    }
+                ]
+            },
+            "orderType": "BUY",
+            "status": "DONE",
+            "contractSize": 1,
+            "processedNumber": 1,
+            "limitValue": null,
+            "stopValue": null,
+            "fee": 12.0,
+            "price": 11001.0,
+            "allOrNone": false,
+            "updatedAt": 1719598846,
+            "approvedBy": null,
+            "isMargin": false
+        },
+        "employee": {
+            "userId": 1,
+            "username": null,
+            "password": null,
+            "email": "admin",
+            "firstName": "User1",
+            "lastName": "User1Prezime",
+            "jmbg": null,
+            "position": "admin",
+            "phoneNumber": null,
+            "active": true,
+            "limitNow": 0.0,
+            "orderlimit": 1.0E7,
+            "requireApproval": false,
+            "permissions": [
+                {
+                    "permissionId": 8,
+                    "name": "manageOrderRequests",
+                    "description": "manageOrderRequests"
+                },
+                {
+                    "permissionId": 5,
+                    "name": "manageLoans",
+                    "description": "manageLoans"
+                },
+                {
+                    "permissionId": 1,
+                    "name": "addUser",
+                    "description": "addUser"
+                },
+                {
+                    "permissionId": 7,
+                    "name": "modifyCustomer",
+                    "description": "modifyCustomer"
+                },
+                {
+                    "permissionId": 3,
+                    "name": "deleteUser",
+                    "description": "deleteUser"
+                },
+                {
+                    "permissionId": 2,
+                    "name": "modifyUser",
+                    "description": "modifyUser"
+                },
+                {
+                    "permissionId": 4,
+                    "name": "readUser",
+                    "description": "readUser"
+                },
+                {
+                    "permissionId": 6,
+                    "name": "manageLoanRequests",
+                    "description": "manageLoanRequests"
+                },
+                {
+                    "permissionId": 9,
+                    "name": "manageMargins",
+                    "description": "manageMargins"
+                }
+            ]
+        },
+        "description": null,
+        "currency": {
+            "id": 70,
+            "currencyName": "Serbian Dinar",
+            "currencyCode": "RSD",
+            "currencySymbol": "RSD",
+            "country": "RSD",
+            "currencyDesc": null,
+            "active": true,
+            "fromRSD": 1.0,
+            "toRSD": 1.0
+        },
+        "buy": 11001.0,
+        "sell": null,
+        "reserved": null,
+        "reserveUsed": null
+    }
+]

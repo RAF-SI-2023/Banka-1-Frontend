@@ -90,6 +90,7 @@ export class TransactionService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
     });
     return this.http.get<NewTransactionDto[]>(`${this.apiUrl}/transactions/${accountNumber}`, { headers });
+    // return this.http.get<NewTransactionDto[]>("/assets/admin.json");
   }
 
 
