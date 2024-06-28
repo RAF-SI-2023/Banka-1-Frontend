@@ -113,6 +113,7 @@ export class LoginPageComponent {
                this.storageService.setRole('customer');
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
+
                sessionStorage.setItem('isLegalPerson', String(response.isLegalEntity));
                console.log(response.isLegalEntity.toString() + " DDDD")
 
