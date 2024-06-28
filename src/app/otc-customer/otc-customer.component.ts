@@ -121,7 +121,7 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeSell = this.contracts
       .filter(contract => accountNumbers.includes(contract.sellerAccountNumber))
-      .filter(contract => contract.comment === null && contract.comment === undefined);
+      .filter(contract => (!contract.bankApproval || !contract.sellerApproval))
 
     console.log('Active Sell Contracts:', this.activeSell);
   }
@@ -132,7 +132,7 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeBuy = this.contracts
       .filter(contract => accountNumbers.includes(contract.buyerAccountNumber))
-      .filter(contract => contract.comment === null && contract.comment === undefined);
+      .filter(contract => (!contract.bankApproval || !contract.sellerApproval))
 
     console.log('Active Buy Contracts:', this.activeBuy);
   }
@@ -142,7 +142,7 @@ export class OtcCustomerComponent {
 
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.history = this.contracts
-      .filter(contract => (contract.bankApproval && contract.sellerApproval) || (contract.comment !== null && contract.comment !== undefined))
+      .filter(contract => (contract.bankApproval && contract.sellerApproval) || (contract.comment !== null))
       // .filter(contract => accountNumbers.includes(contract.buyerAccountNumber) || accountNumbers.includes(contract.sellerAccountNumber));
 
     console.log('History Contracts:', this.history);

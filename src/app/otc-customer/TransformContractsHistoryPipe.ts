@@ -6,7 +6,8 @@ import {
   PublicStock,
   StockListing,
   User
-} from '../model/model'; // Adjust the import path according to your project structure
+} from '../model/model';
+import {DateUtils} from "../welcome/redesign/DateUtils"; // Adjust the import path according to your project structure
 
 @Pipe({
   name: 'transformContractsHistory'
@@ -18,8 +19,8 @@ export class TransformContractsHistoryPipe implements PipeTransform {
         BUYER: contract.buyerAccountNumber,
         SELLER: contract.sellerAccountNumber,
         COMMENT: contract.comment,
-        CREATED: contract.creationDate,
-        REALIZED: contract.realizationDate,
+        CREATED: DateUtils.formatDate(contract.creationDate),
+        REALIZED: DateUtils.formatDate(contract.realizationDate),
         TICKER: contract.ticker,
         AMOUNT: contract.amount,
         PRICE: contract.price,
@@ -33,8 +34,8 @@ export class TransformContractsHistoryPipe implements PipeTransform {
       BUYER: accountNumbers.includes(contract.buyerAccountNumber) ? 'Me' : contract.buyerAccountNumber,
       SELLER: accountNumbers.includes(contract.sellerAccountNumber) ? 'Me' : contract.sellerAccountNumber,
       COMMENT: contract.comment,
-      CREATED: contract.creationDate,
-      REALIZED: contract.realizationDate,
+      CREATED: DateUtils.formatDate(contract.creationDate),
+      REALIZED: DateUtils.formatDate(contract.realizationDate),
       TICKER: contract.ticker,
       AMOUNT: contract.amount,
       PRICE: contract.price,
