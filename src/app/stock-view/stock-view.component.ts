@@ -10,6 +10,7 @@ import { ChartConfiguration, ChartType } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import { PopupService } from '../service/popup.service';
 import { OrangeButtonModule } from '../welcome/redesign/OrangeButton';
+import {ListingType} from "../model/model";
 
 @Component({
   selector: 'app-stock-view',
@@ -152,6 +153,15 @@ export class StockViewComponent {
   }
 
   openBuyPopup() {
-    this.popupService.openBuyPopup(null, null, this.stock);
+    let loggedUserPositionFromStorage = sessionStorage.getItem('role');
+    console.log('Logged user position');
+    console.log(loggedUserPositionFromStorage);
+
+    if(loggedUserPositionFromStorage === 'customer'){
+      this.popupService.openBuyOrderPopup({id: this.stockId, type: ListingType.STOCK, price: this.stock?.price});
+    } else {
+      this.popupService.openBuyPopup(null, null, this.stock);
+    }
+
   }
 }
