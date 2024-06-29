@@ -137,10 +137,17 @@ export class OrdersComponent {
   }
 
   changePublicValue(element: any){
-    this.orderService.changePublicValue(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
-      if(res)
-        this.getSecurityOrders();
-    })
+    if (this.isAdmin || this.isSupervizor) {
+      this.orderService.changePublicValueEmployee(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    } else {
+      this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    }
     element.showPopup = false;
   }
 

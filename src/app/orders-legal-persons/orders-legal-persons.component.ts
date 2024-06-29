@@ -187,7 +187,7 @@ export class OrdersLegalPersonsComponent {
   }
 
   changePublicValue(element: any){
-    this.orderService.changePublicValue(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+    this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
       if(res)
         this.getSecurityOrders();
     })

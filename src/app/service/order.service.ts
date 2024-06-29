@@ -421,7 +421,7 @@ export class OrderService {
   }
 
 
-  changePublicValue(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
+  changePublicValueCustomer(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -439,6 +439,26 @@ export class OrderService {
     console.log("change public value")
     console.log(body)
     return this.http.put<boolean>(environment.userService + '/capital/customer/addPublic', body, httpOptions);
+  }
+
+  changePublicValueEmployee(listingType: ListingType, listingId: number, publicValue: number): Observable<boolean> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const body = {
+      listingType: listingType,
+      listingId: listingId,
+      addToPublic: publicValue
+    }
+
+    console.log("change public value")
+    console.log(body)
+    return this.http.put<boolean>(environment.userService + '/capital/employee/addPublic', body, httpOptions);
   }
 
 
