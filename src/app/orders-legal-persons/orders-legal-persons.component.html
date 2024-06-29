@@ -6,6 +6,13 @@
         <ul>
 
           <li
+            class="{{ selectedTab === 'order-history' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('order-history')"
+          >
+            Order history
+          </li>
+
+          <li
             class="{{ selectedTab === 'all-securities' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('all-securities')"
           >
@@ -22,6 +29,31 @@
         <hr />
       </div>
 
+      <div class="history-tab" *ngIf="selectedTab === 'order-history'">
+        <table>
+          <thead>
+          <tr>
+            <th>Security</th>
+            <th>Transaction</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Last Modified</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orderHistory">
+            <td>{{ order.listingType }}</td>
+            <td>{{ order.orderType }}</td>
+            <td>{{ order.contractSize }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.updatedAt * 1000 | date:'short' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="securities-tab" *ngIf="selectedTab === 'all-securities'">
         <table>
           <thead>
@@ -30,8 +62,8 @@
             <th>Symbol</th>
             <th>Amount</th>
             <th>Price</th>
-            <th>Profit</th>
-            <th>Last modified</th>
+<!--            <th>Profit</th>-->
+<!--            <th>Last modified</th>-->
             <th>Public</th>
             <th>Actions</th>
           </tr>
@@ -42,8 +74,8 @@
             <td>{{ security.security.ticker }}</td>
             <td>{{ security.security.total }}</td>
             <td>{{ security.security.totalPrice }}</td>
-            <td> 123 </td>
-            <td> 123 </td>
+<!--            <td> 123 </td>-->
+<!--            <td> 123 </td>-->
             <!--            <td>{{ security.security.publicTotal }}</td>-->
             <td [ngClass]="{'selected': security.showPopup}" >
               <div class="cell-content"  (click)="showPopup(security)">
@@ -52,7 +84,7 @@
               <div *ngIf="security.showPopup" class="popup">
                 <label for="publicInput">Set number of public actions: </label>
                 <input id="publicInput" [(ngModel)]="changedPublicValue">
-                <button *ngIf="changePublicValueButton(security)" class="button-primary" (click)="changePublicValue(security)">
+                <button *ngIf="changePublicValueButton(security)" class="button-primary" (click)="changePublicValue(security.security)">
                   Confirm
                 </button>
                 <button class="button-secondary" (click)="cancelChangePublic(security)">
