@@ -14,7 +14,7 @@ export class TransformBankAccountDetailsPipe implements PipeTransform {
         inflowAccount: 'NA',
         amount: transactionDto.buy + transactionDto.sell,
         dateAndTime: new Date(transactionDto.dateTime).toLocaleString(),
-        status: 'NA',
+        status: transactionDto.bankAccount.accountStatus,
       };
     });
   }

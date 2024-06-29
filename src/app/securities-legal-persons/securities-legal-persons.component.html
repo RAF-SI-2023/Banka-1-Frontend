@@ -44,7 +44,7 @@
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>
-            <orange-button [buttonName]="'BUY'" (click)="openBuyStockPopup(row.originalStock.listingId)"></orange-button>
+            <orange-button [buttonName]="'BUY'" (click)="openBuyStockPopup(row.originalStock.listingId, row.originalStock.price)"></orange-button>
           </ng-template>
         </app-dynamic-table>
       </div>
@@ -67,7 +67,7 @@
           [showActions]="true"
         >
           <ng-template #actionsColumn let-row>
-            <orange-button [buttonName]="'BUY'" (click)="openBuyFuturePopup(row.original.listingId)"></orange-button>
+            <orange-button [buttonName]="'BUY'" (click)="openBuyFuturePopup(row.original.listingId, row.original.price)"></orange-button>
           </ng-template>
         </app-dynamic-table>
       </div>

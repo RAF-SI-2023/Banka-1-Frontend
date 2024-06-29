@@ -136,12 +136,12 @@ export class AppComponent implements OnInit {
       this.isSupervizor = role === 'supervizor';
     });
 
-    
+
 
     this.authService.getJwtObservable().subscribe((jwt) => {
       if (jwt) {
         const userRole = sessionStorage.getItem('loginUserRole');
-    
+
         if (userRole === 'customer') {
           this.customerService.getCustomer(jwt).subscribe({
             next: (response) => {
@@ -170,12 +170,12 @@ export class AppComponent implements OnInit {
         }
       }
     });
-    
+
 
 
 
       // this.authService.getJwtObservable().subscribe((jwt) => {
-      //   if (jwt) {     
+      //   if (jwt) {
       //     this.customerService.getCustomer(jwt).pipe(
       //       catchError((error) => {
       //         return this.userService.getEmployee(jwt);

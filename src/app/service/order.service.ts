@@ -214,6 +214,46 @@ export class OrderService {
     }
   }
 
+  async buyOrderForLegal(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, isMargin: boolean = false) {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    const orderRequest: CreateOrderRequest = {
+      orderType: orderType,
+      listingId: listingId,
+      listingType: listingType,
+      contractSize: contractSize,
+      limitValue: limitValue,
+      stopValue: stopValue,
+      allOrNone: allOrNone,
+      isMargin: isMargin
+    };
+
+    console.log("Order Type:" + orderRequest.orderType)
+    console.log("Listing Id:" + orderRequest.listingId)
+    console.log("Listing Type:" + orderRequest.listingType)
+    console.log("Contract Size:" + orderRequest.contractSize)
+    console.log("Limit Value:" + orderRequest.limitValue)
+    console.log("Stop Value:" + orderRequest.stopValue)
+    console.log("All or None:" + orderRequest.allOrNone)
+    console.log("Is Margin:" + orderRequest.isMargin)
+
+    try {
+      const response = await this.http.put<boolean>(
+        environment.userService + '/orders/legal', orderRequest, httpOptions).toPromise();
+      console.log(response)
+      return { approved : true, wholeResponse: response };
+    } catch (error) {
+      console.error(error);
+      return { approved : false, wholeResponse: error };
+    }
+  }
+
   async buyOrderOptions(listingId: string, contractSize: number) {
     const jwt = sessionStorage.getItem("jwt");
 

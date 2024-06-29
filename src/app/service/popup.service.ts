@@ -125,15 +125,19 @@ export class PopupService {
     return this.dialog.open(NewRecipientComponent, {});
   }
 
+  openBuyOrderPopup(args: any): void {
+    this.dialog.open(BuyStockPopupComponent, {data: args});
+  }
+
   openBuyPopup(future: any, forex: any, stock: any): void {
     this.dialog.open(BuyPopupComponent, {
       data: { future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
     });
   }
 
-  openSellPopup(listingId: number, amount: number, future: boolean, forex: boolean, stock: boolean) {
+  openSellPopup(listingId: number, legal: boolean, amount: number, future: boolean, forex: boolean, stock: boolean) {
     return this.dialog.open(SellPopupComponent, {
-      data: { listingId: listingId, amount: amount, future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
+      data: { listingId: listingId, isLegal: legal, amount: amount, future: future, forex: forex, stock: stock }  // Pass the future object to the dialog
     });
   }
 
@@ -147,10 +151,6 @@ export class PopupService {
     this.dialog.open(PublicSecurityOfferPopupComponent, {
       data: args
     });
-  }
-
-  openBuyOrderPopup(args: any): void {
-    this.dialog.open(BuyStockPopupComponent, {data: args});
   }
 
   openCustomMessage(args: {title: string, header: string, message: string}): void {
