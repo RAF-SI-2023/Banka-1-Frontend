@@ -73,7 +73,6 @@ export class BuyStockPopupComponent {
                   message: "Your future option has been successfully bought."
                 })
               } else {
-
                 this.popupService.openCustomMessage({
                   title: "Options",
                   header: ((response.wholeResponse as any)?.error as string),
