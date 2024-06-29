@@ -61,64 +61,44 @@ export class BuyStockPopupComponent {
           const limit = parseFloat(this.limitValue);
           const stop = parseFloat(this.stopValue);
 
-          let response: boolean | undefined = false;
+          // let response: boolean | undefined = false;
+          var response;
           switch (this.type){
             case ListingType.FUTURE:
-              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone);
-              if (response) {
+              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone, this.isMargin);
+              if (response.approved) {
                 this.popupService.openCustomMessage({
                   title: "Response",
                   header: "Purchase Successful!",
                   message: "Your future option has been successfully bought."
                 })
               } else {
+
                 this.popupService.openCustomMessage({
                   title: "Options",
-                  header: "Purchase Failed!",
-                  // message: "You do not have sufficient funds to buy this stock option."
+                  header: ((response.wholeResponse as any)?.error as string),
                   message: ""
                 })
               }
               break;
             case ListingType.STOCK:
-              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone);
-              if (response) {
+              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone, this.isMargin);
+              if (response.approved) {
                 this.popupService.openCustomMessage({
                   title: "Options",
                   header: "Purchase Successful!",
                   message: "Your stock option has been successfully bought."
                 })
               } else {
+                console.log((response.wholeResponse as any)?.error?.error);
                 this.popupService.openCustomMessage({
                   title: "Options",
-                  header: "Purchase Failed!",
-                  // message: "You do not have sufficient funds to buy this stock option."
+                  header: ((response.wholeResponse as any)?.error as string),
                   message: ""
                 })
               }
               break;
           }
-
-          // var response;
-          // if(this.type === ListingType.FUTURE) {
-          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FUTURE, volume, limit, stop, this.allOrNone, this.isMargin);
-          //
-          // } else if (this.type === ListingType.FOREX) {
-          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FOREX, volume, limit, stop, this.allOrNone, this.isMargin);
-          //
-          // }else if (this.type === ListingType.STOCK) {
-          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.STOCK, volume, limit, stop, this.allOrNone, this.isMargin);
-          // } else {
-          //   response = false;
-          // }
-          //
-          // if (response) {
-          //   this.popupService.openPopup("Success", "Buy order has been placed successfully");
-          //   this.dialogRef.close();
-          // } else {
-          //   this.popupService.openPopup("Error", "Error placing order, try again later");
-          //   this.dialogRef.close();
-          // }
 
           this.dialogRef.close();
         } else {
