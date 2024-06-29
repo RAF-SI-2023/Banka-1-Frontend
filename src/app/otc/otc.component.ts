@@ -46,7 +46,6 @@ export class OtcComponent {
   headersOTCs = [
     'Buyer',
     'Seller',
-    'Comment',
     'Created',
     'Realized',
     'Ticker',
