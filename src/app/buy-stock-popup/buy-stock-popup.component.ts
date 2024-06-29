@@ -64,7 +64,7 @@ export class BuyStockPopupComponent {
           let response: boolean | undefined = false;
           switch (this.type){
             case ListingType.FUTURE:
-              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone);
+              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone);
               if (response) {
                 this.popupService.openCustomMessage({
                   title: "Response",
@@ -81,7 +81,7 @@ export class BuyStockPopupComponent {
               }
               break;
             case ListingType.STOCK:
-              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone);
+              response = await this.orderService.buyOrderForLegal(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone);
               if (response) {
                 this.popupService.openCustomMessage({
                   title: "Options",

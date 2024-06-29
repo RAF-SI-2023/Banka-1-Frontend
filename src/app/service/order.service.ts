@@ -214,7 +214,7 @@ export class OrderService {
     }
   }
 
-  async buyOrderLav(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, isMargin: boolean = false) {
+  async buyOrderForLegal(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, isMargin: boolean = false) {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
