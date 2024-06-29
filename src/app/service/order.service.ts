@@ -234,14 +234,6 @@ export class OrderService {
       isMargin: isMargin
     };
 
-    console.log("Order Type:" + orderRequest.orderType)
-    console.log("Listing Id:" + orderRequest.listingId)
-    console.log("Listing Type:" + orderRequest.listingType)
-    console.log("Contract Size:" + orderRequest.contractSize)
-    console.log("Limit Value:" + orderRequest.limitValue)
-    console.log("Stop Value:" + orderRequest.stopValue)
-    console.log("All or None:" + orderRequest.allOrNone)
-    console.log("Is Margin:" + orderRequest.isMargin)
 
     try {
       const response = await this.http.put<boolean>(

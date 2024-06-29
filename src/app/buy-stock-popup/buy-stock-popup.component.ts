@@ -61,26 +61,64 @@ export class BuyStockPopupComponent {
           const limit = parseFloat(this.limitValue);
           const stop = parseFloat(this.stopValue);
 
-          var response;
-          if(this.type === ListingType.FUTURE) {
-              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FUTURE, volume, limit, stop, this.allOrNone, this.isMargin);
-
-          } else if (this.type === ListingType.FOREX) {
-              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FOREX, volume, limit, stop, this.allOrNone, this.isMargin);
-
-          }else if (this.type === ListingType.STOCK) {
-              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.STOCK, volume, limit, stop, this.allOrNone, this.isMargin);
-          } else {
-            response = false;
+          let response: boolean | undefined = false;
+          switch (this.type){
+            case ListingType.FUTURE:
+              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId,  ListingType.FUTURE, volume, limit, stop, this.allOrNone);
+              if (response) {
+                this.popupService.openCustomMessage({
+                  title: "Response",
+                  header: "Purchase Successful!",
+                  message: "Your future option has been successfully bought."
+                })
+              } else {
+                this.popupService.openCustomMessage({
+                  title: "Options",
+                  header: "Purchase Failed!",
+                  // message: "You do not have sufficient funds to buy this stock option."
+                  message: ""
+                })
+              }
+              break;
+            case ListingType.STOCK:
+              response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId,  ListingType.STOCK, volume, limit, stop, this.allOrNone);
+              if (response) {
+                this.popupService.openCustomMessage({
+                  title: "Options",
+                  header: "Purchase Successful!",
+                  message: "Your stock option has been successfully bought."
+                })
+              } else {
+                this.popupService.openCustomMessage({
+                  title: "Options",
+                  header: "Purchase Failed!",
+                  // message: "You do not have sufficient funds to buy this stock option."
+                  message: ""
+                })
+              }
+              break;
           }
 
-          if (response) {
-            this.popupService.openPopup("Success", "Buy order has been placed successfully");
-            this.dialogRef.close();
-          } else {
-            this.popupService.openPopup("Error", "Error placing order, try again later");
-            this.dialogRef.close();
-          }
+          // var response;
+          // if(this.type === ListingType.FUTURE) {
+          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FUTURE, volume, limit, stop, this.allOrNone, this.isMargin);
+          //
+          // } else if (this.type === ListingType.FOREX) {
+          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.FOREX, volume, limit, stop, this.allOrNone, this.isMargin);
+          //
+          // }else if (this.type === ListingType.STOCK) {
+          //   response = await this.orderService.buyOrderLav(OrderType.BUY, this.orderId, ListingType.STOCK, volume, limit, stop, this.allOrNone, this.isMargin);
+          // } else {
+          //   response = false;
+          // }
+          //
+          // if (response) {
+          //   this.popupService.openPopup("Success", "Buy order has been placed successfully");
+          //   this.dialogRef.close();
+          // } else {
+          //   this.popupService.openPopup("Error", "Error placing order, try again later");
+          //   this.dialogRef.close();
+          // }
 
           this.dialogRef.close();
         } else {
