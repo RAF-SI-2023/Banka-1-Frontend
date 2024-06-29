@@ -101,7 +101,7 @@ export class OtcComponent {
 
     if (contractId) {
       if (newStatus === 'Approved') {
-        this.otcService.approveOTC(contractId).subscribe(
+        this.otcService.acceptOTC(contractId).subscribe(
           (response) => {
             console.log('Response to successfully changing status to approved with acceptOTC():' + response);
             location.reload();
