@@ -328,6 +328,7 @@ export interface Customer {
   phoneNumber: string;
   gender: string;
   address: string;
+  company?: string;
 
   isLegalEntity: boolean;
 }
