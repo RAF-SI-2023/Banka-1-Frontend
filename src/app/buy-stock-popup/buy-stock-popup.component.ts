@@ -19,7 +19,7 @@ import {min} from "rxjs";
   templateUrl: './buy-stock-popup.component.html',
   styleUrl: './buy-stock-popup.component.css'
 })
-export class BuyStockPopupComponent {
+export class  BuyStockPopupComponent {
 
   volumeOfStock: string = '0';
   limitValue: string = '0';

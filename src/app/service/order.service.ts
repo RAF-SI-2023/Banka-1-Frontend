@@ -287,7 +287,7 @@ export class OrderService {
     }
   }
 
-  async sellOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
+  async sellOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, margin: boolean) {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -304,7 +304,7 @@ export class OrderService {
       limitValue: limitValue,
       stopValue: stopValue,
       allOrNone: allOrNone,
-      // isMargin:
+      isMargin: margin
     };
     console.log("sell order")
     console.log(orderRequest)
