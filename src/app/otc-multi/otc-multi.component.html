@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="page">
+      <div class="security-title">Multi OTC</div>
+      <div class="central-window">
+        <div class="tabs-menu">
+          <ul>
+  
+            <li
+              class="{{ selectedTab === 'my-stocks' ? 'active-tab' : '' }}"
+              (click)="setSelectedTab('my-stocks')"
+            >
+              My Stocks
+            </li>
+  
+            <li
+              class="{{ selectedTab === 'other-bank-stocks' ? 'active-tab' : '' }}"
+              (click)="setSelectedTab('other-bank-stocks')"
+            >
+              Other Bank Stocks
+            </li>
+
+            <li
+              class="{{ selectedTab === 'received-offers' ? 'active-tab' : '' }}"
+              (click)="setSelectedTab('received-offers')"
+            >
+              Received Offers
+            </li>
+
+            <li
+              class="{{ selectedTab === 'sent-offers' ? 'active-tab' : '' }}"
+              (click)="setSelectedTab('sent-offers')"
+            >
+              Sent Offers
+            </li>
+          </ul>
+          <hr />
+        </div>
+  
+        <!-- My Stocks -->
+        <div class="securities-tab" *ngIf="selectedTab === 'my-stocks'">
+          <table>
+            <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>Amount</th>
+              <th>Public</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let myStock of myStocks; let idx = index">
+              <td>{{ myStock.ticker }}</td>
+              <td>{{ myStock.amount }}</td>
+
+              <td (click)="toggleMenu(myStock); $event.stopPropagation()" [class.active]="myStock === selectedStock" class="pointer-cursor">
+                0
+                <div *ngIf="myStock === selectedStock" class="menu" (click)="$event.stopPropagation();">
+                    Set number of public stocks:
+                    <input type="number" [(ngModel)]="myStock.publicAmount" min="0" step="1" max = "myStock.publicAmount">
+
+                    Set price of public stock:
+                    <input type="number" #publicPriceInput min="0.01" step="0.01">
+
+                    <button (click)="setStock(myStock, myStock.publicAmount, publicPriceInput.value, idx); $event.stopPropagation()">Set</button>
+                    <button (click)="toggleMenu(myStock); $event.stopPropagation()">Cancel</button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Other Bank Stocks -->
+        <div class="securities-tab" *ngIf="selectedTab === 'other-bank-stocks'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Symbol</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let otherBankStock of otherBankStocks; let idx = index">
+                <td>{{ otherBankStock.amount }}</td>
+                <td>{{ otherBankStock.ticker }}</td>
+
+                <td>
+                    <div
+                      class="table-buttons"
+                      (click)="sellStock(otherBankStock)">
+                      <button class="button-primary">
+                        Sell
+                      </button>
+                    </div>
+                </td>
+
+              </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- Received Offers -->
+        <div class="securities-tab" *ngIf="selectedTab === 'received-offers'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Offer status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let offer of receivedOffers; let idx = index">
+                <td>{{ offer.amount }}</td>
+                <td>{{ offer.price }}</td>
+                <td>{{ offer.offerStatus }}</td>
+              </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- Sent Offers -->
+        <div class="securities-tab" *ngIf="selectedTab === 'sent-offers'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Symbol</th>
+                <th>Offer status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let offer of sentOffers; let idx = index">
+                <td>{{ offer.amount }}</td>
+                <td>{{ offer.price }}</td>
+                <td>{{ offer.ticker }}</td>
+                <td>{{ offer.offerStatus }}</td>
+              </tr>
+              </tbody>
+            </table>
+        </div>
+  
+        <!-- <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
+          <app-dynamic-table [headersArray]="headersPublicSecurities" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
+            <ng-template #actionsColumn let-row>
+              <div id="helperDiv">
+                <orange-button [buttonName]="'Offer'" (click)="offerSecurity(row.original)"></orange-button>
+              </div>
+            </ng-template>
+          </app-dynamic-table>
+        </div> -->
+
+
+      </div>
+    </div>
+  </div>
+  
