@@ -70,4 +70,12 @@ export class FutureService {
 
     return this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures', {headers});
   }
+
+  getRefreshFutures(): Observable<Future[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.http.get<Future[]>(environment.marketService + '/market/listing/refresh/futures', {headers});
+  }
 }

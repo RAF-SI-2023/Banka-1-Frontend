@@ -7,8 +7,9 @@
 
   <div class="popup-body">
     <div class="content">
-      <label class="body-element">Owner of a stock: {{ security.bankAccount }}</label>
-      <label class="body-element">Stock: {{ security.listingType }}</label>
+      <label class="body-element">Owner of a stock: {{ security.ownerName }}</label>
+      <label class="body-element">Listing Type: {{ security.listingType }}</label>
+      <label class="body-element">Ticker: {{ security.ticker }}</label>
       <div class="body-element">
         <label for="volume">Volume of a stock: </label>
         <input class="popup-input" id="volume" [style.margin-left.px]="20"  [(ngModel)]="volumeOfStock" placeholder="value..." [ngClass]="{ 'invalid-input': validInputVolume() }"/>

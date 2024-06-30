@@ -58,6 +58,28 @@ export class StockService {
     return resp;
   }
 
+  async getRefreshStocks(): Promise<StockListing[]>  {
+
+    const jwt = sessionStorage.getItem("jwt");
+
+    if(!jwt) return [];
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    let resp;
+    try {
+      resp = (await firstValueFrom(
+        this.http.get(environment.marketService + "/market/listing/refresh/stock", {headers})
+      )) as StockListing[];
+    } catch (e) {
+      return [];
+    }
+    resp.forEach(val => val.lastRefresh *= 1000);
+    return resp;
+  }
+
   async getStockHistory(stockId: number, from: number | null = null, to: number | null = null) {
     const jwt = sessionStorage.getItem("jwt");
 

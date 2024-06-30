@@ -72,4 +72,12 @@ export class ForexService {
 
     return this.http.get<Forex[]>(environment.marketService + '/market/listing/get/forex', {headers});
   }
+
+  getRefreshForexes(): Observable<Forex[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.http.get<Forex[]>(environment.marketService + '/market/listing/refresh/forex', {headers});
+  }
 }

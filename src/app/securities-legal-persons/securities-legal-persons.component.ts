@@ -77,7 +77,6 @@ export class SecuritiesLegalPersonsComponent {
   async ngOnInit() {
     await this.loadStocks();
     this.loadFutures();
-
     this.loadOptions()
   }
 
@@ -107,24 +106,6 @@ export class SecuritiesLegalPersonsComponent {
     });
   }
 
-
-  // loadFutures(): void {
-  //   const headers = new HttpHeaders({
-  //     Authorization: 'Bearer ' + sessionStorage.getItem('jwt'),
-  //   });
-  //   this.http
-  //   this.http.get<Future[]>(environment.marketService + '/market/listing/get/futures',{ headers })
-  //     .subscribe(
-  //       (res) =>
-  //         (this.futuresBackup = this.futures =
-  //           res.map((val) => {
-  //             val.settlementDate *= 1000;
-  //             val.lastRefresh *= 1000;
-  //             return val;
-  //           }))
-  //     );
-  //   // this.mockFutureData()
-  // }
 
 
 
@@ -167,142 +148,45 @@ export class SecuritiesLegalPersonsComponent {
     }
   }
 
-  stockMockData(){
-    const exp1: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    const exp2: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    const exp3: StockListing = {
-      listingId: 123,
-      listingType: 'stock',
-      ticker: "AAPL",
-      name: "NAME",
-      exchangeName: "Exchange",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      outstandingShares: 123,
-      dividendYield: 123,
-    }
-    this.securities.push(exp1)
-    this.securities.push(exp2)
-    this.securities.push(exp3)
+
+  async refresh() {
+    console.log('Refreshing');
+
+    await this.refreshStocks();
+    this.refreshFutures();
+    this.refreshOptions()
   }
 
-  optionsDataMock(){
-    const exp1: OptionsDto = {
-      ticker: "string",
-      optionType: "string",
-      strikePrice: 123,
-      currency: "string",
-      impliedVolatility: 123,
-      openInterest: 123,
-      expirationDate: 1717024395,
+  async refreshStocks(): Promise<void> {
 
-      listingId: 123,
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123
-    }
-    const exp2: OptionsDto = {
-      ticker: "string",
-      optionType: "string",
-      strikePrice: 123,
-      currency: "string",
-      impliedVolatility: 123,
-      openInterest: 123,
-      expirationDate: 1717024395,
+    const stocks = await this.stockService.getRefreshStocks();
 
-      listingId: 123,
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-    }
-    this.options.push(exp1)
-    this.options.push(exp2)
+    console.log(stocks);
+
+    this.securities = stocks;
+    this.securitiesBackup = stocks;
+
+    // this.stockMockData()
   }
 
-  mockFutureData(){
-    const exp1 : Future = {
-      listingId: 123,
-      ticker: "string",
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      contractSize: 123,
-      contractUnit: "string",
-      openInterest: 123,
-      settlementDate: 123
-    }
-    const exp2 : Future = {
-      listingId: 123,
-      ticker: "string",
-      listingType: "string",
-      name: "string",
-      exchangeName: "string",
-      lastRefresh: 123,
-      price: 123,
-      high: 123,
-      low: 123,
-      priceChange: 123,
-      volume: 123,
-      contractSize: 123,
-      contractUnit: "string",
-      openInterest: 123,
-      settlementDate: 123
-    }
-
-    this.futures.push(exp1);
-    this.futures.push(exp2);
-
+  refreshFutures(): void {
+    this.futureService.getRefreshFutures().subscribe(response => {
+      this.futures = this.futuresBackup = response.map(
+        val => {
+          val.settlementDate *= 1000;
+          val.lastRefresh *= 1000;
+          return val;
+        }
+      );
+      console.log(response);
+    });
   }
 
 
+  refreshOptions() {
+    this.optionsService.getRefreshOptions().subscribe(response => {
+      this.options = response;
+    })
+    // this.optionsDataMock()
+  }
 }

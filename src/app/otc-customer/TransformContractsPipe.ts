@@ -10,7 +10,6 @@ export class TransformContractsPipe implements PipeTransform {
     return contracts.map(contract => ({
       BUYER: contract.buyerAccountNumber,
       SELLER: contract.sellerAccountNumber,
-      COMMENT: contract.comment,
       CREATED: DateUtils.formatDate(contract.creationDate),
       REALIZED: DateUtils.formatDate(contract.realizationDate),
       TICKER: contract.ticker,
