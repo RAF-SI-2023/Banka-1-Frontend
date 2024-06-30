@@ -34,21 +34,8 @@ export class BankProfitComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-    this.loadBankProfit();
+  async ngOnInit() {
     this.loadAgentProfits();
-  }
-
-  private loadBankProfit() {
-    this.profitService.getBankProfit().subscribe(
-      (data: number) => {
-        this.bankProfit = data;
-        console.log('Bank profit:', this.bankProfit);
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error loading bank profit:', error);
-      }
-    );
   }
 
   public loadAgentProfits(): void {
@@ -59,7 +46,6 @@ export class BankProfitComponent implements OnInit {
 
       mergeMap(employees => {
         const profitRequests = employees.map(employee =>
-
           this.profitService.getAgentProfit(employee.userId).pipe(
             map(profit => ({
               name: employee.firstName + ' ' + employee.lastName,
@@ -79,6 +65,7 @@ export class BankProfitComponent implements OnInit {
             })
 
           )
+
         );
 
         return forkJoin(profitRequests);
@@ -86,6 +73,8 @@ export class BankProfitComponent implements OnInit {
     ).subscribe(
       (employeeProfits: Profit[]) => {
         this.profits = employeeProfits;
+        this.bankProfit = this.profits.reduce((acc, profit) => acc + profit.totalProfit, 0);
+        console.log('Bank profit:', this.bankProfit);
         console.log('Employees with profit:', this.profits);
       },
       (error: HttpErrorResponse) => {
@@ -96,6 +85,10 @@ export class BankProfitComponent implements OnInit {
 
   setTab(tabName: string) {
     this.selectedTab = tabName;
+  }
+
+  refresh() {
+    this.ngOnInit().then();
   }
 
 }

@@ -9,25 +9,30 @@ import {PopupService} from "../service/popup.service";
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewLegalPersonPopUpComponent } from '../add-new-legal-person-pop-up/add-new-legal-person-pop-up.component';
 import { environment } from '../../../environment';
+import { TransparentTextFieldModule } from '../welcome/redesign/TransparentTextField';
+import { DropdownInputModule } from '../welcome/redesign/DropdownInput';
+import { OrangeButtonModule } from '../welcome/redesign/OrangeButton';
 
 @Component({
   selector: 'app-legal-persons',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TransparentTextFieldModule, DropdownInputModule, OrangeButtonModule],
   templateUrl: './legal-persons.component.html',
   styleUrl: './legal-persons.component.css'
 })
 export class LegalPersonsComponent {
   // Initially set the first tab as active (This page only has one tab for now)
   activeTab: string = 'overviewTab';
+  searchFilterKeyWord: string = '';
+  searchBy: string = '';
+  filterByValues: string[] = ['companyName', 'companyNumber', 'pib'];
+  public allLegalPersons: LegalPerson[] = [];
+  loggedUserId:number = -1;
 
   // Function to change the active tab (This page only has one tab for now)
   setActiveTab(tabId: string): void {
     this.activeTab = tabId;
   }
-
-  public allLegalPersons: LegalPerson[] = [];
-  loggedUserId:number = -1;
 
   constructor(private legalPersonService: LegalPersonService, private router: Router, private popup:PopupService, private dialog: MatDialog) {
     let loggedUserIdAsString = sessionStorage.getItem('loggedUserID');
@@ -85,5 +90,52 @@ export class LegalPersonsComponent {
       //   this.loadAllLegalPersons();
       // }
     });
+  }
+
+  onSelectionChange(selectedValue: any): void {
+     this.searchBy = selectedValue;  // Assign the selected value to a component property
+     console.log('Selected value:', this.searchBy);  // Optional: Log the selected value
+  }
+
+  filter()
+  {
+    console.log("searchBy: " + this.searchBy);
+    console.log("searchByKeyWord: " + this.searchFilterKeyWord);
+
+    if(this.searchBy == '')
+    {
+      alert("Choose filter attribute");
+    }
+
+    if(this.searchFilterKeyWord == '')
+    {
+      this.loadAllLegalPersons();
+      return;
+    }
+
+    if(this.searchBy == 'companyName')
+    {
+      console.log('filtering by companyName');
+      let tmp = this.allLegalPersons.filter(legalPerson => legalPerson.companyName === this.searchFilterKeyWord);
+      this.allLegalPersons = tmp;
+    }
+    else if(this.searchBy == 'companyNumber')
+    {
+      console.log('filtering by companyNumber');
+      let tmp = this.allLegalPersons.filter(legalPerson => legalPerson.idNumber === this.searchFilterKeyWord);
+      this.allLegalPersons = tmp;
+    }
+    else if(this.searchBy == 'pib')
+    {
+      console.log('filtering by pib');
+      let tmp = this.allLegalPersons.filter(legalPerson => legalPerson.pib === this.searchFilterKeyWord);
+      this.allLegalPersons = tmp;
+    }
+    else
+    {
+      console.log("Shouldn't enetered here. Filtering by bad searchBy attribute.")
+    }
+
+    console.log(this.allLegalPersons);
   }
 }

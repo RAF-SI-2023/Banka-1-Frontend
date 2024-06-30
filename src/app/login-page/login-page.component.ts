@@ -36,6 +36,7 @@ export class LoginPageComponent {
   toggleRole() {
     this.isEmployee = !this.isEmployee; // Toggle between true and false
     console.log(this.isEmployee ? "employee page" :"customer page")
+    sessionStorage.setItem('loginUserRole',this.isEmployee ? "employee" :"customer")
   }
 
   model: any = {};
@@ -51,6 +52,7 @@ export class LoginPageComponent {
     private storageService: StorageService,
     private customerService: CustomerService,
   ) {
+    sessionStorage.setItem('loginUserRole',"customer")
   }
   loginFormSchema = z.object({
     email: z.string().email(),
@@ -92,6 +94,7 @@ export class LoginPageComponent {
         error => {
           this.popupService.openPopup("Error", "Wrong email or password")
         });
+
       sessionStorage.setItem('isLegalPerson', String(false));
 
     } else {
@@ -110,14 +113,18 @@ export class LoginPageComponent {
                this.storageService.setRole('customer');
                sessionStorage.setItem('loggedUserID', response.userId.toString());
                this.router.navigate(['/welcome']);
-                sessionStorage.setItem('isLegalPerson', String(response.isLegalEntity));
+
+               sessionStorage.setItem('isLegalPerson', String(response.isLegalEntity));
+               sessionStorage.setItem('legalPersonCompany', String(response.company));
+               console.log(response.isLegalEntity.toString() + " DDDD")
+
              },
              error =>{
               console.log("Greska")
              }
            );
           } else {
-            sessionStorage.setItem('isLegalPerson', String(false));
+            // sessionStorage.setItem('isLegalPerson', String(false));
           }
 
         },

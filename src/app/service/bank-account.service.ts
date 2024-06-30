@@ -211,7 +211,7 @@ export class BankAccountService {
       listingType: security.listingType,
       ticker: security.ticker
     }
-    console.log("makeAnOffer")
+    console.log("makeAnOfferCustomer")
     console.log(body)
     return this.httpClient.post(environment.userService + "/contract/customer", body, options);
   }
@@ -230,7 +230,8 @@ export class BankAccountService {
       listingType: security.listingType,
       ticker: security.ticker
     }
-
+    console.log("makeAnOfferCustomer")
+    console.log(body)
     return this.httpClient.post(environment.userService + "/contract/employee", body, options);
   }
 
