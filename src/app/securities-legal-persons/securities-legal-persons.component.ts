@@ -54,6 +54,7 @@ export class SecuritiesLegalPersonsComponent {
   options: any[] = [];
 
   isLegalPerson: boolean = false;
+  role: string | null = '';
 
   constructor(
     private securityService: SecurityService,
@@ -66,6 +67,9 @@ export class SecuritiesLegalPersonsComponent {
     router: Router
   ) {
     this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+    this.role = sessionStorage.getItem('role');
+    console.log('Logged user position in security/legal route');
+    console.log(this.role);
 
     if(!this.isLegalPerson){
       this.selectedTab = 'options'

@@ -35,7 +35,7 @@
           </div>
 
           <div [routerLink]="'/security/all'" class="sidebar-item" routerLinkActive="active"  *ngIf="!isLegalPerson">
-            <div>Securities</div>
+            <div>Security</div>
           </div>
 
           <div [routerLink]="'/security/legal'" class="sidebar-item" routerLinkActive="active" *ngIf="isLegalPerson">
@@ -76,9 +76,6 @@
 
           <div [routerLink]="'/multiOtc'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor)">
             <div>Multi OTC</div>
-          </div>
-
-            <div>Margin</div>
           </div>
 
           <div [routerLink]="'/exchange-transaction-report'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor) && !isLegalPerson">
