@@ -329,9 +329,9 @@ export interface Customer {
   gender: string;
   address: string;
   company?: string;
-
   isLegalEntity: boolean;
 }
+
 
 
 export interface PublicCapitalDto {

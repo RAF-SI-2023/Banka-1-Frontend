@@ -30,7 +30,7 @@
             <div>Bank accounts</div>
           </div>
 
-          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin">
+          <div [routerLink]="'/customer/all'" class="sidebar-item" routerLinkActive="active" *ngIf="isAdmin && !isLegalPerson">
             <div>Customer</div>
           </div>
 
@@ -70,11 +70,14 @@
             <div>OTC</div>
           </div>
 
+          <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor||isCustomer)">
+          <div>Margin</div>
+          </div>
+
           <div [routerLink]="'/multiOtc'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor)">
             <div>Multi OTC</div>
           </div>
 
-          <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor) && !isLegalPerson">
             <div>Margin</div>
           </div>
 
@@ -94,7 +97,7 @@
         <span>Cards</span>
       </div> -->
 
-          <div class="sidebar-item-wrapper" *ngIf="isCustomer">
+          <div class="sidebar-item-wrapper" *ngIf="isCustomer && !isLegalPerson">
             <div class="sidebar-item" (click)="setActiveItem('openPayments')">
               <div>Payments</div>
               <img
@@ -133,7 +136,7 @@
             </div>
           </div>
 
-          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer">
+          <div [routerLink]="'/cards'" class="sidebar-item"routerLinkActive="active" *ngIf="isCustomer  && !isLegalPerson">
             <div>Cards</div>
           </div>
 
