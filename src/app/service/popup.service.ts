@@ -25,6 +25,7 @@ import {CustomPopupComponent} from "../custom-popup/custom-popup.component";
 import {MarginCallPopUpComponent} from "../margin-call-pop-up/margin-call-pop-up.component";
 import {PopUpWithRefreshComponent} from "../pop-up-with-refresh/pop-up-with-refresh.component";
 import { SuccessfullyCreatedUserComponent } from '../successfully-created-user/successfully-created-user.component';
+import { SellMultiOtcPopUpComponent } from '../sell-multi-otc-pop-up/sell-multi-otc-pop-up.component';
 
 
 @Injectable({
@@ -151,6 +152,12 @@ export class PopupService {
     this.dialog.open(PublicSecurityOfferPopupComponent, {
       data: args
     });
+  }
+
+  openSellMultiOtcPopup(args: any): void {
+    this.dialog.open(SellMultiOtcPopUpComponent,{
+      data: args
+    })
   }
 
   openCustomMessage(args: {title: string, header: string, message: string}): void {

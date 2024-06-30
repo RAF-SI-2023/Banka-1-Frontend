@@ -1,0 +1,45 @@
+<div class="popup-container">
+  <div class="popup-header">
+    <span class="header-title">Offer Stocks</span>
+    <span class="close-icon" (click)="onCancelButton()">X</span>
+  </div>
+
+
+  <div class="popup-body">
+    <div class="content">
+      <div class="body-element">
+        <label for="volume">Volume of a stock: </label>
+        <input class="popup-input" id="volume" [style.margin-left.px]="20"  [(ngModel)]="volumeOfStock" placeholder="value..." [ngClass]="{ 'invalid-input': validInputVolume() }"/>
+  <!--      <transparent-text-field id="volume" [(ngModel)]="volumeOfStock" [fieldName]="''"></transparent-text-field>-->
+      </div>
+      <div class="body-element">
+        <label for="price">Price Offer: </label>
+        <input class="popup-input" id="price" [style.margin-left.px]="100" [(ngModel)]="priceOffer" placeholder="value..." [ngClass]="{ 'invalid-input':  validInputOffer() }"/>
+      </div>
+
+
+      <div class="body-element">
+        <label class="warning">{{ warnMessage }}</label>
+      </div>
+    </div>
+
+
+    <div class="popup-buttons">
+      <button class="button-primary"  (click)="onCancelButton()">
+        CANCEL
+      </button>
+      <button class="button-primary"  (click)="onMakeAnOffer()">
+        MAKE AN OFFER
+      </button>
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+</div>

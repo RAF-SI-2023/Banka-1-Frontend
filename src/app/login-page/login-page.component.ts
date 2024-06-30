@@ -115,6 +115,7 @@ export class LoginPageComponent {
                this.router.navigate(['/welcome']);
 
                sessionStorage.setItem('isLegalPerson', String(response.isLegalEntity));
+               sessionStorage.setItem('legalPersonCompany', String(response.company));
                console.log(response.isLegalEntity.toString() + " DDDD")
 
              },

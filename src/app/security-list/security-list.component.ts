@@ -118,11 +118,11 @@ export class SecurityListComponent {
   }
 
   refresh() {
-    // this.loadStocks();
-    // this.loadFutures();
-    // this.loadForexes();
-    // this.loadOptions();
-    this.ngOnInit().then();
+
+    console.log("Refreshing");
+    this.refreshStocks();
+    this.refreshFutures();
+    this.refreshForexes();
   }
 
   async buyOption(options: OptionsDto){
@@ -149,6 +149,13 @@ export class SecurityListComponent {
     // console.log(this.securities)
   }
 
+  async refreshStocks(): Promise<void> {
+    const stocks = await this.stockService.getRefreshStocks();
+    this.securities = stocks;
+    this.securitiesBackup = stocks;
+    // console.log(this.securities)
+  }
+
   loadForexes(): void {
     this.forexService.getForexes().subscribe(forexes => {
       this.forexes = this.forexesBackup = forexes.map(forex => {
@@ -159,8 +166,28 @@ export class SecurityListComponent {
     });
   }
 
+  refreshForexes(): void {
+    this.forexService.getRefreshForexes().subscribe(forexes => {
+      this.forexes = this.forexesBackup = forexes.map(forex => {
+        forex.lastRefresh *= 1000;
+        return forex;
+      });
+      // console.log("Forexes:" + this.forexes)
+    });
+  }
   loadFutures(): void {
     this.futureService.getFutures().subscribe(futures => {
+      this.futures = this.futuresBackup = futures.map(future => {
+        future.settlementDate *= 1000;
+        future.lastRefresh *= 1000;
+        return future;
+      });
+      // console.log("Futures:" + this.futures)
+    });
+  }
+
+  refreshFutures(): void {
+    this.futureService.getRefreshFutures().subscribe(futures => {
       this.futures = this.futuresBackup = futures.map(future => {
         future.settlementDate *= 1000;
         future.lastRefresh *= 1000;

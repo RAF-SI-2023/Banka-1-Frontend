@@ -8,7 +8,7 @@
         <div class="user-logo-name">
           <div class="banka-user-logo"></div>
           <div class="banka-user-name">{{ userInitials }}</div>
-          <label *ngIf="isLegalPerson">⠀(Legal person)</label>
+          <label *ngIf="isLegalPerson">⠀{{company}}</label>
         </div>
 
         <div class="underline"></div>
@@ -68,6 +68,10 @@
 
           <div [routerLink]="'/otc-customer'" class="sidebar-item" routerLinkActive="active" *ngIf="isCustomer">
             <div>OTC</div>
+          </div>
+
+          <div [routerLink]="'/multiOtc'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor)">
+            <div>Multi OTC</div>
           </div>
 
           <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor) && !isLegalPerson">
