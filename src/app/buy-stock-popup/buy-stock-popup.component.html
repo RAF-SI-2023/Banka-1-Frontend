@@ -7,8 +7,10 @@
   <div class="popup-body">
     <div class="content">
       <div class="body-element">
-        <label for="volume">Volume of a stock: </label>
-        <input class="popup-input" id="volume" name="volume" [(ngModel)]="volumeOfStock" (input)="calculateValues()" [ngClass]="{ 'invalid-input': validInputVolume() }" min="0"/>
+        <label *ngIf="type=='STOCK'" for="volume" >Volume of a stock: </label>
+        <label *ngIf="type=='FUTURE'" for="volume" >Volume of a future: </label>
+        <input class="popup-input" id="volume" name="volume" [style.margin-left.px]="20"  [(ngModel)]="volumeOfStock" placeholder="value..." [ngClass]="{ 'invalid-input': validInputVolume() }"/>
+<!--        <input class="popup-input" id="volume" name="volumeInput" [style.margin-left.px]="20" [(ngModel)]="volumeOfStock"/>-->
       </div>
       <div class="body-element">
         <label for="limit">Limit value: </label>

@@ -193,7 +193,7 @@ export interface NewTransactionDto {
 }
 
 export interface TransactionDetails {
-  recipientName: String; 
+  recipientName: String;
   amount: number;
   referenceNumber: String;
   paymentCode: number;
@@ -329,6 +329,7 @@ export interface Customer {
   gender: string;
   address: string;
   company?: string;
+  company?: string;
 
   isLegalEntity: boolean;
 }
@@ -337,6 +338,7 @@ export interface Customer {
 export interface PublicCapitalDto {
   publicTotal: number;
   isIndividual: boolean;
+  ownerName: string;
   bankAccountNumber: string;
   listingType: ListingType;
   listingId: number;

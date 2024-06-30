@@ -27,6 +27,12 @@
           >
             Securities
           </li>
+          <li
+            class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('public-securities')"
+          >
+            Public Securities
+          </li>
 
         </ul>
         <hr />
@@ -93,14 +99,74 @@
 
 
       <div class="securities-tab" *ngIf="selectedTab === 'securities'">
-        <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">
+<!--        <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">-->
+<!--          <ng-template #actionsColumn let-row>-->
+<!--            <div id="helperDiv">-->
+<!--              <orange-button [buttonName]="'Sell'" (click)="sellOrder(row.original)"></orange-button>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </app-dynamic-table>-->
+        <table>
+          <thead>
+          <tr>
+            <th>Security</th>
+            <th>Symbol</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <!--            <th>Profit</th>-->
+            <!--            <th>Last modified</th>-->
+            <th>Public</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let security of allSecurities">
+            <td>{{ security.security.listingType }}</td>
+            <td>{{ security.security.ticker }}</td>
+            <td>{{ security.security.total }}</td>
+            <td>{{ security.security.totalPrice }}</td>
+            <!--            <td> 123 </td>-->
+            <!--            <td> 123 </td>-->
+            <!--            <td>{{ security.security.publicTotal }}</td>-->
+            <td [ngClass]="{'selected': security.showPopup}" >
+              <div class="cell-content"  (click)="showPopup(security)">
+                {{ security.security.publicTotal }}
+              </div>
+              <div *ngIf="security.showPopup" class="popup">
+                <label for="publicInput">Set number of public actions: </label>
+                <input id="publicInput" [(ngModel)]="changedPublicValue">
+                <button *ngIf="changePublicValueButton(security)" class="button-primary" (click)="changePublicValue(security.security)">
+                  Confirm
+                </button>
+                <button class="button-secondary" (click)="cancelChangePublic(security)">
+                  Cancel
+                </button>
+              </div>
+            </td>
+
+            <td>
+              <div
+                class="table-buttons">
+                <button class="button-primary" (click)="sellOrder(security)">
+                  Sell
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
+        <app-dynamic-table [headersArray]="headersPublicSecurities" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
           <ng-template #actionsColumn let-row>
             <div id="helperDiv">
-              <orange-button [buttonName]="'Sell'" (click)="sellOrder(row.original)"></orange-button>
+              <orange-button [buttonName]="'Offer'" (click)="offerSecurity(row.original)"></orange-button>
             </div>
           </ng-template>
         </app-dynamic-table>
       </div>
+
     </div>
   </div>
 </div>

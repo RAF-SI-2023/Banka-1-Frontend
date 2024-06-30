@@ -51,7 +51,6 @@ export class OtcCustomerComponent {
   headersOTCs = [
     'Buyer',
     'Seller',
-    'Comment',
     'Created',
     'Realized',
     'Ticker',
@@ -121,7 +120,7 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeSell = this.contracts
       .filter(contract => accountNumbers.includes(contract.sellerAccountNumber))
-      .filter(contract => (!contract.bankApproval || !contract.sellerApproval))
+      .filter(contract => !(contract.bankApproval && contract.sellerApproval) && !contract.comment)
 
     console.log('Active Sell Contracts:', this.activeSell);
   }
@@ -132,7 +131,7 @@ export class OtcCustomerComponent {
     const accountNumbers = this.customer.accountIds.map(account => account.accountNumber);
     this.activeBuy = this.contracts
       .filter(contract => accountNumbers.includes(contract.buyerAccountNumber))
-      .filter(contract => (!contract.bankApproval || !contract.sellerApproval))
+      .filter(contract => !(contract.bankApproval && contract.sellerApproval) && !contract.comment)
 
     console.log('Active Buy Contracts:', this.activeBuy);
   }
@@ -163,13 +162,29 @@ export class OtcCustomerComponent {
   //   })
   // }
 
+  // getPublicSecurities() {
+  //   this.orderService.getPublicStocksOTC().subscribe(res => {
+  //     console.log('Public Securities:', res);
+  //     this.publicSecurities = res.filter(publicSecurity => {
+  //       if (this.customer.isLegalEntity) {
+  //         return !publicSecurity.isIndividual;
+  //       } else {
+  //         return publicSecurity.isIndividual;
+  //       }
+  //     });
+  //   });
+  // }
+
   getPublicSecurities() {
     this.orderService.getPublicStocksOTC().subscribe(res => {
+      console.log('Public Securities:', res);
+      const customerAccountNumbers = this.customer.accountIds.map(account => account.accountNumber);
       this.publicSecurities = res.filter(publicSecurity => {
+        const isAccountDifferent = !customerAccountNumbers.includes(publicSecurity.bankAccountNumber);
         if (this.customer.isLegalEntity) {
-          return !publicSecurity.isIndividual;
+          return !publicSecurity.isIndividual && isAccountDifferent;
         } else {
-          return publicSecurity.isIndividual;
+          return publicSecurity.isIndividual && isAccountDifferent;
         }
       });
     });

@@ -18,7 +18,6 @@ export class TransformContractsHistoryPipe implements PipeTransform {
       return contracts.map(contract => ({
         BUYER: contract.buyerAccountNumber,
         SELLER: contract.sellerAccountNumber,
-        COMMENT: contract.comment,
         CREATED: DateUtils.formatDate(contract.creationDate),
         REALIZED: DateUtils.formatDate(contract.realizationDate),
         TICKER: contract.ticker,
@@ -33,7 +32,6 @@ export class TransformContractsHistoryPipe implements PipeTransform {
     return contracts.map(contract => ({
       BUYER: accountNumbers.includes(contract.buyerAccountNumber) ? 'Me' : contract.buyerAccountNumber,
       SELLER: accountNumbers.includes(contract.sellerAccountNumber) ? 'Me' : contract.sellerAccountNumber,
-      COMMENT: contract.comment,
       CREATED: DateUtils.formatDate(contract.creationDate),
       REALIZED: DateUtils.formatDate(contract.realizationDate),
       TICKER: contract.ticker,
