@@ -17,7 +17,7 @@
 <!--        <input type="text" class="popup-input" id="margin_call" [style.margin-left.px]="100" [(ngModel)]="marginCall" placeholder="value..." [ngClass]="{ 'invalid-input':  isValid() }"/>-->
 <!--      </div>-->
 
-      <span class="hint-text">Minimum: 2.334,00 RSD</span>
+      <span class="hint-text">Minimum: {{minimumAmount}} RSD</span>
       <div class="body-element">
         <label class="warning">{{ warnMessage }}</label>
       </div>

@@ -41,8 +41,7 @@ import {OtcCustomerComponent} from "./otc-customer/otc-customer.component";
 import {MarginComponent} from "./margin/margin.component";
 import {MarginTransactionDetailsComponent} from "./margin-transaction-details/margin-transaction-details.component";
 import {ExchangeTransactionReportComponent} from "./exchange-transaction-report/exchange-transaction-report.component";
-
-
+import { OtcMultiComponent } from './otc-multi/otc-multi.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, //this will make the first page that is loaded a login page
@@ -185,8 +184,12 @@ export const routes: Routes = [
     data: { roles: ['customer'] }
   },
   {
+    path: 'multiOtc', component: OtcMultiComponent, canActivate: [PositionsGuard],
+    data: { roles: ['supervizor', 'admin'] }
+  },
+  {
     path: 'margin', component: MarginComponent, canActivate: [PositionsGuard],
-    data: { roles: ['agent', 'supervizor', 'admin'] }
+    data: { roles: ['agent', 'supervizor','customer', 'admin'] }
   },
   {
     path: 'margin-transaction-details', component: MarginTransactionDetailsComponent, canActivate: [PositionsGuard],

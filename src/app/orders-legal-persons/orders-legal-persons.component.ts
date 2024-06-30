@@ -62,6 +62,8 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   securities: CapitalProfitDto[] = [];
 
+  orderHistory: OrderDto[] = [];
+
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
   publicSecurities: AllPublicCapitalsDto[] = [];
 
@@ -167,20 +169,32 @@ export class OrdersLegalPersonsComponent implements OnInit {
     if(original.security.listingType === 'STOCK') {
       this.popupService.openSellPopup(original.security.listingId, true,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
       this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
       this.popupService.openSellPopup(original.security.listingId, true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     }
   }
 
+  async loadOrders(){
+    if(this.isSupervizor || this.isAdmin){
+      this.orderHistory = await this.orderService.getAllOrdersHistory();
+    }else{
+      this.orderHistory=await this.orderService.getOrdersHistory();
+    }
+
+  }
+
   changePublicValue(element: any){
-    this.orderService.changePublicValue(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+    this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
       if(res)
         this.getSecurityOrders();
     })
@@ -195,7 +209,7 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   changePublicValueButton(security: any): boolean{
     if (this.changedPublicValue > 0) {
-      if (security.security.total > this.changedPublicValue)
+      if (security.security.total - security.security.publicTotal >= this.changedPublicValue)
         return true;
     }
     return false;
