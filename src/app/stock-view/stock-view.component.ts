@@ -58,7 +58,7 @@ export class StockViewComponent {
 
 
   goBack() {
-    this.router.navigateByUrl(`/securities`);
+    this.router.navigateByUrl(`/security/all`);
   }
 
   refresh() {
