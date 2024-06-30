@@ -60,6 +60,8 @@ export class SecurityListComponent {
 
   options: any[] = [];
 
+  role: string | null = ''
+
   constructor(
     private stockService: StockService,
     private futureService: FutureService,
@@ -69,8 +71,17 @@ export class SecurityListComponent {
     private popupService: PopupService,
     router: Router
   ) {
-    this.selectedTab = 'options'
+    // this.selectedTab = 'options'
     this._router = router;
+
+    this.role = sessionStorage.getItem('role');
+    console.log('Role: ' + this.role);
+
+    if(this.role === 'customer'){
+      this.selectedTab = 'stocks'
+    } else {
+      this.selectedTab = 'options'
+    }
   }
 
   async ngOnInit() {

@@ -36,20 +36,21 @@
             Stock
           </div>
 
-          <div
+          <div *ngIf="this.role !== 'customer'"
             (click)="setSelectedTab('future')"
             [ngClass]="selectedTab === 'future' ? 'tab tab-active' : 'tab'"
           >
             Future
           </div>
 
-          <div
+          <div *ngIf="this.role !== 'customer'"
             (click)="setSelectedTab('forex')"
             [ngClass]="selectedTab === 'forex' ? 'tab tab-active' : 'tab'"
           >
             Forex
           </div>
-          <div
+
+          <div *ngIf="this.role !== 'customer'"
             (click)="setSelectedTab('options')"
             [ngClass]="selectedTab === 'options' ? 'tab tab-active' : 'tab'"
           >
