@@ -272,10 +272,17 @@ export class OrdersComponent {
   }
 
   changePublicValue(security: any){
-    this.orderService.changePublicValue(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
-      if(res)
-        this.getSecurityOrders();
-    })
+    if(sessionStorage.getItem("loginUserRole") == "customer") {
+      this.orderService.changePublicValueCustomer(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    } else {
+      this.orderService.changePublicValueEmployee(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    }
     security.security.showPopup = false;
   }
 

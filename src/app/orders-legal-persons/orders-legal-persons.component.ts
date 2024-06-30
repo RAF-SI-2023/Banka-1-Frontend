@@ -68,7 +68,6 @@ export class OrdersLegalPersonsComponent implements OnInit {
   publicSecurities: AllPublicCapitalsDto[] = [];
 
   headersOrderHistory = ['Security', 'Transaction', 'Amount', 'Price', 'Status', 'Last Modified']
-  orderHistory: OrderDto[] = [];
 
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
@@ -82,16 +81,6 @@ export class OrdersLegalPersonsComponent implements OnInit {
     this.loadOrders();
     this.getSecurityOrders();
     this.getPublicSecurities();
-  }
-
-  async loadOrders(){
-    // if(this.isSupervizor || this.isAdmin){
-    //   this.orderHistory = await this.orderService.getAllOrdersHistory();
-    // }else{
-      this.orderHistory = await this.orderService.getOrdersHistory();
-      console.log("ORDER HISTORY")
-      console.log(this.orderHistory)
-    // }
   }
 
   private getSecurityOrders() {
