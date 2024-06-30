@@ -36,6 +36,7 @@
           <hr />
         </div>
   
+        <!-- My Stocks -->
         <div class="securities-tab" *ngIf="selectedTab === 'my-stocks'">
           <table>
             <thead>
@@ -76,6 +77,76 @@
             </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- Other Bank Stocks -->
+        <div class="securities-tab" *ngIf="selectedTab === 'other-bank-stocks'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Symbol</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let otherBankStock of otherBankStocks; let idx = index">
+                <td>{{ otherBankStock.amount }}</td>
+                <td>{{ otherBankStock.ticker }}</td>
+
+                <td>
+                    <div
+                      class="table-buttons">
+                      <button class="button-primary">
+                        Sell
+                      </button>
+                    </div>
+                  </td>
+
+              </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- Received Offers -->
+        <div class="securities-tab" *ngIf="selectedTab === 'received-offers'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Offer status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let offer of receivedOffers; let idx = index">
+                <td>{{ offer.amount }}</td>
+                <td>{{ offer.price }}</td>
+                <td>{{ offer.offerStatus }}</td>
+              </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <!-- Sent Offers -->
+        <div class="securities-tab" *ngIf="selectedTab === 'sent-offers'">
+            <table>
+              <thead>
+              <tr>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Symbol</th>
+                <th>Offer status</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let offer of sentOffers; let idx = index">
+                <td>{{ offer.amount }}</td>
+                <td>{{ offer.price }}</td>
+                <td>{{ offer.ticker }}</td>
+                <td>{{ offer.offerStatus }}</td>
+              </tr>
+              </tbody>
+            </table>
         </div>
   
         <!-- <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">

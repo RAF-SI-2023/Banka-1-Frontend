@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MyStockDto } from '../model/model';
+import { MyStockDto, OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
 import { MultiOtcService } from '../service/multi-otc.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -22,6 +22,9 @@ export class OtcMultiComponent {
   selectedStock: any = null;
 
   myStocks : MyStockDto[] = [];
+  receivedOffers : ReceivedOffersDto[] = [];
+  sentOffers : SendOffersDto[] = [];
+  otherBankStocks : OtherBankStocks[] = [];
 
   constructor(private multiOtcService: MultiOtcService) {this.selectedTab = "my-stocks";}
 
@@ -31,6 +34,9 @@ export class OtcMultiComponent {
 
   ngOnInit() {
     this.loadAllMyStocks();
+    this.loadAllReceivedOffers();
+    this.loadAllSentOffers();
+    this.loadOtherBankStocks();
   }
 
   loadAllMyStocks()
@@ -41,6 +47,51 @@ export class OtcMultiComponent {
 
         console.log('All myStocks data loaded');
         console.log(this.myStocks);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading myStocks:', error);
+      }
+    );
+  }
+
+  loadAllReceivedOffers()
+  {
+    this.multiOtcService.getAllReceivedOffers().subscribe(
+      (allReceivedOffersFromAPI: ReceivedOffersDto[]) => {
+        this.receivedOffers = allReceivedOffersFromAPI;
+
+        console.log('All receivedOffers data loaded');
+        console.log(this.receivedOffers);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading myStocks:', error);
+      }
+    );
+  }
+
+  loadAllSentOffers()
+  {
+    this.multiOtcService.getAllSendOffers().subscribe(
+      (allSentOffersFromAPI: SendOffersDto[]) => {
+        this.sentOffers = allSentOffersFromAPI;
+
+        console.log('All sentOffers data loaded');
+        console.log(this.sentOffers);
+      },
+      (error: HttpErrorResponse) => {
+        console.error('Error loading myStocks:', error);
+      }
+    );
+  }
+
+  loadOtherBankStocks()
+  {
+    this.multiOtcService.getAllOtherBankStocks().subscribe(
+      (allOtherBankStocks: OtherBankStocks[]) => {
+        this.otherBankStocks = allOtherBankStocks;
+
+        console.log('All otherBankStocks data loaded');
+        console.log(this.otherBankStocks);
       },
       (error: HttpErrorResponse) => {
         console.error('Error loading myStocks:', error);
