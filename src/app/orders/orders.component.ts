@@ -172,6 +172,15 @@ export class OrdersComponent {
 
   setSelectedTab(tab: "order-history" | "requests" | "securities" | "public-securities") {
     this.selectedTab = tab;
+
+    //to refresh table after switching tabs
+    this.customerId = sessionStorage.getItem('loggedUserID');
+    if(this.customerId) {
+      this.loadLimit()
+    }
+    this.loadOrders()
+    this.getSecurityOrders();
+    this.getPublicSecurities();
   }
 
   async ngOnInit() {
