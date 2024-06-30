@@ -69,6 +69,7 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   headersOrderHistory = ['Security', 'Transaction', 'Amount', 'Price', 'Status', 'Last Modified']
 
+
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
 
@@ -82,6 +83,7 @@ export class OrdersLegalPersonsComponent implements OnInit {
     this.getSecurityOrders();
     this.getPublicSecurities();
   }
+
 
   private getSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({

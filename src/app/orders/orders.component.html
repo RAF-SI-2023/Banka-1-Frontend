@@ -8,7 +8,15 @@
     <div class="central-window">
       <div class="tabs-menu">
         <ul>
+<!--          <li-->
+<!--            class="{{ selectedTab === 'requests' ? 'active-tab' : '' }}"-->
+<!--            (click)="setSelectedTab('requests')"-->
+<!--            *ngIf="(isAdmin || isSupervizor)"-->
+<!--          >-->
+<!--            Requests-->
+<!--          </li>-->
           <li
+
             class="{{ selectedTab === 'requests' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('requests')"
             *ngIf="(isAdmin || isSupervizor)"
@@ -16,11 +24,13 @@
             Requests
           </li>
           <li
+
             class="{{ selectedTab === 'all-securities' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('all-securities')"
           >
             All Securities
           </li>
+
           <li *ngIf="isAdmin"
             class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('public-securities')"
@@ -153,6 +163,7 @@
       </div>
 
 
+
       <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
         <app-dynamic-table [headersArray]="headersPublicSecurities" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
           <ng-template #actionsColumn let-row>
@@ -162,6 +173,7 @@
           </ng-template>
         </app-dynamic-table>
       </div>
+
     </div>
   </div>
 </div>

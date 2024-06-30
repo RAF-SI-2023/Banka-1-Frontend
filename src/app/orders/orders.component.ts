@@ -1,14 +1,6 @@
 import {Component} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {
-  AllPublicCapitalsDto,
-  CapitalProfitDto,
-  ListingType,
-  OrderDto,
-  OrderStatus, PublicStock,
-  SellingRequest,
-  StatusRequest
-} from "../model/model";
+import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -44,7 +36,9 @@ import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPi
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
+
   selectedTab: "order-history" | "requests" | "public-securities" | "all-securities";
+
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -75,8 +69,10 @@ export class OrdersComponent {
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
 
+
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
   publicSecurities: AllPublicCapitalsDto[] = [];
+
 
 
   sellScheme = z.object({
@@ -98,6 +94,7 @@ export class OrdersComponent {
     this.selectedTab = "order-history";
     this.getAllSecurityOrders();
     this.getSecurityOrders();
+
     this.getPublicSecurities();
     console.log("BBBB")
   }
@@ -106,6 +103,10 @@ export class OrdersComponent {
     this.orderService.getPublicStocks().subscribe( res =>{
       this.publicSecurities = res
     })
+  }
+
+
+    console.log("BBBB")
   }
 
 
@@ -150,8 +151,19 @@ export class OrdersComponent {
     // })
   }
 
+
   setSelectedTab(tab: "order-history" | "requests" | "public-securities" | "all-securities") {
     this.selectedTab = tab;
+
+    //to refresh table after switching tabs
+    this.customerId = sessionStorage.getItem('loggedUserID');
+    if(this.customerId) {
+      this.loadLimit()
+    }
+    this.loadOrders()
+    this.getSecurityOrders();
+    this.getPublicSecurities();
+
   }
 
   async ngOnInit() {
@@ -262,15 +274,6 @@ export class OrdersComponent {
     security.showPopup = true;
   }
 
-  changePublicValueButton(security: any): boolean{
-    if (this.changedPublicValue > 0) {
-      if (security.security.total > this.changedPublicValue)
-        return true;
-    }
-
-    return false;
-  }
-
   changePublicValue(security: any){
     if(sessionStorage.getItem("loginUserRole") == "customer") {
       this.orderService.changePublicValueCustomer(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
@@ -284,6 +287,15 @@ export class OrdersComponent {
       })
     }
     security.security.showPopup = false;
+  }
+
+  changePublicValueButton(security: any): boolean{
+    if (this.changedPublicValue > 0) {
+      if (security.security.total > this.changedPublicValue)
+        return true;
+    }
+
+    return false;
   }
 
   cancelChangePublic(security: any){
