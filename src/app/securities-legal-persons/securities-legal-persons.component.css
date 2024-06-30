@@ -407,3 +407,46 @@ hr {
   background-color: #131319;
 
 }
+
+.right-row {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  padding-right: 20px;
+}
+.search-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  background-color: var(--banka-orange);
+  justify-content: center;
+  align-items: center;
+  border-radius: 15px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+}
+.button-image {
+  border: none; /* Removes the border */
+  background-color: transparent; /* Makes the background transparent */
+  padding: 0; /* Removes padding around the image */
+  cursor: pointer; /* Changes the cursor to a pointer when hovered over the button */
+  display: inline-block; /* Ensures the button is properly aligned */
+  overflow: hidden; /* Prevents any overflow */
+  transition: opacity 0.3s ease; /* Smooth transition for the whole button */
+}
+
+.button-image img {
+  width: 100%; /* Adjusts the width of the image to fill the button */
+  height: auto; /* Adjusts the height to maintain the aspect ratio */
+  display: block; /* Ensures the image fills the button */
+  transition: transform 0.3s ease; /* Adds a transform transition for a subtle effect */
+}
+
+.button-image:hover {
+  opacity: 0.8; /* Changes the opacity of the button on hover */
+}
+
+.button-image:hover img {
+  transform: scale(1.05); /* Slightly scales up the image on hover */
+}
+

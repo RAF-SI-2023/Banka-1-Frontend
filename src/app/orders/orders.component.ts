@@ -82,6 +82,8 @@ export class OrdersComponent {
               private popupService: PopupService) {
 
       this.selectedTab = "order-history";
+      console.log("BBBB")
+
 
   }
 
@@ -94,18 +96,18 @@ export class OrdersComponent {
         console.error('Error fetching securities', error);
       }
     });
-    this.securities.push({
-      bankAccountNumber: "string",
-      // currencyName: 123,
-      listingType: ListingType.STOCK,
-      listingId: 123,
-      totalPrice: 123,
-      total: 123,
-      ticker: "string",
-      reserved: 123,
-      publicTotal: 123,
-      averageBuyingPrice: 123,
-    })
+    // this.securities.push({
+    //   bankAccountNumber: "string",
+    //   // currencyName: 123,
+    //   listingType: ListingType.STOCK,
+    //   listingId: 123,
+    //   totalPrice: 123,
+    //   total: 123,
+    //   ticker: "string",
+    //   reserved: 123,
+    //   publicTotal: 123,
+    //   averageBuyingPrice: 123,
+    // })
   }
 
   setSelectedTab(tab: "order-history" | "requests" | "securities") {
@@ -156,19 +158,19 @@ export class OrdersComponent {
 }
   sellOrder(original: any) {
     if(original.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.listingId, false, false, true).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.listingId, false, original.total, false, false, true).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()
       });
     } else if(original.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.listingId, false, true, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.listingId, false, original.total, false, true, false).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()
       });
     } else if(original.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.listingId, true, false, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.listingId,false, original.total, true, false, false).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()

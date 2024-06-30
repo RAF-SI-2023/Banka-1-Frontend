@@ -30,7 +30,7 @@ export class PublicSecurityOfferPopupComponent {
 
   warnMessage: string = '';
 
-  security: PublicStock;
+  security: any;
 
   isEmployee: boolean;
   isCustomer: boolean;
@@ -43,6 +43,7 @@ export class PublicSecurityOfferPopupComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.security = data;
+    console.log('Security', this.security);
     this.isEmployee = sessionStorage.getItem('role') === 'employee' ||
       sessionStorage.getItem('role') === 'admin' ||
       sessionStorage.getItem('role') === 'agent' ||
@@ -100,14 +101,16 @@ export class PublicSecurityOfferPopupComponent {
     }
   }
 
-  validInputVolume(){
-    if(this.volumeOfStock == '') return false;
-    return isNaN(parseFloat(this.volumeOfStock));
+  validInputVolume(): boolean {
+    if (this.volumeOfStock === '') return false;
+    const volume = parseFloat(this.volumeOfStock);
+    return isNaN(volume) || volume < 0 || volume > this.security.amount;
   }
 
-  validInputOffer(){
-    if(this.priceOffer == '') return false;
-    return isNaN(parseFloat(this.priceOffer));
+  validInputOffer(): boolean {
+    if (this.priceOffer === '') return false;
+    const offer = parseFloat(this.priceOffer);
+    return isNaN(offer) || offer < 0;
   }
 
 

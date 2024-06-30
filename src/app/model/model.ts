@@ -328,14 +328,16 @@ export interface Customer {
   phoneNumber: string;
   gender: string;
   address: string;
-
+  company?: string;
   isLegalEntity: boolean;
 }
+
 
 
 export interface PublicCapitalDto {
   publicTotal: number;
   isIndividual: boolean;
+  ownerName: string;
   bankAccountNumber: string;
   listingType: ListingType;
   listingId: number;
@@ -347,6 +349,7 @@ export interface CustomerWithAccounts {
   lastName: string;
   email: string;
   jmbg: string;
+  isLegalEntity: boolean;
   phoneNumber: string;
   gender: string;
   address: string;
@@ -606,6 +609,16 @@ export interface PublicStock{
   price: number;
   lastModified: string;
   bankAccount: string;
+}
+
+export interface AllPublicCapitalsDto{
+  listingId: number;
+  listingType: string;
+  ticker: string;
+  bankAccountNumber: string;
+  amount: number;
+  lastModified: string;
+  ownerName: string;
 }
 
 export interface Currency {

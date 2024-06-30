@@ -34,7 +34,7 @@
       <div class="overview-tab" *ngIf="selectedTab === 'otc-history'">
         <app-dynamic-table-status
           [headersArray]="headersOTCs"
-          [dataArray]="contracts | transformContracts"
+          [dataArray]="history | transformContractsHistory: customer"
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>
@@ -48,7 +48,7 @@
       <div class="overview-tab" *ngIf="selectedTab === 'active-sell'">
         <app-dynamic-table-status
           [headersArray]="headersOTCs"
-          [dataArray]="activeSell | transformContracts"
+          [dataArray]="activeSell | transformContractsHistory: customer"
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>
@@ -84,7 +84,7 @@
       <div class="overview-tab" *ngIf="selectedTab === 'active-buy'">
         <app-dynamic-table-status
           [headersArray]="headersOTCs"
-          [dataArray]="activeBuy | transformContracts"
+          [dataArray]="activeBuy | transformContractsHistory: customer"
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../service/customer.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PopupService } from '../service/popup.service';
-import { Customer, LegalPerson } from '../model/model';
+import { Account, AccountType, Customer, LegalPerson } from '../model/model';
 import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
 import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
@@ -24,6 +24,8 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
 
   customers: Customer[] = []
   customersFullNames: string[] = []
+  
+
   selectedCustomerToJoin: Customer = {
     userId: -1,
     firstName: '',
@@ -33,7 +35,7 @@ export class JoinLegalPersonAndCustomerPopUpComponent {
     phoneNumber: '',
     gender: '',
     address: '',
-    isLegalEntity: false
+    isLegalEntity: false,
   };
 
   constructor(private dialogRef: MatDialogRef<JoinLegalPersonAndCustomerPopUpComponent>, 

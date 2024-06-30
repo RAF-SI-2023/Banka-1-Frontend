@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   loggedUserPosition: string = '';
   showPaymentsSubMenu: boolean = false;
   isLegalPerson: boolean = false;
+  company?: string = "no company";
 
   //Izbrisati kada bek odradi
   accounts: Account[] = [
@@ -118,12 +119,16 @@ export class AppComponent implements OnInit {
     private customerService: CustomerService
   ) {
     this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+    this.company = sessionStorage.getItem('legalPersonCompany')?? undefined;
     this.triggerEventForAlreadyLoadedPage();
     this.toggleSideNav();
     this.userInitials = '/';
   }
 
   ngOnInit() {
+    this.isLegalPerson = sessionStorage.getItem('isLegalPerson') === 'true';
+    console.log("isLegalPerson => " + sessionStorage.getItem('isLegalPerson'));
+
     this.checkIsAdminOrEmployeeOrCustomer();
     this.storageService.role$.subscribe((role) => {
       this.isAdmin = role === 'admin';
@@ -138,7 +143,7 @@ export class AppComponent implements OnInit {
     this.authService.getJwtObservable().subscribe((jwt) => {
       if (jwt) {
         const userRole = sessionStorage.getItem('loginUserRole');
-    
+
         if (userRole === 'customer') {
           this.customerService.getCustomer(jwt).subscribe({
             next: (response) => {
@@ -167,12 +172,12 @@ export class AppComponent implements OnInit {
         }
       }
     });
-    
+
 
 
 
       // this.authService.getJwtObservable().subscribe((jwt) => {
-      //   if (jwt) {     
+      //   if (jwt) {
       //     this.customerService.getCustomer(jwt).pipe(
       //       catchError((error) => {
       //         return this.userService.getEmployee(jwt);

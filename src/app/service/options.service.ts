@@ -23,4 +23,16 @@ export class OptionsService {
 
     return this.http.get<OptionsDto[]>(environment.marketService + '/market/listing/get/options', httpOptions);
   }
+
+  getRefreshOptions(): Observable<OptionsDto[]> {
+    const jwt = sessionStorage.getItem("jwt");
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${jwt}`
+      })
+    };
+
+    return this.http.get<OptionsDto[]>(environment.marketService + '/market/listing/refresh/options', httpOptions);
+  }
 }
