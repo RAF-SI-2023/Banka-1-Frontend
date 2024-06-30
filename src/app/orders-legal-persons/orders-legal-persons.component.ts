@@ -43,7 +43,7 @@ import {ExtendedModule} from "@angular/flex-layout";
   styleUrl: './orders-legal-persons.component.css'
 })
 export class OrdersLegalPersonsComponent {
-  selectedTab: "public-securities" | "all-securities";
+  selectedTab: "public-securities" | "all-securities" | "order-history";
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
   isEmployee: boolean = sessionStorage.getItem('role') === "employee";
   isAgent = sessionStorage.getItem('role') === 'agent';
@@ -60,11 +60,15 @@ export class OrdersLegalPersonsComponent {
 
   securities: CapitalProfitDto[] = [];
 
+  orderHistory: OrderDto[] = [];
+
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
   publicSecurities: AllPublicCapitalsDto[] = [];
 
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
+
+
 
 
 
@@ -142,13 +146,14 @@ export class OrdersLegalPersonsComponent {
   }
 
 
-  setSelectedTab(tab: "public-securities" | "all-securities") {
+  setSelectedTab(tab: "public-securities" | "all-securities" | "order-history") {
     this.selectedTab = tab;
   }
 
   async ngOnInit() {
     this.getSecurityOrders();
     this.getPublicSecurities();
+    this.loadOrders()
   }
 
 
@@ -157,20 +162,32 @@ export class OrdersLegalPersonsComponent {
     if(original.security.listingType === 'STOCK') {
       this.popupService.openSellPopup(original.security.listingId, true,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
       this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
       this.popupService.openSellPopup(original.security.listingId, true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
+        this.loadOrders()
       });
     }
   }
 
+  async loadOrders(){
+    if(this.isSupervizor || this.isAdmin){
+      this.orderHistory = await this.orderService.getAllOrdersHistory();
+    }else{
+      this.orderHistory=await this.orderService.getOrdersHistory();
+    }
+
+  }
+
   changePublicValue(element: any){
-    this.orderService.changePublicValue(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+    this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
       if(res)
         this.getSecurityOrders();
     })
@@ -185,7 +202,7 @@ export class OrdersLegalPersonsComponent {
 
   changePublicValueButton(security: any): boolean{
     if (this.changedPublicValue > 0) {
-      if (security.security.total > this.changedPublicValue)
+      if (security.security.total - security.security.publicTotal >= this.changedPublicValue)
         return true;
     }
     return false;
