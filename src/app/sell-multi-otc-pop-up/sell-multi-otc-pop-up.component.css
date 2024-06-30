@@ -1,0 +1,62 @@
+.popup {
+    background-color: #333; /* Dark gray background */
+    color: #fff; /* White text color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Spacing inside the popup */
+    font-family: Arial, sans-serif; /* Professional, readable font */
+    width: 30vw;
+  }
+  
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Space between header and body */
+  }
+  
+  .popup-header h1 {
+    margin: 0; /* Remove default margin */
+    font-size: 1.6rem; /* Prominent header size */
+  }
+  
+  .popup-header .x-button {
+    cursor: pointer; /* Indicates clickable */
+    filter: invert(1); /* Makes the image white */
+  }
+  
+  hr {
+    border-color: #444; /* Slightly lighter line for separation */
+  }
+  
+  .popup-body .input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px; /* Space between input rows */
+  }
+  
+  .popup-body .input-row label {
+    flex: 0 0 120px; /* Fixed width for labels, ensuring alignment */
+    margin-right: 10px; /* Space between label and input field */
+  }
+  
+  .input-row input {
+    flex-grow: 1; /* Input field takes remaining space */
+    padding: 8px;
+    background-color: #444; /* Slightly lighter than popup background */
+    border: 1px solid #555; /* Subtle border */
+    border-radius: 4px; /* Rounded corners for input field */
+    color: #fff; /* White text */
+  }
+  
+  .button-wrapper {
+    display: inline-block; /* Allows buttons to sit side by side */
+    margin-right: 10px; /* Space between buttons */
+  }
+  
+  .popup-buttons {
+    display: flex;
+    justify-content: flex-end; /* Aligns buttons to the right */
+    margin-top: 20px; /* Space above buttons */
+  }
+  

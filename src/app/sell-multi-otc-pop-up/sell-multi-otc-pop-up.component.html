@@ -1,0 +1,40 @@
+<div class="popup">
+    <div class="popup-header">
+      <h1>Sell Security</h1>
+      <img src="/assets/x.svg" alt="x button" class="x-button" height="40" width="40" (click)="closeSellingMenu()" />
+    </div>
+    <hr>
+    <div class="popup-body">
+      <div class="input-row">
+        <label>Amount:</label>
+        <input type="number" [(ngModel)]="amount" min="0" placeholder="value...">
+      </div>
+  
+      <div class="input-row">
+        <label>Limit value:</label>
+        <input type="number" min="0" placeholder="value..." [(ngModel)]="limitValue">
+      </div>
+  
+      <div class="input-row">
+        <label>Stop value:</label>
+        <input type="number" min="0" placeholder="value..." [(ngModel)]="stopValue">
+      </div>
+  
+      <div class="input-row">
+        <label>All or None:</label>
+        <input type="checkbox" [(ngModel)]="allOrNone">
+      </div>
+  
+   
+      <div class="popup-buttons">
+        <div class="button-wrapper">
+          <orange-button [buttonName]="'Cancel'" (click)="closeSellingMenu()"></orange-button>
+        </div>
+        <div class="button-wrapper">
+          <orange-button [buttonName]="'Sell'" (click)="sellOrder()"></orange-button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  
