@@ -1,9 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, model} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
+import {PublicStock, AllPublicCapitalsDto} from "../model/model";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {WhiteTextFieldModule} from "../welcome/redesign/WhiteTextField";
 import {PopupService} from '../service/popup.service';
@@ -106,8 +107,7 @@ export class OrdersComponent {
   }
 
 
-    console.log("BBBB")
-  }
+  
 
 
   private getAllSecurityOrders() {
@@ -150,6 +150,7 @@ export class OrdersComponent {
     //   averageBuyingPrice: 123,
     // })
   }
+
 
 
   setSelectedTab(tab: "order-history" | "requests" | "public-securities" | "all-securities") {
