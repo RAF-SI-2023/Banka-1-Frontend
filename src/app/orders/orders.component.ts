@@ -1,6 +1,14 @@
 import {Component} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
+import {
+  AllPublicCapitalsDto,
+  CapitalProfitDto,
+  ListingType,
+  OrderDto,
+  OrderStatus, PublicStock,
+  SellingRequest,
+  StatusRequest
+} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -36,7 +44,7 @@ import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPi
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
-  selectedTab: "order-history" | "requests" | "securities";
+  selectedTab: "order-history" | "requests" | "securities" | "public-securities";
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -75,22 +83,36 @@ export class OrdersComponent {
 
   // headersSecurities = ['Total Price', 'Account Number', 'Currency', 'Listing Type', 'Ticker', 'Total', 'Reserved', 'Public'];
   headersSecurities = ['Security', 'Symbol', 'Amount', 'Price'];
+
+  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
+  publicSecurities: AllPublicCapitalsDto[] = [];
+
   securities: CapitalProfitDto[] = [];
+  allSecurities: any[] = []
+  changedPublicValue: number = -1;
+
 
 
   constructor(private orderService: OrderService,
               private popupService: PopupService) {
 
       this.selectedTab = "order-history";
-      console.log("BBBB")
+  }
 
-
+  getPublicSecurities(){
+    this.orderService.getPublicStocks().subscribe( res =>{
+      this.publicSecurities = res
+    })
   }
 
   private getSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({
       next: (securities: any[]) => {
         this.securities = securities;
+        this.allSecurities = securities.map(security => ({
+          security: security,
+          showPopup: false
+        }))
       },
       error: (error) => {
         console.error('Error fetching securities', error);
@@ -110,7 +132,45 @@ export class OrdersComponent {
     // })
   }
 
-  setSelectedTab(tab: "order-history" | "requests" | "securities") {
+  offerSecurity(security: PublicStock){
+    this.popupService.openPublicSecuritiesPopup(security);
+  }
+
+  changePublicValue(element: any){
+    if (this.isAdmin || this.isSupervizor) {
+      this.orderService.changePublicValueEmployee(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    } else {
+      this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
+        if (res)
+          this.getSecurityOrders();
+      })
+    }
+    element.showPopup = false;
+  }
+
+  showPopup(security: any){
+    this.allSecurities.forEach(el => el.showPopup = false); // Close other popups
+    this.changedPublicValue = security.public;
+    security.showPopup = true;
+  }
+
+  changePublicValueButton(security: any): boolean{
+    if (this.changedPublicValue > 0) {
+      if (security.security.total - security.security.publicTotal >= this.changedPublicValue)
+        return true;
+    }
+    return false;
+  }
+
+  cancelChangePublic(security: any){
+    security.showPopup = false;
+    this.changedPublicValue = -1;
+  }
+
+  setSelectedTab(tab: "order-history" | "requests" | "securities" | "public-securities") {
     this.selectedTab = tab;
   }
 
@@ -122,6 +182,7 @@ export class OrdersComponent {
     }
     this.loadOrders()
     this.getSecurityOrders();
+    this.getPublicSecurities();
 
   }
 
