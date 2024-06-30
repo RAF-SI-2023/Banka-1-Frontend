@@ -8,25 +8,25 @@
     <div class="central-window">
       <div class="tabs-menu">
         <ul>
-<!--          <li-->
-<!--            class="{{ selectedTab === 'requests' ? 'active-tab' : '' }}"-->
-<!--            (click)="setSelectedTab('requests')"-->
-<!--            *ngIf="(isAdmin || isSupervizor)"-->
-<!--          >-->
-<!--            Requests-->
-<!--          </li>-->
+          <li
+            class="{{ selectedTab === 'requests' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('requests')"
+            *ngIf="(isAdmin || isSupervizor)"
+          >
+            Requests
+          </li>
           <li
             class="{{ selectedTab === 'all-securities' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('all-securities')"
           >
             All Securities
           </li>
-<!--          <li-->
-<!--            class="{{ selectedTab === 'securities' ? 'active-tab' : '' }}"-->
-<!--            (click)="setSelectedTab('securities')"-->
-<!--          >-->
-<!--            Securities-->
-<!--          </li>-->
+          <li *ngIf="isAdmin"
+            class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('public-securities')"
+          >
+            Public Securities
+          </li>
           <li
             class="{{ selectedTab === 'order-history' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('order-history')"
@@ -153,15 +153,15 @@
       </div>
 
 
-<!--      <div class="securities-tab" *ngIf="selectedTab === 'securities'">-->
-<!--        <app-dynamic-table [headersArray]="headersSecurities" [dataArray]="securities | transformSecurities" [showActions]="true">-->
-<!--          <ng-template #actionsColumn let-row>-->
-<!--            <div id="helperDiv">-->
-<!--              <orange-button [buttonName]="'Sell'" (click)="sellOrder(row.original)"></orange-button>-->
-<!--            </div>-->
-<!--          </ng-template>-->
-<!--        </app-dynamic-table>-->
-<!--      </div>-->
+      <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
+        <app-dynamic-table [headersArray]="headersPublicSecurities" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
+          <ng-template #actionsColumn let-row>
+            <div id="helperDiv">
+              <orange-button [buttonName]="'Offer'" (click)="offerSecurity(row.original)"></orange-button>
+            </div>
+          </ng-template>
+        </app-dynamic-table>
+      </div>
     </div>
   </div>
 </div>

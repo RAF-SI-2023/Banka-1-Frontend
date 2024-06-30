@@ -1,6 +1,14 @@
 import {Component} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
+import {
+  AllPublicCapitalsDto,
+  CapitalProfitDto,
+  ListingType,
+  OrderDto,
+  OrderStatus, PublicStock,
+  SellingRequest,
+  StatusRequest
+} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -36,7 +44,7 @@ import {TransformPublicSecuritiesPipeModule} from "./TransformPublicSecuritiesPi
 })
 export class OrdersComponent {
   public OrderStatus = OrderStatus;
-  selectedTab: "order-history" | "requests" | "securities" | "all-securities";
+  selectedTab: "order-history" | "requests" | "public-securities" | "all-securities";
   orderHistory: OrderDto[] = [];
   orderSecurities: OrderDto[] = [];
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
@@ -67,7 +75,8 @@ export class OrdersComponent {
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
 
-
+  headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
+  publicSecurities: AllPublicCapitalsDto[] = [];
 
 
   sellScheme = z.object({
@@ -89,8 +98,16 @@ export class OrdersComponent {
     this.selectedTab = "order-history";
     this.getAllSecurityOrders();
     this.getSecurityOrders();
+    this.getPublicSecurities();
     console.log("BBBB")
   }
+
+  getPublicSecurities(){
+    this.orderService.getPublicStocks().subscribe( res =>{
+      this.publicSecurities = res
+    })
+  }
+
 
   private getAllSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({
@@ -133,7 +150,7 @@ export class OrdersComponent {
     // })
   }
 
-  setSelectedTab(tab: "order-history" | "requests" | "securities" | "all-securities") {
+  setSelectedTab(tab: "order-history" | "requests" | "public-securities" | "all-securities") {
     this.selectedTab = tab;
   }
 
@@ -265,6 +282,10 @@ export class OrdersComponent {
   cancelChangePublic(security: any){
     security.showPopup = false;
     this.changedPublicValue = -1;
+  }
+
+  offerSecurity(security: PublicStock){
+    this.popupService.openPublicSecuritiesPopup(security);
   }
 
 }
