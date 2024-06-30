@@ -329,7 +329,6 @@ export interface Customer {
   gender: string;
   address: string;
   company?: string;
-  company?: string;
 
   isLegalEntity: boolean;
 }

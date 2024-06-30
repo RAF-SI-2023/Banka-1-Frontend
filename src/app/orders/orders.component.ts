@@ -218,20 +218,20 @@ export class OrdersComponent {
       })
 }
   sellOrder(original: any) {
-    if(original.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.listingId, false, original.total, false, false, true).afterClosed().subscribe(() =>{
+    if(original.security.listingType === 'STOCK') {
+      this.popupService.openSellPopup(original.security.listingId, false, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()
       });
-    } else if(original.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.listingId, false, original.total, false, true, false).afterClosed().subscribe(() =>{
+    } else if(original.security.listingType === 'FOREX') {
+      this.popupService.openSellPopup(original.security.listingId, false, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()
       });
-    } else if(original.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.listingId,false, original.total, true, false, false).afterClosed().subscribe(() =>{
+    } else if(original.security.listingType === 'FUTURE') {
+      this.popupService.openSellPopup(original.security.listingId,false, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.loadLimit()
         this.loadOrders()
         this.getSecurityOrders()
