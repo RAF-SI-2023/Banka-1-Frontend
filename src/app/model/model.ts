@@ -673,13 +673,19 @@ export interface ExchangeTransactionReport {
 export interface MyStockDto{
   amount? : number;
   ticker? : string;
-  public? : number;
+  publicAmount? : number;
 }
 
 export interface MakeOfferDto{
   amount? : number;
   price? : number;
   ticker? : string;
+}
+
+export interface EditMyPublicStock{
+  ticker?: string,
+  publicAmount?: number,
+  price?: number
 }
 
 export interface OtherBankStocks{

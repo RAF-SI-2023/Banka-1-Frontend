@@ -1,73 +1,96 @@
-import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {OrderService} from "../service/order.service";
-import {PopupService} from "../service/popup.service";
-import {ListingType, OrderDto, OrderType, SellingRequest} from "../model/model";
-import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {Component, ElementRef, Inject, ViewChild} from '@angular/core';
 import {FormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {TransparentTextFieldModule} from "../welcome/redesign/TransparentTextField";
+import {OutlineOrangeButtonModule} from "../welcome/redesign/OutlineOrangeButton";
+import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
+import {FieldComponentModule} from "../welcome/redesign/FieldCompentn";
+import {DropdownInputModule} from "../welcome/redesign/DropdownInput";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {PopupService} from "../service/popup.service";
+import { MakeOfferDto, OtherBankStocks } from '../model/model';
 import { MultiOtcService } from '../service/multi-otc.service';
-import { MakeOfferDto } from '../model/model';
+
 
 @Component({
   selector: 'app-sell-multi-otc-pop-up',
   standalone: true,
-  imports: [
+  imports: [FormsModule,
+    CommonModule,
+    TransparentTextFieldModule,
+    OutlineOrangeButtonModule,
     OrangeButtonModule,
-    FormsModule],
+    FieldComponentModule,
+    DropdownInputModule],
   templateUrl: './sell-multi-otc-pop-up.component.html',
   styleUrl: './sell-multi-otc-pop-up.component.css'
 })
 export class SellMultiOtcPopUpComponent {
 
-  price?: number = 0;
-  amount?: number = 0;
-  ticker?: string = '';
-  limitValue: number = 0;
-  stopValue: number = 0;
-  allOrNone: boolean = false;
+  volumeOfStock: string = '';
+  priceOffer: string = '';
 
-  total: number = 0;
+  warnMessage: string = '';
 
-  isLegal: boolean = false;
+  otherBankStock: OtherBankStocks;
 
-  constructor(public dialogRef: MatDialogRef<SellMultiOtcPopUpComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,  // Inject the dialog data
-              private multiOtcService: MultiOtcService,
-              private popupService: PopupService
+  constructor(
+    public multiOtcService: MultiOtcService,
+    public dialogRef: MatDialogRef<SellMultiOtcPopUpComponent>,
+    public popupService: PopupService,
+    @Inject(MAT_DIALOG_DATA) public data: OtherBankStocks
   ) {
-    console.log(data)
-    this.ticker = this.data.ticker;
-    this.amount = this.data.amount;
-    this.price = this.data.price;
-    console.log("Passed data: " + this.ticker + " " + this.amount + " " + this.price);
+    this.otherBankStock = data;
   }
 
-  closeSellingMenu() {
+  onCancelButton(){
     this.dialogRef.close();
   }
 
-  async sellOrder() {
-    if(this.amount && (this.amount <= 0 || this.limitValue < 0 || this.stopValue < 0)){
-      this.popupService.openPopup("Error", "Invalid input values");
-      return;
-    }
+  onMakeAnOffer() {
+    if (!this.validInputOffer() && !this.validInputVolume()) {
+      if (this.volumeOfStock != '' && this.priceOffer != '') {
+        const volume = parseFloat(this.volumeOfStock);
+        const offer = parseFloat(this.priceOffer);
+        if (volume >= 0 || offer >= 0) {
+          console.log("Other bank stock:");
+          console.log(this.otherBankStock);
 
-    let makeOfferDto: MakeOfferDto = {
-      amount: this.amount,
-      price: this.price,
-      ticker: this.ticker
-    }
+          if (this.otherBankStock.amount && volume <= this.otherBankStock.amount) {
 
-    var response = await this.multiOtcService.makeOffer(makeOfferDto);
+            let makeOfferDto : MakeOfferDto = {
+              amount: volume,
+              ticker: this.otherBankStock.ticker,
+              price: offer
+            }
+            this.multiOtcService.makeOffer(makeOfferDto).subscribe(res => {
+              console.log(res);
+              this.popupService.openPopup("Offer made successfully.", "Success");
+            });
 
-    if (response) {
-      this.popupService.openPopup("Success", "Sell order has been placed successfully");
-      console.log("AAA " + response)
-      this.dialogRef.close();
+            this.warnMessage = "";
+            this.dialogRef.close();
+          } else {
+            this.warnMessage = "Asked volume too high."
+          }
+        } else {
+          this.warnMessage = "Both volume and price need to be positive numbers."
+        }
+      } else {
+        this.warnMessage = "Both volume and price are required.";
+      }
     } else {
-      this.popupService.openPopup("Error", "Error placing sell order, try again later");
-      this.dialogRef.close();
+      this.warnMessage = "";
     }
   }
 
+  validInputVolume(){
+    if(this.volumeOfStock == '') return false;
+    return isNaN(parseFloat(this.volumeOfStock));
+  }
+
+  validInputOffer(){
+    if(this.priceOffer == '') return false;
+    return isNaN(parseFloat(this.priceOffer));
+  }
 }

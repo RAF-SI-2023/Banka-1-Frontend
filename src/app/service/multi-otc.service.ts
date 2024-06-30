@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom, Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import { MyStockDto, MakeOfferDto,OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
+import { EditMyPublicStock } from '../model/model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,21 @@ export class MultiOtcService {
     let url = environment.userService + `/api/v1/otcTrade/getOurStocks`;
 
     return this.httpClient.get<MyStockDto[]>(url, options); 
+  }
+
+  //Set price of my public stocks
+  public setPriceAndAmountOfMyPublicStocks(editMyPublicStock: EditMyPublicStock): Observable<any>{
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    return this.httpClient.post(environment.userService + '/api/v1/otcTrade/editOurStock', {
+      ticker: editMyPublicStock.ticker,
+      publicAmount: editMyPublicStock.publicAmount,
+      price: editMyPublicStock.price
+    },{
+      headers: headers
+    });
   }
 
   //Get all other bank stocks
@@ -77,7 +93,7 @@ export class MultiOtcService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/api/v1/otcTrade/getMyOffers`;
+    let url = environment.userService + `/api/v1/otcTrade/getOurOffers`;
 
     return this.httpClient.get<SendOffersDto[]>(url, options); 
   }

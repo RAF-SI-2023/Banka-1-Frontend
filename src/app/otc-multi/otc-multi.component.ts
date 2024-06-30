@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MyStockDto, OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
+import { EditMyPublicStock, MyStockDto, OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
 import { MultiOtcService } from '../service/multi-otc.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PopupService } from '../service/popup.service';
 
 @Component({
   selector: 'app-otc-multi',
@@ -26,7 +27,7 @@ export class OtcMultiComponent {
   sentOffers : SendOffersDto[] = [];
   otherBankStocks : OtherBankStocks[] = [];
 
-  constructor(private multiOtcService: MultiOtcService) {this.selectedTab = "my-stocks";}
+  constructor(private multiOtcService: MultiOtcService, private popupService: PopupService) {this.selectedTab = "my-stocks";}
 
   setSelectedTab(tab: "other-bank-stocks" | "my-stocks" | "received-offers" | "sent-offers") {
     this.selectedTab = tab;
@@ -108,16 +109,35 @@ export class OtcMultiComponent {
     }
   }
 
-  setOrder(stock: MyStockDto, numberOfPublicStocks: any, priceOfPublicStock: any, idx: number): void {
+  setStock(stock: MyStockDto, numberOfPublicStocks: any, priceOfPublicStock: any, idx: number): void {
     // Implementation of sell order
     console.log('Set:');
     console.log(stock);
     console.log(numberOfPublicStocks, priceOfPublicStock, idx);
+
+    let editStock : EditMyPublicStock = {
+      ticker: stock.ticker,
+      publicAmount: numberOfPublicStocks,
+      price: priceOfPublicStock
+    } 
+
+    this.multiOtcService.setPriceAndAmountOfMyPublicStocks(editStock).subscribe(res => {
+      console.log(res);
+      if(res) 
+        alert("Successfully set pricec and amount of public stock");
+      else
+        alert("Error while setting pricec and amount of public stock");
+    })
+
     this.toggleMenu(null); // Close menu after action
   }
 
-  sellStock(stockToSell:MyStockDto){
-    console.log("Selling stock:");
-    console.log(stockToSell);
+  sellStock(otherBankStock:OtherBankStocks){
+    // let otherBankStocks : OtherBankStocks = {
+    //   amount: 69,
+    //   ticker: "MIHA"
+    // }
+
+    this.popupService.openSellMultiOtcPopup(otherBankStock);
   }
 }

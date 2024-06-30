@@ -44,7 +44,6 @@
               <th>Symbol</th>
               <th>Amount</th>
               <th>Public</th>
-              <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -56,22 +55,13 @@
                 0
                 <div *ngIf="myStock === selectedStock" class="menu" (click)="$event.stopPropagation();">
                     Set number of public stocks:
-                    <input type="number" [(ngModel)]="myStock.public" min="0" step="1">
+                    <input type="number" [(ngModel)]="myStock.publicAmount" min="0" step="1" max = "myStock.publicAmount">
 
                     Set price of public stock:
                     <input type="number" #publicPriceInput min="0.01" step="0.01">
 
-                    <button (click)="setOrder(myStock, myStock.public, publicPriceInput.value, idx); $event.stopPropagation()">Set</button>
+                    <button (click)="setStock(myStock, myStock.publicAmount, publicPriceInput.value, idx); $event.stopPropagation()">Set</button>
                     <button (click)="toggleMenu(myStock); $event.stopPropagation()">Cancel</button>
-                </div>
-              </td>
-  
-              <td>
-                <div
-                  class="table-buttons">
-                  <button class="button-primary" (click)="sellStock(myStock)">
-                    Sell
-                  </button>
                 </div>
               </td>
             </tr>
@@ -86,6 +76,7 @@
               <tr>
                 <th>Amount</th>
                 <th>Symbol</th>
+                <th>Action</th>
               </tr>
               </thead>
               <tbody>
@@ -95,12 +86,13 @@
 
                 <td>
                     <div
-                      class="table-buttons">
+                      class="table-buttons"
+                      (click)="sellStock(otherBankStock)">
                       <button class="button-primary">
                         Sell
                       </button>
                     </div>
-                  </td>
+                </td>
 
               </tr>
               </tbody>
