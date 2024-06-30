@@ -669,3 +669,41 @@ export interface ExchangeTransactionReport {
   exchangedTo: string;
   profit: number;
 }
+
+export interface MyStockDto{
+  amount? : number;
+  ticker? : string;
+  public? : number;
+}
+
+export interface MakeOfferDto{
+  amount? : number;
+  price? : number;
+  ticker? : string;
+}
+
+export interface OtherBankStocks{
+  amount? : number;
+  ticker? : string;
+}
+
+export enum OfferStatus {
+  PROCESSING = 'PROCESSING',
+  ACCEPTED = 'ACCEPTED',
+  DECLINED = 'DECLINED',
+  FINISHED_ACCEPTED = 'FINISHED_ACCEPTED',
+  FINISHED_DECLINED = 'FINISHED_DECLINED'
+}
+
+export interface ReceivedOffersDto{
+  amount? : number;
+  price? : number;
+  offerStatus? : OfferStatus;
+}
+
+export interface SendOffersDto{
+  ticker? : string;
+  amount? : number;
+  price? : number;
+  offerStatus? : OfferStatus;
+}
