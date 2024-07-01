@@ -1,6 +1,6 @@
 import {Component, model} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest, AllPublicCapitalsDto, PublicStock} from "../model/model";
+import {CapitalProfitDto, ListingType, OrderDto, OrderStatus, SellingRequest, StatusRequest} from "../model/model";
 import {OrderService} from "../service/order.service";
 import {FormsModule} from "@angular/forms";
 import {z} from "zod";
@@ -94,10 +94,8 @@ export class OrdersComponent {
 
     this.selectedTab = "order-history";
     this.getAllSecurityOrders();
-    this.getSecurityOrders();
 
     this.getPublicSecurities();
-    console.log("BBBB")
   }
 
   getPublicSecurities(){
@@ -160,9 +158,9 @@ export class OrdersComponent {
     if(this.customerId) {
       this.loadLimit()
     }
-    this.loadOrders()
-    this.getSecurityOrders();
-    this.getPublicSecurities();
+    // this.loadOrders()
+    // this.getSecurityOrders();
+    // this.getPublicSecurities();
 
   }
 
@@ -173,7 +171,7 @@ export class OrdersComponent {
       this.loadLimit()
     }
     this.loadOrders()
-    this.getSecurityOrders();
+    this.getAllSecurityOrders();
 
   }
 
@@ -213,42 +211,46 @@ export class OrdersComponent {
 }
 
   sellAllSecurityOrder(original: any) {
+    let isCustomer = false
+    if(sessionStorage.getItem("loginUserRole") == "customer") {
+      isCustomer = true;
+    }
     if(original.security.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.security.listingId,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
-        this.getSecurityOrders()
+      this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
+        this.getAllSecurityOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
-        this.getSecurityOrders()
+      this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, false, true, false).afterClosed().subscribe(() =>{
+        this.getAllSecurityOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
-        this.getSecurityOrders()
+      this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, true, false, false).afterClosed().subscribe(() =>{
+        this.getAllSecurityOrders()
       });
     }
   }
 
-  sellOrder(original: any) {
-    if(original.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.listingId, original.total, false, false, true).afterClosed().subscribe(() =>{
-        this.loadLimit()
-        this.loadOrders()
-        this.getSecurityOrders()
-      });
-    } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
-        this.loadLimit()
-        this.loadOrders()
-        this.getSecurityOrders()
-      });
-    } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
-        this.loadLimit()
-        this.loadOrders()
-        this.getSecurityOrders()
-      });
-    }
-  }
+  // sellOrder(original: any) {
+  //   if(original.listingType === 'STOCK') {
+  //     this.popupService.openSellPopup(original.listingId, original.total, false, false, true).afterClosed().subscribe(() =>{
+  //       this.loadLimit()
+  //       this.loadOrders()
+  //       this.getSecurityOrders()
+  //     });
+  //   } else if(original.security.listingType === 'FOREX') {
+  //     this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
+  //       this.loadLimit()
+  //       this.loadOrders()
+  //       this.getSecurityOrders()
+  //     });
+  //   } else if(original.security.listingType === 'FUTURE') {
+  //     this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
+  //       this.loadLimit()
+  //       this.loadOrders()
+  //       this.getSecurityOrders()
+  //     });
+  //   }
+  // }
 
   openSellMenu(order: OrderDto) {
     this.sellingOrder = order;
@@ -275,23 +277,33 @@ export class OrdersComponent {
   }
 
   changePublicValue(security: any){
+    console.log(sessionStorage.getItem("loginUserRole"))
     if(sessionStorage.getItem("loginUserRole") == "customer") {
       this.orderService.changePublicValueCustomer(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
-        if (res)
-          this.getSecurityOrders();
+        if (res) {
+          security.showPopup = false;
+          // this.changedPublicValue = -1;
+          this.getAllSecurityOrders();
+          // location.reload()
+        }
       })
     } else {
       this.orderService.changePublicValueEmployee(security.security.listingType, security.security.listingId, this.changedPublicValue).subscribe(res => {
-        if (res)
-          this.getSecurityOrders();
+        if (res) {
+          security.showPopup = false;
+          // this.changedPublicValue = -1;
+          this.getAllSecurityOrders();
+          // location.reload()
+
+        }
+
       })
     }
-    security.security.showPopup = false;
   }
 
   changePublicValueButton(security: any): boolean{
     if (this.changedPublicValue > 0) {
-      if (security.security.total > this.changedPublicValue)
+      if (security.security.total - security.security.publicTotal > this.changedPublicValue)
         return true;
     }
 

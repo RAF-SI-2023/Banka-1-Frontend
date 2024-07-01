@@ -69,8 +69,17 @@ export class SellPopupComponent {
     let margin = false;
     if (this.isCustomer){
       margin = this.margin;
-    }
-    if (this.isFuture) {
+      if (this.isFuture) {
+          response = await this.orderService.sellOrderForCustomer(OrderType.SELL, this.listingId, ListingType.FUTURE, this.amount, this.limitValue, this.stopValue, this.allOrNone, margin);
+        } else if (this.isForex) {
+          response = await this.orderService.sellOrderForCustomer(OrderType.SELL, this.listingId, ListingType.FOREX, this.amount, this.limitValue, this.stopValue, this.allOrNone, margin);
+        } else if (this.isStock) {
+          response = await this.orderService.sellOrderForCustomer(OrderType.SELL, this.listingId, ListingType.STOCK, this.amount, this.limitValue, this.stopValue, this.allOrNone, margin);
+        } else {
+          response = false;
+        }
+    } else {
+      if (this.isFuture) {
         response = await this.orderService.sellOrder(OrderType.SELL, this.listingId, ListingType.FUTURE, this.amount, this.limitValue, this.stopValue, this.allOrNone, margin);
       } else if (this.isForex) {
         response = await this.orderService.sellOrder(OrderType.SELL, this.listingId, ListingType.FOREX, this.amount, this.limitValue, this.stopValue, this.allOrNone, margin);
@@ -79,6 +88,7 @@ export class SellPopupComponent {
       } else {
         response = false;
       }
+    }
 
     if (response) {
       this.popupService.openPopup("Success", "Sell order has been placed successfully");

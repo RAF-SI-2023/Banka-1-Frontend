@@ -118,17 +118,17 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, false, true).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId,true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId,true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
@@ -146,10 +146,12 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   changePublicValue(element: any){
     this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
-      if(res)
+      // if(res)
+      console.log("FFFF")
+      console.log(res)
         this.getSecurityOrders();
+        element.showPopup = false;
     })
-    element.showPopup = false;
   }
 
   showPopup(security: any){
