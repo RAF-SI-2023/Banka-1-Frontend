@@ -9,6 +9,7 @@ import {Router} from "@angular/router";
 import {GrayButtonModule} from "../welcome/redesign/GrayButton";
 import {MarginService} from "../service/margin.service";
 import {TransformMarginAccountsPipe} from "../transform-margin-accounts.pipe";
+import { CustomerService } from '../service/customer.service';
 
 @Component({
   selector: 'app-margin',
@@ -36,28 +37,82 @@ export class MarginComponent {
   selectedTab: string = 'margin_accounts';
   margins: Margin[] = [];
   backUpMargins: Margin[] = [];
+  isAdmin: boolean = false;
+  isEmployee: boolean = false;
+  isCustomer: boolean = false;
+  isSupervizor: boolean = false;
+  accountNumbers: string[] = [];
+
 
   constructor(
     private http: HttpClient,
     private popup: PopupService,
     private router: Router,
-    private marginService: MarginService
+    private marginService: MarginService,
+    private customerService:CustomerService
   ) {}
 
+
+  checkIsAdminOrEmployeeOrCustomer(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.isAdmin = sessionStorage.getItem('role') === 'admin';
+      this.isEmployee = sessionStorage.getItem('role') === 'employee';
+      this.isCustomer = sessionStorage.getItem('role') === 'customer';
+      this.isSupervizor = sessionStorage.getItem('role') === 'supervizor';
+  
+      const jwt = sessionStorage.getItem('jwt');
+  
+      if (jwt !== null && jwt.length > 0 && this.isCustomer) {
+        this.customerService.getCustomer2().subscribe(
+          (response) => {
+            if (response != null) {
+              this.accountNumbers = response.accountIds.map(
+                (account: any) => account.accountNumber
+              );
+              //console.log("Account Numbers: ", this.accountNumbers);
+              //this.checkRequiredAccounts(response.userId);
+            }
+            resolve(); 
+          },
+          (e) => {
+            reject(e); 
+          }
+        );
+      } else {
+        resolve(); 
+      }
+    });
+  }
+  
   async ngOnInit() {
+    await this.checkIsAdminOrEmployeeOrCustomer();
     this.loadMargins();
   }
-
+  
   async loadMargins() {
-    this.marginService.getAllMargins().subscribe(
-      (margins: Margin[]) => {
-        this.margins = this.backUpMargins = margins;
-        console.log("Margins: ", this.margins);
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error loading margins:', error);
-      }
-    );
+    if (this.isCustomer == false) {
+      this.marginService.getAllMargins().subscribe(
+        (margins: Margin[]) => {
+          this.margins = this.backUpMargins = margins;
+          console.log("Margins: ", this.margins);
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error loading margins:', error);
+        }
+      );
+    } else {
+      this.marginService.getAllMargins().subscribe(
+        (margins: Margin[]) => {
+        this.margins = this.backUpMargins=margins.filter(margin => this.accountNumbers.includes(margin.bankAccountNumber));
+         //this.margins = this.backUpMargins = margins;
+          console.log("Margins: ", this.margins);
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error loading margins:', error);
+        }
+      );
+      console.log("Izdvojeni racuni:" +this.accountNumbers);
+    }
   }
 
   setTab(tabName: string) {

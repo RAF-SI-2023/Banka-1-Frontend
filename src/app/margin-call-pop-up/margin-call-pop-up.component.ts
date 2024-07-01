@@ -20,9 +20,11 @@ export class MarginCallPopUpComponent {
   marginCall: string = '';
   warnMessage: string = '';
   margin: Margin;
+  minimumAmount:number=0;
 
   constructor(public marginService: MarginService, public dialogRef: MatDialogRef<MarginCallPopUpComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.margin = data;
+    this.minimumAmount=this.margin.maintenanceMargin-this.margin.balance;
   }
 
   closePopUp(){

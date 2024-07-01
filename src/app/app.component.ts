@@ -138,7 +138,7 @@ export class AppComponent implements OnInit {
       this.isSupervizor = role === 'supervizor';
     });
 
-
+    
 
     this.authService.getJwtObservable().subscribe((jwt) => {
       if (jwt) {

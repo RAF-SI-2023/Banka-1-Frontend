@@ -329,10 +329,9 @@ export interface Customer {
   gender: string;
   address: string;
   company?: string;
-  company?: string;
-
   isLegalEntity: boolean;
 }
+
 
 
 export interface PublicCapitalDto {
@@ -673,9 +672,9 @@ export interface ExchangeTransactionReport {
 }
 
 export interface MyStockDto{
-  amount? : number;
+  amount : number;
   ticker? : string;
-  publicAmount? : number;
+  publicAmount: number;
 }
 
 export interface MakeOfferDto{
@@ -714,4 +713,31 @@ export interface SendOffersDto{
   amount? : number;
   price? : number;
   offerStatus? : OfferStatus;
+}
+export interface TransfersReportDto {
+  profit: number;
+  transfers: TransferDto[];
+}
+
+export interface TransferDto {
+  id?: number;
+  senderName?: string;
+  senderAccountNumber?: string;
+  recipientAccountOwnerName?: string;
+  recipientAccountNumber?: string;
+  amount?: number;
+  paymentCode?: string;
+  model?: string;
+  referenceNumber?: string;
+  status?: TransactionStatus;
+  commissionFee?: number;
+  dateOfPayment?: number;
+  channel?: string;
+  convertedAmount?: number;
+  exchangeRate?: number;
+  commission?: number;
+  transferDate?: number;
+  previousCurrency?: string;
+  exchangeTo?: string;
+  profit?: number;
 }
