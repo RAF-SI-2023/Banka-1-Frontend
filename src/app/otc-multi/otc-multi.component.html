@@ -108,6 +108,9 @@
                 <th>Amount</th>
                 <th>Price</th>
                 <th>Offer status</th>
+                <th>Symbol</th>
+                <th>Accept Action</th>
+                <th>Deny Action</th>
               </tr>
               </thead>
               <tbody>
@@ -115,6 +118,30 @@
                 <td>{{ offer.amount }}</td>
                 <td>{{ offer.price }}</td>
                 <td>{{ offer.offerStatus }}</td>
+                <td>{{ offer.ticker}}</td>
+
+                <td>
+                  <div class="table-buttons">
+                    <button class="button-primary accept"
+                    [disabled]="offer.offerStatus !== OfferStatus.PROCESSING"
+                    [style.backgroundColor]="(offer.offerStatus !== OfferStatus.PROCESSING) ? 'gray' : null"
+                    (click)="acceptOffer(offer, idx)">
+                      Accept
+                    </button>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="table-buttons">
+                    <button class="button-primary deny"
+                    [disabled]="offer.offerStatus !== OfferStatus.PROCESSING"
+                    [style.backgroundColor]="(offer.offerStatus !== OfferStatus.PROCESSING) ? 'gray' : null"
+                    (click)="denyOffer(offer, idx)">
+                      Deny
+                    </button>
+                  </div>
+                </td>
+
               </tr>
               </tbody>
             </table>

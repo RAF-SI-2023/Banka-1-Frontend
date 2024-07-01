@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EditMyPublicStock, MyStockDto, OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
+import { EditMyPublicStock, MyStockDto, OfferStatus, OtherBankStocks, ReceivedOffersDto, SendOffersDto } from '../model/model';
 import { MultiOtcService } from '../service/multi-otc.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PopupService } from '../service/popup.service';
@@ -21,6 +21,7 @@ export class OtcMultiComponent {
   isAgent = sessionStorage.getItem('role') === 'agent';
   isSupervizor = sessionStorage.getItem('role') === 'supervizor';
   selectedStock: any = null;
+  OfferStatus = OfferStatus;
 
   myStocks : MyStockDto[] = [];
   receivedOffers : ReceivedOffersDto[] = [];
@@ -202,4 +203,23 @@ export class OtcMultiComponent {
   }
 
 
+  acceptOffer(offer: ReceivedOffersDto, idx: number){
+    this.multiOtcService.acceptOffer(offer).subscribe(res => {
+      console.log(res);
+
+      alert("Successfully accepted offer");
+      //this.receivedOffers.splice(idx, 1);
+      this.loadAllReceivedOffers();
+    })
+  }
+
+  denyOffer(offer: ReceivedOffersDto, idx: number){
+    this.multiOtcService.denyOffer(offer).subscribe(res => {
+      console.log(res);
+
+      alert("Successfully denied offer");
+      //this.receivedOffers.splice(idx, 1);
+      this.loadAllReceivedOffers();
+    })
+  }
 }
