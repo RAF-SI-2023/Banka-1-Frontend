@@ -25,7 +25,12 @@
       <input type="checkbox" [(ngModel)]="allOrNone">
     </div>
 
- 
+    <div *ngIf="isCustomer" class="input-row">
+      <label>Margin:</label>
+      <input type="checkbox" [(ngModel)]="margin">
+    </div>
+
+
     <div class="popup-buttons">
       <div class="button-wrapper">
         <orange-button [buttonName]="'Cancel'" (click)="closeSellingMenu()"></orange-button>

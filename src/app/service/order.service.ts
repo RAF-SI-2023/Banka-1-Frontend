@@ -287,7 +287,7 @@ export class OrderService {
     }
   }
 
-  async sellOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
+  async sellOrder(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, margin: boolean) {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -304,7 +304,7 @@ export class OrderService {
       limitValue: limitValue,
       stopValue: stopValue,
       allOrNone: allOrNone,
-      // isMargin:
+      isMargin: margin
     };
     console.log("sell order")
     console.log(orderRequest)
@@ -321,7 +321,7 @@ export class OrderService {
     }
   }
 
-  async sellOrderForLegal(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean) {
+  async sellOrderForCustomer(orderType: OrderType, listingId: string, listingType: ListingType, contractSize: number, limitValue: number, stopValue: number, allOrNone: boolean, margin: boolean) {
     const jwt = sessionStorage.getItem("jwt");
 
     const httpOptions = {
@@ -338,13 +338,13 @@ export class OrderService {
       limitValue: limitValue,
       stopValue: stopValue,
       allOrNone: allOrNone,
-      // isMargin:
+      isMargin: margin
     };
     console.log("sell order")
     console.log(orderRequest)
 
     try {
-      const response = await this.http.post<boolean>(
+      const response = await this.http.put<boolean>(
         environment.userService + '/orders/legal', orderRequest, httpOptions).toPromise();
       return response;
     } catch (error) {
@@ -456,8 +456,6 @@ export class OrderService {
       addToPublic: publicValue
     }
 
-    console.log("change public value")
-    console.log(body)
     return this.http.put<boolean>(environment.userService + '/capital/employee/addPublic', body, httpOptions);
   }
 
