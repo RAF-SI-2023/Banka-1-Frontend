@@ -52,13 +52,14 @@
               <td>{{ myStock.amount }}</td>
 
               <td (click)="toggleMenu(myStock); $event.stopPropagation()" [class.active]="myStock === selectedStock" class="pointer-cursor">
-                0
+                {{myStock.publicAmount}}
                 <div *ngIf="myStock === selectedStock" class="menu" (click)="$event.stopPropagation();">
                     Set number of public stocks:
-                    <input type="number" [(ngModel)]="myStock.publicAmount" min="0" step="1" max = "myStock.publicAmount">
+                    <input type="number" [(ngModel)]="myStock.publicAmount" min="0" step="1" [max] = "myStock.amount" [value] = "myStock.publicAmount" 
+                      (ngModelChange)="isPublicAmountValid($event, myStock)" onkeydown="return false">
 
                     Set price of public stock:
-                    <input type="number" #publicPriceInput min="0.01" step="0.01">
+                    <input type="number" #publicPriceInput min="0.01" step="0.01" (ngModelChange)="isPriceValid($event)">
 
                     <button (click)="setStock(myStock, myStock.publicAmount, publicPriceInput.value, idx); $event.stopPropagation()">Set</button>
                     <button (click)="toggleMenu(myStock); $event.stopPropagation()">Cancel</button>
@@ -87,9 +88,9 @@
                 <td>
                     <div
                       class="table-buttons"
-                      (click)="sellStock(otherBankStock)">
+                      (click)="offerStock(otherBankStock)">
                       <button class="button-primary">
-                        Sell
+                        Offer
                       </button>
                     </div>
                 </td>
