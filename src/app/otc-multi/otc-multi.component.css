@@ -447,3 +447,11 @@
   .pointer-cursor {
     cursor: pointer;
   }
+
+  .accept{
+    background-color: green;
+  }
+
+  .deny{
+    background-color: red;
+  }

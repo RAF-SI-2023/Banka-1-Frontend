@@ -705,7 +705,9 @@ export enum OfferStatus {
 export interface ReceivedOffersDto{
   amount? : number;
   price? : number;
-  offerStatus? : OfferStatus;
+  offerStatus : OfferStatus;
+  offerId? : number;
+  ticker? : string;
 }
 
 export interface SendOffersDto{
