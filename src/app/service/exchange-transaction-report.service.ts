@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {firstValueFrom} from "rxjs";
-import {ExchangeTransactionReport} from "../model/model";
+import {ExchangeTransactionReport, TransfersReportDto} from "../model/model";
 
 @Injectable({
   providedIn: 'root'
@@ -13,24 +13,24 @@ export class ExchangeTransactionReportService {
 
   constructor(private http: HttpClient) { }
 
-  async getAllExchangeTransactionReports(): Promise<ExchangeTransactionReport[]> {
+  async getAllExchangeTransactionReports(): Promise<TransfersReportDto> {
     const jwt = sessionStorage.getItem("jwt");
-
-    if(!jwt) return [];
-
+  
+    if (!jwt) return { profit: 0, transfers: [] };
+  
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+      'Authorization': 'Bearer ' + jwt
     });
-
+  
     let resp;
     try {
-      resp = (await firstValueFrom(
-        this.http.get(environment.userService + "/", {headers})
-      )) as ExchangeTransactionReport[];
+      resp = await firstValueFrom(
+        this.http.get<TransfersReportDto>(environment.userService + "/transfer/transferReport", { headers })
+      );
     } catch (e) {
-      return [];
+      return { profit: 0, transfers: [] };
     }
     return resp;
   }
-
+ 
 }

@@ -4,7 +4,6 @@
     <div class="central-window">
       <div class="tabs-menu">
         <ul>
-
           <li
             class="{{ selectedTab === 'order-history' ? 'active-tab' : '' }}"
             (click)="setSelectedTab('order-history')"
@@ -20,11 +19,25 @@
           </li>
 
           <li
-            class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"
-            (click)="setSelectedTab('public-securities')"
+            class="{{ selectedTab === 'order-history' ? 'active-tab' : '' }}"
+            (click)="setSelectedTab('order-history')"
           >
-            Public Securities
+            Order history
           </li>
+
+<!--          <li-->
+<!--            class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"-->
+<!--            (click)="setSelectedTab('public-securities')"-->
+<!--          >-->
+<!--            Public Securities-->
+<!--          </li>-->
+
+<!--          <li-->
+<!--            class="{{ selectedTab === 'public-securities' ? 'active-tab' : '' }}"-->
+<!--            (click)="setSelectedTab('public-securities')"-->
+<!--          >-->
+<!--            Public Securities-->
+<!--          </li>-->
         </ul>
         <hr />
       </div>
@@ -115,6 +128,37 @@
           </ng-template>
         </app-dynamic-table>
       </div>
+
+<!--      <div class="securities-tab" *ngIf="selectedTab === 'order-history'">-->
+<!--        <app-dynamic-table [headersArray]="headersOrderHistory" [dataArray]="orderHistory | transformOrderHistory">-->
+<!--        </app-dynamic-table>-->
+<!--      </div>-->
+
+      <div class="history-tab" *ngIf="selectedTab === 'order-history'">
+        <table>
+          <thead>
+          <tr>
+            <th>Security</th>
+            <th>Transaction</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Last Modified</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orderHistory">
+            <td>{{ order.listingType }}</td>
+            <td>{{ order.orderType }}</td>
+            <td>{{ order.contractSize }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.updatedAt * 1000 | date:'short' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FilterByStatusPipeModule} from "../orders/FilterByStatusPipe";
 import {FormsModule} from "@angular/forms";
@@ -20,6 +20,7 @@ import {OrderService} from "../service/order.service";
 import {PopupService} from "../service/popup.service";
 import {WhiteTextFieldModule} from "../welcome/redesign/WhiteTextField";
 import {ExtendedModule} from "@angular/flex-layout";
+import {TransformOrderHistoryPipe} from "../transform-order-history.pipe";
 
 @Component({
   selector: 'app-orders-legal-persons',
@@ -37,12 +38,13 @@ import {ExtendedModule} from "@angular/flex-layout";
     DatePipe,
     FilterByStatusPipeModule,
     NgClass,
-    ExtendedModule
+    ExtendedModule,
+    TransformOrderHistoryPipe
   ],
   templateUrl: './orders-legal-persons.component.html',
   styleUrl: './orders-legal-persons.component.css'
 })
-export class OrdersLegalPersonsComponent {
+export class OrdersLegalPersonsComponent implements OnInit {
   selectedTab: "public-securities" | "all-securities" | "order-history";
   isAdmin: boolean = sessionStorage.getItem('role') === "admin";
   isEmployee: boolean = sessionStorage.getItem('role') === "employee";
@@ -65,18 +67,22 @@ export class OrdersLegalPersonsComponent {
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
   publicSecurities: AllPublicCapitalsDto[] = [];
 
+  headersOrderHistory = ['Security', 'Transaction', 'Amount', 'Price', 'Status', 'Last Modified']
+
+
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
-
-
-
-
 
   constructor(private orderService: OrderService,
               private popupService: PopupService) {
       this.selectedTab = "all-securities";
   }
 
+  async ngOnInit() {
+    this.loadOrders();
+    this.getSecurityOrders();
+    this.getPublicSecurities();
+  }
 
 
   private getSecurityOrders() {
@@ -149,14 +155,6 @@ export class OrdersLegalPersonsComponent {
   setSelectedTab(tab: "public-securities" | "all-securities" | "order-history") {
     this.selectedTab = tab;
   }
-
-  async ngOnInit() {
-    this.getSecurityOrders();
-    this.getPublicSecurities();
-    this.loadOrders()
-  }
-
-
 
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
@@ -276,4 +274,6 @@ export class OrdersLegalPersonsComponent {
       showPopup: false
     }))
   }
+
+  protected readonly history = history;
 }

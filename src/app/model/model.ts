@@ -193,7 +193,7 @@ export interface NewTransactionDto {
 }
 
 export interface TransactionDetails {
-  recipientName: String;
+  recipientName: String; 
   amount: number;
   referenceNumber: String;
   paymentCode: number;
@@ -329,9 +329,9 @@ export interface Customer {
   gender: string;
   address: string;
   company?: string;
-
   isLegalEntity: boolean;
 }
+
 
 
 export interface PublicCapitalDto {
@@ -713,4 +713,31 @@ export interface SendOffersDto{
   amount? : number;
   price? : number;
   offerStatus? : OfferStatus;
+}
+export interface TransfersReportDto {
+  profit: number;
+  transfers: TransferDto[];
+}
+
+export interface TransferDto {
+  id?: number;
+  senderName?: string;
+  senderAccountNumber?: string;
+  recipientAccountOwnerName?: string;
+  recipientAccountNumber?: string;
+  amount?: number;
+  paymentCode?: string;
+  model?: string;
+  referenceNumber?: string;
+  status?: TransactionStatus;
+  commissionFee?: number;
+  dateOfPayment?: number;
+  channel?: string;
+  convertedAmount?: number;
+  exchangeRate?: number;
+  commission?: number;
+  transferDate?: number;
+  previousCurrency?: string;
+  exchangeTo?: string;
+  profit?: number;
 }

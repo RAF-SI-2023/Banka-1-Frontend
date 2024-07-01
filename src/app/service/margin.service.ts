@@ -24,6 +24,18 @@ export class MarginService {
     return this.httpClient.get<Margin[]>(url, options);
   }
 
+  getCustomerMargins(): Observable<Margin[]> {
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/margin/all`;
+
+    return this.httpClient.get<Margin[]>(url, options);
+  }
+
   depositMoney(margin: Margin, marginCall: number) {
     const headers = new HttpHeaders({
       'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
