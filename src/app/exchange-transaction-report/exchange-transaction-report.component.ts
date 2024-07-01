@@ -3,7 +3,7 @@ import {GrayButtonModule} from "../welcome/redesign/GrayButton";
 import {NgIf} from "@angular/common";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
 import {TableComponentMarginModule} from "../welcome/redesign/TableComponentMargin";
-import {ExchangeTransactionReport, Margin} from "../model/model";
+import {ExchangeTransactionReport, Margin, TransferDto, TransfersReportDto} from "../model/model";
 import {HttpClient} from "@angular/common/http";
 import {MarginService} from "../service/margin.service";
 import {TableComponentModule} from "../welcome/redesign/TableComponent";
@@ -20,9 +20,9 @@ import {ExchangeTransactionReportService} from "../service/exchange-transaction-
   styleUrl: './exchange-transaction-report.component.css'
 })
 export class ExchangeTransactionReportComponent {
-  headersETR = ['Outflow account', 'Inflow account', 'Amount', 'Previous currency', 'Exchanged to', 'Profit' ];
+  headersETR = ['Inflow account','Outflow account','Amount', 'Date','Status','Exchanged to', 'Previous currency','Profit'];
   selectedTab: string = 'exchangeTransactions';
-  exchangedTransactions: ExchangeTransactionReport[] = [];
+  exchangedTransactions: TransferDto[] = [];
 
   constructor(private http: HttpClient, private etrService: ExchangeTransactionReportService) {}
 
@@ -31,12 +31,29 @@ export class ExchangeTransactionReportComponent {
   }
 
   async loadExchangedTransactionReports() {
-    this.http.get<ExchangeTransactionReport[]>('/assets/mocked_banking_data/exchanged-transaction-reports-mocked.json').subscribe(data => {
-      this.exchangedTransactions = data
-      console.log("Exchanged Transaction Reports: ", this.exchangedTransactions);
-    });
+    const transfersReport: TransfersReportDto = await this.etrService.getAllExchangeTransactionReports();
 
-    // this.exchangedTransactions = await this.etrService.getAllExchangeTransactionReports();
+    const transformedArray = transfersReport.transfers.map(item => {
+      // Check if dateOfPayment is defined
+      const date = item.dateOfPayment ? new Date(item.dateOfPayment * 1000).toLocaleDateString() : '';
+  
+      return {
+          recipientAccount: item.recipientAccountNumber,
+          senderAccount: item.senderAccountNumber,
+          amount: item.amount,
+          date: date,
+          status: item.status,
+          previousCurrency: item.previousCurrency || '', // Assuming 'senderAccountNumber' represents the previous currency
+          exchangeTo: item.exchangeTo || '',    // Assuming 'recipientAccountNumber' represents the exchange to currency
+          profit: item.profit || 0                     // Assuming 'commission' represents profit
+      };
+  });
+
+    this.exchangedTransactions = transformedArray;
+
+    
+
+    console.log("BUUUU", this.exchangedTransactions);
   }
 
   setTab(tabName: string) {
