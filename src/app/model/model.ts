@@ -169,7 +169,7 @@ export interface CreateUserRequest {
 export interface TransactionBasics {
   senderAccountNumber: string;
   recipientAccountNumber: string;
-  amount: string;
+  amount: number;
 }
 
 export interface TransactionDto {
