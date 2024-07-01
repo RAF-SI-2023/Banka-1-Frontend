@@ -672,7 +672,7 @@ export interface ExchangeTransactionReport {
 }
 
 export interface MyStockDto{
-  amount? : number;
+  amount : number;
   ticker? : string;
   publicAmount: number;
 }
