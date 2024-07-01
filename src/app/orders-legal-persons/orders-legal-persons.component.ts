@@ -146,11 +146,10 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   changePublicValue(element: any){
     this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
-      // if(res)
-      console.log("FFFF")
-      console.log(res)
+      if(res) {
         this.getSecurityOrders();
         element.showPopup = false;
+      }
     })
   }
 
