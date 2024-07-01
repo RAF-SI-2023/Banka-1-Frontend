@@ -37,7 +37,8 @@ export class MultiOtcService {
       publicAmount: editMyPublicStock.publicAmount,
       price: editMyPublicStock.price
     },{
-      headers: headers
+      headers: headers,
+      responseType: 'text'
     });
   }
 

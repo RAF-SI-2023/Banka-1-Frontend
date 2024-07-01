@@ -158,10 +158,9 @@ export class OrdersComponent {
     if(this.customerId) {
       this.loadLimit()
     }
-    // this.loadOrders()
-    // this.getSecurityOrders();
-    // this.getPublicSecurities();
-
+    this.loadOrders()
+    this.getSecurityOrders();
+    this.getPublicSecurities();
   }
 
   async ngOnInit() {

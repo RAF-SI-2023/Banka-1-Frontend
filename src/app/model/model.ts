@@ -674,7 +674,7 @@ export interface ExchangeTransactionReport {
 export interface MyStockDto{
   amount? : number;
   ticker? : string;
-  publicAmount? : number;
+  publicAmount: number;
 }
 
 export interface MakeOfferDto{
