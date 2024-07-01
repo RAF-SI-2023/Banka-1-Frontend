@@ -193,7 +193,7 @@ export interface NewTransactionDto {
 }
 
 export interface TransactionDetails {
-  recipientName: String; 
+  recipientName: String;
   amount: number;
   referenceNumber: String;
   paymentCode: number;
