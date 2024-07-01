@@ -104,52 +104,12 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
 
 
-  // getPublicSecurities(){
-  //   let publicStocks: PublicCapitalDto[] = []
-  //   this.orderService.getPublicStocks().subscribe( res =>{
-  //     publicStocks = res;
-  //   })
-  //
-  //   let allStocks: StockListing[] = []
-  //   this.orderService.getAllStocks().subscribe(res =>{
-  //     allStocks = res;
-  //   })
-  //
-  //   const publicIds = publicStocks.map(stock => stock.listingId);
-  //   const filterAllStocks = allStocks.filter(stock => publicIds.includes(stock.listingId))
-  //   this.publicSecurities = filterAllStocks.map(stock => {
-  //     const date = new Date(stock.lastRefresh);
-  //     const formattedDate = new Intl.DateTimeFormat("en", {month: "long", year: "2-digit", day: "numeric"}).format(date);
-  //
-  //     let publicStock: PublicStock = {
-  //         listingType: stock.listingType,
-  //         listingId: stock.listingId,
-  //         ticker: stock.ticker,
-  //         amount: stock.volume,
-  //         price: stock.price,
-  //         lastModified: formattedDate,
-  //         bankAccount: this.getOwner(publicStocks, stock.listingId),
-  //       }
-  //       return publicStock;
-  //   })
-  //
-  //
-  //  // this.mockPublicSecurities()
-  // }
-
   getPublicSecurities(){
     this.orderService.getPublicStocks().subscribe( res =>{
       this.publicSecurities = res
     })
   }
 
-
-  getOwner(stocks: PublicCapitalDto[], listingId: number){
-    const stock = stocks.find(stock => stock.listingId == listingId);
-    if(stock != null)
-      return stock.bankAccountNumber
-    return "";
-  }
 
 
   setSelectedTab(tab: "public-securities" | "all-securities" | "order-history") {
@@ -158,17 +118,17 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
-      this.popupService.openSellPopup(original.security.listingId, true,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
     } else if(original.security.listingType === 'FOREX') {
-      this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId,true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
     } else if(original.security.listingType === 'FUTURE') {
-      this.popupService.openSellPopup(original.security.listingId, true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
+      this.popupService.openSellPopup(original.security.listingId,true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
       });
@@ -186,10 +146,11 @@ export class OrdersLegalPersonsComponent implements OnInit {
 
   changePublicValue(element: any){
     this.orderService.changePublicValueCustomer(element.listingType, element.listingId, this.changedPublicValue).subscribe(res => {
-      if(res)
+      if(res) {
         this.getSecurityOrders();
+        element.showPopup = false;
+      }
     })
-    element.showPopup = false;
   }
 
   showPopup(security: any){
