@@ -21,7 +21,7 @@ export class TransactionComponent implements OnInit{
   transaction: TransactionBasics = {
     senderAccountNumber: '',
     recipientAccountNumber: '',
-    amount: '',
+    amount: 0,
   };
 
   outflowAccounts: Account[] = [];
@@ -111,8 +111,9 @@ export class TransactionComponent implements OnInit{
     return true;
   }
 
-  private isValidAmount(amount: string): boolean {
-    return /^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$/.test(amount);
+  private isValidAmount(amount: number): boolean {
+    //return /^(0(\.\d+)?|[1-9]\d*(\.\d+)?)$/.test(amount);
+    return amount > 0;
   }
   
 }

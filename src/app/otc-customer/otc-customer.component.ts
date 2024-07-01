@@ -196,6 +196,7 @@ export class OtcCustomerComponent {
 
   setTab(tabName: string) {
     this.selectedTab = tabName;
+    this.loadOTCs();
   }
 
   updateOTCStatus(contract: any, newStatus: 'Approved' | 'Denied') {
