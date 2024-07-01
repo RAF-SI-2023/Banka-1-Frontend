@@ -31,13 +31,19 @@ export class OtcMultiComponent {
 
   setSelectedTab(tab: "other-bank-stocks" | "my-stocks" | "received-offers" | "sent-offers") {
     this.selectedTab = tab;
+
+    //refresh all data when switching tabs
+    this.loadAllMyStocks();
+    this.loadAllReceivedOffers();
+    this.loadAllSentOffers();
+    this.stepBeforeLoadingOtherBankStocks();
   }
 
   ngOnInit() {
     this.loadAllMyStocks();
     this.loadAllReceivedOffers();
     this.loadAllSentOffers();
-    this.loadOtherBankStocks();
+    this.stepBeforeLoadingOtherBankStocks();
   }
 
   loadAllMyStocks()
@@ -100,6 +106,19 @@ export class OtcMultiComponent {
     );
   }
 
+  stepBeforeLoadingOtherBankStocks()
+  {
+    this.multiOtcService.stepBeforeGetAllOtherBankStocks().subscribe({
+      next: (response) => {
+        console.log("Response received:", response);
+        this.loadOtherBankStocks();
+      },
+      error: (error) => {
+        console.error("Error:", error);
+      }
+    });
+  }
+
   toggleMenu(stock: any): void {
     // Close the current menu if clicked again or another is clicked
     if (this.selectedStock && this.selectedStock === stock) {
@@ -141,7 +160,7 @@ export class OtcMultiComponent {
     this.toggleMenu(null); // Close menu after action
   }
 
-  sellStock(otherBankStock:OtherBankStocks){
+  offerStock(otherBankStock:OtherBankStocks){
     // let otherBankStocks : OtherBankStocks = {
     //   amount: 69,
     //   ticker: "MIHA"
@@ -181,4 +200,6 @@ export class OtcMultiComponent {
       alert("Price can not be negative");
     }
   }
+
+
 }
