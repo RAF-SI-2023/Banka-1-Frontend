@@ -421,3 +421,7 @@ hr {
   background-color: var(--banka-very-dark-gray);
 }
 
+.disabled-button {
+  pointer-events: none;
+  opacity: 0.6;
+}
