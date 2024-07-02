@@ -67,6 +67,8 @@ presubmits:
               trap collectRecordings EXIT
 
               npm run e2e
+
+              
           securityContext:
             privileged: true
           imagePullPolicy: Always
