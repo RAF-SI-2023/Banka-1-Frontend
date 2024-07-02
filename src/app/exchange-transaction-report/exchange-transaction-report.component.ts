@@ -31,12 +31,17 @@ export class ExchangeTransactionReportComponent {
   }
 
   async loadExchangedTransactionReports() {
-    const transfersReport: TransfersReportDto = await this.etrService.getAllExchangeTransactionReports();
+    // const transfersReport: TransfersReportDto = await this.etrService.getAllExchangeTransactionReports();
+    let transfersReport: TransfersReportDto = { profit: 0, transfers: [] };
+    this.etrService.getAllExchangeTransactionReports().subscribe(
+      (transfers: TransfersReportDto) => {
+        transfersReport = transfers;
+    });
 
     const transformedArray = transfersReport.transfers.map(item => {
       // Check if dateOfPayment is defined
       const date = item.dateOfPayment ? new Date(item.dateOfPayment * 1000).toLocaleDateString() : '';
-  
+
       return {
           recipientAccount: item.recipientAccountNumber,
           senderAccount: item.senderAccountNumber,
@@ -44,14 +49,12 @@ export class ExchangeTransactionReportComponent {
           date: date,
           status: item.status,
           previousCurrency: item.previousCurrency || '', // Assuming 'senderAccountNumber' represents the previous currency
-          exchangeTo: item.exchangeTo || '',    // Assuming 'recipientAccountNumber' represents the exchange to currency
+          exchangeTo: item.exchangedTo || '',    // Assuming 'recipientAccountNumber' represents the exchange to currency
           profit: item.profit || 0                     // Assuming 'commission' represents profit
       };
   });
 
     this.exchangedTransactions = transformedArray;
-
-    
 
     console.log("BUUUU", this.exchangedTransactions);
   }

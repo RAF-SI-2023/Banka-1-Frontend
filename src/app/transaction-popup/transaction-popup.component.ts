@@ -21,6 +21,9 @@ export class TransactionPopupComponent implements OnInit{
   ngOnInit(): void {
     this.user = this.transactionService.getTransactionUser() as Customer;
     this.transactionBasics=this.transactionService.getTransactionBasics() as TransactionBasics;
+    console.log('TransactionPopupComponent: ', this.user);
+    console.log('Inflow account: ', this.transactionBasics);
+
   }
 
 

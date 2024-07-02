@@ -65,6 +65,18 @@ export interface BankAccount {
   accountOwner?: string;
 }
 
+export interface BankAccountCompany {
+  id: number;
+  companyName?: string;
+  telephoneNumber?: string;
+  faxNumber?: string;
+  pib?: string;
+  idNumber?: string;
+  jobId?: string;
+  registrationNumber?: string;
+  address?: string;
+}
+
 export interface Account {
   accountNumber: string;
   accountType: AccountType;
@@ -715,29 +727,29 @@ export interface SendOffersDto{
   offerStatus? : OfferStatus;
 }
 export interface TransfersReportDto {
-  profit: number;
   transfers: TransferDto[];
+  profit: number;
 }
 
 export interface TransferDto {
   id?: number;
   senderName?: string;
   senderAccountNumber?: string;
-  recipientAccountOwnerName?: string;
   recipientAccountNumber?: string;
   amount?: number;
-  paymentCode?: string;
-  model?: string;
-  referenceNumber?: string;
+  convertedAmount?: number;
+  exchangeRate?: number;
   status?: TransactionStatus;
   commissionFee?: number;
   dateOfPayment?: number;
-  channel?: string;
-  convertedAmount?: number;
-  exchangeRate?: number;
-  commission?: number;
-  transferDate?: number;
   previousCurrency?: string;
-  exchangeTo?: string;
+  exchangedTo?: string;
   profit?: number;
+
+  // paymentCode?: string;
+  // model?: string;
+  // referenceNumber?: string;
+  // channel?: string;
+  // commission?: number;
+  // transferDate?: number;
 }
