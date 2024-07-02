@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {BankAccount, User} from '../model/model';
+import {BankAccount, BankAccountCompany, User} from '../model/model';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -42,10 +42,29 @@ export class BankAccountAdminComponent implements OnInit {
   }
 
   loadBankAccounts() {
-    this.bankAccountService.getAdminBankAccounts(1).subscribe(
-      (usersBankAccountsFromDB: BankAccount[]) => {
-        this.bankAccounts = usersBankAccountsFromDB;
-        console.log('Bank accounts loaded:', this.bankAccounts);
+    // this.bankAccountService.getAdminBankAccounts(1).subscribe(
+    //   (usersBankAccountsFromDB: BankAccount[]) => {
+    //     this.bankAccounts = usersBankAccountsFromDB;
+    //     console.log('Bank accounts loaded:', this.bankAccounts);
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     console.error('Error loading bank accounts:', error);
+    //   }
+    // );
+
+    this.bankAccountService.getAdminCompanyId().subscribe(
+      (companyBankAccounts: BankAccountCompany) => {
+
+        this.bankAccountService.getAdminBankAccounts(companyBankAccounts.id).subscribe(
+          (usersBankAccountsFromDB: BankAccount[]) => {
+
+            this.bankAccounts = usersBankAccountsFromDB;
+            console.log('Bank accounts loaded:', this.bankAccounts);
+          },
+          (error: HttpErrorResponse) => {
+            console.error('Error loading bank accounts:', error);
+          }
+        );
       },
       (error: HttpErrorResponse) => {
         console.error('Error loading bank accounts:', error);

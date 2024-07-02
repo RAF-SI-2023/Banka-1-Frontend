@@ -65,6 +65,18 @@ export interface BankAccount {
   accountOwner?: string;
 }
 
+export interface BankAccountCompany {
+  id: number;
+  companyName?: string;
+  telephoneNumber?: string;
+  faxNumber?: string;
+  pib?: string;
+  idNumber?: string;
+  jobId?: string;
+  registrationNumber?: string;
+  address?: string;
+}
+
 export interface Account {
   accountNumber: string;
   accountType: AccountType;
@@ -169,7 +181,7 @@ export interface CreateUserRequest {
 export interface TransactionBasics {
   senderAccountNumber: string;
   recipientAccountNumber: string;
-  amount: string;
+  amount: number;
 }
 
 export interface TransactionDto {
@@ -193,7 +205,7 @@ export interface NewTransactionDto {
 }
 
 export interface TransactionDetails {
-  recipientName: String; 
+  recipientName: String;
   amount: number;
   referenceNumber: String;
   paymentCode: number;
@@ -672,9 +684,9 @@ export interface ExchangeTransactionReport {
 }
 
 export interface MyStockDto{
-  amount? : number;
+  amount : number;
   ticker? : string;
-  publicAmount? : number;
+  publicAmount: number;
 }
 
 export interface MakeOfferDto{
@@ -705,7 +717,9 @@ export enum OfferStatus {
 export interface ReceivedOffersDto{
   amount? : number;
   price? : number;
-  offerStatus? : OfferStatus;
+  offerStatus : OfferStatus;
+  offerId? : number;
+  ticker? : string;
 }
 
 export interface SendOffersDto{
@@ -713,4 +727,31 @@ export interface SendOffersDto{
   amount? : number;
   price? : number;
   offerStatus? : OfferStatus;
+}
+export interface TransfersReportDto {
+  transfers: TransferDto[];
+  profit: number;
+}
+
+export interface TransferDto {
+  id?: number;
+  senderName?: string;
+  senderAccountNumber?: string;
+  recipientAccountNumber?: string;
+  amount?: number;
+  convertedAmount?: number;
+  exchangeRate?: number;
+  status?: TransactionStatus;
+  commissionFee?: number;
+  dateOfPayment?: number;
+  previousCurrency?: string;
+  exchangedTo?: string;
+  profit?: number;
+
+  // paymentCode?: string;
+  // model?: string;
+  // referenceNumber?: string;
+  // channel?: string;
+  // commission?: number;
+  // transferDate?: number;
 }
