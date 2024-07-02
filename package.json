@@ -4,6 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "test:e2e": "concurrently \"npm:start\" \"npm run wait-and-run-tests\"",
+    "wait-and-run-tests": "wait-on http://localhost:4200 && cypress run && npm run stop",
+    "stop": "kill-port 4200",
     "build": "ng build",
     "build-prod": "ng build --configuration k8s-production",
     "build-dev": "ng build --configuration k8s-development",
@@ -66,13 +69,16 @@
     "@playwright/test": "^1.43.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.12.7",
+    "concurrently": "^8.2.2",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "kill-port": "^2.0.1",
     "mail-listener2": "^0.3.1",
-    "typescript": "~5.3.2"
+    "typescript": "~5.3.2",
+    "wait-on": "^7.2.0"
   }
 }
