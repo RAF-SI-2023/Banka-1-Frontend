@@ -64,11 +64,12 @@ presubmits:
 
               npm run start& 
 
+              sleep 300
+
               trap collectRecordings EXIT
 
               npm run e2e
 
-              
           securityContext:
             privileged: true
           imagePullPolicy: Always
