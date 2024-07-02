@@ -62,13 +62,9 @@ presubmits:
 
               npm install
 
-              npm run start& 
-
-              sleep 300
-
               trap collectRecordings EXIT
 
-              npm run e2e
+              npm run test:e2e
 
           securityContext:
             privileged: true
