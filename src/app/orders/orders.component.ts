@@ -70,11 +70,8 @@ export class OrdersComponent {
   allSecurities: any[] = [];
   changedPublicValue: number = -1;
 
-
   headersPublicSecurities = ['Security', 'Symbol', 'Amount', 'Last Modified', 'Owner'];
   publicSecurities: AllPublicCapitalsDto[] = [];
-
-
 
   sellScheme = z.object({
     amount: z.number().min(0),
@@ -94,7 +91,6 @@ export class OrdersComponent {
 
     this.selectedTab = "order-history";
     this.getAllSecurityOrders();
-
     this.getPublicSecurities();
   }
 
@@ -104,9 +100,6 @@ export class OrdersComponent {
     })
   }
 
-
-
-
   private getAllSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({
       next: (securities: CapitalProfitDto[]) => {
@@ -115,13 +108,12 @@ export class OrdersComponent {
           security: security,
           showPopup: false
         }))
+        console.log('All Securities', securities);
       },
       error: (error) => {
         console.error('Error fetching securities', error);
       }
     });
-
-    // this.mockSecurityOrders();
   }
 
   private getSecurityOrders() {
@@ -134,21 +126,7 @@ export class OrdersComponent {
         console.error('Error fetching securities', error);
       }
     });
-    // this.securities.push({
-    //   bankAccountNumber: "string",
-    //   // currencyName: 123,
-    //   listingType: ListingType.STOCK,
-    //   listingId: 123,
-    //   totalPrice: 123,
-    //   total: 123,
-    //   ticker: "string",
-    //   reserved: 123,
-    //   publicTotal: 123,
-    //   averageBuyingPrice: 123,
-    // })
   }
-
-
 
   setSelectedTab(tab: "order-history" | "requests" | "public-securities" | "all-securities") {
     this.selectedTab = tab;
@@ -164,14 +142,12 @@ export class OrdersComponent {
   }
 
   async ngOnInit() {
-
     this.customerId = sessionStorage.getItem('loggedUserID');
     if(this.customerId) {
       this.loadLimit()
     }
     this.loadOrders()
     this.getAllSecurityOrders();
-
   }
 
   loadLimit() {
@@ -193,21 +169,19 @@ export class OrdersComponent {
 
     console.log("ORDER HISTORY: ");
     console.log(this.orderHistory);
-
   }
 
   async approveOrder(order: OrderDto) {
       this.orderService.decideOrder(order.orderId, StatusRequest.APPROVED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-
   }
 
   async denyOrder(order: OrderDto) {
       this.orderService.decideOrder(order.orderId, StatusRequest.DENIED).subscribe( async response => {
         this.orderHistory = await this.orderService.getAllOrdersHistory();
       })
-}
+  }
 
   sellAllSecurityOrder(original: any) {
     let isCustomer = false
@@ -217,39 +191,20 @@ export class OrdersComponent {
     if(original.security.listingType === 'STOCK') {
       this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getAllSecurityOrders()
+        location.reload();
       });
     } else if(original.security.listingType === 'FOREX') {
       this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getAllSecurityOrders()
+        location.reload();
       });
     } else if(original.security.listingType === 'FUTURE') {
       this.popupService.openSellPopup(original.security.listingId, isCustomer,  original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getAllSecurityOrders()
+        location.reload();
       });
     }
   }
-
-  // sellOrder(original: any) {
-  //   if(original.listingType === 'STOCK') {
-  //     this.popupService.openSellPopup(original.listingId, original.total, false, false, true).afterClosed().subscribe(() =>{
-  //       this.loadLimit()
-  //       this.loadOrders()
-  //       this.getSecurityOrders()
-  //     });
-  //   } else if(original.security.listingType === 'FOREX') {
-  //     this.popupService.openSellPopup(original.security.listingId, original.security.total, false, true, false).afterClosed().subscribe(() =>{
-  //       this.loadLimit()
-  //       this.loadOrders()
-  //       this.getSecurityOrders()
-  //     });
-  //   } else if(original.security.listingType === 'FUTURE') {
-  //     this.popupService.openSellPopup(original.security.listingId, original.security.total, true, false, false).afterClosed().subscribe(() =>{
-  //       this.loadLimit()
-  //       this.loadOrders()
-  //       this.getSecurityOrders()
-  //     });
-  //   }
-  // }
 
   openSellMenu(order: OrderDto) {
     this.sellingOrder = order;
@@ -293,9 +248,7 @@ export class OrdersComponent {
           // this.changedPublicValue = -1;
           this.getAllSecurityOrders();
           // location.reload()
-
         }
-
       })
     }
   }

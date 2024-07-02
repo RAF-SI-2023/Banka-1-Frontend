@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {DatePipe, DecimalPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, DecimalPipe, Location, NgClass, NgForOf, NgIf} from "@angular/common";
 import {FilterByStatusPipeModule} from "../orders/FilterByStatusPipe";
 import {FormsModule} from "@angular/forms";
 import {OrangeButtonModule} from "../welcome/redesign/OrangeButton";
@@ -11,11 +11,8 @@ import {
   CapitalProfitDto,
   ListingType,
   OrderDto,
-  PublicCapitalDto, PublicOffer, PublicStock,
-  SellingRequest,
-  StatusRequest, StockListing
+  PublicStock
 } from "../model/model";
-import {z} from "zod";
 import {OrderService} from "../service/order.service";
 import {PopupService} from "../service/popup.service";
 import {WhiteTextFieldModule} from "../welcome/redesign/WhiteTextField";
@@ -84,6 +81,9 @@ export class OrdersLegalPersonsComponent implements OnInit {
     this.getPublicSecurities();
   }
 
+  refresh(){
+    this.ngOnInit().then();
+  }
 
   private getSecurityOrders() {
     this.orderService.getSecurityOrders().subscribe({
@@ -93,16 +93,13 @@ export class OrdersLegalPersonsComponent implements OnInit {
           security: security,
           showPopup: false
         }))
+        console.log('All Securities', securities);
       },
       error: (error) => {
         console.error('Error fetching securities', error);
       }
     });
-
-    // this.mockSecurityOrders();
   }
-
-
 
   getPublicSecurities(){
     this.orderService.getPublicStocks().subscribe( res =>{
@@ -110,27 +107,24 @@ export class OrdersLegalPersonsComponent implements OnInit {
     })
   }
 
-
-
-  setSelectedTab(tab: "public-securities" | "all-securities" | "order-history") {
-    this.selectedTab = tab;
-  }
-
   sellOrder(original: any) {
     if(original.security.listingType === 'STOCK') {
       this.popupService.openSellPopup(original.security.listingId, true, original.security.total, false, false, true).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
+        location.reload();
       });
     } else if(original.security.listingType === 'FOREX') {
       this.popupService.openSellPopup(original.security.listingId,true, original.security.total, false, true, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
+        location.reload();
       });
     } else if(original.security.listingType === 'FUTURE') {
       this.popupService.openSellPopup(original.security.listingId,true, original.security.total, true, false, false).afterClosed().subscribe(() =>{
         this.getSecurityOrders()
         this.loadOrders()
+        location.reload();
       });
     }
   }
@@ -141,7 +135,6 @@ export class OrdersLegalPersonsComponent implements OnInit {
     }else{
       this.orderHistory=await this.orderService.getOrdersHistory();
     }
-
   }
 
   changePublicValue(element: any){
@@ -176,64 +169,8 @@ export class OrdersLegalPersonsComponent implements OnInit {
     this.popupService.openPublicSecuritiesPopup(security);
   }
 
-
-  mockPublicSecurities(){
-    const ex1 : AllPublicCapitalsDto = {
-      listingType: ListingType.STOCK,
-      listingId: 456,
-      ticker:"AAPL",
-      amount: 138,
-      lastModified:"Jan 1, 2024",
-      bankAccountNumber: "345677885",
-      ownerName: "Nastasja"
-    }
-
-    this.publicSecurities.push(ex1);
-  }
-
-  mockSecurityOrders(){
-    const example1: CapitalProfitDto = {
-      bankAccountNumber: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "string",
-      reserved: 35556,
-      publicTotal: 123,
-      averageBuyingPrice: 123
-    }
-    const example2: CapitalProfitDto = {
-      bankAccountNumber: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "string",
-      reserved: 35556,
-      publicTotal: 123,
-      averageBuyingPrice: 123
-    }
-    const example3: CapitalProfitDto = {
-      bankAccountNumber: "string",
-      listingType: ListingType.FOREX,
-      listingId: 13425,
-      totalPrice: 10000,
-      total: 346457,
-      ticker: "AAPL",
-      reserved: 35556,
-      publicTotal: 123,
-      averageBuyingPrice: 123
-    }
-
-    this.securities.push(example1)
-    this.securities.push(example2)
-    this.securities.push(example3)
-
-    this.allSecurities = this.securities.map(security => ({
-      security: security,
-      showPopup: false
-    }))
+  setSelectedTab(tab: "public-securities" | "all-securities" | "order-history") {
+    this.selectedTab = tab;
   }
 
   protected readonly history = history;
