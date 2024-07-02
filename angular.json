@@ -54,7 +54,12 @@
                   "maximumError": "150kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": {
+                "scripts": true,
+                "styles": true,
+                "fonts": false
+              }
             },
             "k8s-development": {
               "fileReplacements": [

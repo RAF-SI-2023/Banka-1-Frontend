@@ -37,7 +37,8 @@ export class MultiOtcService {
       publicAmount: editMyPublicStock.publicAmount,
       price: editMyPublicStock.price
     },{
-      headers: headers
+      headers: headers,
+      responseType: 'text'
     });
   }
 
@@ -50,9 +51,23 @@ export class MultiOtcService {
     console.log(headers);
 
     const options = { headers: headers };
-    let url = environment.userService + `/api/v1/otcTrade/getBanksStock`;
+    let url = environment.userService + `/api/v1/otcTrade/getBanksStocks`;
 
     return this.httpClient.get<OtherBankStocks[]>(url, options); 
+  }
+
+  //Step before getAllOtherBankStocks
+  public stepBeforeGetAllOtherBankStocks(): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/api/v1/otcTrade/refresh`;
+
+    return this.httpClient.put<any>(url, options); 
   }
 
   //Make offer
@@ -79,6 +94,7 @@ export class MultiOtcService {
     console.log(headers);
 
     const options = { headers: headers };
+
     let url = environment.userService + `/api/v1/otcTrade/getOffers`;
 
     return this.httpClient.get<ReceivedOffersDto[]>(url, options); 
@@ -98,4 +114,29 @@ export class MultiOtcService {
     return this.httpClient.get<SendOffersDto[]>(url, options); 
   }
 
+  // Accept offer
+  acceptOffer(offer: ReceivedOffersDto): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    const options = { headers: headers, observe: 'response' };
+    let url = environment.userService + `/api/v1/otcTrade/acceptOffer/${offer.offerId}`;
+
+    return this.httpClient.post<any>(url, options);
+  }
+
+  // Deny offer
+  denyOffer(offer: ReceivedOffersDto): Observable<any> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+
+    const options = { headers: headers, observe: 'response' };
+    let url = environment.userService + `/api/v1/otcTrade/declineOffer/${offer.offerId}`;
+
+    return this.httpClient.post<any>(url, options);
+  }
 }

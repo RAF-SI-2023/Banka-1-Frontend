@@ -16,15 +16,14 @@
           [showStatus]="true"
         >
           <ng-template #statusColumn let-row>
-<!--             <dropdown-input-status [initialValues]="[row.original.bankApproval, row.original.sellerApproval]" [initialValue]="row.status"  [inputName]="'status'"
-                            [valueNames]="['Approve', 'Deny']" [values]="['Approve', 'Deny']"
-                            (selectedValue)="setStatus(row.original, $event)">
-            </dropdown-input-status> -->
             <div class="dropdown">
               <div
                 id="dropdownMenu"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
+                [class.disabled-button]="row.original.comment !== null || (row.original.bankApproval && row.original.sellerApproval)"
+                [attr.title]="row.original.comment !== null ? 'Cannot change status' : ''"
+
               >
                 {{ row.original | transformStatus }}
               </div>
@@ -45,10 +44,6 @@
                 </li>
               </ul>
             </div>
-<!--             <dropdown-input-status [initialValues]="[row.original.bankApproval, row.original.sellerApproval]" [initialValue]="row.status"  [inputName]="'status'"
-                            [valueNames]="['Approve', 'Deny']" [values]="['Approve', 'Deny']"
-                            (selectedValue)="setStatus(row.original, $event)">
-            </dropdown-input-status> -->
           </ng-template>
         </app-dynamic-table-status>
       </div>
