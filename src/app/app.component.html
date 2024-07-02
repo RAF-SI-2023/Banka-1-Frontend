@@ -74,6 +74,10 @@
           <div>Margin</div>
           </div>
 
+          <div [routerLink]="'/margin'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isAgent || isSupervizor||isCustomer)">
+          <div>Margin</div>
+          </div>
+
           <div [routerLink]="'/multiOtc'" class="sidebar-item" routerLinkActive="active" *ngIf="(isAdmin || isSupervizor)">
             <div>Multi OTC</div>
           </div>

@@ -38,9 +38,9 @@ export class ExchangeTransactionReportService {
 
   getAllExchangeTransactionReports(): Observable<TransfersReportDto> {
     const headers = new HttpHeaders({
-      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+      'Authorization': 'Bearer ' +sessionStorage.getItem("jwt")
     });
     return this.http.get<TransfersReportDto>(`${this.apiUrl}/transfer/transferReport`, { headers });
   }
-
+ 
 }

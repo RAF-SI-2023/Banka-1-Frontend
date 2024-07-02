@@ -31,33 +31,36 @@ export class ExchangeTransactionReportComponent {
   }
 
   async loadExchangedTransactionReports() {
-    // const transfersReport: TransfersReportDto = await this.etrService.getAllExchangeTransactionReports();
     let transfersReport: TransfersReportDto = { profit: 0, transfers: [] };
+    
     this.etrService.getAllExchangeTransactionReports().subscribe(
       (transfers: TransfersReportDto) => {
         transfersReport = transfers;
-    });
+        console.log("Transferss" + transfers.transfers.length);
 
-    const transformedArray = transfersReport.transfers.map(item => {
-      // Check if dateOfPayment is defined
-      const date = item.dateOfPayment ? new Date(item.dateOfPayment * 1000).toLocaleDateString() : '';
+        // Transform the data after receiving the report
+        const transformedArray = transfersReport.transfers.map(item => {
+          // Check if dateOfPayment is defined
+          const date = item.dateOfPayment ? new Date(item.dateOfPayment * 1000).toLocaleDateString() : '';
 
-      return {
-          recipientAccount: item.recipientAccountNumber,
-          senderAccount: item.senderAccountNumber,
-          amount: item.amount,
-          date: date,
-          status: item.status,
-          previousCurrency: item.previousCurrency || '', // Assuming 'senderAccountNumber' represents the previous currency
-          exchangeTo: item.exchangedTo || '',    // Assuming 'recipientAccountNumber' represents the exchange to currency
-          profit: item.profit || 0                     // Assuming 'commission' represents profit
-      };
-  });
+          return {
+            recipientAccount: item.recipientAccountNumber,
+            senderAccount: item.senderAccountNumber,
+            amount: item.amount,
+            date: date,
+            status: item.status,
+            previousCurrency: item.previousCurrency || '##', 
+            exchangeTo: item.exchangedTo || '##',    
+            profit: item.profit || 0                     
+          };
+        });
 
-    this.exchangedTransactions = transformedArray;
+        this.exchangedTransactions = transformedArray;
+        console.log("BUUUU", this.exchangedTransactions);
+      }
+    );
+}
 
-    console.log("BUUUU", this.exchangedTransactions);
-  }
 
   setTab(tabName: string) {
     this.selectedTab = tabName;
