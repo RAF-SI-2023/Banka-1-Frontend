@@ -181,7 +181,7 @@ export interface CreateUserRequest {
 export interface TransactionBasics {
   senderAccountNumber: string;
   recipientAccountNumber: string;
-  amount: string;
+  amount: number;
 }
 
 export interface TransactionDto {
@@ -717,7 +717,9 @@ export enum OfferStatus {
 export interface ReceivedOffersDto{
   amount? : number;
   price? : number;
-  offerStatus? : OfferStatus;
+  offerStatus : OfferStatus;
+  offerId? : number;
+  ticker? : string;
 }
 
 export interface SendOffersDto{
