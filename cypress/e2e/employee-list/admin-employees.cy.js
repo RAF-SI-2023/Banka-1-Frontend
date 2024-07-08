@@ -6,6 +6,7 @@ describe('check number of employees for admin user', () => {
         cy.get('label').contains('Email').siblings('input').type('admin');
         cy.get('input[type="password"]').click().type('admin');
         cy.get('button').contains('Login').click();
+        cy.wait(2000);
         cy.contains('div', 'Employee panel').first().click();
         cy.get('.tabs-content app-dynamic-table tbody tr').should('have.length', 4);
     })
