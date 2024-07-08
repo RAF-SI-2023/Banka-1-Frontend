@@ -73,21 +73,6 @@
         </table>
       </div>
 
-      <div class="securities-tab" *ngIf="selectedTab === 'public-securities'">
-        <app-dynamic-table [headersArray]="headersPublicSecurities" [dataArray]="publicSecurities | transformPublicSecurities" [showActions]="true">
-          <ng-template #actionsColumn let-row>
-            <div id="helperDiv">
-              <orange-button [buttonName]="'Offer'" (click)="offerSecurity(row.original)"></orange-button>
-            </div>
-          </ng-template>
-        </app-dynamic-table>
-      </div>
-
-<!--      <div class="securities-tab" *ngIf="selectedTab === 'order-history'">-->
-<!--        <app-dynamic-table [headersArray]="headersOrderHistory" [dataArray]="orderHistory | transformOrderHistory">-->
-<!--        </app-dynamic-table>-->
-<!--      </div>-->
-
       <div class="history-tab" *ngIf="selectedTab === 'order-history'">
         <table>
           <thead>

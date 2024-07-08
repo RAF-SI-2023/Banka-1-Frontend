@@ -3,7 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 // import { environment } from '../../../environment';
 // import { BankAccount, Exchange, Recipient, Payment, NewLimitDto } from '../model/model';
-import {BankAccount, Exchange, Recipient, Payment, NewLimitDto, User, ContractCreateDto} from '../model/model';
+import {
+  BankAccount,
+  Exchange,
+  Recipient,
+  Payment,
+  NewLimitDto,
+  User,
+  ContractCreateDto,
+  BankAccountCompany
+} from '../model/model';
 import { environment } from '../../environments/environment';
 import {map} from "rxjs/operators";
 
@@ -44,6 +53,19 @@ export class BankAccountService {
     let url = environment.userService + `/account/getCompany/${companyId}`;
 
     return this.httpClient.get<BankAccount[]>(url, options);
+  }
+
+  getAdminCompanyId(): Observable<BankAccountCompany> {
+
+    const headers = new HttpHeaders({
+      'Authorization': 'Bearer ' + sessionStorage.getItem('jwt')
+    });
+    console.log(headers);
+
+    const options = { headers: headers };
+    let url = environment.userService + `/company/bank`;
+
+    return this.httpClient.get<BankAccountCompany>(url, options);
   }
 
   //Get all payments for bank account MOCKED
