@@ -5,7 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "test:e2e": "concurrently \"npm:start\" \"npm run wait-and-run-tests\"",
-    "wait-and-run-tests": "wait-on http://localhost:4200 && cypress run && npm run stop",
+    "cypress": "cypress run",
+    "ci": "start-server-and-test start http://localhost:4200 cypress",
     "stop": "kill-port 4200",
     "build": "ng build",
     "build-prod": "ng build --configuration k8s-production",
@@ -78,6 +79,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "kill-port": "^2.0.1",
     "mail-listener2": "^0.3.1",
+    "start-server-and-test": "^2.0.4",
     "typescript": "~5.3.2",
     "wait-on": "^7.2.0"
   }
