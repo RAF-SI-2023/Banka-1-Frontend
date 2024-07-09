@@ -64,7 +64,7 @@ presubmits:
 
               trap collectRecordings EXIT
 
-              npm run test:e2e
+              npm run ci
 
           securityContext:
             privileged: true
