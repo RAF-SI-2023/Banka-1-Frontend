@@ -36,58 +36,36 @@ presubmits:
               set -euo pipefail
 
               collectRecordings() {
-                # NE MENJATI PRI KOPIRANJU
-                # Ovaj deo ostaviti kako jeste.
-                # Kako bi ovo radili kako treba, potrebno je da
-                # izmenite cypress.config.js (ili cypress.json)
-                # da snima testove.
-                cp -r ./test-results /logs/artifacts
+                cp -r ./cypress/videos /logs/artifacts
+                cp -r ./cypress/screenshots /logs/artifacts
 
-                echo "${GCSWEB_URL}/prow-logs/pr-logs/pull/${REPO_OWNER}_${REPO_NAME}/${PULL_NUMBER}/${JOB_NAME}/${BUILD_NUMBER}/artifacts/test-results" > /logs/artifacts/playwright.results.link.txt
+                echo "${GCSWEB_URL}/prow-logs/pr-logs/pull/${REPO_OWNER}_${REPO_NAME}/${PULL_NUMBER}/${JOB_NAME}/${BUILD_NUMBER}/artifacts/videos" > /logs/artifacts/videos.link.txt
+                echo "${GCSWEB_URL}/prow-logs/pr-logs/pull/${REPO_OWNER}_${REPO_NAME}/${PULL_NUMBER}/${JOB_NAME}/${BUILD_NUMBER}/artifacts/screenshots" > /logs/artifacts/screenshots.link.txt
               }
 
-              # Pokreće Docker unutar kontejnera u kome se izvršava ova skripta.
-              # Docker vam omogućava da koristite Docker Compose kako bi pokrenuli
-              # backend servise potrebne za rad frontenda.
-              # start-docker.sh
+              cd ..
 
-              # pushd ../backend
-              # PROMENITI PRI KOPIRANJU
-              # Pokreće ceo Docker Compose stack za backend,
-              # po potrebi promeniti da se pokreću pojedinačni servisi, npr.
-              # docker compose up -d <naziv-servisa>
-              # Takođe po potrebi dodati --build flag.
-              # docker compose up -d
-              # popd
+              git clone -b sprint-9 https://github.com/RAF-SI-2023/Banka-1-Backend.git ./Banka-1-Backend
 
-              ###########################################
-              # PROMENITI PRI KOPIRANJU
-              # Naredne komande promeniti po potrebi tako da pokrenu Cypress
-              # testove. Tačne komande zavise od framework-a koji koristite,
-              # npr. drugačije je za Angular i React.
-              ###########################################
+              cd ./Banka-1-Backend
 
-              # Downloaduje dependency-e potrebne za testove.
-              # npm ci
+              sleep 120
 
-              # npx playwright install --with-deps
+              start-docker.sh
 
-              # Pokreće frontend u pozadini.
-              # "&" znači da će komanda/proces da se pokrene u pozadini,
-              # tj. da će skripta nastaviti da se dalje izvršava.
-              # npm run start&
+              docker compose -f docker.compose.yaml.example up -d
 
-              # trap komanda obezbeđuje da se "collectCypressRecordings"
-              # funkcija izvrši pre samog izlaska iz ove skripte, nezavisno
-              # od toga da li su testovi prošli uspešno ili neuspšeno.
-              # Ovo je izuzetno važno kako bi uploadovoali snimke nezavisno
-              # od toga da li su testovi prošli ili ne, pošto čak i da nisu,
-              # snimci pomažu pri debagovanju problema.
-              # Takođe je izuzetno važno da se ova trap komnda pokrene pre
-              # pokretanja testova.
+              cd ..
+              cd ./Banka-1-Frontend
+
+              sleep 120
+
+              npm install
+
               trap collectRecordings EXIT
 
-              # npx playwright test ./playwright
+              npm run ci
+
           securityContext:
             privileged: true
           imagePullPolicy: Always

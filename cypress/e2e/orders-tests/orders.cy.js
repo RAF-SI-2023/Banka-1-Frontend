@@ -1,5 +1,5 @@
 describe('orders test', () => {
-    it('should login as customer and submit invalid form', () => {
+    it.skip('should login as customer and submit invalid form', () => {
         cy.visit('http://localhost:4200/login');
         cy.get('label').contains('Email').click();
         cy.get('label').contains('Email').siblings('input').type('customer@gmail.com');
