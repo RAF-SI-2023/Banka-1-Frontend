@@ -1,5 +1,7 @@
 # BankaFrontend
 
+https://banka-1-dev.si.raf.edu.rs/
+
 ## Login kredencijali
 Customer:\
 email: customer@gmail.com\
@@ -7,7 +9,7 @@ password: customer\
 \
 Admin:\
 email: admin\
-password: admin\
+password: admin
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.3.
 
